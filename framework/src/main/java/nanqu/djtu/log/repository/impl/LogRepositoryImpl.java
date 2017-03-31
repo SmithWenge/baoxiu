@@ -24,6 +24,11 @@ public class LogRepositoryImpl implements ILogRepository {
     @Autowired
     private RepositoryUtils<LogContent> repositoryUtils;
 
+    /**
+     * 添加日志
+     *
+     * @param logContent 日志信息
+     */
     @Override
     public void insertLog(LogContent logContent) {
         String sql = "INSERT INTO baoxiu_log (logAction, logLevel, logContent, logUser) VALUES (?, ?, ?, ?)";

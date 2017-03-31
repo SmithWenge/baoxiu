@@ -3,7 +3,22 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="/Class.txt.ft">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="/Dummy.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="/File Header.txt.ft">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="/Interface.txt.ft">
           <value>
             <set />
           </value>
@@ -249,6 +264,21 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/web/pom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/web/src/main/java/Test.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/web/src/main/java/nanqu/Test.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/web/src/main/java/nanqu/djtu/Test.java">
           <value>
             <set />
           </value>
