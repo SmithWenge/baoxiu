@@ -3,7 +3,7 @@ package nanqu.djtu.shiro.repository.impl;
 import nanqu.djtu.pojo.Permission;
 import nanqu.djtu.pojo.Role;
 import nanqu.djtu.pojo.User;
-import nanqu.djtu.shiro.repository.ShiroRepository;
+import nanqu.djtu.shiro.repository.ShiroRepositoryI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ShiroRepositoryImpl implements ShiroRepository {
+public class ShiroRepositoryImpl implements ShiroRepositoryI {
     private static final Logger LOG = LoggerFactory.getLogger(ShiroRepositoryImpl.class);
 
     @Autowired

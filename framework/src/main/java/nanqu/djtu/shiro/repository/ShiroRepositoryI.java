@@ -6,7 +6,7 @@ import nanqu.djtu.pojo.User;
 
 import java.util.List;
 
-public interface ShiroRepository {
+public interface ShiroRepositoryI {
     /**
      *  更具用户的登录名查询用户信息
      *

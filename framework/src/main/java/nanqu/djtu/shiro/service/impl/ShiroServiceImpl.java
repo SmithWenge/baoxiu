@@ -3,7 +3,7 @@ package nanqu.djtu.shiro.service.impl;
 import nanqu.djtu.pojo.Permission;
 import nanqu.djtu.pojo.Role;
 import nanqu.djtu.pojo.User;
-import nanqu.djtu.shiro.repository.ShiroRepository;
+import nanqu.djtu.shiro.repository.ShiroRepositoryI;
 import nanqu.djtu.shiro.service.ShiroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class ShiroServiceImpl implements ShiroService {
     @Autowired
-    private ShiroRepository shiroRepository;
+    private ShiroRepositoryI shiroRepository;
 
     @Override
     public User queryByName(String username) {

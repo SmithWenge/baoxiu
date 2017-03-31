@@ -21,4 +21,9 @@ public class ConstantFields {
 
     /* 日志查询条件存储 */
     public static final String LOG_QUERY = "logQuery";
+
+    /* 操作提示信息 */
+    public static final String OPERATION_MESSAGE_KEY = "opsKey";
+    public static final String SUCCESS_MESSAGE = "操作成功";
+    public static final String FAILURE_MESSAGE = "操作失败";
 }

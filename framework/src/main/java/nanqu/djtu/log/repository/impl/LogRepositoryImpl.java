@@ -26,7 +26,7 @@ public class LogRepositoryImpl implements ILogRepository {
 
     @Override
     public void insertLog(LogContent logContent) {
-        String sql = "INSERT INTO lgb_log (logAction, logLevel, logContent, logUser) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO baoxiu_log (logAction, logLevel, logContent, logUser) VALUES (?, ?, ?, ?)";
         Object[] args = {
                 logContent.getLogAction(),
                 logContent.getLogLevel(),
@@ -39,7 +39,7 @@ public class LogRepositoryImpl implements ILogRepository {
 
     @Override
     public Page<LogContent> select4Page(LogContent logContent, Pageable pageable) {
-        StringBuilder sql = new StringBuilder("SELECT logId, logAction, logLevel, logContent, logUser, logTime FROM lgb_log WHERE deleteFlag = 0");
+        StringBuilder sql = new StringBuilder("SELECT logId, logAction, logLevel, logContent, logUser, logTime FROM baoxiu_log WHERE deleteFlag = 0");
         List<Object> list = new ArrayList<Object>();
 
         Optional<LogContent> optional = Optional.fromNullable(logContent);

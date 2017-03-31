@@ -3,7 +3,17 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="/Dummy.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/.gitignore">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/README.md">
           <value>
             <set />
           </value>
@@ -19,6 +29,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/common/src/main/java/nanqu/djtu/utils/ConstantFields.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/db/baoxiu20170331.sql">
           <value>
             <set />
           </value>
@@ -168,6 +183,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/framework/src/main/java/nanqu/djtu/shiro/repository/impl/ShiroRepositoryI.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/framework/src/main/java/nanqu/djtu/shiro/repository/impl/ShiroRepositoryImpl.java">
           <value>
             <set />
@@ -208,6 +228,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/pojo/src/main/java/nanqu/djtu/pojo/ShiroUser.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/pom.xml">
           <value>
             <set />
@@ -228,12 +253,37 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/web/src/main/resources/db/db.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/web/src/main/resources/spring/root-context.xml">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/web/src/main/resources/spring/servlet-context.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/web/src/main/webapp/WEB-INF/include/footer.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/web/src/main/webapp/WEB-INF/include/header.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/web/src/main/webapp/WEB-INF/include/javascript.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/web/src/main/webapp/WEB-INF/views/admin/role/add.jsp">
           <value>
             <set />
           </value>
