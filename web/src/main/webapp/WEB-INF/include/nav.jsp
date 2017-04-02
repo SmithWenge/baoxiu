@@ -31,8 +31,8 @@
                     <a href="javascript:;"><i class="layui-icon">&#xe649;</i> 位置管理</a>
                     <dl class="layui-nav-child">
                         <dd class="layui-this"><a href="${contextPath}/admin/place/distinct/list.action"><i class="layui-icon">&#xe602;</i> 校区管理</a></dd>
-                        <dd><a href="./show-modal.html"><i class="layui-icon">&#xe602;</i> show-modal</a></dd>
-                        <dd><a href="./ajax-get.html"><i class="layui-icon">&#xe602;</i> ajax-get</a></dd>
+                        <dd><a href="${contextPath}/admin/place/building/list.action"><i class="layui-icon">&#xe602;</i> 地点管理</a></dd>
+                        <dd><a href="${contextPath}/admin/place/room/route/page.action"><i class="layui-icon">&#xe602;</i> 位置管理</a></dd>
                         <dd><a href="./ajax-post.html"><i class="layui-icon">&#xe602;</i> ajax-post</a></dd>
                         <dd><a href="./data-grid.html"><i class="layui-icon">&#xe602;</i> 数据表格</a></dd>
                         <dd><a href="./highcharts.html"><i class="layui-icon">&#xe602;</i> 图表charts</a></dd>
