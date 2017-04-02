@@ -1,0 +1,122 @@
+* {
+    font-weight: lighter
+}
+
+/* 头部 */
+.layui-layout-admin .layui-header {
+    background: #00a65a;
+}
+
+.header .logo {
+    position: absolute;
+    left: 0;
+    width: 200px;
+    height: 60px;
+    background: #008d4c;
+}
+
+.header .logo h1 {
+    font-size: 24px;
+    text-align: center;
+    color: #ffffff;
+    line-height: 60px;
+    font-weight: lighter;
+}
+
+.header .logo .version {
+
+    position: relative;
+    left: 0;
+    top: 0;
+    font-size: 12px;
+
+}
+
+.header .layui-nav {
+    position: absolute;
+    right: 0;
+    background: transparent;
+}
+
+.header .layui-nav .layui-nav-item > a {
+    color: #ffffff;
+}
+
+.header .layui-nav .layui-nav-item:hover {
+    background: #008d4c;
+}
+
+.header .layui-nav .layui-this:after,
+.header .layui-nav-bar,
+.header .layui-nav-tree .layui-nav-itemed:after {
+    background: transparent;
+}
+
+.header .layui-nav .layui-nav-more {
+    border-color: #ffffff transparent transparent;
+}
+
+.header .layui-nav .layui-nav-mored,
+.header .layui-nav-itemed .layui-nav-more {
+    top: 22px;
+    border-style: dashed dashed solid;
+    border-color: transparent transparent #ffffff
+}
+
+.header .layui-nav .layui-nav-bar {
+    display: none;
+}
+
+.header .user-avatar {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #aaaaaa;
+}
+
+/* 侧边栏 */
+.side .layui-nav {
+    border-radius: 0;
+}
+
+.side .layui-nav .layui-nav-item {
+    border-bottom: 1px solid #484848;
+}
+
+.side .layui-nav .layui-nav-item .layui-icon {
+    color: #ffffff;
+    font-size: 16px;
+    top: 3px;
+}
+
+/* 主体 */
+.layui-layout-admin .layui-body {
+    padding: 10px;
+}
+
+.body .search {
+    padding: 5px 0 0 0;
+    background-color: #ffffff;
+    border-width: 1px 1px 1px 5px;
+    border-style: solid;
+}
+
+.body .search .form-item {
+    margin-bottom: 0;
+}
+
+.body .search .form-item .input {
+    width: 100px;
+}
+
+.body .layui-form-label {
+    width: auto;
+}
+
+/* footer */
+.footer {
+    text-align: center;
+}
+
+.footer .copyright {
+    line-height: 44px;
+}

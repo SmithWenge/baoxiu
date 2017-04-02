@@ -18,6 +18,16 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>nanqu</groupId>
+            <artifactId>pojo</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>nanqu</groupId>
+            <artifactId>nanqu.repository</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

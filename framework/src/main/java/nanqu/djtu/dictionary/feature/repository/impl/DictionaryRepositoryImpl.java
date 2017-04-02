@@ -21,14 +21,14 @@ public class DictionaryRepositoryImpl implements IDictionaryRepository {
     private static final Logger LOG = LoggerFactory.getLogger(DictionaryRepositoryImpl.class);
 
     public Dictionary selectById(String id) {
-        String sql = "SELECT id, groupKey, groupKey, itemKey, itemValue, status, sort WHERE id=?";
+        String sql = "SELECT id, groupKey, groupKey, itemKey, itemValue, status, sort FROM　common_dictionary WHERE id=?";
         Object[] args = { id };
 
         return jdbcTemplate.queryForObject(sql, args, new DictionaryRowMapper());
     }
 
     public List<Dictionary> selectAll() {
-        String sql = "SELECT id, groupKey, groupValue, itemKey, itemValue, status, sort FROM lgb_dictionary";
+        String sql = "SELECT id, groupKey, groupValue, itemKey, itemValue, status, sort FROM common_dictionary";
         Object[] args = {};
 
         //TODO Don't using query replace with other api or other JdbcTemplate

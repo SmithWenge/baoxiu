@@ -41,7 +41,7 @@
 
     <context:component-scan base-package="nanqu.djtu" />
 
-	<!-- Enables the Spring MVC @Controller programming model -->
+	<!-- Enables the Spring MVC @HomeController programming model -->
 	<annotation-driven>
         <!-- 设置分页功能的参数解析器 -->
         <argument-resolvers>
@@ -132,7 +132,7 @@
     </beans:bean>
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <beans:bean class="com.lgb.arc.web.tag.DictionaryTag" init-method="init" lazy-init="false">
+    <beans:bean class="nanqu.djtu.dictionary.tag.DictionaryTag" init-method="init" lazy-init="false">
         <beans:property name="manager" ref="defaultDictionaryManager" />
     </beans:bean>
 

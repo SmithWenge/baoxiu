@@ -9,10 +9,11 @@
     <title>大连交通大学后勤保修系统</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
-    <%--<meta http-equiv="X-UA-Compatible" content="IE=8" />--%>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="${contextPath}/static/images/lgb.ico" />
+    <link rel="shortcut icon" href="${contextPath}/static/images/djtu.ico" />
+    <link rel="stylesheet" href="${contextPath}/static/plugin/layui/css/layui.css">
+    <link rel="stylesheet" href="${contextPath}/static/plugin/template/css/main.css">
 
     <style type="text/css">
         label.error {

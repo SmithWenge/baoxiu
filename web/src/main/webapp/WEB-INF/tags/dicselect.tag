@@ -1,5 +1,5 @@
 <%@tag pageEncoding="UTF-8"%>
-<%@ taglib prefix="dict" uri="http://www.lgb.com/tags/dic" %>
+<%@ taglib prefix="dict" uri="http://www.djtu.com/tags/dic" %>
 <%@ attribute name="id" type="java.lang.String" required="false"%>
 <%@ attribute name="name" type="java.lang.String" required="true"%>
 <%@ attribute name="key" type="java.lang.String" required="true"%>

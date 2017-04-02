@@ -18,6 +18,8 @@ public class ConstantFields {
 
     /* shiro登录状态Key */
     public static final String LOGIN_KEY = "shiroLogin";
+    /* 用户登录后信息 */
+    public static final String SESSION_LOGIN_KEY = "adminInfo";
 
     /* 日志查询条件存储 */
     public static final String LOG_QUERY = "logQuery";

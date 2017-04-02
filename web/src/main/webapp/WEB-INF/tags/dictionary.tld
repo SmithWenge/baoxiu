@@ -7,17 +7,17 @@
 
     <tlib-version>1.0</tlib-version>
     <short-name>DictionaryTag</short-name>
-    <uri>http://www.lgb.com/tags/dic</uri>
+    <uri>http://www.djtu.com/tags/dic</uri>
 
     <function>
         <name>list</name>
-        <function-class>com.lgb.arc.web.tag.DictionaryTag</function-class>
+        <function-class>nanqu.djtu.dictionary.tag.DictionaryTag</function-class>
         <function-signature>java.util.List list(java.lang.String)</function-signature>
     </function>
 
     <function>
         <name>show</name>
-        <function-class>com.lgb.arc.web.tag.DictionaryTag</function-class>
+        <function-class>nanqu.djtu.dictionary.tag.DictionaryTag</function-class>
         <function-signature>java.lang.String show(java.lang.String, int)</function-signature>
     </function>
 </taglib>

@@ -1,7 +1,5 @@
 package nanqu.djtu.shiro.manage.controller;
 
-import nanqu.djtu.pojo.ShiroUser;
-import nanqu.djtu.pojo.Permission;
 import nanqu.djtu.pojo.Role;
 import nanqu.djtu.pojo.User;
 import nanqu.djtu.shiro.manage.service.RoleManageServiceI;
@@ -15,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -67,7 +64,7 @@ public class RoleManageController {
             return "redirect:/admin/role/routeAdd.action";
         }
 
-        ShiroUser user = (ShiroUser) session.getAttribute(ConstantFields.LOGIN_KEY);
+        User user = (User) session.getAttribute(ConstantFields.LOGIN_KEY);
         String logUser = user.getUsername();
 
         if (roleManageService.addNewRole(addPermissions, role, logUser)) {
@@ -118,7 +115,7 @@ public class RoleManageController {
             return "redirect:/admin/role/user/edit/route/" + user.getUserId() + ".action";
         }
 
-        ShiroUser shiroUser = (ShiroUser) session.getAttribute(ConstantFields.LOGIN_KEY);
+        User shiroUser = (User) session.getAttribute(ConstantFields.LOGIN_KEY);
         String logUser = shiroUser.getUsername();
 
         if (roleManageService.updateUserRole(roles, user, logUser)) {
@@ -174,7 +171,7 @@ public class RoleManageController {
             return "redirect:/admin/role/edit/route/" + role.getRoleId() + ".action";
         }
 
-        ShiroUser shiroUser = (ShiroUser) session.getAttribute(ConstantFields.LOGIN_KEY);
+        User shiroUser = (User) session.getAttribute(ConstantFields.LOGIN_KEY);
         String logUser = shiroUser.getUsername();
 
         if (roleManageService.updateRolePermissions(editPermissions, role, logUser)) {
