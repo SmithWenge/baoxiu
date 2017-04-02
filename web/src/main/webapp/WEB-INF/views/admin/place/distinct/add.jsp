@@ -40,6 +40,11 @@
 
 <script>
     $(function () {
+        // 导航栏选择
+        $("#first").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#placeDistinct").attr("class", "layui-this");
+
+        // 表单验证
         var form = layui.form();
 
         form.verify({
