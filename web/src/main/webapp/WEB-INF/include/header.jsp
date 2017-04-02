@@ -14,6 +14,7 @@
     <link rel="shortcut icon" href="${contextPath}/static/images/djtu.ico" />
     <link rel="stylesheet" href="${contextPath}/static/plugin/layui/css/layui.css">
     <link rel="stylesheet" href="${contextPath}/static/plugin/template/css/main.css">
+    <link rel="stylesheet" href="${contextPath}/static/css/nanqu.css">
 
     <style type="text/css">
         label.error {

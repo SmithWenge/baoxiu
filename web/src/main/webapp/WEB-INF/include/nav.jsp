@@ -8,7 +8,7 @@
     <div class="layui-header header">
         <!-- logo -->
         <div class="logo">
-            <h1>后台管理系统 <span class="version">0.0.1</span></h1>
+            <h1>报修管理系统 <span class="version">0.0.1</span></h1>
         </div>
 
         <ul class="layui-nav" lay-filter="">
@@ -28,9 +28,9 @@
         <div class="layui-side-scroll">
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
-                    <a href="javascript:;"><i class="layui-icon">&#xe649;</i> 文档说明</a>
+                    <a href="javascript:;"><i class="layui-icon">&#xe649;</i> 位置管理</a>
                     <dl class="layui-nav-child">
-                        <dd class="layui-this"><a href="./index.html"><i class="layui-icon">&#xe602;</i> 开发日志</a></dd>
+                        <dd class="layui-this"><a href="${contextPath}/admin/place/distinct/list.action"><i class="layui-icon">&#xe602;</i> 校区管理</a></dd>
                         <dd><a href="./show-modal.html"><i class="layui-icon">&#xe602;</i> show-modal</a></dd>
                         <dd><a href="./ajax-get.html"><i class="layui-icon">&#xe602;</i> ajax-get</a></dd>
                         <dd><a href="./ajax-post.html"><i class="layui-icon">&#xe602;</i> ajax-post</a></dd>

@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+    <!-- 底部固定区域 -->
+    <div class="layui-footer footer">
+        <span class="copyright">©2017 Make By <a href="http://www.56team.com">56Team</a></span>
     </div>
-<!-- 底部固定区域 -->
-<div class="layui-footer footer">
-    <span class="copyright">©2017 Admin-Template By <a href="http://www.kuange.me">KuanGe</a></span>
 </div>
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
