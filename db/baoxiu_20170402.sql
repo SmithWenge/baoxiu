@@ -313,7 +313,7 @@ CREATE TABLE `baoxiu_placedistinct` (
   `distinctId` varchar(50) NOT NULL COMMENT '校区Id',
   `distinctName` varchar(20) NOT NULL COMMENT '校区名',
   `deleteFlag` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否删除：0：非删除   1：删除',
-  `state` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0:停用 1:启用',
+  `distinctNumber` varchar(45) NOT NULL COMMENT '校区编号',
   PRIMARY KEY (`distinctId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='维修校区';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -324,6 +324,7 @@ CREATE TABLE `baoxiu_placedistinct` (
 
 LOCK TABLES `baoxiu_placedistinct` WRITE;
 /*!40000 ALTER TABLE `baoxiu_placedistinct` DISABLE KEYS */;
+INSERT INTO `baoxiu_placedistinct` VALUES ('9423325b-ac9a-4a2f-b327-cdffb265000e','旅顺一期',0,'003'),('a91ce1a9-9a01-4e17-b3c6-ef65b756f784','南区',0,'002');
 /*!40000 ALTER TABLE `baoxiu_placedistinct` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -616,4 +617,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-02 13:16:32
+-- Dump completed on 2017-04-02 18:19:07
