@@ -6,6 +6,8 @@ public class ConstantFields {
     /* ajax分页中数据的KEY */
     public static final String PAGE_KEY = "page";
 
+    public static final String SESSION_ROOM_SEARCH_KEY = "placeRoomSearchKey";
+
     /**
      * 默认邮件配置项
      */

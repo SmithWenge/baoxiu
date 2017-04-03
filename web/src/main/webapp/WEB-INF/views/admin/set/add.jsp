@@ -7,7 +7,7 @@
     <fieldset class="layui-elem-field">
         <legend>
             <span class="layui-breadcrumb">
-              <a href="${contextPath}/admin/place/distinct/list.action">设备组管理</a>
+              <a href="${contextPath}/admin/set/index.action">设备组管理</a>
               <a><cite>设备组添加</cite></a>
             </span>
         </legend>

@@ -32,7 +32,7 @@
                     <dl class="layui-nav-child">
                         <dd id="placeDistinct"><a href="${contextPath}/admin/place/distinct/list.action"><i class="layui-icon">&#xe602;</i> 校区管理</a></dd>
                         <dd><a href="${contextPath}/admin/place/building/list.action"><i class="layui-icon">&#xe602;</i> 地点管理</a></dd>
-                        <dd><a href="${contextPath}/admin/place/room/route/page.action"><i class="layui-icon">&#xe602;</i> 位置管理</a></dd>
+                        <dd id="placeRoom"><a href="${contextPath}/admin/place/room/index.action"><i class="layui-icon">&#xe602;</i> 位置管理</a></dd>
                         <dd><a href="./ajax-post.html"><i class="layui-icon">&#xe602;</i> ajax-post</a></dd>
                         <dd><a href="./data-grid.html"><i class="layui-icon">&#xe602;</i> 数据表格</a></dd>
                         <dd><a href="./highcharts.html"><i class="layui-icon">&#xe602;</i> 图表charts</a></dd>
@@ -42,7 +42,7 @@
                     <a href="javascript:;"><i class="layui-icon">&#xe641;</i> 设备管理</a>
                     <dl class="layui-nav-child">
                         <dd id="set"><a href="${contextPath}/admin/set/index.action"><i class="layui-icon">&#xe602;</i> 设备组管理</a></dd>
-                        <dd><a href="${contextPath}/admin/equipment/route/page.action"><i class="layui-icon">&#xe602;</i> 设备管理</a></dd>
+                        <dd id="equipment"><a href="${contextPath}/admin/equipment/index.action"><i class="layui-icon">&#xe602;</i> 设备管理</a></dd>
                         <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目三</a></dd>
                     </dl>
                 </li>

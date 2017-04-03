@@ -123,7 +123,12 @@ public class PlaceDistinctRepositoryImpl implements PlaceDistinctRepositoryI {
         }
     }
 
-
+    /**
+     * 更新校区信息
+     *
+     * @param distinct 新的更改后的校区信息
+     * @return 更改成功返回true, else false
+     */
     @Override
     public boolean updatePlaceDistinct(PlaceDistinct distinct) {
         String sql = "UPDATE baoxiu_placedistinct SET distinctName = ?, distinctNumber = ? WHERE distinctId = ? AND deleteFlag = 0";

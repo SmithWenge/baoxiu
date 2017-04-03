@@ -7,22 +7,23 @@
     <fieldset class="layui-elem-field">
         <legend>
             <span class="layui-breadcrumb">
-              <a href="${contextPath}/admin/set/index.action">设备组管理</a>
-              <a><cite>设备组编辑</cite></a>
+              <a href="${contextPath}/admin/worker/workertype/list.action">工种管理</a>
+              <a><cite>工种修改</cite></a>
             </span>
         </legend>
         <div style="width: 30%; margin-top: 15px; ">
-            <form action="${contextPath}/admin/set/edit/do.action" method="post" class="layui-form">
+            <form action="${contextPath}/admin/place/distinct/edit/do.action" method="post" class="layui-form">
+                <input type="hidden" name="typeId" value="${distinct.distinctId}">
 
                 <div class="layui-form-item">
-                    <label class="layui-form-label">设备组名</label>
+                    <label class="layui-form-label">工种名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="setName" lay-verify="setName" placeholder="请输入" autocomplete="off" class="layui-input">
+                        <input type="text" name="typeName" lay-verify="typeName" value="${distinct.distinctName}" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceDistinct">保存</button>
+                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addWorkerType">保存</button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                     </div>
                 </div>
@@ -35,15 +36,11 @@
 
 <script>
     $(function () {
-        // 导航栏选择
-        $("#two").attr("class", "layui-nav-item layui-nav-itemed");
-        $("#set").attr("class", "layui-this");
-
-        // 表单验证
         var form = layui.form();
 
         form.verify({
-            setName: function (value) {
+
+            distinctName: function (value) {
                 if (value.length < 2) {
                     return "请输入校区名";
                 }

@@ -5,8 +5,8 @@
 <!-- 内容主体 -->
 <div class="layui-body body">
     <fieldset class="layui-elem-field layui-field-title">
-        <legend>设备组管理</legend>
-        <a href="${contextPath}/admin/set/add/route.action">
+        <legend>位置管理</legend>
+        <a href="${contextPath}/admin/place/room/add/route.action">
             <button class="layui-btn layui-btn-normal elementAddBtn" id="addPlaceDistinct">添加</button>
         </a>
         <div class="layui-field-box">
@@ -14,7 +14,10 @@
                 <thead>
                 <tr>
                     <td>序号</td>
-                    <td>设备组名</td>
+                    <td>位置编号</td>
+                    <td>位置名</td>
+                    <td>所属校区</td>
+                    <td>所属维修区域</td>
                     <td>操作</td>
                 </tr>
                 </thead>
@@ -33,15 +36,15 @@
 <script>
     $(function () {
         // 导航栏选择
-        $("#two").attr("class", "layui-nav-item layui-nav-itemed");
-        $("#set").attr("class", "layui-this");
+        $("#first").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#placeRoom").attr("class", "layui-this");
 
         // 拼接操作字符转
-        function createOpsBtnGroup(setId) {
+        function createOpsBtnGroup(roomId) {
             return '<div class="layui-btn-group">' +
-                    '<a href="${contextPath}/admin/set/edit/route/' + setId +'.action">' +
+                    '<a href="${contextPath}/admin/place/room/edit/route/' + roomId +'.action">' +
                     '<button class="layui-btn layui-btn-small layui-btn-warm"><i class="layui-icon">&#xe642;</i>' +
-                    '</button> </a><a href="${contextPath}/admin/set/delete/' + setId + '.action">' +
+                    '</button> </a><a href="${contextPath}/admin/place/room/delete/' + roomId + '.action">' +
                     '<button class="layui-btn layui-btn-small layui-btn-danger"><i class="layui-icon">&#xe640;</i></button>' +
                     '</a></div>'
         }
@@ -57,13 +60,13 @@
                 type: 'post',
                 contentType: 'application/x-www-form-urlencoded',
                 dataType: 'json',
-                url: '${contextPath}/admin/set/route/page.action',
+                url: '${contextPath}/admin/place/room/route/page.action',
                 data: pageData,
                 success: function (result) {
                     $("#pageTableBody").empty();
 
                     $.each(result.page.content, function (i, item) {
-                        var trData = "<tr><td>" + (i + 1) + "</td><td>" + item.setName + "</td><td>" + createOpsBtnGroup(item.setId) + "</td></tr>";
+                        var trData = "<tr><td>" + (i + 1) + "</td><td>" + item.roomNumber + "</td><td>" + item.roomName + "</td><td>" + item.distinctName + "</td><td>" + item.buildingName + "</td><td>" + createOpsBtnGroup(item.roomId) + "</td>";
                         $("#pageTableBody").append(trData);
                     });
 
@@ -79,7 +82,7 @@
                 type: 'post',
                 contentType: 'application/x-www-form-urlencoded',
                 dataType: 'json',
-                url: '${contextPath}/admin/set/route/page.action',
+                url: '${contextPath}/admin/place/room/route/page.action',
                 data: pageData,
                 success: function (result) {
                     laypage({

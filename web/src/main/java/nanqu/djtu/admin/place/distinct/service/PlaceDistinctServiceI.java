@@ -12,6 +12,4 @@ public interface PlaceDistinctServiceI {
     PlaceDistinct query4Edit(String distinctId);
      boolean updatePlaceDistinct(PlaceDistinct distinct, AdminUser user);
     boolean query4PlaceDistinctNumberUnique(String distinctNumber);
-
-
 }

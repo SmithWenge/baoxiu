@@ -40,7 +40,7 @@ public class SetController {
      */
     @ResponseBody
     @RequestMapping("/route/page")
-    public Map<String, Page<EquipmentSet>> listFirstPageSets(EquipmentSet equipmentSet,
+    public Map<String, Page<EquipmentSet>> pageSets(EquipmentSet equipmentSet,
                                                              @PageableDefault(ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable) {
         Map<String, Page<EquipmentSet>> mapData = new HashMap<>();
 
