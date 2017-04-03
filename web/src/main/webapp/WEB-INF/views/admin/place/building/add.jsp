@@ -14,20 +14,29 @@
     <div style="width: 30%; margin-top: 15px; ">
       <form action="${contextPath}/admin/place/building/add/do.action" method="post" class="layui-form">
         <div class="layui-form-item">
-          <label class="layui-form-label">校区编号</label>
+          <label class="layui-form-label">校区名</label>
           <div class="layui-input-block">
-              <select name="quiz">
-                <option value="">请选择校区编号</option>
-
+              <select name="placeDistinctName" id="placeDistinctName" lay-verify="placeDistinctNumber">
+                <option value="">请选择校区名</option>
                 <option value=""></option>
                 <c:forEach items="${placeDistincts}" var="placeDistincts">
-                  <option value="${placeDistincts.distinctId}">${placeDistincts.distinctName}</option>
+                  <option  value="${placeDistincts.distinctId}" >${placeDistincts.distinctName}</option>
                   </c:forEach>
-
               </select>
-
             </div>
           </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">设备组编号</label>
+          <div class="layui-input-block">
+            <select name="setName" lay-verify="setId" id="setName">
+              <option value="">请选择设备组名</option>
+              <option value=""></option>
+              <c:forEach items="${equipmentSets}" var="equipmentSets">
+                <option  value="${equipmentSets.setId}" >${equipmentSets.setName}</option>
+              </c:forEach>
+            </select>
+          </div>
+        </div>
         <div class="layui-form-item">
           <label class="layui-form-label">地点编号</label>
           <div class="layui-input-block">
@@ -60,7 +69,7 @@
     form.verify({
       buildingNumber: function(value) {
         if(value.length > 4 || value.length < 2) {
-          return "校区编号的长度为2到4";
+          return "地点编号的长度为2到4";
         }
 
         if (!(/^[0-9]+$/.test(value))) {
@@ -76,17 +85,17 @@
           contentType: 'application/x-www-form-urlencoded',
           dataType: 'json',
           data: validateData,
-          url: '${contextPath}/admin/place/building/unique/distinctNumber.action',
+          url: '${contextPath}/admin/place/building/unique/buildingNumber.action',
           success: function (result) {
-            uniqueDistinctNumber = result;
+            uniquecBuildingNumber = result;
           }
         });
 
-        if (!uniqueDistinctNumber) {
-          return "填写的校区编号已存在";
+        if (!uniquecBuildingNumber) {
+          return "填写的地点编号已存在";
         }
       },
-      distinctName: function (value) {
+      buildingName: function (value) {
         if (value.length < 2) {
           return "请输入校区名";
         }

@@ -10,6 +10,8 @@ public interface PlaceDistinctServiceI {
     boolean saveNewPlaceDistinct(PlaceDistinct distinct, AdminUser user);
     boolean deleteDistinct(String distinctId, AdminUser user);
     PlaceDistinct query4Edit(String distinctId);
-    boolean updatePlaceDistinct(PlaceDistinct distinct, AdminUser user);
+     boolean updatePlaceDistinct(PlaceDistinct distinct, AdminUser user);
     boolean query4PlaceDistinctNumberUnique(String distinctNumber);
+
+
 }

@@ -7,7 +7,7 @@
   <fieldset class="layui-elem-field layui-field-title">
     <legend>校区管理</legend>
     <a href="${contextPath}/admin/place/building/add/route.action">
-      <button class="layui-btn layui-btn-normal elementAddBtn" id="addPlaceDistinct">添加</button>
+      <button class="layui-btn layui-btn-normal elementAddBtn" id="addPlaceBuilding'">添加</button>
     </a>
     <div class="layui-field-box">
       <table class="layui-table">
@@ -27,10 +27,10 @@
             <td>${building.buildingName}</td>
             <td>
               <div class="layui-btn-group">
-                <a href="${contextPath}/admin/place/buiding/edit/route/${building.buildingId}.action">
+                <a href="${contextPath}/admin/place/building/edit/route/${building.buildingId}.action">
                   <button class="layui-btn layui-btn-small layui-btn-warm"><i class="layui-icon">&#xe642;</i></button>
                 </a>
-                <a href="${contextPath}/admin/place/buiding/delete/${building.buildingId}.action">
+                <a href="${contextPath}/admin/place/building/delete/${building.buildingId}.action">
                   <button class="layui-btn layui-btn-small layui-btn-danger"><i class="layui-icon">&#xe640;</i></button>
                 </a>
               </div>
@@ -47,6 +47,10 @@
 
 <script>
   $(function () {
+    //导航栏选择
+    $("#first").attr("class", "layui-nav-item layui-nav-itemed");
+    $("#placeDistinct").attr("class", "layui-this");
+
     // 删除提示弹出提示
     function deleteConfirm($deleteBtn) {
       event.preventDefault();

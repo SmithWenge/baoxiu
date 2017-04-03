@@ -8,6 +8,15 @@ public class PlaceBuilding {
     private String buildingName;
     private String distinctId;
     private String setId;
+    private String hiddenBuildingNumber;
+
+    public String getHiddenBuildingNumber() {
+        return hiddenBuildingNumber;
+    }
+
+    public void setHiddenBuildingNumber(String hiddenBuildingNumber) {
+        this.hiddenBuildingNumber = hiddenBuildingNumber;
+    }
 
     public String getBuildingId() {
         return buildingId;
@@ -17,12 +26,12 @@ public class PlaceBuilding {
         this.buildingId = buildingId;
     }
 
-    public String getBuidingName() {
+    public String getBuildingName() {
         return buildingName;
     }
 
-    public void setBuidingName(String buidingName) {
-        this.buildingName = buidingName;
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
     }
 
     public String getDistinctId() {
