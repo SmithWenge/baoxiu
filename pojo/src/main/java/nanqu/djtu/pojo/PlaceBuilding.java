@@ -1,8 +1,5 @@
 package nanqu.djtu.pojo;
 
-/**
- * Created by Administrator on 2017/4/2.
- */
 public class PlaceBuilding {
     private String buildingId;
     private String buildingName;

@@ -2,6 +2,7 @@ package nanqu.djtu.admin.equipment.controller;
 
 import nanqu.djtu.admin.equipment.service.EquipmentServiceI;
 import nanqu.djtu.pojo.Equipment;
+import nanqu.djtu.pojo.PlaceBuilding;
 import nanqu.djtu.pojo.PlaceDistinct;
 import nanqu.djtu.utils.ConstantFields;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,14 +47,21 @@ public class EquipmentController {
         return mapData;
     }
 
+    /**
+     * 校区查询地点的二级联动
+     *
+     * @param distinct 校区对象
+     * @return 这个校区下地点的List
+     */
     @ResponseBody
     @RequestMapping("/distinct/buildings")
     public Map<String, List<PlaceBuilding>> listBuildingWithDistinct(PlaceDistinct distinct) {
-        Map<String, PlaceBuilding> mapData = new HashMap<>();
+        Map<String, List<PlaceBuilding>> mapData = new HashMap<>();
 
         List<PlaceBuilding> buildings = equipmentService.queryBuildingWithDistinctId(distinct.getDistinctId());
 
         mapData.put("buildings", buildings);
 
         return mapData;
+    }
 }
