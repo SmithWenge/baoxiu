@@ -27,7 +27,7 @@
           <label class="layui-form-label">设备组编号</label>
           <div class="layui-input-block">
             <select name="setId" lay-verify="setId" id="setId">
-              <option value="">可不填</option>
+              <option value="">可不选</option>
               <c:forEach items="${equipmentSets}" var="equipmentSets">
                 <option  value="${equipmentSets.setId}" >${equipmentSets.setName}</option>
               </c:forEach>

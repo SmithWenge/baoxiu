@@ -208,11 +208,27 @@ public class PlaceBuildingRepositoryImpl implements PlaceBuildingRepositoryI {
         };
 
         try {
-            return jdbcTemplate.queryForObject(sql, args, new Select4ListRowMapper());
+            return jdbcTemplate.queryForObject(sql, args, new Select4EditRowMapper());
         } catch (Exception e) {
             LOG.error("[PlaceBuilding] query4List error with info {}.", e.getMessage());
 
             return null;
+        }
+    }
+
+    private class Select4EditRowMapper implements RowMapper<PlaceBuilding> {
+
+        @Override
+        public PlaceBuilding mapRow(ResultSet rs, int rowNum) throws SQLException {
+            PlaceBuilding placeBuilding = new PlaceBuilding();
+
+            placeBuilding.setBuildingId(rs.getString("buildingId"));
+            placeBuilding.setBuildingName(rs.getString("buildingName"));
+            placeBuilding.setSetId(rs.getString("setId"));
+            placeBuilding.setDistinctId(rs.getString("distinctId"));
+            placeBuilding.setBuildingNumber(rs.getString("buildingNumber"));
+
+            return placeBuilding;
         }
     }
 
