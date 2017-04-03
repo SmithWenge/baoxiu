@@ -1,0 +1,32 @@
+package nanqu.djtu.admin.equipment.service.impl;
+
+import nanqu.djtu.admin.equipment.repository.EquipmentRepositoryI;
+import nanqu.djtu.admin.equipment.service.EquipmentServiceI;
+import nanqu.djtu.pojo.Equipment;
+import nanqu.djtu.pojo.PlaceDistinct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class EquipmentServiceImpl implements EquipmentServiceI {
+    private static final Logger LOG = LoggerFactory.getLogger(EquipmentServiceImpl.class);
+
+    @Autowired
+    private EquipmentRepositoryI equipmentRepository;
+
+    @Override
+    public Page<Equipment> query4Page(Equipment equipment, Pageable pageable) {
+        return equipmentRepository.select4Page(equipment, pageable);
+    }
+
+    @Override
+    public List<PlaceDistinct> queryAllPlaceDistincts() {
+        return equipmentRepository.selectAllPlaceDistincts();
+    }
+}
