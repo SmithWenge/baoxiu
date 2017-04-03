@@ -51,4 +51,5 @@ public interface PlaceDistinctRepositoryI {
      * @return 唯一返回true, else false
      */
     boolean select4PlaceDistinctNumberUnique(String distinctNumber);
+
 }
