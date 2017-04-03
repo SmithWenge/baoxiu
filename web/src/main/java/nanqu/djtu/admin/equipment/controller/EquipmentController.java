@@ -1,5 +1,6 @@
 package nanqu.djtu.admin.equipment.controller;
 
+import com.google.common.base.Optional;
 import nanqu.djtu.admin.equipment.service.EquipmentServiceI;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.utils.ConstantFields;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -169,5 +171,26 @@ public class EquipmentController {
 
         return equipmentNumber.equalsIgnoreCase(hiddenEquipmentNumber) ||
                 equipmentService.queryUniqueEquipmentNumber(equipment.getEquipmentNumber());
+    }
+
+    /**
+     * 路由到设备编辑页面
+     *
+     * @param equipmentId 设备Id
+     * @return 设备编辑页面地址和数据
+     */
+    @RequestMapping("/edit/route/{equipmentId}")
+    public ModelAndView routeEdit(@PathVariable String equipmentId) {
+        Equipment equipment = equipmentService.query4Edit(equipmentId);
+
+        if (Optional.fromNullable(equipment).isPresent()) {
+            ModelAndView mav = new ModelAndView("admin/equipment/edit");
+
+            mav.addObject("equipment", equipment);
+
+            return mav;
+        } else {
+            return new ModelAndView("redirect:/admin/equipment/index.action");
+        }
     }
 }

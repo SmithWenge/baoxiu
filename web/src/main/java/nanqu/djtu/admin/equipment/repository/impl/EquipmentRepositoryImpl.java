@@ -351,4 +351,91 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
             return false;
         }
     }
+
+    /**
+     * 通过地点Id查询这个地点下的setId
+     *
+     * @param buildingId 地点Id
+     * @return 如果有setId返回setId, else null
+     */
+    @Override
+    public String selectSetIdWithBuilding(String buildingId) {
+        String sql = "SELECT setId FROM baoxiu_placebuilding WHERE buildingId = ? AND deleteFlag = 0";
+        Object[] args = {
+                buildingId
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, String.class);
+        } catch (Exception e) {
+            LOG.error("[Equipment] select setId with buildingId {} error with info {}.", buildingId, e.getMessage());
+
+            return null;
+        }
+    }
+
+    /**
+     * 通过位置Id查询这个位置下的setId
+     *
+     * @param roomId 位置Id
+     * @return 如果有setId返回setId, else null
+     */
+    @Override
+    public String selectSetIdWithRoom(String roomId) {
+        String sql = "SELECT setId FROM baoxiu_placeroom WHERE roomId = ? AND deleteFlag = 0";
+        Object[] args = {
+                roomId
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, String.class);
+        } catch (Exception e) {
+            LOG.error("[Equipment] select setId with roomId {} error with info {}.", roomId, e.getMessage());
+
+            return null;
+        }
+    }
+
+    /**
+     * 查询编辑的设备对象
+     *
+     * @param equipmentId 设备Id
+     * @return 如果存在返回对象, else null
+     */
+    @Override
+    public Equipment select4Edit(String equipmentId) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT E.equipmentId, E.equipmentName, E.repairGroupId, E.equipmentNumber, ES.setId FROM baoxiu_equipment E");
+        builder.append(" LEFT JOIN baoxiu_equipmentset ES ON E.equipmentId = ES.equipmentId WHERE E.equipmentId = ?");
+        builder.append(" AND E.deleteFlag = 0");
+
+        Object[] args = {
+                equipmentId
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(builder.toString(), args, new Select4EditRowMapper());
+        } catch (Exception e) {
+            LOG.error("[Equipment] select edit equipment {} error with info {}.", equipmentId, e.getMessage());
+
+            return null;
+        }
+    }
+
+    private class Select4EditRowMapper implements RowMapper<Equipment> {
+
+        @Override
+        public Equipment mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            Equipment equipment = new Equipment();
+
+            equipment.setEquipmentId(rs.getString("equipmentId"));
+            equipment.setEquipmentName(rs.getString("equipmentName"));
+            equipment.setRepairGroupId(rs.getString("repairGroupId"));
+            equipment.setEquipmentNumber(rs.getString("equipmentNumber"));
+            equipment.setSetId(rs.getString("setId"));
+
+            return equipment;
+        }
+    }
 }

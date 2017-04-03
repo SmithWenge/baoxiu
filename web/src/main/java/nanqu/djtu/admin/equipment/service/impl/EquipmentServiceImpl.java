@@ -1,5 +1,6 @@
 package nanqu.djtu.admin.equipment.service.impl;
 
+import com.google.common.base.Strings;
 import nanqu.djtu.admin.equipment.repository.EquipmentRepositoryI;
 import nanqu.djtu.admin.equipment.service.EquipmentServiceI;
 import nanqu.djtu.pojo.*;
@@ -24,6 +25,19 @@ public class EquipmentServiceImpl implements EquipmentServiceI {
 
     @Override
     public Page<Equipment> query4Page(Equipment equipment, Pageable pageable) {
+        String roomId = equipment.getRoomId();
+        String buildingId = equipment.getBuildingId();
+
+        if (Strings.isNullOrEmpty(roomId) && (!Strings.isNullOrEmpty(buildingId))) {
+            String setId = equipmentRepository.selectSetIdWithBuilding(buildingId);
+
+            equipment.setSetId(setId);
+        } else if (!Strings.isNullOrEmpty(roomId)) {
+            String setId = equipmentRepository.selectSetIdWithRoom(roomId);
+
+            equipment.setSetId(setId);
+        }
+
         return equipmentRepository.select4Page(equipment, pageable);
     }
 
@@ -78,5 +92,10 @@ public class EquipmentServiceImpl implements EquipmentServiceI {
         }
 
         return insert;
+    }
+
+    @Override
+    public Equipment query4Edit(String equipmentId) {
+        return equipmentRepository.select4Edit(equipmentId);
     }
 }
