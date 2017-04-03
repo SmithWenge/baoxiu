@@ -16,7 +16,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">选择校区</label>
                     <div class="layui-input-block">
-                        <select name="distinctId" id="distinctId">
+                        <select name="distinctId" id="distinctId" lay-filter="distinctId">
                             <c:forEach items="${distincts}" var="distinct">
                                 <option value="${distinct.distinctId}">${distinct.distinctName}</option>
                             </c:forEach>
@@ -28,7 +28,7 @@
                     <label class="layui-form-label">选择地点</label>
                     <div class="layui-input-block">
                         <select name="buildingId" id="buildingId">
-                            <option value="0">0</option>
+                            <option value="0">请选择地点</option>
                         </select>
                     </div>
                 </div>
@@ -63,28 +63,34 @@
         // 导航栏选择
         $("#first").attr("class", "layui-nav-item layui-nav-itemed");
         $("#placeRoom").attr("class", "layui-this");
+        var form = layui.form();
 
-        $('#distinctId').trigger('change');
+        form.on('select(distinctId)', function(data){
 
-        $('#distinctId').on('change', function () {
-            var distinctId = $('#distinctId').val();
-            confirm(distinctId);
+            var distinctId = data.value;
             var building = document.getElementById("buildingId");
+            console.log(building.options.length)
+            building.options.length = 0;
+            console.log(building.options.length)
             $.ajax({
                 type: 'post',
                 contentType: 'application/json',
                 dataType: 'json',
                 url: '${contextPath}/admin/place/room/buildings/' + distinctId + '.action',
                 success: function (result) {
-                    building.options.length = 0;
+                    console.log(result.buildings)
                     $.each(result.buildings, function (i, item) {
                         building.options.add(new Option(item.buildingName, item.buildingId));
+                        console.log(building.options.length)
                     });
                 }
             });
+            form.render('select');
         });
 
-        var form = layui.form();
+
+
+        $('#distinctId').trigger('select');
 
         form.verify({
             roomNumber: function(value) {
