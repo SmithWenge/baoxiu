@@ -161,6 +161,7 @@ public class EquipmentController {
      * @param equipment 包含设备编号的设备对象
      * @return 如果不重复返回true, else false
      */
+    @ResponseBody
     @RequestMapping("/unique/equipmentNumber")
     public boolean uniqueEquipmentNumber(Equipment equipment) {
         String hiddenEquipmentNumber = equipment.getHiddenEquipmentNumber();

@@ -76,4 +76,12 @@ public interface EquipmentRepositoryI {
      * @return 添加成功返回true, else falase
      */
     boolean insertNewEquipment(Equipment equipment);
+
+    /**
+     * 添加设备与设备组关联表数据
+     *
+     * @param equipment 包含两个Id的设备对象
+     * @return 如果添加成功返回true, else false
+     */
+    boolean insertNewEquipmentWithSet(Equipment equipment);
 }

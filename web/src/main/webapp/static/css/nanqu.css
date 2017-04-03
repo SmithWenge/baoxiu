@@ -1,3 +1,15 @@
 .elementAddBtn {
     margin-top: 10px;
 }
+
+.elementAddAndQueryDiv {
+    margin-top: 10px;
+}
+
+.addBtnFloatRight {
+    float: right !important;
+}
+
+.queryDivBtn {
+    margin-left: 0px;
+}

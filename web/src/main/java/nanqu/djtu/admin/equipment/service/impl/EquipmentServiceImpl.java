@@ -3,12 +3,15 @@ package nanqu.djtu.admin.equipment.service.impl;
 import nanqu.djtu.admin.equipment.repository.EquipmentRepositoryI;
 import nanqu.djtu.admin.equipment.service.EquipmentServiceI;
 import nanqu.djtu.pojo.*;
+import nanqu.djtu.utils.PrimaryKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -59,11 +62,16 @@ public class EquipmentServiceImpl implements EquipmentServiceI {
         return equipmentRepository.selectUniqueEquipmentNumber(equipmentNumber);
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public boolean saveNewEquipment(Equipment equipment, AdminUser user) {
-        boolean insert = equipmentRepository.insertNewEquipment(equipment);
+        String equipmentId = PrimaryKeyUtil.uuidPrimaryKey();
+        equipment.setEquipmentId(equipmentId);
 
-        if (insert) {
+        boolean insert = equipmentRepository.insertNewEquipment(equipment);
+        boolean insertSet = equipmentRepository.insertNewEquipmentWithSet(equipment);
+
+        if (insert && insertSet) {
             LOG.info("[Equipment] add new equipment success with user {}.", user.getAdminName());
         } else {
             LOG.warn("[Equipment] add new equipment failure with user {}.", user.getAdminName());

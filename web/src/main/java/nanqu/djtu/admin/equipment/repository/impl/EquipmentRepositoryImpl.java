@@ -314,7 +314,7 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
     public boolean insertNewEquipment(Equipment equipment) {
         String sql = "INSERT INTO baoxiu_equipment (equipmentId, equipmentName, repairGroupId, equipmentNumber) VALUES (?, ?, ?, ?)";
         Object[] args = {
-                PrimaryKeyUtil.uuidPrimaryKey(),
+                equipment.getEquipmentId(),
                 equipment.getEquipmentName(),
                 equipment.getRepairGroupId(),
                 equipment.getEquipmentNumber()
@@ -324,6 +324,29 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
             return jdbcTemplate.update(sql, args) == 1;
         } catch (Exception e) {
             LOG.error("[Equipment] insert new equipment error with info {}.", e.getMessage());
+
+            return false;
+        }
+    }
+
+    /**
+     * 添加设备与设备组关联表数据
+     *
+     * @param equipment 包含两个Id的设备对象
+     * @return 如果添加成功返回true, else false
+     */
+    @Override
+    public boolean insertNewEquipmentWithSet(Equipment equipment) {
+        String sql = "INSERT INTO baoxiu_equipmentset (setId, equipmentId) VALUES (?, ?)";
+        Object[] args = {
+                equipment.getSetId(),
+                equipment.getEquipmentId()
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[Equipment] insert equipment set three table error with info {}.", e.getMessage());
 
             return false;
         }
