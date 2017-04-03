@@ -37,7 +37,7 @@
     $(function () {
         // 导航栏选择
         $("#two").attr("class", "layui-nav-item layui-nav-itemed");
-        $("#set").attr("class", "layui-this");
+        $("#equipment").attr("class", "layui-this");
 
         // 拼接操作字符转
         function createOpsBtnGroup(equipmentId) {

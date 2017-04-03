@@ -46,4 +46,34 @@ public interface EquipmentRepositoryI {
      * @return 这个位置下设备组数据
      */
     List<EquipmentSet> selectSetsWithRoomId(String roomId);
+
+    /**
+     * 查询所有的设备组
+     *
+     * @return 返回设备组对象List
+     */
+    List<EquipmentSet> selectAllEquipmentSets();
+
+    /**
+     * 查询所有的维修小组
+     *
+     * @return 返回维修小组对象List
+     */
+    List<RepairGroup> selectAllRepairGroup();
+
+    /**
+     * 查询判断设备编号的唯一
+     *
+     * @param equipmentNumber 设备编号
+     * @return 如果不重复返回true, else false
+     */
+    boolean selectUniqueEquipmentNumber(String equipmentNumber);
+
+    /**
+     * 保存新添加的设备
+     *
+     * @param equipment 设备对象
+     * @return 添加成功返回true, else falase
+     */
+    boolean insertNewEquipment(Equipment equipment);
 }

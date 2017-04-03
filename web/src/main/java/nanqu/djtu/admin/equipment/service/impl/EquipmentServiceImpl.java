@@ -43,4 +43,32 @@ public class EquipmentServiceImpl implements EquipmentServiceI {
     public List<EquipmentSet> querySetsWithRoomId(String roomId) {
         return equipmentRepository.selectSetsWithRoomId(roomId);
     }
+
+    @Override
+    public List<EquipmentSet> queryAllEquipmentSets() {
+        return equipmentRepository.selectAllEquipmentSets();
+    }
+
+    @Override
+    public List<RepairGroup> queryAllRepairGroup() {
+        return equipmentRepository.selectAllRepairGroup();
+    }
+
+    @Override
+    public boolean queryUniqueEquipmentNumber(String equipmentNumber) {
+        return equipmentRepository.selectUniqueEquipmentNumber(equipmentNumber);
+    }
+
+    @Override
+    public boolean saveNewEquipment(Equipment equipment, AdminUser user) {
+        boolean insert = equipmentRepository.insertNewEquipment(equipment);
+
+        if (insert) {
+            LOG.info("[Equipment] add new equipment success with user {}.", user.getAdminName());
+        } else {
+            LOG.warn("[Equipment] add new equipment failure with user {}.", user.getAdminName());
+        }
+
+        return insert;
+    }
 }

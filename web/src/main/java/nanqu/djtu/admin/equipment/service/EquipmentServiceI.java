@@ -12,4 +12,8 @@ public interface EquipmentServiceI {
     List<PlaceBuilding> queryBuildingWithDistinctId(String distinctId);
     List<PlaceRoom> queryRoomWithBuildingId(String buildingId);
     List<EquipmentSet> querySetsWithRoomId(String roomId);
+    List<EquipmentSet> queryAllEquipmentSets();
+    List<RepairGroup> queryAllRepairGroup();
+    boolean queryUniqueEquipmentNumber(String equipmentNumber);
+    boolean saveNewEquipment(Equipment equipment, AdminUser user);
 }
