@@ -27,4 +27,6 @@ public interface PlaceBuildingServiceI {
     PlaceBuilding query4Edit(String buildingId);
 
     boolean updatePlaceBuilding(PlaceBuilding placeBuilding, AdminUser user);
+
+
 }

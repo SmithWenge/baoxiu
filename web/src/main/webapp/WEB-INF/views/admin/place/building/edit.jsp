@@ -8,37 +8,15 @@
     <legend>
             <span class="layui-breadcrumb">
               <a href="${contextPath}/admin/place/building/list.action">地点管理</a>
-              <a><cite>地点添加</cite></a>
+              <a><cite>地点修改</cite></a>
             </span>
     </legend>
     <div style="width: 30%; margin-top: 15px; ">
       <form action="${contextPath}/admin/place/building/edit/do.action" method="post" class="layui-form">
         <input type="hidden" name="buildingId" value="${building.buildingId}">
+        <input type="hidden" name="distinctId" id="distinctId" value="${building.distinctId}">
+        <input type="hidden" name="setId" value="${building.setId}">
 
-        <div class="layui-form-item">
-          <label class="layui-form-label">校区名</label>
-          <div class="layui-input-block">
-            <select name="placeDistinctName" id="placeDistinctName" lay-verify="placeDistinctNumber">
-              <option value="">请选择校区名</option>
-              <option value=""></option>
-              <c:forEach items="${placeDistincts}" var="placeDistincts">
-                <option  value="${placeDistincts.distinctId}" >${placeDistincts.distinctName}</option>
-              </c:forEach>
-            </select>
-          </div>
-        </div>
-        <div class="layui-form-item">
-          <label class="layui-form-label">设备组编号</label>
-          <div class="layui-input-block">
-            <select name="setName" lay-verify="setId" id="setName">
-              <option value="">请选择设备组名</option>
-              <option value=""></option>
-              <c:forEach items="${equipmentSets}" var="equipmentSets">
-                <option  value="${equipmentSets.setId}" >${equipmentSets.setName}</option>
-              </c:forEach>
-            </select>
-          </div>
-        </div>
         <div class="layui-form-item">
           <label class="layui-form-label">地点编号</label>
           <div class="layui-input-block">
@@ -77,7 +55,7 @@
     form.verify({
       buildingNumber: function(value) {
         if(value.length > 4 || value.length < 2) {
-          return "校区编号的长度为2到4";
+          return "地点编号的长度为2到4";
         }
 
         if (!(/^[0-9]+$/.test(value))) {
@@ -86,6 +64,7 @@
 
         var validateData = {
           "buildingNumber": $("#buildingNumber").val(),
+          "distinctId":$("#distinctId").val(),
           "hiddenBuildingNumber": $("#hiddenBuildingNumber").val()
         };
         var uniqueBuildingNumber = false;

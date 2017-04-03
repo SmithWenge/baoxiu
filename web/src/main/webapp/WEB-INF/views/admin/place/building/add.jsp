@@ -16,9 +16,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label">校区名</label>
           <div class="layui-input-block">
-              <select name="placeDistinctName" id="placeDistinctName" lay-verify="placeDistinctNumber">
-                <option value="">请选择校区名</option>
-                <option value=""></option>
+              <select name="distinctId" id="distinctId" lay-verify="distinctId">
                 <c:forEach items="${placeDistincts}" var="placeDistincts">
                   <option  value="${placeDistincts.distinctId}" >${placeDistincts.distinctName}</option>
                   </c:forEach>
@@ -28,9 +26,8 @@
         <div class="layui-form-item">
           <label class="layui-form-label">设备组编号</label>
           <div class="layui-input-block">
-            <select name="setName" lay-verify="setId" id="setName">
-              <option value="">请选择设备组名</option>
-              <option value=""></option>
+            <select name="setId" lay-verify="setId" id="setId">
+              <option value="">可不填</option>
               <c:forEach items="${equipmentSets}" var="equipmentSets">
                 <option  value="${equipmentSets.setId}" >${equipmentSets.setName}</option>
               </c:forEach>
@@ -76,8 +73,8 @@
           return "请填写数字序列";
         }
 
-        var validateData = { "buildingNumber": $("#buildingNumber").val() };
-        var uniqueDistinctNumber = false;
+        var validateData = { "buildingNumber": $("#buildingNumber").val(),"distinctId":$("#distinctId").val() };
+        var uniqueBuildingNumber = false;
 
         $.ajax({
           type: 'post',
@@ -87,17 +84,17 @@
           data: validateData,
           url: '${contextPath}/admin/place/building/unique/buildingNumber.action',
           success: function (result) {
-            uniquecBuildingNumber = result;
+            uniqueBuildingNumber = result;
           }
         });
 
-        if (!uniquecBuildingNumber) {
+        if (!uniqueBuildingNumber) {
           return "填写的地点编号已存在";
         }
       },
       buildingName: function (value) {
         if (value.length < 2) {
-          return "请输入校区名";
+          return "请输入地点名";
         }
 
         if (!(/^[\u4e00-\u9fa5]+$/.test(value))) {
@@ -107,5 +104,6 @@
     });
   });
 </script>
+
 
 <%@ include file="/WEB-INF/include/footer.jsp"%>

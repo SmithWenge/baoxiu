@@ -25,4 +25,5 @@ public interface PlaceBuildingRepositoryI {
     PlaceBuilding select4Edit(String buildingId);
 
     boolean updatePlaceBuilding(PlaceBuilding placeBuilding);
+
 }
