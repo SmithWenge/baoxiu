@@ -1,6 +1,7 @@
 package nanqu.djtu.admin.place.room.service;
 
 import nanqu.djtu.pojo.AdminUser;
+import nanqu.djtu.pojo.PlaceBuilding;
 import nanqu.djtu.pojo.PlaceDistinct;
 import nanqu.djtu.pojo.PlaceRoom;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,6 @@ public interface PlaceRoomServiceI {
     PlaceRoom query4Edit(String roomId);
     boolean updatePlaceRoom(PlaceRoom room, AdminUser user);
     boolean query4PlaceRoomNumberUnique(String roomNumber);
-    List<PlaceRoom> queryBuildings();
+    List<PlaceBuilding> queryBuildingsByDistinctId(String distinctId);
     List<PlaceDistinct> queryDistincts();
 }

@@ -3,6 +3,7 @@ package nanqu.djtu.admin.place.room.service.impl;
 import nanqu.djtu.admin.place.room.repository.PlaceRoomRepositoryI;
 import nanqu.djtu.admin.place.room.service.PlaceRoomServiceI;
 import nanqu.djtu.pojo.AdminUser;
+import nanqu.djtu.pojo.PlaceBuilding;
 import nanqu.djtu.pojo.PlaceDistinct;
 import nanqu.djtu.pojo.PlaceRoom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,8 @@ public class PlaceRoomServiceImpl implements PlaceRoomServiceI{
     }
 
     @Override
-    public List<PlaceRoom> queryBuildings() {
-        return placeRoomRepository.selectBuildings();
+    public List<PlaceBuilding> queryBuildingsByDistinctId(String distinctId) {
+        return placeRoomRepository.selectBuildingsByDistinctId(distinctId);
     }
 
     @Override

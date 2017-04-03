@@ -1,6 +1,7 @@
 package nanqu.djtu.admin.place.room.repository.impl;
 
 import nanqu.djtu.admin.place.room.repository.PlaceRoomRepositoryI;
+import nanqu.djtu.pojo.PlaceBuilding;
 import nanqu.djtu.pojo.PlaceDistinct;
 import nanqu.djtu.pojo.PlaceRoom;
 import nanqu.djtu.util.RepositoryUtils;
@@ -187,9 +188,11 @@ public class PlaceRoomRepositoryImpl implements PlaceRoomRepositoryI{
      * @return
      */
     @Override
-    public List<PlaceRoom> selectBuildings() {
-        String sql = "SELECT buildingId, buildingName FROM baoxiu_placebuilding WHERE deleteFlag = 0";
-        Object[] args = {};
+    public List<PlaceBuilding> selectBuildingsByDistinctId(String distinctId) {
+        String sql = "SELECT buildingId, buildingName FROM baoxiu_placebuilding WHERE deleteFlag = 0 AND distinctId = ?";
+        Object[] args = {
+                distinctId
+        };
 
         try {
             return jdbcTemplate.query(sql, args, new SelectBuildingsRowMapper());
@@ -200,16 +203,16 @@ public class PlaceRoomRepositoryImpl implements PlaceRoomRepositoryI{
         }
     }
 
-    class SelectBuildingsRowMapper implements RowMapper<PlaceRoom> {
+    class SelectBuildingsRowMapper implements RowMapper<PlaceBuilding> {
 
         @Override
-        public PlaceRoom mapRow(ResultSet resultSet, int i) throws SQLException {
-            PlaceRoom room = new PlaceRoom();
+        public PlaceBuilding mapRow(ResultSet resultSet, int i) throws SQLException {
+            PlaceBuilding building = new PlaceBuilding();
 
-            room.setBuildingId(resultSet.getString("buildingId"));
-            room.setBuildingName(resultSet.getString("buildingName"));
+            building.setBuildingId(resultSet.getString("buildingId"));
+            building.setBuildingName(resultSet.getString("buildingName"));
 
-            return room;
+            return building;
         }
     }
 

@@ -16,7 +16,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">选择校区</label>
                     <div class="layui-input-block">
-                        <select name="distinctId">
+                        <select name="distinctId" id="distinctId">
                             <c:forEach items="${distincts}" var="distinct">
                                 <option value="${distinct.distinctId}">${distinct.distinctName}</option>
                             </c:forEach>
@@ -27,7 +27,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">选择地点</label>
                     <div class="layui-input-block">
-                        <select name="buildingId">
+                        <select name="buildingId" id="buildingId">
 
                         </select>
                     </div>
@@ -99,6 +99,25 @@
                 if (!(/^[\u4e00-\u9fa5]+$/.test(value))) {
                     return "请输入中文";
                 }
+            }
+        });
+    });
+
+    $('#distinctId').trigger('change');
+
+    $('#distinctId').on('change', function () {
+        var distinctId = $('#distinctId').val();
+        var building = document.getElementById("buildingId");
+        $.ajax({
+            type: 'post',
+            contentType: 'application/json',
+            dataType: 'json',
+            url: '${contextPath}/admin/place/room/buildings/' + distinctId + '.action',
+            success: function (result) {
+                building.options.length = 0;
+                $.each(result.buildings, function (i, item) {
+                    building.options.add(new Option(item.buildingName, item.buildingId));
+                });
             }
         });
     });

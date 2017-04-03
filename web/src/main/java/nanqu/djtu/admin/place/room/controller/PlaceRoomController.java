@@ -3,6 +3,7 @@ package nanqu.djtu.admin.place.room.controller;
 import com.google.common.base.Optional;
 import nanqu.djtu.admin.place.room.service.PlaceRoomServiceI;
 import nanqu.djtu.pojo.AdminUser;
+import nanqu.djtu.pojo.PlaceBuilding;
 import nanqu.djtu.pojo.PlaceDistinct;
 import nanqu.djtu.pojo.PlaceRoom;
 import nanqu.djtu.utils.ConstantFields;
@@ -231,9 +232,16 @@ public class PlaceRoomController {
         String roomNumber = room.getRoomNumber();
         String hiddenRoomNumber = room.getHiddenRoomNumber();
 
-        boolean rem =  roomNumber.equals(hiddenRoomNumber) ||
+        return  roomNumber.equals(hiddenRoomNumber) ||
                 placeRoomService.query4PlaceRoomNumberUnique(room.getRoomNumber());
+    }
 
-        return rem;
+    @ResponseBody
+    @RequestMapping(value = "/buildings/{distinctId}", method = RequestMethod.POST)
+    public Map<String, List<PlaceBuilding>> teachers(@PathVariable("distinctId") String distinctId) {
+        Map<String, List<PlaceBuilding>> map = new HashMap<>();
+        map.put("buildings", placeRoomService.queryBuildingsByDistinctId(distinctId));
+
+        return map;
     }
 }
