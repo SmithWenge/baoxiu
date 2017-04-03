@@ -84,5 +84,4 @@ public class PlaceBuildingServiceImpl implements PlaceBuildingServiceI {
         return update;
     }
 
-
 }

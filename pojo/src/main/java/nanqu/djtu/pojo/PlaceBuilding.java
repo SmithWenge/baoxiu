@@ -7,6 +7,26 @@ public class PlaceBuilding {
     private String setId;
     private String hiddenBuildingNumber;
 
+    public String getDistinctNumber() {
+        return distinctNumber;
+    }
+
+    public void setDistinctNumber(String distinctNumber) {
+        this.distinctNumber = distinctNumber;
+    }
+
+    private String distinctNumber;
+
+    public String getDistinctName() {
+        return distinctName;
+    }
+
+    public void setDistinctName(String distinctName) {
+        this.distinctName = distinctName;
+    }
+
+    private String distinctName;
+
     public String getHiddenBuildingNumber() {
         return hiddenBuildingNumber;
     }
