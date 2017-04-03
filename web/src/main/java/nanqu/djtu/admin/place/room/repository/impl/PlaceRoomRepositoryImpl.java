@@ -240,8 +240,8 @@ public class PlaceRoomRepositoryImpl implements PlaceRoomRepositoryI{
         public PlaceDistinct mapRow(ResultSet resultSet, int i) throws SQLException {
             PlaceDistinct distinct = new PlaceDistinct();
 
-            distinct.setDistinctId("distinctId");
-            distinct.setDistinctName("distinctName");
+            distinct.setDistinctId(resultSet.getString("distinctId"));
+            distinct.setDistinctName(resultSet.getString("distinctName"));
 
             return distinct;
         }
