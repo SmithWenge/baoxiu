@@ -108,7 +108,7 @@ public class PlaceDistinctRepositoryImpl implements PlaceDistinctRepositoryI {
      * @return 校区信息对象
      */
     @Override
-    public PlaceDistinct select4Edit(String distinctId) {
+     public PlaceDistinct select4Edit(String distinctId) {
         String sql = "SELECT distinctId, distinctName, distinctNumber FROM baoxiu_placedistinct WHERE distinctId = ? AND deleteFlag = 0";
         Object[] args = {
                 distinctId
