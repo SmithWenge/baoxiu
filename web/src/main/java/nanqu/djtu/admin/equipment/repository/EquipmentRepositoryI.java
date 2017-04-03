@@ -108,4 +108,28 @@ public interface EquipmentRepositoryI {
      * @return 如果存在返回对象, else null
      */
     Equipment select4Edit(String equipmentId);
+
+    /**
+     * 更新设备对象
+     *
+     * @param equipment 更改后的设备对象
+     * @return 如果保存成功返回true, else false
+     */
+    boolean updateEquipment(Equipment equipment);
+
+    /**
+     * 删除原来的设备的关联的设备组
+     *
+     * @param equipmentId 设备Id
+     * @return 删除成功返回true, else false
+     */
+    boolean deleteEquipmentSetTable(String equipmentId);
+
+    /**
+     * 删除设备
+     *
+     * @param equipmentId 设备Id
+     * @return 删除成功返回true, else false
+     */
+    boolean deleteEquipment(String equipmentId);
 }

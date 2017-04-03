@@ -4,7 +4,6 @@ import com.google.common.base.Strings;
 import nanqu.djtu.admin.equipment.repository.EquipmentRepositoryI;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.util.RepositoryUtils;
-import nanqu.djtu.utils.PrimaryKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -436,6 +435,75 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
             equipment.setSetId(rs.getString("setId"));
 
             return equipment;
+        }
+    }
+
+    /**
+     * 更新设备对象
+     *
+     * @param equipment 更改后的设备对象
+     * @return 如果保存成功返回true, else false
+     */
+    @Override
+    public boolean updateEquipment(Equipment equipment) {
+        String sql = "UPDATE baoxiu_equipment SET equipmentName = ?, repairGroupId = ?, equipmentNumber = ? WHERE equipmentId = ? AND deleteFlag = 0";
+        Object[] args = {
+                equipment.getEquipmentName(),
+                equipment.getRepairGroupId(),
+                equipment.getEquipmentNumber(),
+                equipment.getEquipmentId()
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[Equipment] update equipment {} error with info {}.", equipment.getEquipmentId(), e.getMessage());
+
+            return false;
+        }
+    }
+
+    /**
+     * 删除原来的设备的关联的设备组
+     *
+     * @param equipmentId 设备Id
+     * @return 删除成功返回true, else false
+     */
+    @Override
+    public boolean deleteEquipmentSetTable(String equipmentId) {
+        String sql = "DELETE FROM baoxiu_equipmentset WHERE equipmentId = ?";
+        Object[] args = {
+                equipmentId
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) >= 1;
+        } catch (Exception e) {
+            LOG.error("[Equipment] delete equipment set {} error with info {}.", equipmentId, e.getMessage());
+
+            return false;
+        }
+    }
+
+    /**
+     * 删除设备
+     *
+     * @param equipmentId 设备Id
+     * @return 删除成功返回true, else false
+     */
+    @Override
+    public boolean deleteEquipment(String equipmentId) {
+        String sql = "UPDATE baoxiu_equipment SET deleteFlag = 1 WHERE equipmentId = ?";
+        Object[] args = {
+                equipmentId
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[Equipment] delete equipment {} error with info {}.", equipmentId, e.getMessage());
+
+            return false;
         }
     }
 }
