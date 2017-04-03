@@ -15,6 +15,26 @@ public class Equipment {
     private List<EquipmentSet> sets;  // 设备组
     private String setId;  // 设备组Id
 
+    private String buildingId;  // 地点Id
+    private String roomId;  // 位置Id
+
+    public void setBuildingId(String buildingId) {
+        this.buildingId = buildingId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
+
+    public String getBuildingId() {
+
+        return buildingId;
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
     public void setHiddenEquipmentNumber(String hiddenEquipmentNumber) {
         this.hiddenEquipmentNumber = hiddenEquipmentNumber;
     }

@@ -7,9 +7,7 @@ import nanqu.djtu.pojo.PlaceDistinct;
 
 import java.util.List;
 
-/**
- * Created by Administrator on 2017/4/2.
- */
+
 public interface PlaceBuildingServiceI {
 
     List<PlaceBuilding> query4List();
@@ -27,4 +25,6 @@ public interface PlaceBuildingServiceI {
     PlaceBuilding query4Edit(String buildingId);
 
     boolean updatePlaceBuilding(PlaceBuilding placeBuilding, AdminUser user);
+
+
 }

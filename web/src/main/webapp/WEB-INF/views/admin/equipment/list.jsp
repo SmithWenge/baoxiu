@@ -6,7 +6,7 @@
 <div class="layui-body body">
     <fieldset class="layui-elem-field layui-field-title">
         <legend>设备管理</legend>
-        <form action="${contextPath}/admin/equipment/add/do.action" method="post" class="layui-form" id="equipmentQueryForm">
+        <div class="layui-form" id="equipmentQueryForm">
             <div class="layui-form-item elementAddAndQueryDiv">
                 <div class="layui-input-inline">
                     <select name="distinctId" id="distinctId" lay-filter="distinctId">
@@ -19,16 +19,13 @@
                     </select>
                 </div>
                 <div class="layui-input-inline">
-                    <select name="quiz3">
-                        <option value="">请选择县/区</option>
-                        <option value="西湖区">西湖区</option>
-                        <option value="余杭区">余杭区</option>
-                        <option value="拱墅区">临安市</option>
+                    <select name="roomId" id="roomId" lay-filter="roomId">
+                        <option value="">请选择位置</option>
                     </select>
                 </div>
                 <div class="layui-input-inline">
                     <div class="layui-input-block queryDivBtn">
-                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="demo1">查询</button>
+                        <button class="layui-btn layui-btn-normal" id="queryEquipmentBtn">查询</button>
                     </div>
                 </div>
                 <div class="layui-input-inline addBtnFloatRight">
@@ -39,7 +36,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
         <div class="layui-field-box">
             <table class="layui-table">
                 <thead>
@@ -70,6 +67,41 @@
         $("#two").attr("class", "layui-nav-item layui-nav-itemed");
         $("#equipment").attr("class", "layui-this");
 
+        var condition = {
+            "roomId": '',
+            "buildingId": ''
+        };
+
+        // 查询数据分页显示
+        $("#queryEquipmentBtn").click(function () {
+            loadPageData();
+        });
+
+        // 加载位置信息
+        function loadRoomData(result) {
+            var $ = layui.jquery;
+            var $form = $('#equipmentQueryForm');
+            var form = layui.form();
+
+            var rooms = result.rooms;
+            var optionsValue = '<option value="-100">请选择位置</option>';
+
+            for (var i = 0; i < rooms.length; i++) {
+                optionsValue += '<option value="' + rooms[i].roomId + '">' + rooms[i].roomName + '</option>';
+            }
+
+            $form.find('select[id=roomId]').empty();
+            $form.find('select[id=roomId]').append(optionsValue);
+            form.render();
+
+            form.on('select(roomId)', function(data) {
+                // 位置条件
+                console.log(data);
+                condition.roomId = data.value;
+                console.log(condition);
+            });
+        }
+
         // 加载地点数据
         function loadBuildingData(result) {
             var $ = layui.jquery;
@@ -77,14 +109,36 @@
             var form = layui.form();
 
             var buildings = result.buildings;
+            var optionsValue = '<option value="-100">请选择地点</option>';
 
-            var optionsValue = '';
             for (var i = 0; i < buildings.length; i++) {
                 optionsValue += '<option value="' + buildings[i].buildingId + '">' + buildings[i].buildingName + '</option>';
             }
 
+            $form.find('select[id=buildingId]').empty();
+
             $form.find('select[id=buildingId]').append(optionsValue);
             form.render();
+
+            form.on('select(buildingId)', function(data) {
+                var postData = {
+                    "buildingId": data.value
+                };
+
+                // 地点条件
+                condition.buildingId = data.value;
+
+                $.ajax({
+                    type: 'post',
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    url: '${contextPath}/admin/equipment/building/rooms.action',
+                    data: postData,
+                    success: function (result) {
+                        loadRoomData(result);
+                    }
+                });
+            });
         }
 
         // 加载校区数据
@@ -95,11 +149,12 @@
 
             var distincts = result.distincts;
 
-            var optionsValue = '';
+            var optionsValue = '<option>请选择地点</option>';
             for (var i = 0; i < distincts.length; i++) {
                 optionsValue += '<option value="' + distincts[i].distinctId + '">' + distincts[i].distinctName + '</option>';
             }
 
+            $form.find('select[id=distinctId]').empty();
             $form.find('select[id=distinctId]').append(optionsValue);
             form.render();
 
@@ -115,7 +170,6 @@
                     url: '${contextPath}/admin/equipment/distinct/buildings.action',
                     data: postData,
                     success: function (result) {
-                        // 配置校区查询
                         loadBuildingData(result);
                     }
                 });
@@ -139,7 +193,11 @@
         function jumpPage(curr) {
             if (curr <= 0) curr = 1;
 
-            var pageData = { "page": curr - 1 };
+            var pageData = {
+                "page": curr - 1,
+                "buildingId": condition.buildingId,
+                "roomId": condition.roomId
+            };
             $.ajax({
                 type: 'post',
                 contentType: 'application/x-www-form-urlencoded',
@@ -148,9 +206,7 @@
                 data: pageData,
                 success: function (result) {
                     $("#pageTableBody").empty();
-                    console.log(result);
 
-                    // 配置校区查询
                     loadDistinctData(result);
 
                     $.each(result.page.content, function (i, item) {
@@ -166,7 +222,11 @@
 
         // 初始化页面加载数据
         function loadPageData() {
-            var pageData = { "page": 0 };
+            var pageData = {
+                "page": 0,
+                "buildingId": condition.buildingId,
+                "roomId": condition.roomId
+            };
             $.ajax({
                 type: 'post',
                 contentType: 'application/x-www-form-urlencoded',

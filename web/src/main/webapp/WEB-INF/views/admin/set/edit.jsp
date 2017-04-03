@@ -13,7 +13,7 @@
         </legend>
         <div style="width: 30%; margin-top: 15px; ">
             <form action="${contextPath}/admin/set/edit/do.action" method="post" class="layui-form">
-                <input type="hidden" value="${}">
+
                 <div class="layui-form-item">
                     <label class="layui-form-label">设备组名</label>
                     <div class="layui-input-block">
