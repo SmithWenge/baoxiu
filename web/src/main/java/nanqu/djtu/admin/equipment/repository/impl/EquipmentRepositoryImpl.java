@@ -2,8 +2,7 @@ package nanqu.djtu.admin.equipment.repository.impl;
 
 import com.google.common.base.Strings;
 import nanqu.djtu.admin.equipment.repository.EquipmentRepositoryI;
-import nanqu.djtu.pojo.Equipment;
-import nanqu.djtu.pojo.PlaceDistinct;
+import nanqu.djtu.pojo.*;
 import nanqu.djtu.util.RepositoryUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,6 +102,116 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
             distinct.setDistinctName(rs.getString("distinctName"));
 
             return distinct;
+        }
+    }
+
+    /**
+     * 查询这个校区下的地点
+     *
+     * @param distinctId 校区Id
+     * @return 校区的所有地点
+     */
+    @Override
+    public List<PlaceBuilding> selectBuildingWithDistinctId(String distinctId) {
+        String sql = "SELECT buildingId, buildingName FROM baoxiu_placebuilding WHERE distinctId = ? AND deleteFlag = 0";
+        Object[] args = {
+                distinctId
+        };
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectBuildingWithDistinctIdRowMapper());
+        } catch (Exception e) {
+            LOG.error("[Equipment] select distinct {}'s buildings error with info {}.", distinctId, e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
+    private class SelectBuildingWithDistinctIdRowMapper implements RowMapper<PlaceBuilding> {
+
+        @Override
+        public PlaceBuilding mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            PlaceBuilding building = new PlaceBuilding();
+
+            building.setBuildingId(rs.getString("buildingId"));
+            building.setBuildingName(rs.getString("buildingName"));
+
+            return building;
+        }
+    }
+
+    /**
+     * 查询这个地点下的所有位置
+     *
+     * @param buildingId 地点Id
+     * @return 这个地点下位置数据
+     */
+    @Override
+    public List<PlaceRoom> selectRoomWithBuildingId(String buildingId) {
+        String sql = "SELECT roomId, roomName FROM baoxiu_placeroom WHERE buildingId = ? AND deleteFlag = 0";
+        Object[] args = {
+                buildingId
+        };
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectRoomWithBuildingIdRowMapper());
+        } catch (Exception e) {
+            LOG.error("[Equipment] select building {}'s rooms error with info {}.", buildingId, e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
+    private class SelectRoomWithBuildingIdRowMapper implements RowMapper<PlaceRoom> {
+
+        @Override
+        public PlaceRoom mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            PlaceRoom room = new PlaceRoom();
+
+            room.setRoomId(rs.getString("roomId"));
+            room.setRoomName(rs.getString("roomName"));
+
+            return room;
+        }
+    }
+
+    /**
+     * 查询这个位置下的所有设备组
+     *
+     * @param roomId 位置Id
+     * @return 这个位置下设备组数据
+     */
+    @Override
+    public List<EquipmentSet> selectSetsWithRoomId(String roomId) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT setId, setName FROM baoxiu_set WHERE setId = (SELECT setId FROM baoxiu_placeroom WHERE");
+        builder.append(" roomId = ? AND deleteFlag = 0) AND deleteFlag = 0");
+        Object[] args = {
+                roomId
+        };
+
+        try {
+            return jdbcTemplate.query(builder.toString(), args, new SelectSetsWithRoomIdRowMapper());
+        } catch (Exception e) {
+            LOG.error("[Equipment] select room {}'s sets error with info {}.", roomId, e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
+    private class SelectSetsWithRoomIdRowMapper implements RowMapper<EquipmentSet> {
+
+        @Override
+        public EquipmentSet mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            EquipmentSet set = new EquipmentSet();
+
+            set.setSetId(rs.getString("setId"));
+            set.setSetName(rs.getString("setName"));
+
+            return set;
         }
     }
 }
