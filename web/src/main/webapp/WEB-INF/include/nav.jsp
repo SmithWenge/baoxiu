@@ -42,7 +42,7 @@
                     <a href="javascript:;"><i class="layui-icon">&#xe641;</i> 设备管理</a>
                     <dl class="layui-nav-child">
                         <dd id="set"><a href="${contextPath}/admin/set/index.action"><i class="layui-icon">&#xe602;</i> 设备组管理</a></dd>
-                        <dd><a href="${contextPath}/admin/equipment/route/page.action"><i class="layui-icon">&#xe602;</i> 设备管理</a></dd>
+                        <dd id="equipment"><a href="${contextPath}/admin/equipment/index.action"><i class="layui-icon">&#xe602;</i> 设备管理</a></dd>
                         <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目三</a></dd>
                     </dl>
                 </li>

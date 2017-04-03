@@ -8,7 +8,7 @@
         <legend>
             <span class="layui-breadcrumb">
               <a href="${contextPath}/admin/place/distinct/list.action">校区管理</a>
-              <a><cite>校区添加</cite></a>
+              <a><cite>校区修改</cite></a>
             </span>
         </legend>
         <div style="width: 30%; margin-top: 15px; ">
