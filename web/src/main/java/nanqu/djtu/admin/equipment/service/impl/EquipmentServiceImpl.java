@@ -2,9 +2,7 @@ package nanqu.djtu.admin.equipment.service.impl;
 
 import nanqu.djtu.admin.equipment.repository.EquipmentRepositoryI;
 import nanqu.djtu.admin.equipment.service.EquipmentServiceI;
-import nanqu.djtu.pojo.Equipment;
-import nanqu.djtu.pojo.PlaceBuilding;
-import nanqu.djtu.pojo.PlaceDistinct;
+import nanqu.djtu.pojo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +32,15 @@ public class EquipmentServiceImpl implements EquipmentServiceI {
     @Override
     public List<PlaceBuilding> queryBuildingWithDistinctId(String distinctId) {
         return equipmentRepository.selectBuildingWithDistinctId(distinctId);
+    }
+
+    @Override
+    public List<PlaceRoom> queryRoomWithBuildingId(String buildingId) {
+        return equipmentRepository.selectRoomWithBuildingId(buildingId);
+    }
+
+    @Override
+    public List<EquipmentSet> querySetsWithRoomId(String roomId) {
+        return equipmentRepository.selectSetsWithRoomId(roomId);
     }
 }

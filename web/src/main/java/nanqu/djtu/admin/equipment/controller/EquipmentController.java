@@ -1,9 +1,7 @@
 package nanqu.djtu.admin.equipment.controller;
 
 import nanqu.djtu.admin.equipment.service.EquipmentServiceI;
-import nanqu.djtu.pojo.Equipment;
-import nanqu.djtu.pojo.PlaceBuilding;
-import nanqu.djtu.pojo.PlaceDistinct;
+import nanqu.djtu.pojo.*;
 import nanqu.djtu.utils.ConstantFields;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +20,16 @@ import java.util.Map;
 public class EquipmentController {
     @Autowired
     private EquipmentServiceI equipmentService;
+
+    /**
+     * 设备页面首页
+     *
+     * @return 设备页面地址
+     */
+    @RequestMapping("/index")
+    public String index() {
+        return "admin/equipment/list";
+    }
 
     /**
      * 分页查询设备
@@ -61,6 +69,42 @@ public class EquipmentController {
         List<PlaceBuilding> buildings = equipmentService.queryBuildingWithDistinctId(distinct.getDistinctId());
 
         mapData.put("buildings", buildings);
+
+        return mapData;
+    }
+
+    /**
+     * 地点查询位置的二级联动
+     *
+     * @param building 地点对象
+     * @return 这个地点下位置的List
+     */
+    @ResponseBody
+    @RequestMapping("/building/rooms")
+    public Map<String, List<PlaceRoom>> listRoomWithBuildingId(PlaceBuilding building) {
+        Map<String, List<PlaceRoom>> mapData = new HashMap<>();
+
+        List<PlaceRoom> rooms = equipmentService.queryRoomWithBuildingId(building.getBuildingId());
+
+        mapData.put("rooms", rooms);
+
+        return mapData;
+    }
+
+    /**
+     * 位置查询设备组的二级联动
+     *
+     * @param placeRoom 位置对象
+     * @return 这个位置下设备组的List
+     */
+    @ResponseBody
+    @RequestMapping("/room/sets")
+    public Map<String, List<EquipmentSet>> listRoomEquipmentSets(PlaceRoom placeRoom) {
+        Map<String, List<EquipmentSet>> mapData = new HashMap<>();
+
+        List<EquipmentSet> sets = equipmentService.querySetsWithRoomId(placeRoom.getRoomId());
+
+        mapData.put("sets", sets);
 
         return mapData;
     }

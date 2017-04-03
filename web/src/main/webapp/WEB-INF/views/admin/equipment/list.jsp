@@ -5,8 +5,8 @@
 <!-- 内容主体 -->
 <div class="layui-body body">
     <fieldset class="layui-elem-field layui-field-title">
-        <legend>设备组管理</legend>
-        <a href="${contextPath}/admin/set/add/route.action">
+        <legend>设备管理</legend>
+        <a href="${contextPath}/admin/equipment/add/route.action">
             <button class="layui-btn layui-btn-normal elementAddBtn" id="addPlaceDistinct">添加</button>
         </a>
         <div class="layui-field-box">
@@ -14,7 +14,10 @@
                 <thead>
                 <tr>
                     <td>序号</td>
-                    <td>设备组名</td>
+                    <td>设备名</td>
+                    <td>设备编号</td>
+                    <td>维修小组</td>
+                    <td>小组编号</td>
                     <td>操作</td>
                 </tr>
                 </thead>
@@ -37,11 +40,11 @@
         $("#set").attr("class", "layui-this");
 
         // 拼接操作字符转
-        function createOpsBtnGroup(setId) {
+        function createOpsBtnGroup(equipmentId) {
             return '<div class="layui-btn-group">' +
-                    '<a href="${contextPath}/admin/set/edit/route/' + setId +'.action">' +
+                    '<a href="${contextPath}/admin/equipment/edit/route/' + equipmentId +'.action">' +
                     '<button class="layui-btn layui-btn-small layui-btn-warm"><i class="layui-icon">&#xe642;</i>' +
-                    '</button> </a><a href="${contextPath}/admin/set/delete/' + setId + '.action">' +
+                    '</button> </a><a href="${contextPath}/admin/equipment/delete/' + equipmentId + '.action">' +
                     '<button class="layui-btn layui-btn-small layui-btn-danger"><i class="layui-icon">&#xe640;</i></button>' +
                     '</a></div>'
         }
@@ -57,13 +60,14 @@
                 type: 'post',
                 contentType: 'application/x-www-form-urlencoded',
                 dataType: 'json',
-                url: '${contextPath}/admin/set/route/page.action',
+                url: '${contextPath}/admin/equipment/route/page.action',
                 data: pageData,
                 success: function (result) {
                     $("#pageTableBody").empty();
 
                     $.each(result.page.content, function (i, item) {
-                        var trData = "<tr><td>" + (i + 1) + "</td><td>" + item.setName + "</td><td>" + createOpsBtnGroup(item.setId) + "</td></tr>";
+                        var trData = "<tr><td>" + (i + 1) + "</td><td>" + item.equipmentName + "</td><td>" + createOpsBtnGroup(item.equipmentId) + "</td>";
+                        trData += "<td>" + item.equipmentName + "</td><td>" + item.repairGroupName + "</td><td>" + item.repairGroupNumber + "</td></tr>";
                         $("#pageTableBody").append(trData);
                     });
 
@@ -79,7 +83,7 @@
                 type: 'post',
                 contentType: 'application/x-www-form-urlencoded',
                 dataType: 'json',
-                url: '${contextPath}/admin/set/route/page.action',
+                url: '${contextPath}/admin/equipment/route/page.action',
                 data: pageData,
                 success: function (result) {
                     laypage({
