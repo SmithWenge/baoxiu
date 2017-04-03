@@ -3,6 +3,7 @@ package nanqu.djtu.admin.equipment.service.impl;
 import nanqu.djtu.admin.equipment.repository.EquipmentRepositoryI;
 import nanqu.djtu.admin.equipment.service.EquipmentServiceI;
 import nanqu.djtu.pojo.Equipment;
+import nanqu.djtu.pojo.PlaceBuilding;
 import nanqu.djtu.pojo.PlaceDistinct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,5 +29,10 @@ public class EquipmentServiceImpl implements EquipmentServiceI {
     @Override
     public List<PlaceDistinct> queryAllPlaceDistincts() {
         return equipmentRepository.selectAllPlaceDistincts();
+    }
+
+    @Override
+    public List<PlaceBuilding> queryBuildingWithDistinctId(String distinctId) {
+        return equipmentRepository.selectBuildingWithDistinctId(distinctId);
     }
 }

@@ -3,6 +3,7 @@ package nanqu.djtu.admin.equipment.repository.impl;
 import com.google.common.base.Strings;
 import nanqu.djtu.admin.equipment.repository.EquipmentRepositoryI;
 import nanqu.djtu.pojo.Equipment;
+import nanqu.djtu.pojo.PlaceBuilding;
 import nanqu.djtu.pojo.PlaceDistinct;
 import nanqu.djtu.util.RepositoryUtils;
 import org.slf4j.Logger;
@@ -103,6 +104,42 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
             distinct.setDistinctName(rs.getString("distinctName"));
 
             return distinct;
+        }
+    }
+
+    /**
+     * 查询这个校区下的地点
+     *
+     * @param distinctId 校区Id
+     * @return 校区的所有地点
+     */
+    @Override
+    public List<PlaceBuilding> selectBuildingWithDistinctId(String distinctId) {
+        String sql = "SELECT buildingId, buildingName FROM baoxiu_placebuilding WHERE distinctId = ? AND deleteFlag = 0";
+        Object[] args = {
+                distinctId
+        };
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectBuildingWithDistinctIdRowMapper());
+        } catch (Exception e) {
+            LOG.error("[Equipment] select distinct {}'s buildings error with info {}.", distinctId, e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
+    private class SelectBuildingWithDistinctIdRowMapper implements RowMapper<PlaceBuilding> {
+
+        @Override
+        public PlaceBuilding mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            PlaceBuilding building = new PlaceBuilding();
+
+            building.setBuildingId(rs.getString("buildingId"));
+            building.setBuildingName(rs.getString("buildingName"));
+
+            return building;
         }
     }
 }
