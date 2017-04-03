@@ -1,5 +1,6 @@
 package nanqu.djtu.admin.place.room.repository;
 
+import nanqu.djtu.pojo.PlaceBuilding;
 import nanqu.djtu.pojo.PlaceDistinct;
 import nanqu.djtu.pojo.PlaceRoom;
 import org.springframework.data.domain.Page;
@@ -59,7 +60,7 @@ public interface PlaceRoomRepositoryI {
      * 查询地点
      * @return
      */
-    List<PlaceRoom> selectBuildings();
+    List<PlaceBuilding> selectBuildingsByDistinctId(String DistinctId);
 
     /**
      * 查询校区
