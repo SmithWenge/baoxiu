@@ -6,9 +6,32 @@
 <div class="layui-body body">
     <fieldset class="layui-elem-field layui-field-title">
         <legend>位置管理</legend>
-        <a href="${contextPath}/admin/place/room/add/route.action">
-            <button class="layui-btn layui-btn-normal elementAddBtn" id="addPlaceDistinct">添加</button>
-        </a>
+        <div class="layui-form" id="roomQueryForm">
+            <div class="layui-form-item elementAddAndQueryDiv">
+                <div class="layui-input-inline">
+                    <select name="distinctId" id="distinctId" lay-filter="distinctId">
+                        <option value="">请选择校区</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <select name="buildingId" id="buildingId" lay-filter="buildingId">
+                        <option value="">请选择地点</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <div class="layui-input-block queryDivBtn">
+                        <button class="layui-btn layui-btn-normal" id="queryRoomBtn">查询</button>
+                    </div>
+                </div>
+                <div class="layui-input-inline addBtnFloatRight">
+                    <div class="layui-input-block">
+                        <a href="${contextPath}/admin/place/room/add/route.action">
+                            <button class="layui-btn layui-btn-normal" id="addPlaceRoom">添加</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="layui-field-box">
             <table class="layui-table">
                 <thead>
@@ -39,6 +62,79 @@
         $("#first").attr("class", "layui-nav-item layui-nav-itemed");
         $("#placeRoom").attr("class", "layui-this");
 
+        var condition = {
+            "distinctId": '',
+            "buildingId": ''
+        };
+
+        // 查询数据分页显示
+        $("#queryRoomBtn").click(function () {
+            loadPageData();
+        });
+
+        // 加载地点数据
+        function loadBuildingData(result) {
+            var $ = layui.jquery;
+            var $form = $('#roomQueryForm');
+            var form = layui.form();
+
+            var buildings = result.buildings;
+            var optionsValue = '<option value="">请选择地点</option>';
+
+            for (var i = 0; i < buildings.length; i++) {
+                optionsValue += '<option value="' + buildings[i].buildingId + '">' + buildings[i].buildingName + '</option>';
+            }
+
+            $form.find('select[id=buildingId]').empty();
+
+            $form.find('select[id=buildingId]').append(optionsValue);
+            form.render();
+
+            form.on('select(buildingId)', function(data) {
+
+                // 地点条件
+                condition.buildingId = data.value;
+            });
+        }
+
+        // 加载校区数据
+        function loadDistinctData(result) {
+            var $ = layui.jquery;
+            var $form = $('#roomQueryForm');
+            var form = layui.form();
+
+            var distincts = result.distincts;
+
+            var optionsValue = '<option value="">请选择校区</option>';
+            for (var i = 0; i < distincts.length; i++) {
+                optionsValue += '<option value="' + distincts[i].distinctId + '">' + distincts[i].distinctName + '</option>';
+            }
+
+            $form.find('select[id=distinctId]').empty();
+            $form.find('select[id=distinctId]').append(optionsValue);
+            form.render();
+
+            form.on('select(distinctId)', function(data) {
+                var postData = {
+                    "distinctId": data.value
+                };
+
+                // 校区条件
+                condition.distinctId = data.value;
+
+                $.ajax({
+                    type: 'post',
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    url: '${contextPath}/admin/place/room/buildings.action',
+                    data: postData,
+                    success: function (result) {
+                        loadBuildingData(result);
+                    }
+                });
+            });
+        }
+
         // 拼接操作字符转
         function createOpsBtnGroup(roomId) {
             return '<div class="layui-btn-group">' +
@@ -55,7 +151,11 @@
         function jumpPage(curr) {
             if (curr <= 0) curr = 1;
 
-            var pageData = { "page": curr - 1 };
+            var pageData = {
+                "page": curr - 1,
+                "buildingId": condition.buildingId,
+                "distinctId": condition.distinctId
+            };
             $.ajax({
                 type: 'post',
                 contentType: 'application/x-www-form-urlencoded',
@@ -64,6 +164,8 @@
                 data: pageData,
                 success: function (result) {
                     $("#pageTableBody").empty();
+
+                    loadDistinctData(result);
 
                     $.each(result.page.content, function (i, item) {
                         var trData = "<tr><td>" + (i + 1) + "</td><td>" + item.roomNumber + "</td><td>" + item.roomName + "</td><td>" + item.distinctName + "</td><td>" + item.buildingName + "</td><td>" + createOpsBtnGroup(item.roomId) + "</td>";
@@ -77,7 +179,11 @@
 
         // 初始化页面加载数据
         function loadPageData() {
-            var pageData = { "page": 0 };
+            var pageData = {
+                "page": 0,
+                "buildingId": condition.buildingId,
+                "distinctId": condition.distinctId
+            };
             $.ajax({
                 type: 'post',
                 contentType: 'application/x-www-form-urlencoded',

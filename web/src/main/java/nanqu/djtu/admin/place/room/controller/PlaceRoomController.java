@@ -2,10 +2,7 @@ package nanqu.djtu.admin.place.room.controller;
 
 import com.google.common.base.Optional;
 import nanqu.djtu.admin.place.room.service.PlaceRoomServiceI;
-import nanqu.djtu.pojo.AdminUser;
-import nanqu.djtu.pojo.PlaceBuilding;
-import nanqu.djtu.pojo.PlaceDistinct;
-import nanqu.djtu.pojo.PlaceRoom;
+import nanqu.djtu.pojo.*;
 import nanqu.djtu.utils.ConstantFields;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,62 +49,17 @@ public class PlaceRoomController {
      */
     @ResponseBody
     @RequestMapping("/route/page")
-    public Map<String, Page<PlaceRoom>> listFirstPage(PlaceRoom room,@PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable, HttpSession session) {
-        session.removeAttribute(ConstantFields.SESSION_ROOM_SEARCH_KEY);
+    public Map<String, Object> listFirstPage(PlaceRoom room,@PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable) {
 
-        Map<String, Page<PlaceRoom>> mapData = new HashMap<>();
-
-        Page<PlaceRoom> page = placeRoomService.query4Page(room, pageable);
-
-        mapData.put(ConstantFields.PAGE_KEY, page);
-
-        return mapData;
-    }
-
-    /**
-     * 查询位置信息列表(分页)
-     *
-     * @return 位置信息列表的页面地址和数据
-     */
-    @ResponseBody
-    @RequestMapping("/page")
-    public Map<String, Page<PlaceRoom>> listPage(PlaceRoom room,@PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable, HttpSession session) {
-        PlaceRoom searchObj = (PlaceRoom)session.getAttribute(ConstantFields.SESSION_ROOM_SEARCH_KEY);
-
-        Map<String, Page<PlaceRoom>> mapData = new HashMap<>();
-
-        Optional<PlaceRoom> optional = Optional.fromNullable(searchObj);
-        if (optional.isPresent()) {
-            room = searchObj;
-        }
+        Map<String, Object> mapData = new HashMap<>();
 
         Page<PlaceRoom> page = placeRoomService.query4Page(room, pageable);
-
         mapData.put(ConstantFields.PAGE_KEY, page);
 
-        return mapData;
-    }
+        mapData.put("condition",room);
 
-    /**
-     * 条件查询位置信息列表
-     *
-     * @return 位置信息列表的页面地址和数据
-     */
-    @ResponseBody
-    @RequestMapping("/pageSearch")
-    public Map<String, Page<PlaceRoom>> searchPage(PlaceRoom room,@PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable, HttpSession session) {
-        PlaceRoom searchObj = (PlaceRoom)session.getAttribute(ConstantFields.SESSION_ROOM_SEARCH_KEY);
-
-        Map<String, Page<PlaceRoom>> mapData = new HashMap<>();
-
-        Optional<PlaceRoom> optional = Optional.fromNullable(searchObj);
-        if (optional.isPresent()) {
-            session.setAttribute(ConstantFields.SESSION_ROOM_SEARCH_KEY, room);
-        }
-
-        Page<PlaceRoom> page = placeRoomService.query4Page(room, pageable);
-
-        mapData.put(ConstantFields.PAGE_KEY, page);
+        List<PlaceDistinct> distincts = placeRoomService.queryDistincts();
+        mapData.put("distincts", distincts);
 
         return mapData;
     }
@@ -121,8 +73,10 @@ public class PlaceRoomController {
     public ModelAndView routeAdd() {
         ModelAndView mav = new ModelAndView("admin/place/room/add");
 
+        List<EquipmentSet> sets = placeRoomService.querySets();
         List<PlaceDistinct> distincts = placeRoomService.queryDistincts();
         mav.addObject("distincts", distincts);
+        mav.addObject("sets", sets);
 
         return mav;
     }
@@ -143,7 +97,7 @@ public class PlaceRoomController {
         if (save) {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
 
-            return "redirect:/admin/place/room/list.action";
+            return "redirect:/admin/place/room/index.action";
         } else {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
 
@@ -167,11 +121,11 @@ public class PlaceRoomController {
         if (delete) {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
 
-            return "redirect:/admin/place/room/list.action";
+            return "redirect:/admin/place/room/index.action";
         } else {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
 
-            return "redirect:/admin/place/room/list.action";
+            return "redirect:/admin/place/room/index.action";
         }
     }
 
@@ -188,7 +142,11 @@ public class PlaceRoomController {
         if (Optional.fromNullable(room).isPresent()) {
             ModelAndView mav = new ModelAndView("admin/place/room/edit");
 
+            List<PlaceBuilding> buildings = placeRoomService.queryBuildings4Edit();
+            List<EquipmentSet> sets = placeRoomService.querySets();
             mav.addObject("room", room);
+            mav.addObject("buildings", buildings);
+            mav.addObject("sets", sets);
 
             return mav;
         } else {
@@ -212,7 +170,7 @@ public class PlaceRoomController {
         if (update) {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
 
-            return "redirect:/admin/place/room/list.action";
+            return "redirect:/admin/place/room/index.action";
         } else {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
 
@@ -232,15 +190,20 @@ public class PlaceRoomController {
         String roomNumber = room.getRoomNumber();
         String hiddenRoomNumber = room.getHiddenRoomNumber();
 
-        return  roomNumber.equals(hiddenRoomNumber) ||
+        return  roomNumber.equalsIgnoreCase(hiddenRoomNumber) ||
                 placeRoomService.query4PlaceRoomNumberUnique(room.getRoomNumber());
     }
 
+    /**
+     * 二级联动根据校区查询地点
+     * @param placeDistinct
+     * @return
+     */
     @ResponseBody
-    @RequestMapping(value = "/buildings/{distinctId}", method = RequestMethod.POST)
-    public Map<String, List<PlaceBuilding>> teachers(@PathVariable("distinctId") String distinctId) {
+    @RequestMapping(value = "/buildings", method = RequestMethod.POST)
+    public Map<String, List<PlaceBuilding>> buildings(PlaceDistinct placeDistinct) {
         Map<String, List<PlaceBuilding>> map = new HashMap<>();
-        map.put("buildings", placeRoomService.queryBuildingsByDistinctId(distinctId));
+        map.put("buildings", placeRoomService.queryBuildingsByDistinctId(placeDistinct.getDistinctId()));
 
         return map;
     }

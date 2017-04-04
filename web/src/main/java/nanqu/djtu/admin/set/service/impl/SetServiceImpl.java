@@ -66,4 +66,9 @@ public class SetServiceImpl implements SetServiceI {
 
         return delete;
     }
+
+    @Override
+    public boolean query4UniqueSetNumber(String setNumber) {
+        return setRepository.select4UniqueSetNumber(setNumber);
+    }
 }

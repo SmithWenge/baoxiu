@@ -1,6 +1,7 @@
 package nanqu.djtu.admin.place.room.repository.impl;
 
 import nanqu.djtu.admin.place.room.repository.PlaceRoomRepositoryI;
+import nanqu.djtu.pojo.EquipmentSet;
 import nanqu.djtu.pojo.PlaceBuilding;
 import nanqu.djtu.pojo.PlaceDistinct;
 import nanqu.djtu.pojo.PlaceRoom;
@@ -79,7 +80,7 @@ public class PlaceRoomRepositoryImpl implements PlaceRoomRepositoryI{
      */
     @Override
     public boolean insertNewPlaceRoom(PlaceRoom room) {
-        String sql = "INSERT INTO baoxiu_placeroom (roomId, roomName, buildingId, setId, roomNumber,) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO baoxiu_placeroom (roomId, roomName, buildingId, setId, roomNumber) VALUES (?, ?, ?, ?, ?)";
         Object[] args = {
                 PrimaryKeyUtil.uuidPrimaryKey(),
                 room.getRoomName(),
@@ -244,6 +245,55 @@ public class PlaceRoomRepositoryImpl implements PlaceRoomRepositoryI{
             distinct.setDistinctName(resultSet.getString("distinctName"));
 
             return distinct;
+        }
+    }
+
+    /**
+     * 添加页面查询set
+     * @return
+     */
+    @Override
+    public List<EquipmentSet> selectSets() {
+        String sql = "SELECT setId, setName FROM baoxiu_set WHERE deleteFlag = 0";
+        Object[] args = {};
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectSetsRowMapper());
+        } catch (Exception e) {
+            LOG.error("[EquipmentSet] selectSets error with info {}.", e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
+    class SelectSetsRowMapper implements RowMapper<EquipmentSet> {
+
+        @Override
+        public EquipmentSet mapRow(ResultSet resultSet, int i) throws SQLException {
+            EquipmentSet set = new EquipmentSet();
+
+            set.setSetId(resultSet.getString("setId"));
+            set.setSetName(resultSet.getString("setName"));
+
+            return set;
+        }
+    }
+
+    /**
+     * 编辑页面查询buildings
+     * @return
+     */
+    @Override
+    public List<PlaceBuilding> selectBuildings4Edit() {
+        String sql = "SELECT buildingId, buildingName FROM baoxiu_placebuilding WHERE deleteFlag = 0";
+        Object[] args = {};
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectBuildingsRowMapper());
+        } catch (Exception e) {
+            LOG.error("[PlaceBuilding] selectBuildingsForEdit error with info {}.", e.getMessage());
+
+            return new ArrayList<>();
         }
     }
 }

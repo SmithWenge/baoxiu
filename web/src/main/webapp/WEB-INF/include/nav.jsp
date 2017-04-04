@@ -31,19 +31,16 @@
                     <a href="javascript:;"><i class="layui-icon">&#xe649;</i> 位置管理</a>
                     <dl class="layui-nav-child">
                         <dd id="placeDistinct"><a href="${contextPath}/admin/place/distinct/list.action"><i class="layui-icon">&#xe602;</i> 校区管理</a></dd>
-                        <dd><a href="${contextPath}/admin/place/building/list.action"><i class="layui-icon">&#xe602;</i> 地点管理</a></dd>
+                        <dd ><a href="${contextPath}/admin/place/building/list.action"><i class="layui-icon">&#xe602;</i> 地点管理</a></dd>
                         <dd id="placeRoom"><a href="${contextPath}/admin/place/room/index.action"><i class="layui-icon">&#xe602;</i> 位置管理</a></dd>
-                        <dd><a href="./ajax-post.html"><i class="layui-icon">&#xe602;</i> ajax-post</a></dd>
-                        <dd><a href="./data-grid.html"><i class="layui-icon">&#xe602;</i> 数据表格</a></dd>
-                        <dd><a href="./highcharts.html"><i class="layui-icon">&#xe602;</i> 图表charts</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item" id="two">
                     <a href="javascript:;"><i class="layui-icon">&#xe641;</i> 设备管理</a>
                     <dl class="layui-nav-child">
                         <dd id="set"><a href="${contextPath}/admin/set/index.action"><i class="layui-icon">&#xe602;</i> 设备组管理</a></dd>
-                        <dd><a href="${contextPath}/admin/equipment/route/page.action"><i class="layui-icon">&#xe602;</i> 设备管理</a></dd>
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目三</a></dd>
+                        <dd id="equipment"><a href="${contextPath}/admin/equipment/index.action"><i class="layui-icon">&#xe602;</i> 设备管理</a></dd>
+                        <dd id="printer"><a href="${contextPath}/admin/printer/list.action"><i class="layui-icon">&#xe602;</i> 打印机管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -56,15 +53,15 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="layui-icon">&#xe62d;</i> 导航边栏三</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目一</a></dd>
+                        <dd id="workerInfo"><a href="${contextPath}/admin/worker/info/list.action"><i class="layui-icon">&#xe602;</i>工人管理</a></dd>
                         <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目二</a></dd>
                         <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目三</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="layui-icon">&#xe64a;</i> 导航边栏四</a>
+                <li class="layui-nav-item" id="five">
+                    <a href="javascript:;"><i class="layui-icon">&#xe64a;</i> 报修单</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目一</a></dd>
+                        <dd id="maintenanceList"><a href="${contextPath}/admin/maintenance/list/manage/index.action"><i class="layui-icon">&#xe602;</i> 报修单管理</a></dd>
                         <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目二</a></dd>
                         <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目三</a></dd>
                     </dl>

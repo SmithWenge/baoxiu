@@ -1,5 +1,6 @@
 package nanqu.djtu.admin.equipment.controller;
 
+import com.google.common.base.Optional;
 import nanqu.djtu.admin.equipment.service.EquipmentServiceI;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.utils.ConstantFields;
@@ -8,9 +9,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,5 +113,138 @@ public class EquipmentController {
         mapData.put("sets", sets);
 
         return mapData;
+    }
+
+    /**
+     * 路由到设备添加页面
+     *
+     * @return 设备添加页面地址
+     */
+    @RequestMapping("/add/route")
+    public ModelAndView routeAdd() {
+        List<EquipmentSet> sets = equipmentService.queryAllEquipmentSets();
+        List<RepairGroup> groups = equipmentService.queryAllRepairGroup();
+
+        ModelAndView mav = new ModelAndView("admin/equipment/add");
+
+        mav.addObject("sets", sets);
+        mav.addObject("groups", groups);
+
+        return mav;
+    }
+
+    /**
+     * 保存新的设备
+     *
+     * @param equipment 新的设备信息
+     * @param redirectAttributes 提示信息
+     * @return 如果添加
+     */
+    @RequestMapping(value = "/add/do", method = RequestMethod.POST)
+    public String addNewEquipment(Equipment equipment, RedirectAttributes redirectAttributes, HttpSession session) {
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+
+        boolean save = equipmentService.saveNewEquipment(equipment, user);
+
+        if (save) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+
+            return "redirect:/admin/equipment/index.action";
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+
+            return "redirect:/admin/equipment/add/route.action";
+        }
+    }
+
+    /**
+     * 判断设备编号的唯一
+     *
+     * @param equipment 包含设备编号的设备对象
+     * @return 如果不重复返回true, else false
+     */
+    @ResponseBody
+    @RequestMapping("/unique/equipmentNumber")
+    public boolean uniqueEquipmentNumber(Equipment equipment) {
+        String hiddenEquipmentNumber = equipment.getHiddenEquipmentNumber();
+        String equipmentNumber = equipment.getEquipmentNumber();
+
+        return equipmentNumber.equalsIgnoreCase(hiddenEquipmentNumber) ||
+                equipmentService.queryUniqueEquipmentNumber(equipment.getEquipmentNumber());
+    }
+
+    /**
+     * 路由到设备编辑页面
+     *
+     * @param equipmentId 设备Id
+     * @return 设备编辑页面地址和数据
+     */
+    @RequestMapping("/edit/route/{equipmentId}")
+    public ModelAndView routeEdit(@PathVariable String equipmentId) {
+        Equipment equipment = equipmentService.query4Edit(equipmentId);
+
+        if (Optional.fromNullable(equipment).isPresent()) {
+            ModelAndView mav = new ModelAndView("admin/equipment/edit");
+
+            mav.addObject("equipment", equipment);
+
+            List<EquipmentSet> sets = equipmentService.queryAllEquipmentSets();
+            List<RepairGroup> groups = equipmentService.queryAllRepairGroup();
+
+            mav.addObject("sets", sets);
+            mav.addObject("groups", groups);
+
+            return mav;
+        } else {
+            return new ModelAndView("redirect:/admin/equipment/index.action");
+        }
+    }
+
+    /**
+     * 保存设备的编辑
+     *
+     * @param equipment 编辑后的设备信息
+     * @param redirectAttributes 提示信息
+     * @return 编辑保存成功返回list, else edit page
+     */
+    @RequestMapping(value = "/edit/do", method = RequestMethod.POST)
+    public String saveEdit(Equipment equipment, RedirectAttributes redirectAttributes, HttpSession session) {
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+
+        boolean update = equipmentService.updateEquipment(equipment, user);
+
+        if (update) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+
+            return "redirect:/admin/equipment/index.action";
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+
+            return "redirect:/admin/equipment/edit/route/" + equipment.getEquipmentId() + ".action";
+        }
+    }
+
+    /**
+     * 删除设备数据
+     *
+     * @param equipmentId 设备Id
+     * @param redirectAttributes 提示信息
+     * @return 删除成功返回true, else false
+     */
+    @RequestMapping("/delete/{equipmentId}")
+    public String deleteEquipment(@PathVariable String equipmentId, RedirectAttributes redirectAttributes, HttpSession session) {
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+
+        boolean delete = equipmentService.deleteEquipment(equipmentId, user);
+
+        if (delete) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+
+            return "redirect:/admin/equipment/index.action";
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+
+            return "redirect:/admin/equipment/index.action";
+        }
     }
 }

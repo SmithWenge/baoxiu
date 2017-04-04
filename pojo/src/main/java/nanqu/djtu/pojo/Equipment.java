@@ -6,6 +6,7 @@ public class Equipment {
     private String equipmentId;  // 设备Id
     private String equipmentName;  // 设备名称
     private String equipmentNumber;  // 设备的唯一编号
+    private String hiddenEquipmentNumber; // 隐藏修改的编号
 
     private String repairGroupId;  // 设备维修组的Id
     private String repairGroupName;  // 维修小组名
@@ -13,6 +14,35 @@ public class Equipment {
 
     private List<EquipmentSet> sets;  // 设备组
     private String setId;  // 设备组Id
+
+    private String buildingId;  // 地点Id
+    private String roomId;  // 位置Id
+
+    public void setBuildingId(String buildingId) {
+        this.buildingId = buildingId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
+
+    public String getBuildingId() {
+
+        return buildingId;
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setHiddenEquipmentNumber(String hiddenEquipmentNumber) {
+        this.hiddenEquipmentNumber = hiddenEquipmentNumber;
+    }
+
+    public String getHiddenEquipmentNumber() {
+
+        return hiddenEquipmentNumber;
+    }
 
     public void setRepairGroupNumber(String repairGroupNumber) {
         this.repairGroupNumber = repairGroupNumber;

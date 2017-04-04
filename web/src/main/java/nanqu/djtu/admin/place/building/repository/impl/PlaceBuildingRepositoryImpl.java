@@ -32,7 +32,7 @@ public class PlaceBuildingRepositoryImpl implements PlaceBuildingRepositoryI {
      */
     @Override
     public List<PlaceBuilding> select4List() {
-        String sql ="SELECT  buildingId,buildingName,distinctId,setId,buildingNumber FROM baoxiu.baoxiu_placebuilding where deleteFlag = 0";
+        String sql ="SELECT buildingId,buildingName,baoxiu.baoxiu_placebuilding.distinctId,setId,buildingNumber,distinctName,distinctNumber FROM baoxiu.baoxiu_placebuilding join baoxiu.baoxiu_placedistinct on baoxiu.baoxiu_placebuilding.distinctId = baoxiu.baoxiu_placedistinct.distinctId where baoxiu.baoxiu_placebuilding.deleteFlag = 0";
         Object[] args ={};
         try {
             return jdbcTemplate.query(sql, args, new Select4ListRowMapper());
@@ -56,8 +56,10 @@ public class PlaceBuildingRepositoryImpl implements PlaceBuildingRepositoryI {
             placeBuilding.setBuildingId(rs.getString("buildingId"));
             placeBuilding.setBuildingName(rs.getString("buildingName"));
             placeBuilding.setSetId(rs.getString("setId"));
-            placeBuilding.setBuildingId(rs.getString("distinctId"));
+            placeBuilding.setDistinctId(rs.getString("distinctId"));
             placeBuilding.setBuildingNumber(rs.getString("buildingNumber"));
+            placeBuilding.setDistinctName(rs.getString("distinctName"));
+            placeBuilding.setDistinctNumber(rs.getString("distinctNumber"));
 
             return placeBuilding;
         }
@@ -158,7 +160,7 @@ public class PlaceBuildingRepositoryImpl implements PlaceBuildingRepositoryI {
      */
     @Override
     public boolean select4PlaceBuildingNumberUnique(PlaceBuilding building) {
-        String sql = "SELECT count(1) as NUM  FROM baoxiu.baoxiu_placebuilding where buildingNumber = ? and distinctId = ?";
+        String sql = "SELECT count(1) as NUM  FROM baoxiu.baoxiu_placebuilding where buildingNumber = ? and distinctId = ? ";
         Object[] args = {building.getBuildingNumber(),building.getDistinctId()};
 
         try {
@@ -203,11 +205,27 @@ public class PlaceBuildingRepositoryImpl implements PlaceBuildingRepositoryI {
         };
 
         try {
-            return jdbcTemplate.queryForObject(sql, args, new Select4ListRowMapper());
+            return jdbcTemplate.queryForObject(sql, args, new Select4EditRowMapper());
         } catch (Exception e) {
             LOG.error("[PlaceBuilding] query4List error with info {}.", e.getMessage());
 
             return null;
+        }
+    }
+
+    private class Select4EditRowMapper implements RowMapper<PlaceBuilding> {
+
+        @Override
+        public PlaceBuilding mapRow(ResultSet rs, int rowNum) throws SQLException {
+            PlaceBuilding placeBuilding = new PlaceBuilding();
+
+            placeBuilding.setBuildingId(rs.getString("buildingId"));
+            placeBuilding.setBuildingName(rs.getString("buildingName"));
+            placeBuilding.setSetId(rs.getString("setId"));
+            placeBuilding.setDistinctId(rs.getString("distinctId"));
+            placeBuilding.setBuildingNumber(rs.getString("buildingNumber"));
+
+            return placeBuilding;
         }
     }
 
@@ -219,10 +237,10 @@ public class PlaceBuildingRepositoryImpl implements PlaceBuildingRepositoryI {
      */
     @Override
     public boolean updatePlaceBuilding(PlaceBuilding placeBuilding) {
-        String sql = "UPDATE baoxiu.baoxiu_placebuilding SET buildingName = ? ,distinctId=?,setId = ?, buildingName = ? where deleteFlag = 0 AND buildingId ='? ";
-        Object[] args = {placeBuilding.getBuildingNumber(),placeBuilding.getDistinctId(),placeBuilding.getSetId(),placeBuilding.getBuildingName(),placeBuilding.getDistinctId()};
+        String sql = "UPDATE baoxiu.baoxiu_placebuilding SET buildingNumber = ? ,distinctId=?,setId = ?, buildingName = ? where deleteFlag = 0 AND buildingId =? ";
+        Object[] args = {placeBuilding.getBuildingNumber(),placeBuilding.getDistinctId(),placeBuilding.getSetId(),placeBuilding.getBuildingName(),placeBuilding.getBuildingId()};
         try {
-            return  jdbcTemplate.update(sql,args) == 1;
+            return  jdbcTemplate.update(sql,args) ==1;
 
         }catch (Exception e) {
             LOG.error("[PlaceBuilding] update place building error with info {}.", e.getMessage());
@@ -230,4 +248,5 @@ public class PlaceBuildingRepositoryImpl implements PlaceBuildingRepositoryI {
             return false;
         }
     }
+
 }

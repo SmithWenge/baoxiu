@@ -1,8 +1,6 @@
 package nanqu.djtu.admin.place.building.controller;
-
 import com.google.common.base.Optional;
 import nanqu.djtu.admin.place.building.service.PlaceBuildingServiceI;
-
 import nanqu.djtu.pojo.AdminUser;
 import nanqu.djtu.pojo.EquipmentSet;
 import nanqu.djtu.pojo.PlaceBuilding;
@@ -16,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.servlet.http.HttpSession;
 import java.util.List;
-
 /**
  * @author zhangwenyue
  */
@@ -132,23 +128,18 @@ public class PlaceBuildingController {
     /**
      * 路由到地点编辑页面
      *
-     * @param buildingId 地点Id
+     * @param buildingId, 地点Id
      * @return 地点编辑页面和相对地点信息
      */
     @RequestMapping("/edit/route/{buildingId}")
-    public ModelAndView routeEdit(@PathVariable String buildingId) {
+    public ModelAndView routeEdit(@PathVariable String buildingId  ) {
         PlaceBuilding building = placeBuildingService.query4Edit(buildingId);
-        List<PlaceDistinct>  placeDistincts = placeBuildingService.placeDistinctQuery4List();
-        List<EquipmentSet>  equipmentSets = placeBuildingService.equipmentSetQuery4List();
 
         if (Optional.fromNullable(building).isPresent()) {
             ModelAndView mav = new ModelAndView("admin/place/building/edit");
-
             mav.addObject("building", building);
-            mav.addObject("placeDistincts",placeDistincts);
-            mav.addObject("equipmentSets",equipmentSets);
-
             return mav;
+
         } else {
             return new ModelAndView("redirect:/admin/place/building/list.action");
         }
@@ -176,9 +167,4 @@ public class PlaceBuildingController {
             return "redirect:/admin/place/building/edit/route/" + placeBuilding.getBuildingId() + ".action";
         }
     }
-
-
-
-
-
 }

@@ -11,4 +11,5 @@ public interface SetServiceI {
     EquipmentSet query4Edit(String setId);
     boolean updateSet(EquipmentSet set, AdminUser user);
     boolean deleteSet(String setId, AdminUser user);
+    boolean query4UniqueSetNumber(String setNumber);
 }

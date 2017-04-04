@@ -46,4 +46,90 @@ public interface EquipmentRepositoryI {
      * @return 这个位置下设备组数据
      */
     List<EquipmentSet> selectSetsWithRoomId(String roomId);
+
+    /**
+     * 查询所有的设备组
+     *
+     * @return 返回设备组对象List
+     */
+    List<EquipmentSet> selectAllEquipmentSets();
+
+    /**
+     * 查询所有的维修小组
+     *
+     * @return 返回维修小组对象List
+     */
+    List<RepairGroup> selectAllRepairGroup();
+
+    /**
+     * 查询判断设备编号的唯一
+     *
+     * @param equipmentNumber 设备编号
+     * @return 如果不重复返回true, else false
+     */
+    boolean selectUniqueEquipmentNumber(String equipmentNumber);
+
+    /**
+     * 保存新添加的设备
+     *
+     * @param equipment 设备对象
+     * @return 添加成功返回true, else falase
+     */
+    boolean insertNewEquipment(Equipment equipment);
+
+    /**
+     * 添加设备与设备组关联表数据
+     *
+     * @param equipment 包含两个Id的设备对象
+     * @return 如果添加成功返回true, else false
+     */
+    boolean insertNewEquipmentWithSet(Equipment equipment);
+
+    /**
+     * 通过地点Id查询这个地点下的setId
+     *
+     * @param buildingId 地点Id
+     * @return 如果有setId返回setId, else null
+     */
+    String selectSetIdWithBuilding(String buildingId);
+
+    /**
+     * 通过位置Id查询这个位置下的setId
+     *
+     * @param roomId 位置Id
+     * @return 如果有setId返回setId, else null
+     */
+    String selectSetIdWithRoom(String roomId);
+
+    /**
+     * 查询编辑的设备对象
+     *
+     * @param equipmentId 设备Id
+     * @return 如果存在返回对象, else null
+     */
+    Equipment select4Edit(String equipmentId);
+
+    /**
+     * 更新设备对象
+     *
+     * @param equipment 更改后的设备对象
+     * @return 如果保存成功返回true, else false
+     */
+    boolean updateEquipment(Equipment equipment);
+
+    /**
+     * 删除原来的设备的关联的设备组
+     *
+     * @param equipmentId 设备Id
+     * @return 删除成功返回true, else false
+     */
+    boolean deleteEquipmentSetTable(String equipmentId);
+
+    /**
+     * 删除设备
+     *
+     * @param equipmentId 设备Id
+     * @return 删除成功返回true, else false
+     */
+    boolean deleteEquipment(String equipmentId);
 }

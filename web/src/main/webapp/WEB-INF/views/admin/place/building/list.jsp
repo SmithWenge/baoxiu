@@ -14,6 +14,8 @@
         <thead>
         <tr>
           <td>序号</td>
+          <td>校区编号</td>
+          <td>校区名</td>
           <td>地点编号</td>
           <td>地点名称</td>
           <td>操作</td>
@@ -23,8 +25,11 @@
         <c:forEach items="${building}" var="building" varStatus="status">
           <tr>
             <td>${status.index + 1}</td>
-            <td>${building.buildingId}</td>
+            <td>${building.distinctNumber}</td>
+            <td>${building.distinctName}</td>
+            <td>${building.buildingNumber}</td>
             <td>${building.buildingName}</td>
+
             <td>
               <div class="layui-btn-group">
                 <a href="${contextPath}/admin/place/building/edit/route/${building.buildingId}.action">

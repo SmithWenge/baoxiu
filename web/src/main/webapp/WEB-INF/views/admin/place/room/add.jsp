@@ -12,11 +12,11 @@
             </span>
         </legend>
         <div style="width: 30%; margin-top: 15px; ">
-            <form action="${contextPath}/admin/place/distinct/add/do.action" method="post" class="layui-form">
+            <form action="${contextPath}/admin/place/room/add/do.action" method="post" class="layui-form" id="placeRoomForm">
                 <div class="layui-form-item">
                     <label class="layui-form-label">选择校区</label>
                     <div class="layui-input-block">
-                        <select name="distinctId" id="distinctId">
+                        <select name="distinctId" id="distinctId" lay-filter="distinctId">
                             <c:forEach items="${distincts}" var="distinct">
                                 <option value="${distinct.distinctId}">${distinct.distinctName}</option>
                             </c:forEach>
@@ -28,7 +28,18 @@
                     <label class="layui-form-label">选择地点</label>
                     <div class="layui-input-block">
                         <select name="buildingId" id="buildingId">
-                            <option value="0">0</option>
+                            <option value="0">请选择校区</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选择设备组</label>
+                    <div class="layui-input-block">
+                        <select name="setId" id="setId" lay-filter="setId">
+                            <c:forEach items="${sets}" var="set">
+                                <option value="${set.setId}">${set.setName}</option>
+                            </c:forEach>
                         </select>
                     </div>
                 </div>
@@ -63,28 +74,47 @@
         // 导航栏选择
         $("#first").attr("class", "layui-nav-item layui-nav-itemed");
         $("#placeRoom").attr("class", "layui-this");
+        var form = layui.form();
 
-        $('#distinctId').trigger('change');
+        // 加载地点数据
+        function loadBuildingData(result) {
+            var $ = layui.jquery;
+            var $form = $('#placeRoomForm');
+            var form = layui.form();
+            var optionsValue = '';
 
-        $('#distinctId').on('change', function () {
-            var distinctId = $('#distinctId').val();
-            confirm(distinctId);
-            var building = document.getElementById("buildingId");
+            var buildings = result.buildings;
+
+            if(buildings.length > 0) {
+                for (var i = 0; i < buildings.length; i++) {
+                    optionsValue += '<option value="' + buildings[i].buildingId + '">' + buildings[i].buildingName + '</option>';
+                }
+            } else {
+                optionsValue = '<option value="0">该下拉菜单为空</option>';
+            }
+
+            $form.find('select[id=buildingId]').empty();
+            $form.find('select[id=buildingId]').append(optionsValue);
+            form.render();
+        }
+
+        form.on('select(distinctId)', function(data) {
+            var postData = {
+                "distinctId": data.value
+            };
+
             $.ajax({
                 type: 'post',
-                contentType: 'application/json',
+                contentType: 'application/x-www-form-urlencoded',
                 dataType: 'json',
-                url: '${contextPath}/admin/place/room/buildings/' + distinctId + '.action',
+                url: '${contextPath}/admin/place/room/buildings.action',
+                data: postData,
                 success: function (result) {
-                    building.options.length = 0;
-                    $.each(result.buildings, function (i, item) {
-                        building.options.add(new Option(item.buildingName, item.buildingId));
-                    });
+                    // 配置校区查询
+                    loadBuildingData(result);
                 }
             });
         });
-
-        var form = layui.form();
 
         form.verify({
             roomNumber: function(value) {

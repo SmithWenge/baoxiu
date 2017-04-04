@@ -147,7 +147,7 @@ public class SetController {
      * @param redirectAttributes 提示信息
      * @return 返回list page
      */
-    @RequestMapping(value = "/delete/{setId}", method = RequestMethod.POST)
+    @RequestMapping("/delete/{setId}")
     public String deleteSet(@PathVariable String setId, RedirectAttributes redirectAttributes, HttpSession session) {
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
 
@@ -162,5 +162,21 @@ public class SetController {
 
             return "redirect:/admin/set/index.action";
         }
+    }
+
+    /**
+     * 设备组编号的唯一
+     *
+     * @param set 包含设备编号的对象
+     * @return 如果唯一返回true, else false
+     */
+    @ResponseBody
+    @RequestMapping("/unique/setNumber")
+    public boolean uniqueSetNumber(EquipmentSet set) {
+        String setNumber = set.getSetNumber();
+        String hiddenSetNumber = set.getHiddenSetNumber();
+
+        return setNumber.equalsIgnoreCase(hiddenSetNumber) ||
+                setService.query4UniqueSetNumber(setNumber);
     }
 }

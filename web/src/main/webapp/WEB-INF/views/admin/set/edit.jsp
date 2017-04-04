@@ -7,17 +7,24 @@
     <fieldset class="layui-elem-field">
         <legend>
             <span class="layui-breadcrumb">
-              <a href="${contextPath}/admin/place/distinct/list.action">设备组管理</a>
-              <a><cite>设备组添加</cite></a>
+              <a href="${contextPath}/admin/set/index.action">设备组管理</a>
+              <a><cite>设备组编辑</cite></a>
             </span>
         </legend>
         <div style="width: 30%; margin-top: 15px; ">
             <form action="${contextPath}/admin/set/edit/do.action" method="post" class="layui-form">
-                <input type="hidden" value="${}">
+                <input type="hidden" name="setId" value="${set.setId}">
                 <div class="layui-form-item">
                     <label class="layui-form-label">设备组名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="setName" lay-verify="setName" placeholder="请输入" autocomplete="off" class="layui-input">
+                        <input type="text" name="setName" lay-verify="setName" value="${set.setName}" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">设备编号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="setNumber" id="setNumber" lay-verify="setNumber" value="${set.setNumber}" autocomplete="off" class="layui-input">
+                        <input type="hidden" name="hiddenSetNumber" id="hiddenSetNumber" value="${set.hiddenSetNumber}">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -50,6 +57,37 @@
 
                 if (!(/^[\u4e00-\u9fa5]+$/.test(value))) {
                     return "请输入中文";
+                }
+            },
+            setNumber: function (value) {
+                if (value.length < 2) {
+                    return "请输入合法长度,最小为2";
+                }
+
+                if (!(/^[0-9]+$/.test(value))) {
+                    return "请输入数字序列";
+                }
+
+                var validateData = {
+                    "setNumber": $("#setNumber").val(),
+                    "hiddenSetNumber": $("#hiddenSetNumber").val()
+                };
+                var uniqueSetNumber = false;
+
+                $.ajax({
+                    type: 'post',
+                    async: false,
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    data: validateData,
+                    url: '${contextPath}/admin/set/unique/setNumber.action',
+                    success: function (result) {
+                        uniqueSetNumber = result;
+                    }
+                });
+
+                if (!uniqueSetNumber) {
+                    return "填写的设备组编号已存在";
                 }
             }
         });
