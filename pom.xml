@@ -15,7 +15,7 @@
     <module>web</module>
     <module>framework</module>
     <module>pojo</module>
-      <module>api</module>
+    <module>api</module>
   </modules>
 
   <name>baoxiu web</name>
@@ -129,6 +129,11 @@
       </exclusions>
     </dependency>
     <!-- spring webmvc -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>${spring.mvc.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
