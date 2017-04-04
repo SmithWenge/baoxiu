@@ -10,10 +10,10 @@ import java.util.List;
  */
 public interface WorkerTypeServiceI {
     List<WorkerType> query4List();
-    boolean saveWorkerType(WorkerType distinct, AdminUser user);
+    boolean saveWorkerType(WorkerType type, AdminUser user);
     boolean deleteDistinct(String typeId, AdminUser user);
 
-    boolean updateWorkerType(WorkerType distinct, AdminUser user);
+    boolean updateWorkerType(WorkerType type, AdminUser user);
 
     WorkerType query4Edit(String typeId);
 }

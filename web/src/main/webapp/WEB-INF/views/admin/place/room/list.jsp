@@ -79,7 +79,7 @@
             var form = layui.form();
 
             var buildings = result.buildings;
-            var optionsValue = '<option value="-100">请选择地点</option>';
+            var optionsValue = '<option value="">请选择地点</option>';
 
             for (var i = 0; i < buildings.length; i++) {
                 optionsValue += '<option value="' + buildings[i].buildingId + '">' + buildings[i].buildingName + '</option>';
@@ -105,7 +105,7 @@
 
             var distincts = result.distincts;
 
-            var optionsValue = '<option>请选择地点</option>';
+            var optionsValue = '<option value="">请选择校区</option>';
             for (var i = 0; i < distincts.length; i++) {
                 optionsValue += '<option value="' + distincts[i].distinctId + '">' + distincts[i].distinctName + '</option>';
             }

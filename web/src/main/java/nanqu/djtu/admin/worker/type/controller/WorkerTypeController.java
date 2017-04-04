@@ -36,7 +36,7 @@ public class WorkerTypeController {
     public ModelAndView list() {
         List<WorkerType> types = workerTypeService.query4List();
 
-        ModelAndView mav = new ModelAndView("admin/worker/workertype/list");
+        ModelAndView mav = new ModelAndView("admin/worker/type/list");
 
         mav.addObject("types", types);
 
@@ -51,29 +51,29 @@ public class WorkerTypeController {
      */
     @RequestMapping("/add/route")
     public String routeAdd() {
-        return "admin/worker/workertype/add";
+        return "admin/worker/type/add";
     }
     /**
      * 保存添加新工种
      *
-     * @param distinct 新工种信息
+     * @param type 新工种信息
      * @param redirectAttributes 添加操作提示信息
      * @return 添加成功返回list页面,else add页面
      */
     @RequestMapping(value = "/add/do", method = RequestMethod.POST)
-    public String save( WorkerType distinct, RedirectAttributes redirectAttributes, HttpSession session) {
+    public String save( WorkerType type, RedirectAttributes redirectAttributes, HttpSession session) {
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
 
-        boolean save = workerTypeService.saveWorkerType(distinct, user);
+        boolean save = workerTypeService.saveWorkerType(type, user);
 
         if (save) {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
 
-            return "redirect:/admin/worker/workertype/list.action";
+            return "redirect:/admin/worker/type/list.action";
         } else {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
 
-            return "redirect:/admin/worker/workertype/add/route.action";
+            return "redirect:/admin/worker/type/add/route.action";
         }
     }
     /**
@@ -92,11 +92,11 @@ public class WorkerTypeController {
         if (delete) {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
 
-            return "redirect:/admin/worker/workerType/list.action";
+            return "redirect:/admin/worker/type/list.action";
         } else {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
 
-            return "redirect:/admin/worker/workerType/list.action";
+            return "redirect:/admin/worker/type/list.action";
         }
     }
     /**
@@ -105,41 +105,41 @@ public class WorkerTypeController {
      * @param typeId 工种Id
      * @return 工种编辑页面和相校区信息
      */
-    @RequestMapping("/edit/route/{workerTypeId}")
+    @RequestMapping("/edit/route/{typeId}")
     public ModelAndView routeEdit(@PathVariable String  typeId ) {
-       WorkerType distinct = workerTypeService.query4Edit(typeId);
+       WorkerType type = workerTypeService.query4Edit(typeId);
 
-        if (Optional.fromNullable(distinct).isPresent()) {
-            ModelAndView mav = new ModelAndView("admin/place/distinct/edit");
+        if (Optional.fromNullable(type).isPresent()) {
+            ModelAndView mav = new ModelAndView("admin/worker/type/edit");
 
-            mav.addObject("distinct", distinct);
+            mav.addObject("type", type);
 
             return mav;
         } else {
-            return new ModelAndView("redirect:/admin/place/distinct/list.action");
+            return new ModelAndView("redirect:/admin/worker/type/list.action");
         }
     }
     /**
      * 保存工种信息修改
      *
-     * @param distinct 工种信息
+     * @param type 工种信息
      * @param redirectAttributes 修改操作提示信息
      * @return 保存成功返回list, else edit page
      */
     @RequestMapping(value = "/edit/do", method = RequestMethod.POST)
-    public String saveEditWorkerType(WorkerType distinct, RedirectAttributes redirectAttributes, HttpSession session) {
+    public String saveEditWorkerType(WorkerType type, RedirectAttributes redirectAttributes, HttpSession session) {
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
 
-        boolean update = workerTypeService.updateWorkerType(distinct, user);
+        boolean update = workerTypeService.updateWorkerType(type, user);
 
         if (update) {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
 
-            return "redirect:/worker/workerType/distinct/list.action";
+            return "redirect:/admin/worker/type/list.action";
         } else {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
 
-            return "redirect:/worker/workerType/distinct/edit/route/" + distinct.getTypeId() + ".action";
+            return "redirect:/worker/type/edit/route/" + type.getTypeId() + ".action";
         }
     }
 

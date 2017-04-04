@@ -31,7 +31,7 @@
                     <a href="javascript:;"><i class="layui-icon">&#xe649;</i> 位置管理</a>
                     <dl class="layui-nav-child">
                         <dd id="placeDistinct"><a href="${contextPath}/admin/place/distinct/list.action"><i class="layui-icon">&#xe602;</i> 校区管理</a></dd>
-                        <dd id="placeBuilding"><a href="${contextPath}/admin/place/building/list.action"><i class="layui-icon">&#xe602;</i> 地点管理</a></dd>
+                        <dd ><a href="${contextPath}/admin/place/building/list.action"><i class="layui-icon">&#xe602;</i> 地点管理</a></dd>
                         <dd id="placeRoom"><a href="${contextPath}/admin/place/room/index.action"><i class="layui-icon">&#xe602;</i> 位置管理</a></dd>
                     </dl>
                 </li>
@@ -43,7 +43,7 @@
                         <dd id="printer"><a href="${contextPath}/admin/printer/list.action"><i class="layui-icon">&#xe602;</i> 打印机管理</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item" id="there">
+                <li class="layui-nav-item">
                     <a href="javascript:;"><i class="layui-icon">&#xe62c;</i> 导航边栏二</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目一</a></dd>
@@ -70,4 +70,3 @@
             </ul>
         </div>
     </div>
-</div>

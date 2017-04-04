@@ -26,13 +26,13 @@ public class WorkerTypeServiceImpl implements WorkerTypeServiceI {
     }
 
     @Override
-    public boolean saveWorkerType(WorkerType distinct, AdminUser user) {
-        boolean insert = workerTyeRepository.insertNewWorkerType(distinct);
+    public boolean saveWorkerType(WorkerType type, AdminUser user) {
+        boolean insert = workerTyeRepository.insertNewWorkerType(type);
 
         if (insert) {
-            LOG.info("[PlaceDistinct] add new place distinct success with user {}.", user.getAdminName());
+            LOG.info("[PlaceDistinct] add new worker type success with user {}.", user.getAdminName());
         } else {
-            LOG.warn("[PlaceDistinct] add new place distinct failure with user {}.", user.getAdminName());
+            LOG.warn("[PlaceDistinct] add new worker type failure with user {}.", user.getAdminName());
         }
         return insert;
 
@@ -43,9 +43,9 @@ public class WorkerTypeServiceImpl implements WorkerTypeServiceI {
         boolean delete = workerTyeRepository.deleteWorkerType(typeId);
 
         if (delete) {
-            LOG.info("[PlaceDistinct] delete place distinct {} success with user {}.", typeId, user.getAdminName());
+            LOG.info("[PlaceDistinct] delete worker type {} success with user {}.", typeId, user.getAdminName());
         } else {
-            LOG.warn("[PlaceDistinct] delete place distinct {} failure with user {}.", typeId, user.getAdminName());
+            LOG.warn("[PlaceDistinct] delete worker type {} failure with user {}.", typeId, user.getAdminName());
         }
 
         return delete;
@@ -56,13 +56,13 @@ public class WorkerTypeServiceImpl implements WorkerTypeServiceI {
     }
 
     @Override
-        public boolean updateWorkerType(WorkerType distinct, AdminUser user) {
-            boolean update = workerTyeRepository.updateWorkerType(distinct);
+        public boolean updateWorkerType(WorkerType type, AdminUser user) {
+            boolean update = workerTyeRepository.updateWorkerType(type);
 
             if (update) {
-                LOG.info("[PlaceDistinct] update place distinct {} success with user {}.", distinct.getTypeId(), user.getAdminName());
+                LOG.info("[PlaceDistinct] update worker type {} success with user {}.", type.getTypeId(), user.getAdminName());
             } else {
-                LOG.warn("[PlaceDistinct] update place distinct {} failure with user {}.", distinct.getTypeId(), user.getAdminName());
+                LOG.warn("[PlaceDistinct] update worker type {} failure with user {}.", type.getTypeId(), user.getAdminName());
             }
 
             return update;
