@@ -49,62 +49,17 @@ public class PlaceRoomController {
      */
     @ResponseBody
     @RequestMapping("/route/page")
-    public Map<String, Page<PlaceRoom>> listFirstPage(PlaceRoom room,@PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable, HttpSession session) {
-        session.removeAttribute(ConstantFields.SESSION_ROOM_SEARCH_KEY);
+    public Map<String, Object> listFirstPage(PlaceRoom room,@PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable) {
 
-        Map<String, Page<PlaceRoom>> mapData = new HashMap<>();
-
-        Page<PlaceRoom> page = placeRoomService.query4Page(room, pageable);
-
-        mapData.put(ConstantFields.PAGE_KEY, page);
-
-        return mapData;
-    }
-
-    /**
-     * 查询位置信息列表(分页)
-     *
-     * @return 位置信息列表的页面地址和数据
-     */
-    @ResponseBody
-    @RequestMapping("/page")
-    public Map<String, Page<PlaceRoom>> listPage(PlaceRoom room,@PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable, HttpSession session) {
-        PlaceRoom searchObj = (PlaceRoom)session.getAttribute(ConstantFields.SESSION_ROOM_SEARCH_KEY);
-
-        Map<String, Page<PlaceRoom>> mapData = new HashMap<>();
-
-        Optional<PlaceRoom> optional = Optional.fromNullable(searchObj);
-        if (optional.isPresent()) {
-            room = searchObj;
-        }
+        Map<String, Object> mapData = new HashMap<>();
 
         Page<PlaceRoom> page = placeRoomService.query4Page(room, pageable);
-
         mapData.put(ConstantFields.PAGE_KEY, page);
 
-        return mapData;
-    }
+        mapData.put("condition",room);
 
-    /**
-     * 条件查询位置信息列表
-     *
-     * @return 位置信息列表的页面地址和数据
-     */
-    @ResponseBody
-    @RequestMapping("/pageSearch")
-    public Map<String, Page<PlaceRoom>> searchPage(PlaceRoom room,@PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable, HttpSession session) {
-        PlaceRoom searchObj = (PlaceRoom)session.getAttribute(ConstantFields.SESSION_ROOM_SEARCH_KEY);
-
-        Map<String, Page<PlaceRoom>> mapData = new HashMap<>();
-
-        Optional<PlaceRoom> optional = Optional.fromNullable(searchObj);
-        if (optional.isPresent()) {
-            session.setAttribute(ConstantFields.SESSION_ROOM_SEARCH_KEY, room);
-        }
-
-        Page<PlaceRoom> page = placeRoomService.query4Page(room, pageable);
-
-        mapData.put(ConstantFields.PAGE_KEY, page);
+        List<PlaceDistinct> distincts = placeRoomService.queryDistincts();
+        mapData.put("distincts", distincts);
 
         return mapData;
     }
