@@ -15,6 +15,7 @@
                 <tr>
                     <td>序号</td>
                     <td>设备组名</td>
+                    <td>设备组编号</td>
                     <td>操作</td>
                 </tr>
                 </thead>
@@ -63,7 +64,7 @@
                     $("#pageTableBody").empty();
 
                     $.each(result.page.content, function (i, item) {
-                        var trData = "<tr><td>" + (i + 1) + "</td><td>" + item.setName + "</td><td>" + createOpsBtnGroup(item.setId) + "</td></tr>";
+                        var trData = "<tr><td>" + (i + 1) + "</td><td>" + item.setName + "</td><td>" + item.setNumber + "</td><td>" + createOpsBtnGroup(item.setId) + "</td></tr>";
                         $("#pageTableBody").append(trData);
                     });
 

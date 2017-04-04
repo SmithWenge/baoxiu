@@ -42,7 +42,7 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
         builder.append(" E.equipmentId LEFT JOIN baoxiu_repairgroup RG ON E.repairGroupId = RG.repairGroupId WHERE");
         builder.append(" E.deleteFlag = 0");
 
-        List<Object> argList = new ArrayList();
+        List<Object> argList = new ArrayList<Object>();
 
         if (!Strings.isNullOrEmpty(equipment.getSetId())) {
             builder.append(" AND ES.setId = ?");
