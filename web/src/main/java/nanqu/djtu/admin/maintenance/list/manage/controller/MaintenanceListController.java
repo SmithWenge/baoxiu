@@ -52,6 +52,9 @@ public class MaintenanceListController {
         List<MaintenanceList> distincts = maintenanceListService.queryDistincts();
         mapData.put("distincts", distincts);
 
+        List<MaintenanceList> groups = maintenanceListService.queryGroups();
+        mapData.put("groups", groups);
+
         return mapData;
     }
 

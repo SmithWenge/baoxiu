@@ -1,5 +1,6 @@
 package nanqu.djtu.admin.maintenance.list.manage.service.impl;
 
+import com.google.common.base.Strings;
 import nanqu.djtu.admin.maintenance.list.manage.repository.MaintenanceLisRepositoryI;
 import nanqu.djtu.admin.maintenance.list.manage.service.MaintenanceListServiceI;
 import nanqu.djtu.pojo.*;
@@ -39,11 +40,21 @@ public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
 
     @Override
     public List<Equipment> queryEquipmentsWithRoom(PlaceRoom room) {
-        List<Equipment> list = maintenanceLisRepository.selectEquipmentsWithBuildingId(room);
-        if (list.size() == 0) {
+        String roomId = room.getRoomId();
+        String BuildingId = room.getBuildingId();
+        List<Equipment> list;
+
+        if (Strings.isNullOrEmpty(roomId) && !Strings.isNullOrEmpty(BuildingId)) {
+            list = maintenanceLisRepository.selectEquipmentsWithBuildingId(room);
+        } else {
             list = maintenanceLisRepository.selectEquipmentsWithRoomId(room);
         }
 
         return list;
+    }
+
+    @Override
+    public List<MaintenanceList> queryGroups() {
+        return maintenanceLisRepository.selectGroups();
     }
 }

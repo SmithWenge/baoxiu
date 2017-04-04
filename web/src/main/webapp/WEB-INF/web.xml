@@ -116,7 +116,7 @@
   <!-- Config Taglib uri -->
   <jsp-config>
     <taglib>
-      <taglib-uri>http://www.lgb.com/tags/dic</taglib-uri>
+      <taglib-uri>http://www.djtu.com/tags/dic</taglib-uri>
       <taglib-location>/WEB-INF/tags/dictionary.tld</taglib-location>
     </taglib>
   </jsp-config>

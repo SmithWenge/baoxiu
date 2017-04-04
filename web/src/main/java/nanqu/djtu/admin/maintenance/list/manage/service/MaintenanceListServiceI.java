@@ -14,4 +14,5 @@ public interface MaintenanceListServiceI {
     List<PlaceBuilding> queryBuildingsWithDistinctId(String distinctId);
     List<PlaceRoom> queryRoomWithBuildingId(String buildingId);
     List<Equipment> queryEquipmentsWithRoom(PlaceRoom room);
+    List<MaintenanceList> queryGroups();
 }
