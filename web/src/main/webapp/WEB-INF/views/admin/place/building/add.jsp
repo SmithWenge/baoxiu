@@ -61,6 +61,8 @@
 
 <script>
   $(function () {
+    $("#first").attr("class", "layui-nav-item layui-nav-itemed");
+    $("#placeBuilding").attr("class", "layui-this");
     var form = layui.form();
 
     form.verify({

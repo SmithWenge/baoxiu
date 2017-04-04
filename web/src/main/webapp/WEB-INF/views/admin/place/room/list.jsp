@@ -9,10 +9,10 @@
         <div class="layui-form" id="roomQueryForm">
             <div class="layui-form-item elementAddAndQueryDiv">
                 <div class="layui-input-inline">
-                    <select name="distinctId" id="distinctId" lay-filter="distinctId">
-                        <option value="">请选择校区</option>
-                    </select>
-                </div>
+                <select name="distinctId" id="distinctId" lay-filter="distinctId">
+                    <option value="">请选择校区</option>
+                </select>
+            </div>
                 <div class="layui-input-inline">
                     <select name="buildingId" id="buildingId" lay-filter="buildingId">
                         <option value="">请选择地点</option>
