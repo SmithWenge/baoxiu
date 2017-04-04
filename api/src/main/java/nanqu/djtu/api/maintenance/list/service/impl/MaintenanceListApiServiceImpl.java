@@ -2,6 +2,7 @@ package nanqu.djtu.api.maintenance.list.service.impl;
 
 import nanqu.djtu.api.maintenance.list.repository.MaintenanceListApiRepositoryI;
 import nanqu.djtu.api.maintenance.list.service.MaintenanceListApiServiceI;
+import nanqu.djtu.pojo.MaintenanceList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

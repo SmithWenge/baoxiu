@@ -1,6 +1,7 @@
 package nanqu.djtu.api.maintenance.list.rest;
 
 import nanqu.djtu.api.maintenance.list.service.MaintenanceListApiServiceI;
+import nanqu.djtu.pojo.MaintenanceList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

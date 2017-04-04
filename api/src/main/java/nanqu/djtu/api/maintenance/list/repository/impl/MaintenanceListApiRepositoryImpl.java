@@ -1,6 +1,7 @@
 package nanqu.djtu.api.maintenance.list.repository.impl;
 
 import nanqu.djtu.api.maintenance.list.repository.MaintenanceListApiRepositoryI;
+import nanqu.djtu.pojo.MaintenanceList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,4 +16,13 @@ public class MaintenanceListApiRepositoryImpl implements MaintenanceListApiRepos
     private JdbcTemplate jdbcTemplate;
 
 
+    @Override
+    public boolean insertNew(MaintenanceList list) {
+        return false;
+    }
+
+    @Override
+    public String selectRepairGroupId(String equipmentId) {
+        return null;
+    }
 }

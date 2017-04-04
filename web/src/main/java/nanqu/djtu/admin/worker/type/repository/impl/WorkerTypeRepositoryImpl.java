@@ -45,33 +45,32 @@ public class WorkerTypeRepositoryImpl implements WorkerTyeRepositoryI {
 
         @Override
         public WorkerType mapRow(ResultSet rs, int rowNum) throws SQLException {
-            WorkerType distinct = new WorkerType();
+            WorkerType type = new WorkerType();
 
-            distinct.setTypeId(rs.getString("typeId"));
-            distinct.setTypeName(rs.getString("typeName"));
+            type.setTypeId(rs.getString("typeId"));
+            type.setTypeName(rs.getString("typeName"));
 
 
-            return distinct;
+            return type;
         }
     }
     /**
      * 添加新的工种
      *
-     * @param distinct 新工种的信息
+     * @param type 新工种的信息
      * @return 如果添加成功返回true, else false
      */
     @Override
-    public boolean insertNewWorkerType(WorkerType distinct) {
-        String sql = "INSERT INTO baoxiu_placedistinct (typeId, typeName) VALUES (?, ?, ?)";
+    public boolean insertNewWorkerType(WorkerType type) {
+        String sql = "INSERT INTO baoxiu_workertype (typeId, typeName) VALUES ( ?, ?)";
         Object[] args = {
                 PrimaryKeyUtil.uuidPrimaryKey(),
-                distinct.getTypeId(),
-                distinct.getTypeName()
+                type.getTypeName()
         };
         try {
             return jdbcTemplate.update(sql, args) == 1;
         } catch (Exception e) {
-            LOG.error("[WorkerType] add new type distinct error with info {}.", e.getMessage());
+            LOG.error("[WorkerType] add new worker type error with info {}.", e.getMessage());
 
             return false;
         }
@@ -93,35 +92,17 @@ public class WorkerTypeRepositoryImpl implements WorkerTyeRepositoryI {
         try {
             return jdbcTemplate.update(sql, args) == 1;
         } catch (Exception e) {
-            LOG.error("[WorkerType] delete type distinct error with info {}.", e.getMessage());
+            LOG.error("[WorkerType] delete worker type error with info {}.", e.getMessage());
 
             return false;
         }
     }
     /**
-     * 更新工种信息
+     * 查询需要编辑的工种的信息
      *
-     * @param distinct 新的更改后的工种信息
-     * @return 更改成功返回true, else false
+     * @param typeId 工种Id
+     * @return 工种信息对象
      */
-    @Override
-    public boolean updateWorkerType(WorkerType distinct) {
-        String sql = "UPDATE baoxiu_workertype SET typeName = ?,  WHERE typeId = ? AND deleteFlag = 0";
-        Object[] args = {
-                distinct.getTypeId(),
-                distinct.getTypeName()
-
-        };
-
-        try {
-            return jdbcTemplate.update(sql, args) == 1;
-        } catch (Exception e) {
-            LOG.error("[WorkerType] update type distinct error with info {}.", e.getMessage());
-
-            return false;
-        }
-    }
-
     @Override
     public WorkerType select4Edit(String typeId) {
         String sql = "SELECT typeId, typeName FROM baoxiu_workertype WHERE typeId = ? AND deleteFlag = 0";
@@ -137,6 +118,27 @@ public class WorkerTypeRepositoryImpl implements WorkerTyeRepositoryI {
             return null;
         }
     }
+    /**
+     * 更新工种信息
+     *
+     * @param type 新的更改后的工种信息
+     * @return 更改成功返回true, else false
+     */
+    @Override
+    public boolean updateWorkerType(WorkerType type) {
+        String sql = "UPDATE baoxiu_workertype SET typeName = ?  WHERE typeId = ? AND deleteFlag = 0";
+        Object[] args = {
+                type.getTypeName(),
+                type.getTypeId()
 
+        };
 
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[WorkerType] update worker type error with info {}.", e.getMessage());
+
+            return false;
+        }
+    }
 }

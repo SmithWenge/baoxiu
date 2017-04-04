@@ -44,11 +44,10 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="layui-icon">&#xe62c;</i> 导航边栏二</a>
+                    <a href="javascript:;"><i class="layui-icon">&#xe62c;</i> 工人维护</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目一</a></dd>
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目二</a></dd>
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目三</a></dd>
+                        <dd id="workerType"><a href="${contextPath}/admin/worker/type/list.action"><i class="layui-icon">&#xe602;</i> 工种管理</a></dd>
+                        <dd id="repairGroup"><a href="${contextPath}/admin/repairgroup/list.action"><i class="layui-icon">&#xe602;</i> 维修小组管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -59,10 +58,10 @@
                         <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目三</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="layui-icon">&#xe64a;</i> 导航边栏四</a>
+                <li class="layui-nav-item" id="five">
+                    <a href="javascript:;"><i class="layui-icon">&#xe64a;</i> 报修单</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目一</a></dd>
+                        <dd id="maintenanceList"><a href="${contextPath}/admin/maintenance/list/manage/index.action"><i class="layui-icon">&#xe602;</i> 报修单管理</a></dd>
                         <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目二</a></dd>
                         <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目三</a></dd>
                     </dl>
