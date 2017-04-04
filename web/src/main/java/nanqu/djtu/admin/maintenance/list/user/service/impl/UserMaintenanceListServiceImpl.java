@@ -1,7 +1,8 @@
 package nanqu.djtu.admin.maintenance.list.user.service.impl;
 
-import nanqu.djtu.admin.maintenance.list.user.repository.MaintenanceListRepositoryI;
-import nanqu.djtu.admin.maintenance.list.user.service.MaintenanceListServiceI;
+
+import nanqu.djtu.admin.maintenance.list.user.repository.UserMaintenanceListRepositoryI;
+import nanqu.djtu.admin.maintenance.list.user.service.UserMaintenanceListServiceI;
 import nanqu.djtu.pojo.PlaceBuilding;
 import nanqu.djtu.pojo.PlaceDistinct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,9 @@ import java.util.List;
  * Created by Administrator on 2017/4/4.
  */
 @Service
-public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
+public class UserMaintenanceListServiceImpl implements UserMaintenanceListServiceI {
     @Autowired
-    private MaintenanceListRepositoryI maintenanceListRepository;
+    private UserMaintenanceListRepositoryI maintenanceListRepository;
 
     @Override
     public List<PlaceDistinct> query4ListPlaceDistinct() {

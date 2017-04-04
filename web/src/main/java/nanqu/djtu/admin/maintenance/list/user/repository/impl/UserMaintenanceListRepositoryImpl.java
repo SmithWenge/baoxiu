@@ -1,6 +1,7 @@
 package nanqu.djtu.admin.maintenance.list.user.repository.impl;
 
-import nanqu.djtu.admin.maintenance.list.user.repository.MaintenanceListRepositoryI;
+
+import nanqu.djtu.admin.maintenance.list.user.repository.UserMaintenanceListRepositoryI;
 import nanqu.djtu.pojo.PlaceBuilding;
 import nanqu.djtu.pojo.PlaceDistinct;
 import org.slf4j.Logger;
@@ -19,8 +20,8 @@ import java.util.List;
  * Created by Administrator on 2017/4/4.
  */
 @Repository
-public class MaintenanceListRepositoryImpl implements MaintenanceListRepositoryI{
-    private static final Logger LOG = LoggerFactory.getLogger(MaintenanceListRepositoryImpl.class);
+public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRepositoryI {
+    private static final Logger LOG = LoggerFactory.getLogger(UserMaintenanceListRepositoryImpl.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;
 

@@ -1,6 +1,7 @@
 package nanqu.djtu.admin.maintenance.list.user.controller;
 
-import nanqu.djtu.admin.maintenance.list.user.service.MaintenanceListServiceI;
+
+import nanqu.djtu.admin.maintenance.list.user.service.UserMaintenanceListServiceI;
 import nanqu.djtu.pojo.PlaceBuilding;
 import nanqu.djtu.pojo.PlaceDistinct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,9 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/user/maintenance/list")
-public class MaintenanceListController {
+public class UserMaintenanceListController {
     @Autowired
-    private MaintenanceListServiceI maintenanceListService;
+    private UserMaintenanceListServiceI maintenanceListService;
     /**
      * 用户添加保修单
      *

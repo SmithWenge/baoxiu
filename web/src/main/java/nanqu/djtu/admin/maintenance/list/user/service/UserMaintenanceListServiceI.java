@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/4/4.
  */
-public interface MaintenanceListServiceI {
+public interface UserMaintenanceListServiceI {
     List<PlaceDistinct> query4ListPlaceDistinct();
 
     List<PlaceBuilding> queryBuildingsByDistinctId(String distinctId);
