@@ -43,7 +43,7 @@
                         <dd id="printer"><a href="${contextPath}/admin/printer/list.action"><i class="layui-icon">&#xe602;</i> 打印机管理</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item" >
+                <li class="layui-nav-item" id="there">
                     <a href="javascript:;"><i class="layui-icon">&#xe62c;</i> 导航边栏二</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目一</a></dd>
@@ -70,3 +70,4 @@
             </ul>
         </div>
     </div>
+</div>
