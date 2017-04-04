@@ -74,7 +74,7 @@
     $(function () {
         // 导航栏选择
         $("#two").attr("class", "layui-nav-item layui-nav-itemed");
-        $("#set").attr("class", "layui-this");
+        $("#equipment").attr("class", "layui-this");
 
         // 表单验证
         var form = layui.form();

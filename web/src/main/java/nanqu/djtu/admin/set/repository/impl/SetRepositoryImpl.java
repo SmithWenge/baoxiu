@@ -34,7 +34,7 @@ public class SetRepositoryImpl implements SetRepositoryI {
      */
     @Override
     public Page<EquipmentSet> select4Page(EquipmentSet equipmentSet, Pageable pageable) {
-        String sql = "SELECT setId, setName FROM baoxiu_set WHERE deleteFlag = 0 ORDER BY setId";
+        String sql = "SELECT setId, setName, setNumber FROM baoxiu_set WHERE deleteFlag = 0 ORDER BY setId";
         Object[] args = {};
 
         return repositoryUtils.select4Page(sql, pageable, args, new Select4PageRowMapper());
@@ -49,6 +49,7 @@ public class SetRepositoryImpl implements SetRepositoryI {
 
             set.setSetId(rs.getString("setId"));
             set.setSetName(rs.getString("setName"));
+            set.setSetNumber(rs.getString("setNumber"));
 
             return set;
         }
@@ -62,10 +63,11 @@ public class SetRepositoryImpl implements SetRepositoryI {
      */
     @Override
     public boolean insertNewPlaceDistinct(EquipmentSet set) {
-        String sql = "INSERT INTO baoxiu_set (setId, setName) VALUES (?, ?)";
+        String sql = "INSERT INTO baoxiu_set (setId, setName, setNumber) VALUES (?, ?, ?)";
         Object[] args = {
                 PrimaryKeyUtil.uuidPrimaryKey(),
-                set.getSetName()
+                set.getSetName(),
+                set.getSetNumber()
         };
 
         try {
@@ -85,7 +87,7 @@ public class SetRepositoryImpl implements SetRepositoryI {
      */
     @Override
     public EquipmentSet select4Edit(String setId) {
-        String sql = "SELECT setId, setName FROM baoxiu_set WHERE deleteFlag = 0 AND setId = ?";
+        String sql = "SELECT setId, setName, setNumber FROM baoxiu_set WHERE deleteFlag = 0 AND setId = ?";
         Object[] args = {
                 setId
         };
@@ -107,9 +109,10 @@ public class SetRepositoryImpl implements SetRepositoryI {
      */
     @Override
     public boolean updateSet(EquipmentSet set) {
-        String sql = "UPDATE baoxiu_set SET setName = ? WHERE setId = ? AND deleteFlag = 0";
+        String sql = "UPDATE baoxiu_set SET setName = ?, setNumber = ? WHERE setId = ? AND deleteFlag = 0";
         Object[] args = {
                 set.getSetName(),
+                set.getSetNumber(),
                 set.getSetId()
         };
 
@@ -139,6 +142,28 @@ public class SetRepositoryImpl implements SetRepositoryI {
             return jdbcTemplate.update(sql, args) == 1;
         } catch (Exception e) {
             LOG.error("[EquipmentSet] delete equipment set error with info {}.", e.getMessage());
+
+            return false;
+        }
+    }
+
+    /**
+     * 查询设备组编号唯一
+     *
+     * @param setNumber 设备组编号
+     * @return 如果唯一返回true, else false
+     */
+    @Override
+    public boolean select4UniqueSetNumber(String setNumber) {
+        String sql = "SELECT COUNT(1) AS NUM FROM baoxiu_set WHERE setNumber = ?";
+        Object[] args = {
+                setNumber
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, Integer.class) == 0;
+        } catch (Exception e) {
+            LOG.error("[EquipmentSet] query setNumber {} unique error with info {}.", setNumber, e.getMessage());
 
             return false;
         }

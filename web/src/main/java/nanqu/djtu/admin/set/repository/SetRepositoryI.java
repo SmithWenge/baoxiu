@@ -45,4 +45,12 @@ public interface SetRepositoryI {
      * @return 删除成功返回true, else false
      */
     boolean deleteSet(String setId);
+
+    /**
+     * 查询设备组编号唯一
+     *
+     * @param setNumber 设备组编号
+     * @return 如果唯一返回true, else false
+     */
+    boolean select4UniqueSetNumber(String setNumber);
 }
