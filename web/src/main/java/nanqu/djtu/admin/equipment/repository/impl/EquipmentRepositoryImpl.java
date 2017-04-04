@@ -4,7 +4,6 @@ import com.google.common.base.Strings;
 import nanqu.djtu.admin.equipment.repository.EquipmentRepositoryI;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.util.RepositoryUtils;
-import nanqu.djtu.utils.PrimaryKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -347,6 +346,162 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
             return jdbcTemplate.update(sql, args) == 1;
         } catch (Exception e) {
             LOG.error("[Equipment] insert equipment set three table error with info {}.", e.getMessage());
+
+            return false;
+        }
+    }
+
+    /**
+     * 通过地点Id查询这个地点下的setId
+     *
+     * @param buildingId 地点Id
+     * @return 如果有setId返回setId, else null
+     */
+    @Override
+    public String selectSetIdWithBuilding(String buildingId) {
+        String sql = "SELECT setId FROM baoxiu_placebuilding WHERE buildingId = ? AND deleteFlag = 0";
+        Object[] args = {
+                buildingId
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, String.class);
+        } catch (Exception e) {
+            LOG.error("[Equipment] select setId with buildingId {} error with info {}.", buildingId, e.getMessage());
+
+            return null;
+        }
+    }
+
+    /**
+     * 通过位置Id查询这个位置下的setId
+     *
+     * @param roomId 位置Id
+     * @return 如果有setId返回setId, else null
+     */
+    @Override
+    public String selectSetIdWithRoom(String roomId) {
+        String sql = "SELECT setId FROM baoxiu_placeroom WHERE roomId = ? AND deleteFlag = 0";
+        Object[] args = {
+                roomId
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, String.class);
+        } catch (Exception e) {
+            LOG.error("[Equipment] select setId with roomId {} error with info {}.", roomId, e.getMessage());
+
+            return null;
+        }
+    }
+
+    /**
+     * 查询编辑的设备对象
+     *
+     * @param equipmentId 设备Id
+     * @return 如果存在返回对象, else null
+     */
+    @Override
+    public Equipment select4Edit(String equipmentId) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT E.equipmentId, E.equipmentName, E.repairGroupId, E.equipmentNumber, ES.setId FROM baoxiu_equipment E");
+        builder.append(" LEFT JOIN baoxiu_equipmentset ES ON E.equipmentId = ES.equipmentId WHERE E.equipmentId = ?");
+        builder.append(" AND E.deleteFlag = 0");
+
+        Object[] args = {
+                equipmentId
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(builder.toString(), args, new Select4EditRowMapper());
+        } catch (Exception e) {
+            LOG.error("[Equipment] select edit equipment {} error with info {}.", equipmentId, e.getMessage());
+
+            return null;
+        }
+    }
+
+    private class Select4EditRowMapper implements RowMapper<Equipment> {
+
+        @Override
+        public Equipment mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            Equipment equipment = new Equipment();
+
+            equipment.setEquipmentId(rs.getString("equipmentId"));
+            equipment.setEquipmentName(rs.getString("equipmentName"));
+            equipment.setRepairGroupId(rs.getString("repairGroupId"));
+            equipment.setEquipmentNumber(rs.getString("equipmentNumber"));
+            equipment.setSetId(rs.getString("setId"));
+
+            return equipment;
+        }
+    }
+
+    /**
+     * 更新设备对象
+     *
+     * @param equipment 更改后的设备对象
+     * @return 如果保存成功返回true, else false
+     */
+    @Override
+    public boolean updateEquipment(Equipment equipment) {
+        String sql = "UPDATE baoxiu_equipment SET equipmentName = ?, repairGroupId = ?, equipmentNumber = ? WHERE equipmentId = ? AND deleteFlag = 0";
+        Object[] args = {
+                equipment.getEquipmentName(),
+                equipment.getRepairGroupId(),
+                equipment.getEquipmentNumber(),
+                equipment.getEquipmentId()
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[Equipment] update equipment {} error with info {}.", equipment.getEquipmentId(), e.getMessage());
+
+            return false;
+        }
+    }
+
+    /**
+     * 删除原来的设备的关联的设备组
+     *
+     * @param equipmentId 设备Id
+     * @return 删除成功返回true, else false
+     */
+    @Override
+    public boolean deleteEquipmentSetTable(String equipmentId) {
+        String sql = "DELETE FROM baoxiu_equipmentset WHERE equipmentId = ?";
+        Object[] args = {
+                equipmentId
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) >= 1;
+        } catch (Exception e) {
+            LOG.error("[Equipment] delete equipment set {} error with info {}.", equipmentId, e.getMessage());
+
+            return false;
+        }
+    }
+
+    /**
+     * 删除设备
+     *
+     * @param equipmentId 设备Id
+     * @return 删除成功返回true, else false
+     */
+    @Override
+    public boolean deleteEquipment(String equipmentId) {
+        String sql = "UPDATE baoxiu_equipment SET deleteFlag = 1 WHERE equipmentId = ?";
+        Object[] args = {
+                equipmentId
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[Equipment] delete equipment {} error with info {}.", equipmentId, e.getMessage());
 
             return false;
         }

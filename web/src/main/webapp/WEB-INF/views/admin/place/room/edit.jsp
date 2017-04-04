@@ -12,23 +12,20 @@
             </span>
         </legend>
         <div style="width: 30%; margin-top: 15px; ">
-            <form action="${contextPath}/admin/place/room/add/do.action" method="post" class="layui-form" id="placeRoomForm">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">选择校区</label>
-                    <div class="layui-input-block">
-                        <select name="distinctId" id="distinctId" lay-filter="distinctId">
-                            <c:forEach items="${distincts}" var="distinct">
-                                <option value="${distinct.distinctId}">${distinct.distinctName}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
-
+            <form action="${contextPath}/admin/place/room/edit/do.action" method="post" class="layui-form" id="placeRoomForm">
+                <input type="hidden" name="roomId" value="${room.roomId}">
                 <div class="layui-form-item">
                     <label class="layui-form-label">选择地点</label>
                     <div class="layui-input-block">
                         <select name="buildingId" id="buildingId">
-                            <option value="0">请选择校区</option>
+                            <c:forEach items="${buildings}" var="building">
+                                <c:if test="${room.buildingId == building.buildingId}">
+                                    <option value="${building.buildingId}" selected>${building.buildingName}</option>
+                                </c:if>
+                                <c:if test="${room.buildingId != building.buildingId}">
+                                    <option value="${building.buildingId}">${building.buildingName}</option>
+                                </c:if>
+                            </c:forEach>
                         </select>
                     </div>
                 </div>
@@ -38,7 +35,12 @@
                     <div class="layui-input-block">
                         <select name="setId" id="setId" lay-filter="setId">
                             <c:forEach items="${sets}" var="set">
-                                <option value="${set.setId}">${set.setName}</option>
+                                <c:if test="${room.setId == set.setId}">
+                                    <option value="${set.setId}" selected>${set.setName}</option>
+                                </c:if>
+                                <c:if test="${room.setId != set.setId}">
+                                    <option value="${set.setId}">${set.setName}</option>
+                                </c:if>
                             </c:forEach>
                         </select>
                     </div>
@@ -47,13 +49,14 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">位置编号</label>
                     <div class="layui-input-block">
-                        <input type="text" name="roomNumber" lay-verify="roomNumber" placeholder="请输入编号" class="layui-input" id="roomNumber">
+                        <input type="text" name="roomNumber" lay-verify="roomNumber" value="${room.roomNumber}" class="layui-input" id="roomNumber">
+                        <input type="hidden" name="hiddenRoomNumber" lay-verify="hiddenRoomNumber" value="${room.roomNumber}" class="layui-input" id="hiddenRoomNumber">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">位置名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="roomName" lay-verify="roomName" placeholder="请输入" autocomplete="off" class="layui-input">
+                        <input type="text" name="roomName" lay-verify="roomName" value="${room.roomName}" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -126,7 +129,10 @@
                     return "请填写数字序列";
                 }
 
-                var validateData = { "roomNumber": $("#roomNumber").val() };
+                var validateData = {
+                    "roomNumber": $("#roomNumber").val() ,
+                    "hiddenRoomNumber" : $("#hiddenRoomNumber").val()
+                };
                 var uniqueRoomNumber = false;
 
                 $.ajax({

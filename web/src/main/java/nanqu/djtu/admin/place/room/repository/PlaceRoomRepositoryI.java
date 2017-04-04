@@ -1,5 +1,6 @@
 package nanqu.djtu.admin.place.room.repository;
 
+import nanqu.djtu.pojo.EquipmentSet;
 import nanqu.djtu.pojo.PlaceBuilding;
 import nanqu.djtu.pojo.PlaceDistinct;
 import nanqu.djtu.pojo.PlaceRoom;
@@ -67,4 +68,16 @@ public interface PlaceRoomRepositoryI {
      * @return
      */
     List<PlaceDistinct> selectDistincts();
+
+    /**
+     * 添加页面查询set
+     * @return
+     */
+    List<EquipmentSet> selectSets();
+
+    /**
+     * 编辑页面查询buildings
+     * @return
+     */
+    List<PlaceBuilding> selectBuildings4Edit();
 }

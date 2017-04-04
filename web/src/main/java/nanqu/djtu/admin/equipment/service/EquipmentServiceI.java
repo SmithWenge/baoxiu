@@ -16,4 +16,7 @@ public interface EquipmentServiceI {
     List<RepairGroup> queryAllRepairGroup();
     boolean queryUniqueEquipmentNumber(String equipmentNumber);
     boolean saveNewEquipment(Equipment equipment, AdminUser user);
+    Equipment query4Edit(String equipmentId);
+    boolean updateEquipment(Equipment equipment, AdminUser user);
+    boolean deleteEquipment(String equipmentId, AdminUser user);
 }

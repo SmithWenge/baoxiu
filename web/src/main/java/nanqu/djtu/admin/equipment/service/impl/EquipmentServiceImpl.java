@@ -1,5 +1,6 @@
 package nanqu.djtu.admin.equipment.service.impl;
 
+import com.google.common.base.Strings;
 import nanqu.djtu.admin.equipment.repository.EquipmentRepositoryI;
 import nanqu.djtu.admin.equipment.service.EquipmentServiceI;
 import nanqu.djtu.pojo.*;
@@ -24,6 +25,19 @@ public class EquipmentServiceImpl implements EquipmentServiceI {
 
     @Override
     public Page<Equipment> query4Page(Equipment equipment, Pageable pageable) {
+        String roomId = equipment.getRoomId();
+        String buildingId = equipment.getBuildingId();
+
+        if (Strings.isNullOrEmpty(roomId) && (!Strings.isNullOrEmpty(buildingId))) {
+            String setId = equipmentRepository.selectSetIdWithBuilding(buildingId);
+
+            equipment.setSetId(setId);
+        } else if (!Strings.isNullOrEmpty(roomId)) {
+            String setId = equipmentRepository.selectSetIdWithRoom(roomId);
+
+            equipment.setSetId(setId);
+        }
+
         return equipmentRepository.select4Page(equipment, pageable);
     }
 
@@ -78,5 +92,43 @@ public class EquipmentServiceImpl implements EquipmentServiceI {
         }
 
         return insert;
+    }
+
+    @Override
+    public Equipment query4Edit(String equipmentId) {
+        return equipmentRepository.select4Edit(equipmentId);
+    }
+
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    @Override
+    public boolean updateEquipment(Equipment equipment, AdminUser user) {
+        boolean update = equipmentRepository.updateEquipment(equipment);
+
+        // delete equipment set
+        boolean deleteSet = equipmentRepository.deleteEquipmentSetTable(equipment.getEquipmentId());
+        boolean saveNewEquipmentSet = equipmentRepository.insertNewEquipmentWithSet(equipment);
+
+        if (update && deleteSet && saveNewEquipmentSet) {
+            LOG.info("[PlaceDistinct] update equipment {} success with user {}.", equipment.getEquipmentId(), user.getAdminName());
+        } else {
+            LOG.warn("[PlaceDistinct] update equipment {} failure with user {}.", equipment.getEquipmentId(), user.getAdminName());
+        }
+
+        return update && deleteSet && saveNewEquipmentSet;
+    }
+
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    @Override
+    public boolean deleteEquipment(String equipmentId, AdminUser user) {
+        boolean delete = equipmentRepository.deleteEquipment(equipmentId);
+        boolean deleteSet = equipmentRepository.deleteEquipmentSetTable(equipmentId);
+
+        if (delete && deleteSet) {
+            LOG.info("[PlaceDistinct] delete equipment {} success with user {}.", equipmentId, user.getAdminName());
+        } else {
+            LOG.warn("[PlaceDistinct] delete equipment {} failure with user {}.", equipmentId, user.getAdminName());
+        }
+
+        return delete;
     }
 }

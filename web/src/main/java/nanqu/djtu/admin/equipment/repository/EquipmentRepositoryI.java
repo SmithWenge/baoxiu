@@ -84,4 +84,52 @@ public interface EquipmentRepositoryI {
      * @return 如果添加成功返回true, else false
      */
     boolean insertNewEquipmentWithSet(Equipment equipment);
+
+    /**
+     * 通过地点Id查询这个地点下的setId
+     *
+     * @param buildingId 地点Id
+     * @return 如果有setId返回setId, else null
+     */
+    String selectSetIdWithBuilding(String buildingId);
+
+    /**
+     * 通过位置Id查询这个位置下的setId
+     *
+     * @param roomId 位置Id
+     * @return 如果有setId返回setId, else null
+     */
+    String selectSetIdWithRoom(String roomId);
+
+    /**
+     * 查询编辑的设备对象
+     *
+     * @param equipmentId 设备Id
+     * @return 如果存在返回对象, else null
+     */
+    Equipment select4Edit(String equipmentId);
+
+    /**
+     * 更新设备对象
+     *
+     * @param equipment 更改后的设备对象
+     * @return 如果保存成功返回true, else false
+     */
+    boolean updateEquipment(Equipment equipment);
+
+    /**
+     * 删除原来的设备的关联的设备组
+     *
+     * @param equipmentId 设备Id
+     * @return 删除成功返回true, else false
+     */
+    boolean deleteEquipmentSetTable(String equipmentId);
+
+    /**
+     * 删除设备
+     *
+     * @param equipmentId 设备Id
+     * @return 删除成功返回true, else false
+     */
+    boolean deleteEquipment(String equipmentId);
 }
