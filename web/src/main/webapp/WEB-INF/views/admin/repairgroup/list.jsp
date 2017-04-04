@@ -5,30 +5,34 @@
 <!-- 内容主体 -->
 <div class="layui-body body">
     <fieldset class="layui-elem-field layui-field-title">
-        <legend>工种管理</legend>
-        <a href="${contextPath}/admin/worker/workertype/add/route.action">
-            <button class="layui-btn layui-btn-normal elementAddBtn" id="addworkertype">添加</button>
+        <legend>维护小组管理</legend>
+        <a href="${contextPath}/admin/repairgroup/add/route.action">
+            <button class="layui-btn layui-btn-normal elementAddBtn" id="addRepairGroup">添加</button>
         </a>
         <div class="layui-field-box">
             <table class="layui-table">
                 <thead>
                 <tr>
                     <td>序号</td>
-                    <td>工种名称</td>
+                    <td>维修小组编号</td>
+                    <td>维修小组名称</td>
+                    <td>打印机编号</td>
                     <td>操作</td>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${distincts}" var="distinct" varStatus="status">
+                <c:forEach items="${groups}" var="group" varStatus="status">
                     <tr>
                         <td>${status.index + 1}</td>
-                        <td>${distinct.typeName}</td>
+                        <td>${group.groupNumber}</td>
+                        <td>${group.groupName}</td>
+                        <td>${group.groupPrinterIp}</td>
                         <td>
                             <div class="layui-btn-group">
-                                <a href="${contextPath}/admin/worker/workertype/edit/route/${distinct.typeId}.action">
+                                <a href="${contextPath}/admin/repairgroup/edit/route/${group.repairGroupId}.action">
                                     <button class="layui-btn layui-btn-small layui-btn-warm"><i class="layui-icon">&#xe642;</i></button>
                                 </a>
-                                <a href="${contextPath}/admin/worker/workertype/delete/${distinct.distinctId}.action">
+                                <a href="${contextPath}/admin/repairgroup/delete/${group.repairGroupId}.action">
                                     <button class="layui-btn layui-btn-small layui-btn-danger"><i class="layui-icon">&#xe640;</i></button>
                                 </a>
                             </div>
@@ -45,6 +49,10 @@
 
 <script>
     $(function () {
+        // 导航栏选择
+        $("#first").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#repairgroup").attr("class", "layui-this");
+
         // 删除提示弹出提示
         function deleteConfirm($deleteBtn) {
             event.preventDefault();

@@ -7,17 +7,18 @@
     <fieldset class="layui-elem-field">
         <legend>
             <span class="layui-breadcrumb">
-              <a href="${contextPath}/admin/workerType/distinct/list.action">工种管理</a>
-              <a><cite>工种添加</cite></a>
+              <a href="${contextPath}/admin/worker/type/list.action">工种管理</a>
+              <a><cite>工种修改</cite></a>
             </span>
         </legend>
         <div style="width: 30%; margin-top: 15px; ">
-            <form action="${contextPath}/admin/workerType/distinct/add/do.action" method="post" class="layui-form">
+            <form action="${contextPath}/admin/worker/type/edit/do.action" method="post" class="layui-form">
+                <input type="hidden" name="typeId" value="${type.typeId}">
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">工种名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="workerName" lay-verify="workerName" placeholder="请输入" autocomplete="off" class="layui-input">
+                        <input type="text" name="typeName" lay-verify="typeName" value="${type.typeName}" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -39,7 +40,7 @@
 
         form.verify({
 
-            distinctName: function (value) {
+            typeName: function (value) {
                 if (value.length < 2) {
                     return "请输入工种名";
                 }
@@ -49,7 +50,6 @@
                 }
             }
         });
-
     });
 </script>
 

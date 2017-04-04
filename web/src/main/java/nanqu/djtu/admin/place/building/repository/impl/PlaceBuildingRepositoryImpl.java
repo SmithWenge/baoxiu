@@ -18,9 +18,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Administrator on 2017/4/2.
- */
 @Repository
 public class PlaceBuildingRepositoryImpl implements PlaceBuildingRepositoryI {
     private static final Logger LOG = LoggerFactory.getLogger(PlaceDistinctRepositoryImpl.class);
