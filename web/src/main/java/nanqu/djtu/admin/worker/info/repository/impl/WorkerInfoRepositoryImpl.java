@@ -94,7 +94,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
             repairGroup.setRepairGroupId(rs.getString("repairGroupId"));
             repairGroup.setGroupName(rs.getString("groupNumber"));
             repairGroup.setGroupName(rs.getString("groupName"));
-            repairGroup.setGroupPrinterIP(rs.getString("groupPrinterIp"));
+            repairGroup.setGroupPrinterIp(rs.getString("groupPrinterIp"));
 
             return repairGroup;
         }

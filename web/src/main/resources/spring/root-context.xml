@@ -17,7 +17,7 @@
 		<property name="unauthorizedUrl" value="/http/403.action"/>
 		<property name="filterChainDefinitions">
 			<value>
-				<!-- anon表示此地址不需要任何权限即可访问 -->
+				<!-- anon表示地址不需要任何权限即可访问 -->
 				/static/**=anon
 				<!-- 数据库连接监控 -->
 				/druid/**=anon
@@ -26,6 +26,7 @@
 				/admin/**=authc
 				/admin/logout.action=logout
 				/login/**=anon
+				/api/**=anon
 			</value>
 		</property>
 	</bean>

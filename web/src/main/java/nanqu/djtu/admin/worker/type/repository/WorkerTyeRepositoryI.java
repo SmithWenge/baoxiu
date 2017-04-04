@@ -16,10 +16,10 @@ public interface WorkerTyeRepositoryI {
     /**
      * 添加新的工种
      *
-     * @param distinct 新工种的信息
+     * @param type 新工种的信息
      * @return 如果添加成功返回true, else false
      */
-    boolean insertNewWorkerType(WorkerType distinct);
+    boolean insertNewWorkerType(WorkerType type);
     /**
      * 删除工种
      *
@@ -30,10 +30,10 @@ public interface WorkerTyeRepositoryI {
     /**
      * 更新工种信息
      *
-     * @param distinct 新的更改后的工种信息
+     * @param type 新的更改后的工种信息
      * @return 更改成功返回true, else false
      */
-    boolean updateWorkerType(WorkerType distinct);
+    boolean updateWorkerType(WorkerType type);
     /**
      * 查询需要编辑的工种的信息
      *

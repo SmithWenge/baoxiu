@@ -17,20 +17,19 @@
         <div class="layui-form-item">
           <label class="layui-form-label">姓名</label>
           <div class="layui-input-block">
-            <input type="text" value="${infos.workerName}" name="workerName" lay-verify="workerName" placeholder="${infos.workerName}" autocomplete="off" class="layui-input">
+            <input type="text" value="${infos.workerName}" name="workerName" lay-verify="workerName" id="workerName" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item">
           <label class="layui-form-label">单位</label>
           <div class="layui-input-block">
-            <input type="text" name="workerUnite" lay-verify="workerUnite" placeholder="${infos.workerUnite}" autocomplete="off" class="layui-input">
+            <input type="text" name="workerUnite" lay-verify="workerUnite" value="${infos.workerUnite}" id="workerUnite" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item">
           <label class="layui-form-label">部门</label>
           <div class="layui-input-block">
             <select name="workerDepartment" lay-verify="workerDepartment" id="workerDepartment">
-              <option value="${infos.workerDepartment}">不修改
               </option>
               <option value="1">才艺部</option>
               <option value="2">园艺部</option>
@@ -43,7 +42,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label">职称</label>
           <div class="layui-input-block">
-            <input type="text" name="workerJob" lay-verify="workerJob" placeholder="${infos.workerJob}" class="layui-input" id="workerJob">
+            <input type="text" name="workerJob" lay-verify="workerJob" value="${infos.workerJob}" id="workerJob" autocomplete="off" class="layui-input">
           </div>
         </div>
 
@@ -61,7 +60,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label">工种</label>
           <div class="layui-input-block">
-            <select name="typeId" id="typeId" lay-verify="typeId">
+            <select name="typeId" id="typeId" lay-verify="typeId" >
               <option value="${infos.typeId}">${infos.typeName}</option>
               <c:forEach items="${workerTypes}" var="workerTypes">
                 <option   value="${workerTypes.typeId}" >${workerTypes.typeName}</option>
@@ -73,7 +72,6 @@
           <label class="layui-form-label">状态</label>
           <div class="layui-input-block">
             <select name="workerState" id="workerState" lay-verify="workState">
-              <option value="${infos.workerState}">不修改</option>
               <option  value="1" >在岗</option>
               <option  value="2" >离职</option>
               <option  value="3" >休假</option>

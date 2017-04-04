@@ -36,7 +36,13 @@
             <artifactId>pojo</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>nanqu</groupId>
+            <artifactId>api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
+
     <build>
         <finalName>web</finalName>
 
