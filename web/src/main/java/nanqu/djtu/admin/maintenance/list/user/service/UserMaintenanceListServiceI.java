@@ -1,7 +1,6 @@
 package nanqu.djtu.admin.maintenance.list.user.service;
 
-import nanqu.djtu.pojo.PlaceBuilding;
-import nanqu.djtu.pojo.PlaceDistinct;
+import nanqu.djtu.pojo.*;
 
 import java.util.List;
 
@@ -12,4 +11,14 @@ public interface UserMaintenanceListServiceI {
     List<PlaceDistinct> query4ListPlaceDistinct();
 
     List<PlaceBuilding> queryBuildingsByDistinctId(String distinctId);
+
+    List<EquipmentSet> querySets();
+
+    List<PlaceRoom> queryPlaceRoomByBuildingId(String buildingId);
+
+    List<Equipment> queryEquipment();
+
+    boolean saveNewMaintenanceList(MaintenanceList maintenance);
+
+    MaintenanceList selectRepairGroupId(MaintenanceList maintenance);
 }

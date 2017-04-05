@@ -1,7 +1,6 @@
 package nanqu.djtu.admin.maintenance.list.user.repository;
 
-import nanqu.djtu.pojo.PlaceBuilding;
-import nanqu.djtu.pojo.PlaceDistinct;
+import nanqu.djtu.pojo.*;
 
 import java.util.List;
 
@@ -20,4 +19,29 @@ public interface UserMaintenanceListRepositoryI {
      */
 
     List<PlaceBuilding> selectBuildingsByDistinctId(String distinctId);
+
+    List<EquipmentSet> querySets();
+
+    /**
+     * 查询位置信息
+     * @return 未删除的位置信息列表
+     */
+
+    List<PlaceRoom> queryPlaceRoomByBuildingId(String buildingId);
+
+    /**
+     * 查询设备信息
+     *
+     * @return 未删除的设备信息
+     */
+
+    List<Equipment> queryEquipment();
+
+    /**
+     * 查询相关设备的维修小组
+     * @param maintenance
+     * @return
+     */
+
+    MaintenanceList selectRepairGroupId(MaintenanceList maintenance);
 }
