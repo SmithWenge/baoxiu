@@ -14,12 +14,36 @@ public class MaintenanceList {
     private String equipmentId;
     private int listState;
     private String listDescription;
-    private Timestamp listTime;
-    private Date startListTime;
-    private Date stopListTime;
+    private String listTime;
+    private String startListTime;
+    private String stopListTime;
     private String equipmentName;
     private String groupName;
     private String distinctName;
+
+    public String getStopListTime() {
+        return stopListTime;
+    }
+
+    public void setStopListTime(String stopListTime) {
+        this.stopListTime = stopListTime;
+    }
+
+    public String getStartListTime() {
+        return startListTime;
+    }
+
+    public void setStartListTime(String startListTime) {
+        this.startListTime = startListTime;
+    }
+
+    public String getListTime() {
+        return listTime;
+    }
+
+    public void setListTime(String listTime) {
+        this.listTime = listTime;
+    }
 
     public String getDistinctName() {
         return distinctName;
@@ -43,14 +67,6 @@ public class MaintenanceList {
 
     public void setEquipmentName(String equipmentName) {
         this.equipmentName = equipmentName;
-    }
-
-    public Timestamp getListTime() {
-        return listTime;
-    }
-
-    public void setListTime(Timestamp listTime) {
-        this.listTime = listTime;
     }
 
     public void setListNumber(String listNumber) {
