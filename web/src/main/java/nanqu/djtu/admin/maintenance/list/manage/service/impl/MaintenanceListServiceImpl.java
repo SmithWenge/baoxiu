@@ -57,4 +57,9 @@ public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
     public List<MaintenanceList> queryGroups() {
         return maintenanceLisRepository.selectGroups();
     }
+
+    @Override
+    public MaintenanceList query4details(String listNumber) {
+        return maintenanceLisRepository.select4details(listNumber);
+    }
 }

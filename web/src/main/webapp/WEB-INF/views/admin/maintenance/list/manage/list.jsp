@@ -33,13 +33,6 @@
             <button class="layui-btn layui-btn-normal" id="querymaintenanceListBtn">查询</button>
           </div>
         </div>
-        <div class="layui-input-inline addBtnFloatRight">
-          <div class="layui-input-block">
-            <a href="${contextPath}/admin/equipment/add/route.action">
-              <button class="layui-btn layui-btn-normal" id="addPlaceDistinct">添加</button>
-            </a>
-          </div>
-        </div>
       </div>
     </div>
     <div class="layui-form" id="maintenanceListStateQueryForm">
@@ -349,7 +342,7 @@
           loadStateData();
 
           $.each(result.page.content, function (i, item) {
-            var trData = "<tr><td>" + (i + 1) + "</td><td><a href=\"${contextPath}/admin/maintenance/list/manage/details/route.action\">" + item.listNumber + "</a></td><td>" + item.listState + "</td>";
+            var trData = "<tr><td>" + (i + 1) + "</td><td><a href=\"${contextPath}/admin/maintenance/list/manage/details/route/" + item.listNumber + ".action\">" + item.listNumber + "</a></td><td>" + item.liststateStr + "</td>";
             trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.listTime + "</td>";
             $("#pageTableBody").append(trData);
           });

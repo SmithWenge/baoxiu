@@ -56,4 +56,11 @@ public interface MaintenanceLisRepositoryI {
      * @return
      */
     List<MaintenanceList> selectGroups();
+
+    /**
+     * 查看详情
+     * @param listNumber
+     * @return
+     */
+    MaintenanceList select4details(String listNumber);
 }

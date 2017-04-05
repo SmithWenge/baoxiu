@@ -2,6 +2,8 @@ package nanqu.djtu.admin.maintenance.list.manage.repository.impl;
 
 import com.google.common.base.Strings;
 import nanqu.djtu.admin.maintenance.list.manage.repository.MaintenanceLisRepositoryI;
+import nanqu.djtu.dictionary.feature.manager.IDictionaryManager;
+import nanqu.djtu.dictionary.feature.manager.impl.DefaultDictionaryManager;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.util.RepositoryUtils;
 import org.slf4j.Logger;
@@ -82,12 +84,15 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
         public MaintenanceList mapRow(ResultSet resultSet, int i) throws SQLException {
             MaintenanceList list = new MaintenanceList();
             SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            IDictionaryManager dictionary = DefaultDictionaryManager.getInstance();
+            int listState = resultSet.getInt("listState");
 
             list.setListNumber(resultSet.getString("listNumber"));
-            list.setListState(String.valueOf(resultSet.getInt("listState")));
+            list.setListState(String.valueOf(listState));
             list.setEquipmentName(resultSet.getString("equipmentName"));
             list.setGroupName(resultSet.getString("groupName"));
             list.setListTime(format.format(resultSet.getTimestamp("listTime")));
+            list.setListstateStr(dictionary.dictionary(listState,"listState").getItemValue());
 
             return list;
         }
@@ -263,6 +268,57 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
             list.setRepairGroupId(resultSet.getString("repairGroupId"));
             list.setGroupName(resultSet.getString("groupName"));
+
+            return list;
+        }
+    }
+
+    @Override
+    public MaintenanceList select4details(String listNumber) {
+        String sql = "SELECT listNumber,userName,groupName,roomName,buildingName,distinctName,equipmentName,listTime,listState,listDescription,listStatusTime,listPicture FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.groupName LEFT JOIN baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";
+        Object[] args = {
+                listNumber
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, new Select4detailsRowMapper());
+        } catch (Exception e) {
+            LOG.error("[MaintenanceList] query4details error with info {}.", e.getMessage());
+
+            return null;
+        }
+    }
+
+    class Select4detailsRowMapper implements RowMapper<MaintenanceList> {
+
+        @Override
+        public MaintenanceList mapRow(ResultSet resultSet, int i) throws SQLException {
+            MaintenanceList list = new MaintenanceList();
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            IDictionaryManager dictionary = DefaultDictionaryManager.getInstance();
+            int listState = resultSet.getInt("listState");
+            String groupName = resultSet.getString("groupName");
+            String roomName = resultSet.getString("roomName");
+            String buildingName = resultSet.getString("buildingName");
+            String distinctName = resultSet.getString("distinctName");
+            String listDescription = resultSet.getString("listDescription");
+            String listPicture = resultSet.getString("listPicture");
+
+
+            list.setGroupName(Strings.isNullOrEmpty(groupName) ? "无" : groupName);
+            list.setRoomName(Strings.isNullOrEmpty(roomName) ? "无" : roomName);
+            list.setBuildingName(Strings.isNullOrEmpty(buildingName) ? "无" : buildingName);
+            list.setDistinctName(Strings.isNullOrEmpty(distinctName) ? "无" : distinctName);
+            list.setListDescription(Strings.isNullOrEmpty(listDescription) ? "无" : listDescription);
+            list.setListPicture(Strings.isNullOrEmpty(listPicture) ? "default_list.png" : listPicture);
+
+            list.setListNumber(resultSet.getString("listNumber"));
+            list.setUserName(resultSet.getString("userName"));
+            list.setEquipmentName(resultSet.getString("equipmentName"));
+            list.setListTime(format.format(resultSet.getTimestamp("listTime")));
+            list.setListStatusTime(format.format(resultSet.getTimestamp("listTime")));
+            list.setListState(String.valueOf(resultSet.getInt("listState")));
+            list.setListstateStr(dictionary.dictionary(listState,"listState").getItemValue());
 
             return list;
         }
