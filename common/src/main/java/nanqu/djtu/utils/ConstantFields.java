@@ -2,7 +2,7 @@ package nanqu.djtu.utils;
 
 public class ConstantFields {
     /* 分页中每页数据数 */
-    public static final int DEFAULT_PAGE_SIZE = 2;
+    public static final int DEFAULT_PAGE_SIZE = 10;
     /* ajax分页中数据的KEY */
     public static final String PAGE_KEY = "page";
 

@@ -8,11 +8,11 @@
     <div class="layui-header header">
         <!-- logo -->
         <div class="logo">
-            <h1>报修管理系统 <span class="version">0.0.1</span></h1>
+            <h1>报修管理系统 <span class="version">v6.5</span></h1>
         </div>
 
         <ul class="layui-nav" lay-filter="">
-            <li class="layui-nav-item"><a href="">大数据</a></li>
+            <%--<li class="layui-nav-item"><a href="">大数据</a></li>--%>
             <li class="layui-nav-item">
                 <a href="">${sessionScope.adminInfo.adminName}</a>
                 <dl class="layui-nav-child">
@@ -31,7 +31,7 @@
                     <a href="javascript:;"><i class="layui-icon">&#xe649;</i> 位置管理</a>
                     <dl class="layui-nav-child">
                         <dd id="placeDistinct"><a href="${contextPath}/admin/place/distinct/list.action"><i class="layui-icon">&#xe602;</i> 校区管理</a></dd>
-                        <dd ><a href="${contextPath}/admin/place/building/list.action"><i class="layui-icon">&#xe602;</i> 地点管理</a></dd>
+                        <dd><a href="${contextPath}/admin/place/building/list.action"><i class="layui-icon">&#xe602;</i> 地点管理</a></dd>
                         <dd id="placeRoom"><a href="${contextPath}/admin/place/room/index.action"><i class="layui-icon">&#xe602;</i> 位置管理</a></dd>
                     </dl>
                 </li>
@@ -44,35 +44,15 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="layui-icon">&#xe62c;</i> 导航边栏二</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目一</a></dd>
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目二</a></dd>
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目三</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="layui-icon">&#xe62d;</i> 导航边栏三</a>
+                    <a href="javascript:;"><i class="layui-icon">&#xe64a;</i> 工人管理</a>
                     <dl class="layui-nav-child">
                         <dd id="workerInfo"><a href="${contextPath}/admin/worker/info/list.action"><i class="layui-icon">&#xe602;</i>工人管理</a></dd>
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目二</a></dd>
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目三</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="layui-icon">&#xe64a;</i> 导航边栏四</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目一</a></dd>
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目二</a></dd>
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目三</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item" id="five">
-                    <a href="javascript:;"><i class="layui-icon">&#xe64a;</i> 报修单</a>
+                    <a href="javascript:;"><i class="layui-icon">&#xe62d;</i> 报修单</a>
                     <dl class="layui-nav-child">
                         <dd id="maintenanceList"><a href="${contextPath}/admin/maintenance/list/manage/index.action"><i class="layui-icon">&#xe602;</i> 报修单管理</a></dd>
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目二</a></dd>
-                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目三</a></dd>
                     </dl>
                 </li>
             </ul>

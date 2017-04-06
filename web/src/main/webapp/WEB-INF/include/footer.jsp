@@ -2,7 +2,7 @@
 
     <!-- 底部固定区域 -->
     <div class="layui-footer footer">
-        <span class="copyright">©2017 Make By <a href="http://www.56team.com">56Team</a></span>
+        <span class="copyright">©2017 Powered By <a href="http://www.56team.com">56Team</a></span>
     </div>
 </div>
 

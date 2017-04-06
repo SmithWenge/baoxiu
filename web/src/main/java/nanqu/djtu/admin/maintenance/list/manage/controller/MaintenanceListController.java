@@ -1,5 +1,6 @@
 package nanqu.djtu.admin.maintenance.list.manage.controller;
 
+import com.google.common.base.Optional;
 import nanqu.djtu.admin.maintenance.list.manage.service.MaintenanceListServiceI;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.utils.ConstantFields;
@@ -8,9 +9,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -106,5 +109,26 @@ public class MaintenanceListController {
         mapData.put("equipments", equipments);
 
         return mapData;
+    }
+
+    /**
+     * 路由到查看详情编辑页面
+     *
+     * @param listNumber 位置Id
+     * @return 位置编辑页面和相位置信息
+     */
+    @RequestMapping("/details/route/{listNumber}")
+    public ModelAndView routeEdit(@PathVariable String listNumber) {
+        MaintenanceList list = maintenanceListService.query4details(listNumber);
+
+        if (Optional.fromNullable(list).isPresent()) {
+            ModelAndView mav = new ModelAndView("admin/maintenance/list/manage/details");
+
+            mav.addObject("list", list);
+
+            return mav;
+        } else {
+            return new ModelAndView("redirect:/admin/maintenance/list/manage/index.action");
+        }
     }
 }
