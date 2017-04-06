@@ -50,4 +50,10 @@ public interface MaintenanceLisRepositoryI {
      * @return
      */
     List<Equipment> selectEquipmentsWithRoomId(PlaceRoom room);
+
+    /**
+     * 页面初始化填充下拉框
+     * @return
+     */
+    List<MaintenanceList> selectGroups();
 }

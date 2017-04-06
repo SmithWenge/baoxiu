@@ -4,6 +4,8 @@ package nanqu.djtu.admin.maintenance.list.user.service.impl;
 import nanqu.djtu.admin.maintenance.list.user.repository.UserMaintenanceListRepositoryI;
 import nanqu.djtu.admin.maintenance.list.user.service.UserMaintenanceListServiceI;
 import nanqu.djtu.pojo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import java.util.List;
  */
 @Service
 public class UserMaintenanceListServiceImpl implements UserMaintenanceListServiceI {
+    private static final Logger LOG = LoggerFactory.getLogger(UserMaintenanceListServiceImpl.class);
     @Autowired
     private UserMaintenanceListRepositoryI maintenanceListRepository;
 
@@ -28,11 +31,6 @@ public class UserMaintenanceListServiceImpl implements UserMaintenanceListServic
     }
 
     @Override
-    public List<EquipmentSet> querySets() {
-        return maintenanceListRepository.querySets();
-    }
-
-    @Override
     public List<PlaceRoom> queryPlaceRoomByBuildingId(String buildingId) {
         return maintenanceListRepository.queryPlaceRoomByBuildingId(buildingId);
     }
@@ -44,11 +42,25 @@ public class UserMaintenanceListServiceImpl implements UserMaintenanceListServic
 
     @Override
     public boolean saveNewMaintenanceList(MaintenanceList maintenance) {
-        return false;
+        boolean insert =  maintenanceListRepository.saveNewMaintenanceList(maintenance);
+        if (insert) {
+            LOG.info("[Maintenance] add new place room success with user {}.");
+        } else {
+            LOG.warn("[Maintenance] add new place room failure with user {}.");
+        }
+
+        return insert;
     }
 
     @Override
-    public MaintenanceList selectRepairGroupId(MaintenanceList maintenance) {
-        return maintenanceListRepository.selectRepairGroupId(maintenance);
+    public MaintenanceList queryDistinctNumberAndBuildingNumber(MaintenanceList maintenance) {
+        return maintenanceListRepository.queryDistinctNumberAndBuildingNumber(maintenance);
     }
+
+    @Override
+    public MaintenanceList queryEquipmentNumber(MaintenanceList maintenance) {
+        return maintenanceListRepository.queryEquipmentNumber(maintenance);
+    }
+
+
 }

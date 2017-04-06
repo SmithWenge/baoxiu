@@ -12,7 +12,7 @@ public interface UserMaintenanceListServiceI {
 
     List<PlaceBuilding> queryBuildingsByDistinctId(String distinctId);
 
-    List<EquipmentSet> querySets();
+
 
     List<PlaceRoom> queryPlaceRoomByBuildingId(String buildingId);
 
@@ -20,5 +20,9 @@ public interface UserMaintenanceListServiceI {
 
     boolean saveNewMaintenanceList(MaintenanceList maintenance);
 
-    MaintenanceList selectRepairGroupId(MaintenanceList maintenance);
+
+
+    MaintenanceList queryDistinctNumberAndBuildingNumber(MaintenanceList maintenance);
+
+    MaintenanceList queryEquipmentNumber(MaintenanceList maintenance);
 }

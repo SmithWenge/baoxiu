@@ -94,16 +94,6 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
     }
 
     /**
-     * 查询未删除的设备组
-     * @return
-     */
-
-    @Override
-    public List<EquipmentSet> querySets() {
-        return null;
-    }
-
-    /**
      * 查询位置信息
      * @return 未删除的位置信息列表
      */
@@ -171,34 +161,91 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
         }
     }
 
+
     /**
-     * 查询相关设备的维修小组
+     * 查询所有校区编号和地点编号
      * @param maintenance
-     * @return 维修小组Id
      */
     @Override
-    public MaintenanceList selectRepairGroupId(MaintenanceList maintenance) {
-        String sql = "SELECT repairGroupId FROM baoxiu.baoxiu_equipment WHERE deleteFlag = 0 AND equipmentId =?;";
-        Object[] args = {maintenance.getEquipmentId()};
+    public MaintenanceList queryDistinctNumberAndBuildingNumber(MaintenanceList maintenance) {
+        String sql = "SELECT baoxiu.baoxiu_placedistinct.distinctId,baoxiu.baoxiu_placedistinct.distinctNumber,baoxiu.baoxiu_placebuilding.buildingId,baoxiu.baoxiu_placebuilding.buildingNumber,baoxiu.baoxiu_placeroom.roomId,baoxiu.baoxiu_placeroom.roomNumber  FROM (baoxiu.baoxiu_placedistinct join baoxiu.baoxiu_placebuilding on (baoxiu.baoxiu_placedistinct.distinctId =baoxiu.baoxiu_placebuilding.distinctId)) JOIN baoxiu.baoxiu_placeroom ON(baoxiu.baoxiu_placebuilding.buildingId = baoxiu.baoxiu_placeroom.buildingId) WHERE baoxiu.baoxiu_placedistinct.deleteFlag =0 AND baoxiu.baoxiu_placebuilding.deleteFlag = 0 AND baoxiu.baoxiu_placedistinct.distinctId=? and baoxiu.baoxiu_placebuilding.buildingId = ?AND baoxiu.baoxiu_placeroom.deleteFlag=0 AND baoxiu.baoxiu_placeroom.roomId=?";
+        Object[] args = {maintenance.getDistinctId(),maintenance.getBuildingId(),maintenance.getRoomId()};
 
         try {
-                return jdbcTemplate.queryForObject(sql,args,new selectRepairGroupIdRowMapper());
-        }catch (Exception e) {
+                return jdbcTemplate.queryForObject(sql,args,new queryDistinctNumberAndBuildingNumberRowMapper());
+        }catch (Exception e){
 
             LOG.error("[MaintenanceList] query4List error with info {}.", e.getMessage());
 
             return null;
         }
     }
-    private class selectRepairGroupIdRowMapper implements RowMapper<MaintenanceList> {
+
+
+
+    private class queryDistinctNumberAndBuildingNumberRowMapper implements RowMapper<MaintenanceList> {
 
         @Override
         public MaintenanceList  mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             MaintenanceList maintenanceList = new MaintenanceList();
+            maintenanceList.setBuildingId(rs.getString("buildingId"));
+            maintenanceList.setDistinctId(rs.getString("distinctId"));
+            maintenanceList.setDistinctNumber(rs.getString("distinctNumber"));
+            maintenanceList.setBuildingNumber(rs.getString("buildingNumber"));
+            maintenanceList.setRoomId(rs.getString("roomId"));
+            maintenanceList.setRoomNumber(rs.getString("roomNumber"));
+
+            return maintenanceList;
+        }
+    }
+    /**
+     * 查询所有设备编号
+     * @param maintenance
+     */
+    @Override
+    public MaintenanceList queryEquipmentNumber(MaintenanceList maintenance) {
+        String sql ="SELECT equipmentId,equipmentNumber,repairGroupId  FROM baoxiu.baoxiu_equipment  where deleteFlag = 0 AND equipmentId = ? ";
+        Object[] args = {maintenance.getEquipmentId()};
+
+        try {
+            return jdbcTemplate.queryForObject(sql,args,new queryEquipmentNumberRowMapper());
+
+        }catch (Exception e){
+            LOG.error("[MaintenanceList] query4List error with info {}.", e.getMessage());
+
+            return null;
+        }
+    }
+
+
+    private class queryEquipmentNumberRowMapper implements RowMapper<MaintenanceList> {
+
+        @Override
+        public MaintenanceList  mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            MaintenanceList maintenanceList = new MaintenanceList();
+            maintenanceList.setEquipmentId(rs.getString("equipmentId"));
+            maintenanceList.setEquipmentNumber(rs.getString("equipmentNumber"));
             maintenanceList.setRepairGroupId(rs.getString("repairGroupId"));
 
             return maintenanceList;
+        }
+    }
+
+    @Override
+    public boolean saveNewMaintenanceList(MaintenanceList maintenance) {
+        String sql = "insert INTO baoxiu.baoxiu_maintenancelist(listNumber,userId,userName,repairGroupId,roomId,buildingId,distinctId,equipmentId,listTime,listDescription,deleteFlag) VALUES (?,?,?,?,?,?,?,?,?,?,0);";
+        Object[] arg = {maintenance.getListNumber(),maintenance.getUserId(),maintenance.getUserName(),maintenance.getRepairGroupId(),maintenance.getRoomId(),maintenance.getBuildingId(),maintenance.getDistinctId(),maintenance.getEquipmentId(),maintenance.getListTime(),maintenance.getListDescription()};
+
+
+
+        try {
+            return  jdbcTemplate.update(sql,arg) == 1;
+        }catch (Exception e){
+            LOG.warn("[MaintenanceList] insert maintenance error with info {}.", e.getMessage());
+
+            return false;
         }
     }
 

@@ -1,5 +1,6 @@
 package nanqu.djtu.admin.maintenance.list.manage.repository.impl;
 
+import com.google.common.base.Strings;
 import nanqu.djtu.admin.maintenance.list.manage.repository.MaintenanceLisRepositoryI;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.util.RepositoryUtils;
@@ -13,7 +14,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -31,22 +35,27 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
         StringBuilder sql = new StringBuilder("SELECT listNumber,listState,equipmentName,groupName,listTime FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId WHERE R.deleteFlag = 0");
 
         List<Object> argsList = new ArrayList<>();
-        if (list.getDistinctId() != null && !list.getDistinctId().equals("")) {
-            sql.append(" AND M.distinctId = ?");
-            argsList.add(list.getDistinctId());
+        if (!Strings.isNullOrEmpty(list.getStartListTime())) {
+            sql.append(" AND M.listTime >= ?");
+            argsList.add(list.getStartListTime());
         }
 
-        if (list.getBuildingId() != null && !list.getBuildingId().equals("")) {
+        if (!Strings.isNullOrEmpty(list.getStopListTime())) {
+            sql.append(" AND M.listTime <= ?");
+            argsList.add(list.getStopListTime());
+        }
+
+        if (!Strings.isNullOrEmpty(list.getBuildingId())) {
             sql.append(" AND M.buildingId = ?");
             argsList.add(list.getBuildingId());
         }
 
-        if (list.getRoomId() != null && !list.getRoomId().equals("")) {
+        if (!Strings.isNullOrEmpty(list.getRoomId())) {
             sql.append(" AND M.roomId = ?");
             argsList.add(list.getRoomId());
         }
 
-        if (list.getEquipmentId() != null && !list.getEquipmentId().equals("")) {
+        if (!Strings.isNullOrEmpty(list.getEquipmentId())) {
             sql.append(" AND M.equipmentId = ?");
             argsList.add(list.getEquipmentId());
         }
@@ -56,7 +65,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             argsList.add(list.getListState());
         }
 
-        if (list.getRepairGroupId() != null && !list.getRepairGroupId().equals("")) {
+        if (!Strings.isNullOrEmpty(list.getRepairGroupId())) {
             sql.append(" AND M.repairGroupId = ?");
             argsList.add(list.getRepairGroupId());
         }
@@ -72,12 +81,13 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
         @Override
         public MaintenanceList mapRow(ResultSet resultSet, int i) throws SQLException {
             MaintenanceList list = new MaintenanceList();
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
             list.setListNumber(resultSet.getString("listNumber"));
             list.setListState(String.valueOf(resultSet.getInt("listState")));
             list.setEquipmentName(resultSet.getString("equipmentName"));
             list.setGroupName(resultSet.getString("groupName"));
-            list.setListTime(resultSet.getTimestamp("listTime"));
+            list.setListTime(format.format(resultSet.getTimestamp("listTime")));
 
             return list;
         }
@@ -188,8 +198,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     @Override
     public List<Equipment> selectEquipmentsWithBuildingId(PlaceRoom room) {
-        String sql = "SELECT E.equipmentId, E.equipmentName FROM  baoxiu_equipment AS E LEFT JOIN baoxiu_equipmentset AS ES ON E.equipmentId = ES.equipmentId LEFT JOIN  baoxiu_set AS S ON ES.setId = s.setId IN (SELECT S.setId FROM baoxiu_set AS S LEFT JOIN baoxiu_placebuilding AS B ON s.setId = B.setId WHERE buildingId = ? AND S.deleteFlag = 0)";
-
+        String sql = "SELECT equipmentId,equipmentName FROM baoxiu_equipment WHERE equipmentId IN (SELECT ES.equipmentId FROM baoxiu_set AS S LEFT JOIN baoxiu_equipmentset AS ES ON s.setId = ES.setId WHERE S.setId IN (SELECT S.setId FROM baoxiu_set AS S LEFT JOIN baoxiu_placebuilding AS B ON s.setId = B.setId WHERE buildingId = ? AND S.deleteFlag = 0))";
         Object[] args = {
                 room.getBuildingId()
         };
@@ -218,8 +227,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     @Override
     public List<Equipment> selectEquipmentsWithRoomId(PlaceRoom room) {
-        String sql = "SELECT E.equipmentId, E.equipmentName FROM  baoxiu_equipment AS E LEFT JOIN baoxiu_equipmentset AS ES ON E.equipmentId = ES.equipmentId LEFT JOIN  baoxiu_set AS S ON ES.setId = s.setId IN (SELECT S.setId FROM baoxiu_set AS S LEFT JOIN baoxiu_placeroom AS R ON s.setId = R.setId WHERE roomId = ? AND S.deleteFlag = 0)";
-
+        String sql = "SELECT equipmentId,equipmentName FROM baoxiu_equipment WHERE equipmentId IN (SELECT ES.equipmentId FROM baoxiu_set AS S LEFT JOIN baoxiu_equipmentset AS ES ON s.setId = ES.setId WHERE S.setId IN (SELECT S.setId FROM baoxiu_set AS S LEFT JOIN baoxiu_placeroom AS R ON s.setId = R.setId WHERE roomId = ? AND S.deleteFlag = 0))";
         Object[] args = {
                 room.getRoomId()
         };
@@ -230,6 +238,33 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             LOG.error("[Equipment] select building {}'s rooms error with info {}.", room.getBuildingId(), e.getMessage());
 
             return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public List<MaintenanceList> selectGroups() {
+        String sql = "SELECT repairGroupId, groupName FROM baoxiu_repairgroup WHERE deleteFlag = 0";
+        Object[] args = {};
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectGroupsRowMapper());
+        } catch (Exception e) {
+            LOG.error("[MaintenanceList] selectDistincts error with info {}.", e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
+    class SelectGroupsRowMapper implements RowMapper<MaintenanceList> {
+
+        @Override
+        public MaintenanceList mapRow(ResultSet resultSet, int i) throws SQLException {
+            MaintenanceList list = new MaintenanceList();
+
+            list.setRepairGroupId(resultSet.getString("repairGroupId"));
+            list.setGroupName(resultSet.getString("groupName"));
+
+            return list;
         }
     }
 }

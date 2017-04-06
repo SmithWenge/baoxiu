@@ -8,22 +8,22 @@
     <legend>报修单管理</legend>
     <div class="layui-form" id="maintenanceListQueryForm">
       <div class="layui-form-item elementAddAndQueryDiv">
-        <div class="layui-input-inline">
+        <div class="layui-input-inline" style="width:130px;">
           <select name="distinctId" id="distinctId" lay-filter="distinctId">
             <option value="">请选择校区</option>
           </select>
         </div>
-        <div class="layui-input-inline">
+        <div class="layui-input-inline" style="width:130px;">
           <select name="buildingId" id="buildingId" lay-filter="buildingId">
             <option value="">请选择地点</option>
           </select>
         </div>
-        <div class="layui-input-inline">
+        <div class="layui-input-inline" style="width:130px;">
           <select name="roomId" id="roomId" lay-filter="roomId">
             <option value="">请选择位置</option>
           </select>
         </div>
-        <div class="layui-input-inline">
+        <div class="layui-input-inline" style="width:130px;">
           <select name="equipmentId" id="equipmentId" lay-filter="equipmentId">
             <option value="">请选择设备</option>
           </select>
@@ -42,16 +42,71 @@
         </div>
       </div>
     </div>
+    <div class="layui-form" id="maintenanceListStateQueryForm">
+      <div class="layui-form-item elementAddAndQueryDiv">
+        <div class="layui-input-inline" style="width:130px;">
+          <select name="listState" id="listState" lay-filter="listState">
+            <option value=-1>请选择状态</option>
+            <option value=1>已提交</option>
+            <option value=2>已派单</option>
+            <option value=3>延期</option>
+            <option value=4>等待派单</option>
+            <option value=5>正在备件</option>
+            <option value=6>已催单</option>
+            <option value=7>已评价</option>
+            <option value=8>待评价</option>
+            <option value=9>其他</option>
+          </select>
+        </div>
+        <div class="layui-input-inline">
+          <div class="layui-input-block queryDivBtn">
+            <button class="layui-btn layui-btn-normal" id="querymaintenanceListStateBtn">查询</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="layui-form" id="maintenanceListGroupQueryForm">
+      <div class="layui-form-item elementAddAndQueryDiv">
+        <div class="layui-input-inline" style="width:130px;">
+          <select name="repairGroupId" id="repairGroupId" lay-filter="repairGroupId">
+            <option value="">请选择维修组</option>
+          </select>
+        </div>
+        <div class="layui-input-inline">
+          <div class="layui-input-block queryDivBtn">
+            <button class="layui-btn layui-btn-normal" id="querymaintenanceGroupStateBtn">查询</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="layui-form" id="maintenanceListDataQueryForm">
+      <div class="layui-form-item elementAddAndQueryDiv">
+        <div class="layui-form-pane" style="margin-top: 15px;">
+          <div class="layui-form-item">
+            <label class="layui-form-label">报修时间范围选择</label>
+            <div class="layui-input-inline">
+              <input class="layui-input" placeholder="开始日" name="startListTime" id="LAY_demorange_s">
+            </div>
+            <div class="layui-input-inline">
+              <input class="layui-input" placeholder="截止日" name="stopListTime" id="LAY_demorange_e">
+            </div>
+            <div class="layui-input-inline">
+              <button class="layui-btn layui-btn-normal" id="maintanceListDateBtn">查询</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="layui-field-box">
       <table class="layui-table">
         <thead>
         <tr>
           <td>序号</td>
+          <td>保修单号</td>
+          <td>保修单状态</td>
           <td>设备名</td>
-          <td>设备编号</td>
           <td>维修小组</td>
-          <td>小组编号</td>
-          <td>操作</td>
+          <td>报修时间</td>
         </tr>
         </thead>
         <tbody id="pageTableBody">
@@ -77,13 +132,57 @@
       "buildingId": '',
       "equipmentId":'',
       "listState": '',
-      "repairGroupId": ''
+      "repairGroupId": '',
+      "stopListTime": '',
+      "startListTime": ''
     };
 
     // 查询数据分页显示
     $("#querymaintenanceListBtn").click(function () {
       loadPageData();
     });
+    $("#querymaintenanceListStateBtn").click(function () {
+      loadPageData();
+    });
+    $("#querymaintenanceGroupStateBtn").click(function () {
+      loadPageData();
+    });
+    $("#maintanceListDateBtn").click(function () {
+      condition.startListTime = $("#LAY_demorange_s").val();
+      condition.stopListTime = $("#LAY_demorange_e").val();
+      loadPageData();
+    });
+
+    // 加载状态信息
+    function loadStateData() {
+      var form = layui.form();
+
+      form.on('select(listState)', function(data) {
+        condition.listState = data.value;
+      });
+    }
+
+    // 加载维修组信息
+    function loadGroupData(result) {
+      var $ = layui.jquery;
+      var $form = $('#maintenanceListGroupQueryForm');
+      var form = layui.form();
+
+      var optionsData = result.groups;
+      var optionsValue = '<option value="">请选择维修组</option>';
+
+      for (var i = 0; i < optionsData.length; i++) {
+        optionsValue += '<option value="' + optionsData[i].repairGroupId + '">' + optionsData[i].groupName + '</option>';
+      }
+
+      $form.find('select[id=repairGroupId]').empty();
+      $form.find('select[id=repairGroupId]').append(optionsValue);
+      form.render();
+
+      form.on('select(repairGroupId)', function(data) {
+        condition.repairGroupId = data.value;
+      });
+    }
 
     // 加载设备信息
     function loadEquipmentData(result) {
@@ -232,7 +331,9 @@
         "buildingId": condition.buildingId,
         "roomId": condition.roomId,
         "equipmentId": condition.equipmentId,
-        "repairGroupId": condition.repairGroupId
+        "repairGroupId": condition.repairGroupId,
+        "stopListTime": condition.stopListTime,
+        "startListTime": condition.startListTime
       };
       $.ajax({
         type: 'post',
@@ -244,10 +345,12 @@
           $("#pageTableBody").empty();
 
           loadDistinctData(result);
+          loadGroupData(result);
+          loadStateData();
 
           $.each(result.page.content, function (i, item) {
-            var trData = "<tr><td>" + (i + 1) + "</td><td>" + item.listNumber + "</td><td>" + item.listState + "</td>";
-            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>  + item.listTime + </td><td>";
+            var trData = "<tr><td>" + (i + 1) + "</td><td><a href=\"${contextPath}/admin/maintenance/list/manage/details/route.action\">" + item.listNumber + "</a></td><td>" + item.listState + "</td>";
+            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.listTime + "</td>";
             $("#pageTableBody").append(trData);
           });
         }
@@ -261,7 +364,9 @@
         "buildingId": condition.buildingId,
         "roomId": condition.roomId,
         "equipmentId": condition.equipmentId,
-        "repairGroupId": condition.repairGroupId
+        "repairGroupId": condition.repairGroupId,
+        "stopListTime": condition.stopListTime,
+        "startListTime": condition.startListTime
       };
       $.ajax({
         type: 'post',
@@ -288,6 +393,41 @@
     }
 
     loadPageData();
+
+
+    //日期选择框设置
+    layui.use('laydate', function(){
+      var laydate = layui.laydate;
+
+      var start = {
+        min: '2000-01-01 00:00:00'
+        ,max: '2099-06-16 23:59:59'
+        ,istoday: false
+        ,choose: function(datas){
+          end.min = datas; //开始日选好后，重置结束日的最小日期
+          end.start = datas //将结束日的初始值设定为开始日
+        }
+      };
+
+      var end = {
+        min: '2000-01-01 00:00:00'
+        ,max: '2099-06-16 23:59:59'
+        ,istoday: false
+        ,choose: function(datas){
+          start.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+      };
+
+      document.getElementById('LAY_demorange_s').onclick = function(){
+        start.elem = this;
+        laydate(start);
+      }
+      document.getElementById('LAY_demorange_e').onclick = function(){
+        end.elem = this
+        laydate(end);
+      }
+
+    });
   });
 </script>
 

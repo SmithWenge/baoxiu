@@ -30,4 +30,13 @@ public class ConstantFields {
     public static final String OPERATION_MESSAGE_KEY = "opsKey";
     public static final String SUCCESS_MESSAGE = "操作成功";
     public static final String FAILURE_MESSAGE = "操作失败";
+
+    /* 所有未关联保修组设备的默认的维修组Id */
+    public static final String DEFAULT_GROUP_ID = "0";
+
+    /* 定义各个编号的最小长度 */
+    public static final int MIN_NUMBER_LENGTH = 6;
+
+    /* 定义各个编号的前面补充 */
+    public static final char PAD_NUMBER_CHAR = '0';
 }

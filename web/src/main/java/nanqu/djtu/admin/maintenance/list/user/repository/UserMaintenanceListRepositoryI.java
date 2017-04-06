@@ -1,5 +1,6 @@
 package nanqu.djtu.admin.maintenance.list.user.repository;
 
+import com.mysql.jdbc.MiniAdmin;
 import nanqu.djtu.pojo.*;
 
 import java.util.List;
@@ -20,8 +21,6 @@ public interface UserMaintenanceListRepositoryI {
 
     List<PlaceBuilding> selectBuildingsByDistinctId(String distinctId);
 
-    List<EquipmentSet> querySets();
-
     /**
      * 查询位置信息
      * @return 未删除的位置信息列表
@@ -37,11 +36,21 @@ public interface UserMaintenanceListRepositoryI {
 
     List<Equipment> queryEquipment();
 
+
     /**
-     * 查询相关设备的维修小组
+     * 查询所有校区编号和地点编号
      * @param maintenance
-     * @return
+     */
+    MaintenanceList queryDistinctNumberAndBuildingNumber(MaintenanceList maintenance);
+    /**
+     * 查询所有设备编号
+     * @param maintenance
+     */
+    MaintenanceList queryEquipmentNumber(MaintenanceList maintenance);
+    /**
+     * 添加保修单
+     * @param maintenance
      */
 
-    MaintenanceList selectRepairGroupId(MaintenanceList maintenance);
+    boolean saveNewMaintenanceList(MaintenanceList maintenance);
 }

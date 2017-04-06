@@ -12,16 +12,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpSession;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
-
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2017/4/4.
+ * @author zhangwenyue
  */
 @Controller
 @RequestMapping("/user/maintenance/list")
@@ -77,21 +75,38 @@ public class UserMaintenanceListController {
     @RequestMapping(value = "/add/do", method = RequestMethod.POST)
     public String addNewMaintenanceList(MaintenanceList maintenance, RedirectAttributes redirectAttributes) {
 
-       MaintenanceList repairGroupId = maintenanceListService.selectRepairGroupId(maintenance);
-        String groupId = repairGroupId.getRepairGroupId();
-        java.sql.Date swTime = new java.sql.Date(System.currentTimeMillis());
+        SimpleDateFormat  format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        maintenance.setListTime(format.format(new Date()));
+        maintenance.setUserId("1000");
+        maintenance.setUserName("wenge");
+        MaintenanceList distinctNumberAndBuildingNumber =(maintenanceListService.queryDistinctNumberAndBuildingNumber(maintenance));
+        MaintenanceList equipmentNumber =(maintenanceListService.queryEquipmentNumber(maintenance));
+        String repairGroupId = equipmentNumber.getRepairGroupId();
+        String listNumber = distinctNumberAndBuildingNumber.getDistinctNumber() + distinctNumberAndBuildingNumber.getBuildingNumber()+distinctNumberAndBuildingNumber.getRoomNumber() + equipmentNumber.getEquipmentNumber();
+        maintenance.setListNumber(listNumber);
+        maintenance.setRepairGroupId(repairGroupId);
 
         boolean save = maintenanceListService.saveNewMaintenanceList(maintenance);
 
         if (save) {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
 
-            return "redirect:/admin/equipment/index.action";
+            return "redirect:/user/maintenance/list/success.action";
         } else {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
 
-            return "redirect:/admin/equipment/add/route.action";
+            return "redirect:/user/maintenance/list/route.action";
         }
+    }
+
+    /**
+     * 路由到添加成功页面
+     * @return 页面地址
+     */
+    @RequestMapping("/success")
+    public  ModelAndView success() {
+        ModelAndView modelAndView = new ModelAndView("user/maintenance/list/success");
+        return  modelAndView;
     }
 
 

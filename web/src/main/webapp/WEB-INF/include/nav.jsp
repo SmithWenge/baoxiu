@@ -67,6 +67,14 @@
                         <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目三</a></dd>
                     </dl>
                 </li>
+                <li class="layui-nav-item" id="five">
+                    <a href="javascript:;"><i class="layui-icon">&#xe64a;</i> 报修单</a>
+                    <dl class="layui-nav-child">
+                        <dd id="maintenanceList"><a href="${contextPath}/admin/maintenance/list/manage/index.action"><i class="layui-icon">&#xe602;</i> 报修单管理</a></dd>
+                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目二</a></dd>
+                        <dd><a href="javascript:;"><i class="layui-icon">&#xe602;</i> 栏目三</a></dd>
+                    </dl>
+                </li>
             </ul>
         </div>
     </div>

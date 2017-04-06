@@ -11,20 +11,8 @@
             </span>
         </legend>
         <div style="width: 30%; margin-top: 15px; ">
-            <form action="${contextPath}/admin/place/room/add/do.action" method="post" class="layui-form" id="placeRoomForm">
+            <form action="${contextPath}/user/maintenance/list/add/do.action" method="post" class="layui-form" id="placeRoomForm">
 
-                <div class="layui-form-item">
-                    <label class="layui-form-label">报修单编号</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="roomNumber" lay-verify="roomNumber" placeholder="请输入编号" class="layui-input" id="roomNumber">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">用户名</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="roomNumber" lay-verify="roomNumber" placeholder="请输入编号" class="layui-input" id="roomNumber">
-                    </div>
-                </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">选择校区</label>
                     <div class="layui-input-block">
@@ -49,7 +37,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">选择位置</label>
                     <div class="layui-input-block">
-                        <select name="roomId" id="roomId" lay-filter="buildingId" >
+                        <select name="roomId" id="roomId" lay-filter="roomId" >
                             <option value="0">请选择位置</option>
                         </select>
                     </div>
@@ -61,7 +49,7 @@
                         <select name="equipmentId" id="equipmentId" lay-filter="equipmentId">
                             <option value="0">请选择设备</option>
                             <c:forEach items="${equipments}" var="equipments">
-                                <option value="${equipments.buildingId}">${equipments.equipmentName}</option>
+                                <option value="${equipments.equipmentId}">${equipments.equipmentName}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -74,7 +62,7 @@
                 </div>
 
                 <div class="layui-form-item ">
-                    <label class="layui-form-label">保修单详细信息</label>
+                    <label class="layui-form-label">详细信息</label>
                     <div class="layui-input-block">
                         <textarea name="listDescription" id="listDescription" placeholder="请输入内容" class="layui-textarea"></textarea>
                     </div>
@@ -151,8 +139,6 @@
                 for (var i = 0; i < rooms.length; i++) {
                     optionsValue += '<option value="' + rooms[i].roomId + '">' + rooms[i].roomName + '</option>';
                 }
-            } else {
-                optionsValue = '<option value="0">该下拉菜单为空</option>';
             }
 
             $form.find('select[id=roomId]').empty();
@@ -192,7 +178,7 @@
         layui.upload({
             url: '/test/upload.json'
             ,elem: '#test' //指定原始元素，默认直接查找class="layui-upload-file"
-            ,method: 'get' //上传接口的http类型
+            ,method: 'post' //上传接口的http类型
             ,success: function(res){
                 LAY_demo_upload.src = res.url;
             }

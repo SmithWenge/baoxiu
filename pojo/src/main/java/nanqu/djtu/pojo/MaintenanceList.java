@@ -14,12 +14,73 @@ public class MaintenanceList {
     private String equipmentId;
     private int listState;
     private String listDescription;
-    private Timestamp listTime;
-    private Date startListTime;
-    private Date stopListTime;
+    private String listTime;
+    private String startListTime;
+    private String stopListTime;
     private String equipmentName;
     private String groupName;
     private String distinctName;
+    private String distinctNumber;
+
+    public String getBuildingNumber() {
+        return buildingNumber;
+    }
+
+    public void setBuildingNumber(String buildingNumber) {
+        this.buildingNumber = buildingNumber;
+    }
+
+    public String getEquipmentNumber() {
+        return equipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        this.equipmentNumber = equipmentNumber;
+    }
+
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public String getDistinctNumber() {
+        return distinctNumber;
+    }
+
+    public void setDistinctNumber(String distinctNumber) {
+        this.distinctNumber = distinctNumber;
+    }
+
+    private String buildingNumber;
+    private String roomNumber;
+    private String equipmentNumber;
+
+    public String getStopListTime() {
+        return stopListTime;
+    }
+
+    public void setStopListTime(String stopListTime) {
+        this.stopListTime = stopListTime;
+    }
+
+    public String getStartListTime() {
+        return startListTime;
+    }
+
+    public void setStartListTime(String startListTime) {
+        this.startListTime = startListTime;
+    }
+
+    public String getListTime() {
+        return listTime;
+    }
+
+    public void setListTime(String listTime) {
+        this.listTime = listTime;
+    }
 
     public String getDistinctName() {
         return distinctName;
@@ -43,14 +104,6 @@ public class MaintenanceList {
 
     public void setEquipmentName(String equipmentName) {
         this.equipmentName = equipmentName;
-    }
-
-    public Timestamp getListTime() {
-        return listTime;
-    }
-
-    public void setListTime(Timestamp listTime) {
-        this.listTime = listTime;
     }
 
     public void setListNumber(String listNumber) {
