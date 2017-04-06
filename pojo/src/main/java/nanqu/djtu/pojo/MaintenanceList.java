@@ -20,6 +20,44 @@ public class MaintenanceList {
     private String equipmentName;
     private String groupName;
     private String distinctName;
+    private String distinctNumber;
+
+    public String getEquipmentNumber() {
+        return EquipmentNumber;
+    }
+
+    public void setEquipmentNumber(String equipmentNumber) {
+        EquipmentNumber = equipmentNumber;
+    }
+
+    private String EquipmentNumber;
+
+    public String getBuildingNumber() {
+        return buildingNumber;
+    }
+
+    public void setBuildingNumber(String buildingNumber) {
+        this.buildingNumber = buildingNumber;
+    }
+
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public String getDistinctNumber() {
+        return distinctNumber;
+    }
+
+    public void setDistinctNumber(String distinctNumber) {
+        this.distinctNumber = distinctNumber;
+    }
+
+    private String buildingNumber;
+    private String roomNumber;
 
     public String getStopListTime() {
         return stopListTime;
