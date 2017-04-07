@@ -316,7 +316,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             list.setUserName(resultSet.getString("userName"));
             list.setEquipmentName(resultSet.getString("equipmentName"));
             list.setListTime(format.format(resultSet.getTimestamp("listTime")));
-            list.setListStatusTime(format.format(resultSet.getTimestamp("listTime")));
+            list.setListStatusTime(format.format(resultSet.getTimestamp("listStatusTime")));
             list.setListState(String.valueOf(resultSet.getInt("listState")));
             list.setListstateStr(dictionary.dictionary(listState,"listState").getItemValue());
 

@@ -21,6 +21,51 @@ public class MaintenanceList {
     private String groupName;
     private String distinctName;
     private String distinctNumber;
+    private String roomName;
+    private String buildingName;
+    private String listPicture;
+    private String listStatusTime;
+    private String liststateStr;
+
+    public String getListstateStr() {
+        return liststateStr;
+    }
+
+    public void setListstateStr(String liststateStr) {
+        this.liststateStr = liststateStr;
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public String getBuildingName() {
+        return buildingName;
+    }
+
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
+    }
+
+    public String getListPicture() {
+        return listPicture;
+    }
+
+    public void setListPicture(String listPicture) {
+        this.listPicture = listPicture;
+    }
+
+    public String getListStatusTime() {
+        return listStatusTime;
+    }
+
+    public void setListStatusTime(String listStatusTime) {
+        this.listStatusTime = listStatusTime;
+    }
 
     public String getEquipmentNumber() {
         return EquipmentNumber;
