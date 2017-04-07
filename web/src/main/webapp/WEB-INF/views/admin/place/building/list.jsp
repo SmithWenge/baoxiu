@@ -5,7 +5,7 @@
 <!-- 内容主体 -->
 <div class="layui-body body">
   <fieldset class="layui-elem-field layui-field-title">
-    <legend>校区管理</legend>
+    <legend>地点管理</legend>
     <a href="${contextPath}/admin/place/building/add/route.action">
       <button class="layui-btn layui-btn-normal elementAddBtn" id="addPlaceBuilding'">添加</button>
     </a>
@@ -54,7 +54,7 @@
   $(function () {
     //导航栏选择
     $("#first").attr("class", "layui-nav-item layui-nav-itemed");
-    $("#placeDistinct").attr("class", "layui-this");
+    $("#placeBuilding").attr("class", "layui-this");
 
     // 删除提示弹出提示
     function deleteConfirm($deleteBtn) {

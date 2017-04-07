@@ -50,8 +50,8 @@
 <script>
     $(function () {
         // 导航栏选择
-        $("#first").attr("class", "layui-nav-item layui-nav-itemed");
-        $("#repairgroup").attr("class", "layui-this");
+        $("#four").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#repairGroup").attr("class", "layui-this");
 
         // 删除提示弹出提示
         function deleteConfirm($deleteBtn) {

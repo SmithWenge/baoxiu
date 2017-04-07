@@ -31,7 +31,7 @@
                     <a href="javascript:;"><i class="layui-icon">&#xe649;</i> 位置管理</a>
                     <dl class="layui-nav-child">
                         <dd id="placeDistinct"><a href="${contextPath}/admin/place/distinct/list.action"><i class="layui-icon">&#xe602;</i> 校区管理</a></dd>
-                        <dd><a href="${contextPath}/admin/place/building/list.action"><i class="layui-icon">&#xe602;</i> 地点管理</a></dd>
+                        <dd id="placeBuilding"><a href="${contextPath}/admin/place/building/list.action"><i class="layui-icon">&#xe602;</i> 地点管理</a></dd>
                         <dd id="placeRoom"><a href="${contextPath}/admin/place/room/index.action"><i class="layui-icon">&#xe602;</i> 位置管理</a></dd>
                     </dl>
                 </li>
@@ -43,10 +43,17 @@
                         <dd id="printer"><a href="${contextPath}/admin/printer/list.action"><i class="layui-icon">&#xe602;</i> 打印机管理</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item" id="three">
                     <a href="javascript:;"><i class="layui-icon">&#xe64a;</i> 工人管理</a>
                     <dl class="layui-nav-child">
-                        <dd id="workerInfo"><a href="${contextPath}/admin/worker/info/list.action"><i class="layui-icon">&#xe602;</i>工人管理</a></dd>
+                        <dd id="workerInfo"><a href="${contextPath}/admin/worker/info/list.action"><i class="layui-icon">&#xe602;</i>工人信息管理</a></dd>
+                        <dd id="workerType"><a href="${contextPath}/admin/worker/type/list.action"><i class="layui-icon">&#xe602;</i>工种管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item" id="four">
+                    <a href="javascript:;"><i class="layui-icon">&#xe64a;</i> 维修小组管理</a>
+                    <dl class="layui-nav-child">
+                        <dd id="repairGroup"><a href="${contextPath}/admin/repairgroup/list.action"><i class="layui-icon">&#xe602;</i> 维修小组管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item" id="five">

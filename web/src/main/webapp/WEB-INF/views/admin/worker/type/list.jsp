@@ -45,6 +45,10 @@
 
 <script>
     $(function () {
+        // 导航栏选择
+        $("#three").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#workerType").attr("class", "layui-this");
+
         // 删除提示弹出提示
         function deleteConfirm($deleteBtn) {
             event.preventDefault();

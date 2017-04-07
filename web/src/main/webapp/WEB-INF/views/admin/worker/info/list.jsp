@@ -5,7 +5,7 @@
 <!-- 内容主体 -->
 <div class="layui-body body">
   <fieldset class="layui-elem-field layui-field-title">
-    <legend>工人管理</legend>
+    <legend>工人信息管理</legend>
     <a href="${contextPath}/admin/worker/info/add/route.action">
       <button class="layui-btn layui-btn-normal elementAddBtn" id="addWorkerInfo">添加</button>
     </a>
@@ -72,7 +72,7 @@
 <script>
   $(function () {
     // 导航栏选择
-    $("#first").attr("class", "layui-nav-item layui-nav-itemed");
+    $("#three").attr("class", "layui-nav-item layui-nav-itemed");
     $("#workerInfo").attr("class", "layui-this");
 
     // 删除提示弹出提示
