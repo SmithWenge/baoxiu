@@ -75,16 +75,8 @@ public class UserMaintenanceListController {
     @RequestMapping(value = "/add/do", method = RequestMethod.POST)
     public String addNewMaintenanceList(MaintenanceList maintenance, RedirectAttributes redirectAttributes) {
 
-        SimpleDateFormat  format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        maintenance.setListTime(format.format(new Date()));
-        maintenance.setUserId("1000");
-        maintenance.setUserName("wenge");
-        MaintenanceList distinctNumberAndBuildingNumber =(maintenanceListService.queryDistinctNumberAndBuildingNumber(maintenance));
-        MaintenanceList equipmentNumber =(maintenanceListService.queryEquipmentNumber(maintenance));
-        String repairGroupId = equipmentNumber.getRepairGroupId();
-        String listNumber = distinctNumberAndBuildingNumber.getDistinctNumber() + distinctNumberAndBuildingNumber.getBuildingNumber()+distinctNumberAndBuildingNumber.getRoomNumber() + equipmentNumber.getEquipmentNumber();
-        maintenance.setListNumber(listNumber);
-        maintenance.setRepairGroupId(repairGroupId);
+
+
 
         boolean save = maintenanceListService.saveNewMaintenanceList(maintenance);
 
