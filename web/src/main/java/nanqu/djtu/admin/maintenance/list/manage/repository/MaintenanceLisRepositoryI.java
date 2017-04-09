@@ -67,4 +67,11 @@ public interface MaintenanceLisRepositoryI {
     boolean updateliststate(String listNumber);
 
     boolean insertliststate(String listNumber);
+
+    /**
+     * 查看详情中的状态列表
+     * @param ListNumber
+     * @return
+     */
+    List<MaintenanceList> selectStatusWithListNum(String listNumber);
 }

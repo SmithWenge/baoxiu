@@ -1,80 +1,57 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/include/nav.jsp"%>
-<%@include file="/WEB-INF/include/message.jsp"%>
+<%@ include file="/WEB-INF/include/nav.jsp"%>
 
-<%--课程管理--%>
-<style>
-    #role {
-        background: whitesmoke;
-        border-left: 4px solid #fed350;
-        border-right: 4px solid #fed350;
-        color: #444;
-    }
-</style>
-<div class="panel panel-default" style="float: left; width: 90%; border-radius: 0px;">
-    <div class="panel-heading" style="padding-bottom: 0px; padding-top: 0px; padding-left: 0px; border-radius: 0px;">
-        <ul class="nav nav-pills">
-            <li role="presentation">
-                <a href="${contextPath}/admin/role/list.action">
-                    <span class="glyphicon glyphicon-map-marker"></span> &nbsp;角色管理
-                </a>
-            </li>
-            <li role="presentation" style="float: right;">
-                <a href="${contextPath}/admin/role/routeAdd.action">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="panel-body">
-        <div class="row" style="margin-top: 5px;">
-            <div class="col-md-12">
-                <table class="table" id="paginationTable" align="center">
-                    <tr style="background-color: #3767b1; color: #dbdbdb;">
-                        <th>序号</th>
-                        <th>角色名</th>
-                        <th>描述</th>
-                        <th>权限</th>
-                        <th>操作</th>
+<!-- 内容主体 -->
+<div class="layui-body body">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>权限管理</legend>
+        <a href="${contextPath}/admin/role/routeAdd.action">
+            <button class="layui-btn layui-btn-normal elementAddBtn" id="addRole">添加</button>
+        </a>
+        <div class="layui-field-box">
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <td>序号</td>
+                    <td>角色名</td>
+                    <td>描述</td>
+                    <td>权限</td>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${roles}" var="role" varStatus="status">
+                    <tr>
+                        <td>${status.index + 1}</td>
+                        <td>${role.roleName}</td>
+                        <td>${role.roleZHCNName}</td>
+                        <td>
+                            <c:forEach items="${role.permissions}" var="permission">
+                                ${permission.permissionZHCNName},
+                            </c:forEach>
+                        </td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <a href="${contextPath}/admin/role/edit/route/${role.roleId}.action">
+                                    <button class="layui-btn layui-btn-small layui-btn-warm"><i class="layui-icon">&#xe642;</i></button>
+                                </a>
+                            </div>
+                        </td>
                     </tr>
-                    <c:forEach items="${roles}" var="role" varStatus="status">
-                        <tr>
-                            <td>${status.index + 1}</td>
-                            <td>${role.roleName}</td>
-                            <td>${role.roleZHCNName}</td>
-                            <td>
-                                <c:forEach items="${role.permissions}" var="permission">
-                                    ${permission.permissionZHCNName},
-                                </c:forEach>
-                            </td>
-                            <td>
-                                <shiro:hasRole name="super">
-                                    <a href="${contextPath}/admin/role/edit/route/${role.roleId}.action">
-                                        <button type="button" class="btn btn-warning">修改</button>
-                                    </a>
-                                </shiro:hasRole>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </div>
+                </c:forEach>
+                </tbody>
+            </table>
         </div>
-    </div>
+    </fieldset>
 </div>
 
 <%@include file="/WEB-INF/include/javascript.jsp"%>
 
-<script type="text/javascript">
+<script>
     $(function () {
-        $("#userManageNav").trigger("click");
-    });
-</script>
-
-<script type="text/javascript">
-    $(function() {
-        // 设置table表格中的行高
-        var $height = $('#paginationTable td').height() + 'px';
-        $('#paginationTable td').css('line-height', $height);
+        // 导航栏选择
+        $("#six").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#role").attr("class", "layui-this");
     });
 </script>
 

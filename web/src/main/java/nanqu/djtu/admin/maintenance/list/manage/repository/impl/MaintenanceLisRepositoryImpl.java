@@ -34,16 +34,15 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     @Override
     public Page<MaintenanceList> select4Page(MaintenanceList list, Pageable pageable) {
-        StringBuilder sql = new StringBuilder("SELECT listNumber,listState,equipmentName,groupName,listTime FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId WHERE R.deleteFlag = 0");
-
+        StringBuilder sql = new StringBuilder("SELECT listNumber,listState,equipmentName,groupName,liststatetime FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId WHERE R.deleteFlag = 0");
         List<Object> argsList = new ArrayList<>();
         if (!Strings.isNullOrEmpty(list.getStartListTime())) {
-            sql.append(" AND M.listTime >= ?");
+            sql.append(" AND M.liststatetime >= ?");
             argsList.add(list.getStartListTime());
         }
 
         if (!Strings.isNullOrEmpty(list.getStopListTime())) {
-            sql.append(" AND M.listTime <= ?");
+            sql.append(" AND M.liststatetime <= ?");
             argsList.add(list.getStopListTime());
         }
 
@@ -72,7 +71,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             argsList.add(list.getRepairGroupId());
         }
 
-        sql.append(" ORDER BY M.listTime DESC");
+        sql.append(" ORDER BY M.liststatetime DESC");
         Object[] args = argsList.toArray();
 
         return repositoryUtils.select4Page(sql.toString(), pageable, args, new Query4PageRowmapper());
@@ -91,8 +90,8 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             list.setListState(String.valueOf(listState));
             list.setEquipmentName(resultSet.getString("equipmentName"));
             list.setGroupName(resultSet.getString("groupName"));
-            list.setListTime(format.format(resultSet.getTimestamp("listTime")));
-            list.setListstateStr(dictionary.dictionary(listState,"listState").getItemValue());
+            list.setListstatetime(format.format(resultSet.getTimestamp("liststatetime")));
+            list.setListstateStr(dictionary.dictionary(listState, "listState").getItemValue());
 
             return list;
         }
@@ -275,8 +274,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     @Override
     public MaintenanceList select4details(String listNumber) {
-        String sql = "SELECT listNumber,userName,groupName,roomName,buildingName,distinctName,equipmentName,listTime,listState,listDescription,listStatusTime,listPicture FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.groupName LEFT JOIN baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";
-        Object[] args = {
+        String sql = "SELECT listNumber,userName,groupName,roomName,buildingName,distinctName,equipmentName,listState,listDescription,listPicture FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.groupName LEFT JOIN baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";        Object[] args = {
                 listNumber
         };
 
@@ -328,8 +326,8 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
         @Override
         public MaintenanceList mapRow(ResultSet resultSet, int i) throws SQLException {
             MaintenanceList list = new MaintenanceList();
-            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             IDictionaryManager dictionary = DefaultDictionaryManager.getInstance();
+
             int listState = resultSet.getInt("listState");
             String groupName = resultSet.getString("groupName");
             String roomName = resultSet.getString("roomName");
@@ -349,10 +347,45 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             list.setListNumber(resultSet.getString("listNumber"));
             list.setUserName(resultSet.getString("userName"));
             list.setEquipmentName(resultSet.getString("equipmentName"));
-            list.setListTime(format.format(resultSet.getTimestamp("listTime")));
-            list.setListStatusTime(format.format(resultSet.getTimestamp("listStatusTime")));
             list.setListState(String.valueOf(resultSet.getInt("listState")));
             list.setListstateStr(dictionary.dictionary(listState,"listState").getItemValue());
+
+            return list;
+        }
+    }
+
+    @Override
+    public List<MaintenanceList> selectStatusWithListNum(String listNumber) {
+        String sql = "SELECT listState,liststatetime FROM baoxiu_liststatetime WHERE listNumber = ? AND deleteFlag = 0 ORDER BY liststatetime DESC";
+        Object[] args = {
+                listNumber
+        };
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectStatusWithListNumRowMapper());
+        } catch (Exception e) {
+            LOG.error("[MaintenanceList] select status {}'s MaintenanceList error with info {}.", listNumber, e.getMessage());
+
+            MaintenanceList list = new MaintenanceList();
+            List<MaintenanceList> lists = new ArrayList<>();
+            list.setListstateStr("暂无更新");
+            list.setListstatetime("暂无更新");
+            lists.add(list);
+
+            return lists;
+        }
+    }
+
+    class SelectStatusWithListNumRowMapper implements RowMapper<MaintenanceList> {
+
+        @Override
+        public MaintenanceList mapRow(ResultSet resultSet, int i) throws SQLException {
+            MaintenanceList list = new MaintenanceList();
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            IDictionaryManager dictionary = DefaultDictionaryManager.getInstance();
+
+            list.setListstateStr(dictionary.dictionary(resultSet.getInt("listState"), "listState").getItemValue());
+            list.setListstatetime(format.format(resultSet.getTimestamp("liststatetime")));
 
             return list;
         }

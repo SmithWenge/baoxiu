@@ -104,21 +104,6 @@
         </tr>
         </thead>
         <tbody id="pageTableBody">
-        <tr>
-          <td>序号</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>
-            <div class="layui-btn-group">
-              <a href="${contextPath}/admin/place/distinct/edit/route/${distinct.distinctId}.action">
-                <button class="layui-btn layui-btn-normal" >查询</button>
-              </a>
-            </div>
-          </td>
-        </tr>
         </tbody>
       </table>
     </div>

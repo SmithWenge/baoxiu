@@ -67,7 +67,11 @@ public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
 
     @Override
     public MaintenanceList query4details(String listNumber) {
-        return maintenanceLisRepository.select4details(listNumber);
+        MaintenanceList list = maintenanceLisRepository.select4details(listNumber);
+        List<MaintenanceList> lists = maintenanceLisRepository.selectStatusWithListNum(listNumber);
+        list.setLists(lists);
+
+        return list;
     }
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override

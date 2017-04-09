@@ -62,6 +62,12 @@
                         <dd id="maintenanceList"><a href="${contextPath}/admin/maintenance/list/manage/index.action"><i class="layui-icon">&#xe602;</i> 报修单管理</a></dd>
                     </dl>
                 </li>
+                <li class="layui-nav-item" id="six">
+                    <a href="javascript:;"><i class="layui-icon">&#xe62d;</i> 用户管理</a>
+                    <dl class="layui-nav-child">
+                        <dd id="role"><a href="${contextPath}/admin/role/list.action"><i class="layui-icon">&#xe602;</i> 角色管理</a></dd>
+                    </dl>
+                </li>
             </ul>
         </div>
     </div>

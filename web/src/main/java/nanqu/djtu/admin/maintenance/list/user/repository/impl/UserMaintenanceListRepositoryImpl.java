@@ -3,6 +3,7 @@ package nanqu.djtu.admin.maintenance.list.user.repository.impl;
 
 import nanqu.djtu.admin.maintenance.list.user.repository.UserMaintenanceListRepositoryI;
 import nanqu.djtu.pojo.*;
+import nanqu.djtu.utils.PrimaryKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Administrator on 2017/4/4.
@@ -160,94 +162,188 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
             return equipment;
         }
     }
-
-
     /**
-     * 查询所有校区编号和地点编号
-     * @param maintenance
+     * 添加新的保修单
+     *
+     * @param list 保修单信息
+     * @return 如果添加成功返回true, else false
      */
     @Override
-    public MaintenanceList queryDistinctNumberAndBuildingNumber(MaintenanceList maintenance) {
-        String sql = "SELECT baoxiu.baoxiu_placedistinct.distinctId,baoxiu.baoxiu_placedistinct.distinctNumber,baoxiu.baoxiu_placebuilding.buildingId,baoxiu.baoxiu_placebuilding.buildingNumber,baoxiu.baoxiu_placeroom.roomId,baoxiu.baoxiu_placeroom.roomNumber  FROM (baoxiu.baoxiu_placedistinct join baoxiu.baoxiu_placebuilding on (baoxiu.baoxiu_placedistinct.distinctId =baoxiu.baoxiu_placebuilding.distinctId)) JOIN baoxiu.baoxiu_placeroom ON(baoxiu.baoxiu_placebuilding.buildingId = baoxiu.baoxiu_placeroom.buildingId) WHERE baoxiu.baoxiu_placedistinct.deleteFlag =0 AND baoxiu.baoxiu_placebuilding.deleteFlag = 0 AND baoxiu.baoxiu_placedistinct.distinctId=? and baoxiu.baoxiu_placebuilding.buildingId = ?AND baoxiu.baoxiu_placeroom.deleteFlag=0 AND baoxiu.baoxiu_placeroom.roomId=?";
-        Object[] args = {maintenance.getDistinctId(),maintenance.getBuildingId(),maintenance.getRoomId()};
+    public boolean insertNew(MaintenanceList list) {
+        String sql = "INSERT INTO baoxiu_maintenancelist (listNumber, userId, userName, repairGroupId, roomId, buildingId, distinctId, listDescription, equipmentId, listState) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        Object[] args = {
+                list.getListNumber(),
+                list.getUserId(),
+                list.getUserName(),
+                list.getRepairGroupId(),
+                list.getRoomId(),
+                list.getBuildingId(),
+                list.getDistinctId(),
+                list.getListDescription(),
+                list.getEquipmentId(),
+                list.getListState()
+        };
 
         try {
-                return jdbcTemplate.queryForObject(sql,args,new queryDistinctNumberAndBuildingNumberRowMapper());
-        }catch (Exception e){
-
-            LOG.error("[MaintenanceList] query4List error with info {}.", e.getMessage());
-
-            return null;
-        }
-    }
-
-
-
-    private class queryDistinctNumberAndBuildingNumberRowMapper implements RowMapper<MaintenanceList> {
-
-        @Override
-        public MaintenanceList  mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-            MaintenanceList maintenanceList = new MaintenanceList();
-            maintenanceList.setBuildingId(rs.getString("buildingId"));
-            maintenanceList.setDistinctId(rs.getString("distinctId"));
-            maintenanceList.setDistinctNumber(rs.getString("distinctNumber"));
-            maintenanceList.setBuildingNumber(rs.getString("buildingNumber"));
-            maintenanceList.setRoomId(rs.getString("roomId"));
-            maintenanceList.setRoomNumber(rs.getString("roomNumber"));
-
-            return maintenanceList;
-        }
-    }
-    /**
-     * 查询所有设备编号
-     * @param maintenance
-     */
-    @Override
-    public MaintenanceList queryEquipmentNumber(MaintenanceList maintenance) {
-        String sql ="SELECT equipmentId,equipmentNumber,repairGroupId  FROM baoxiu.baoxiu_equipment  where deleteFlag = 0 AND equipmentId = ? ";
-        Object[] args = {maintenance.getEquipmentId()};
-
-        try {
-            return jdbcTemplate.queryForObject(sql,args,new queryEquipmentNumberRowMapper());
-
-        }catch (Exception e){
-            LOG.error("[MaintenanceList] query4List error with info {}.", e.getMessage());
-
-            return null;
-        }
-    }
-
-
-    private class queryEquipmentNumberRowMapper implements RowMapper<MaintenanceList> {
-
-        @Override
-        public MaintenanceList  mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-            MaintenanceList maintenanceList = new MaintenanceList();
-            maintenanceList.setEquipmentId(rs.getString("equipmentId"));
-            maintenanceList.setEquipmentNumber(rs.getString("equipmentNumber"));
-            maintenanceList.setRepairGroupId(rs.getString("repairGroupId"));
-
-            return maintenanceList;
-        }
-    }
-
-    @Override
-    public boolean saveNewMaintenanceList(MaintenanceList maintenance) {
-        String sql = "insert INTO baoxiu.baoxiu_maintenancelist(listNumber,userId,userName,repairGroupId,roomId,buildingId,distinctId,equipmentId,listTime,listDescription,deleteFlag) VALUES (?,?,?,?,?,?,?,?,?,?,0);";
-        Object[] arg = {maintenance.getListNumber(),maintenance.getUserId(),maintenance.getUserName(),maintenance.getRepairGroupId(),maintenance.getRoomId(),maintenance.getBuildingId(),maintenance.getDistinctId(),maintenance.getEquipmentId(),maintenance.getListTime(),maintenance.getListDescription()};
-
-
-
-        try {
-            return  jdbcTemplate.update(sql,arg) == 1;
-        }catch (Exception e){
-            LOG.warn("[MaintenanceList] insert maintenance error with info {}.", e.getMessage());
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[Maintenance] add new maintenance error with info {}.", e.getMessage());
 
             return false;
         }
     }
 
 
+    /**
+     * 查看这个设备的维修组
+     *
+     * @param equipmentId 设备Id
+     * @return 返回这个设备的维修组Id
+     */
+    @Override
+    public String selectRepairGroupId(String equipmentId) {
+        String sql = "SELECT repairGroupId FROM baoxiu_equipment WHERE equipmentId = ?";
+        Object[] args = {
+                equipmentId
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, String.class);
+        } catch (Exception e) {
+            LOG.error("[API] query equipment {}'s repair group id error with info {}.", equipmentId, e.getMessage());
+
+            return null;
+        }
+    }
+
+    /**
+     * 查询这个校区的编号
+     *
+     * @param distinctId 校区Id
+     * @return 返回校区编号
+     */
+    @Override
+    public String selectDistinctNumber(String distinctId) {
+        String sql = "SELECT distinctNumber FROM baoxiu_placedistinct WHERE distinctId = ?";
+        Object[] args = {
+                distinctId
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, String.class);
+        } catch (Exception e) {
+            LOG.error("[API] query distinct {}'s number error with info {}.", distinctId, e.getMessage());
+
+            return null;
+        }
+    }
+
+    /**
+     * 查询这个地点的编号
+     *
+     * @param buildingId 地点Id
+     * @return 这个地点的编号
+     */
+    @Override
+    public String selectBuildingNumber(String buildingId) {
+        String sql = "SELECT buildingNumber FROM baoxiu_placebuilding WHERE buildingId = ?";
+        Object[] args = {
+                buildingId
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, String.class);
+        } catch (Exception e) {
+            LOG.error("[API] query building {}'s number error with info {}.", buildingId, e.getMessage());
+
+            return null;
+        }
+    }
+
+    /**
+     * 查询这个位置的编号
+     *
+     * @param roomId 位置Id
+     * @return 这个位置的编号
+     */
+    @Override
+    public String selectRoomNumber(String roomId) {
+        String sql = "SELECT roomNumber FROM baoxiu_placeroom WHERE roomId = ?";
+        Object[] args = {
+                roomId
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, String.class);
+        } catch (Exception e) {
+            LOG.error("[Maintenance] query room {}'s number error with info {}.", roomId, e.getMessage());
+
+            return null;
+        }
+    }
+
+    /**
+     * 查询这个设备的编号
+     *
+     * @param equipmentId 设备Id
+     * @return 这个设备的编号
+     */
+    @Override
+    public String selectEquipmentNumber(String equipmentId) {
+        String sql = "SELECT equipmentNumber FROM baoxiu_equipment WHERE equipmentId = ?";
+        Object[] args = {
+                equipmentId
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, String.class);
+        } catch (Exception e) {
+            LOG.error("[Maintenance] query equipment {}'s number error with info {}.", equipmentId, e.getMessage());
+
+            return null;
+        }
+    }
+
+    /**
+     * 查询这个报修单是否存在
+     *
+     * @param listId 报修单编号
+     * @return 如果不存在返回true, else false
+     */
+    @Override
+    public boolean selectIfExistMaintenanceList(String listId) {
+        String sql = "SELECT COUNT(1) AS NUM FROM baoxiu_maintenancelist WHERE listNumber = ? AND deleteFLag = 0 AND listState != 1";
+        Object[] args = {
+                listId
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, Integer.class) == 0;
+        } catch (Exception e) {
+            LOG.error("[Maintenance] query exit list error with info {}.", e.getMessage());
+
+            return false;
+        }
+    }
+
+    /**
+     * 添加保修状态
+     * @param list 保修单信息
+     * @return 如果添加成功返回true, else false
+     */
+
+    @Override
+    public boolean insertNewListState(MaintenanceList list) {
+       String sql ="INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid,listNumber, listState, liststatetime) VALUES (?,?,?,?)";
+        Object[] args = {PrimaryKeyUtil.uuidPrimaryKey(),list.getListNumber(),list.getListState(),list.getListStatusTime() };
+
+        try {
+                return  jdbcTemplate.update(sql,args) == 1;
+        }catch (Exception e){
+            LOG.error("[Maintenance] add new maintenance error with info {}.", e.getMessage());
+
+            return false;
+
+        }
+    }
 }
