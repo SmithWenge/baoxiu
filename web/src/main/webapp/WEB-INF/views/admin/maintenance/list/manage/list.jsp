@@ -99,7 +99,7 @@
           <td>保修单状态</td>
           <td>设备名</td>
           <td>维修小组</td>
-          <td>报修时间</td>
+          <td>最新状态时间</td>
         </tr>
         </thead>
         <tbody id="pageTableBody">
@@ -343,7 +343,7 @@
 
           $.each(result.page.content, function (i, item) {
             var trData = "<tr><td>" + (i + 1) + "</td><td><a href=\"${contextPath}/admin/maintenance/list/manage/details/route/" + item.listNumber + ".action\">" + item.listNumber + "</a></td><td>" + item.liststateStr + "</td>";
-            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.listTime + "</td>";
+            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.liststatetime + "</td>";
             $("#pageTableBody").append(trData);
           });
         }

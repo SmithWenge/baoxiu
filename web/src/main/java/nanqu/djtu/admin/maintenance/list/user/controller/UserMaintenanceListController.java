@@ -4,6 +4,8 @@ package nanqu.djtu.admin.maintenance.list.user.controller;
 import nanqu.djtu.admin.maintenance.list.user.service.UserMaintenanceListServiceI;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.utils.ConstantFields;
+import nanqu.djtu.utils.PrinterUtils;
+import nanqu.djtu.utils.PrintModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,11 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author zhangwenyue
@@ -75,16 +73,8 @@ public class UserMaintenanceListController {
     @RequestMapping(value = "/add/do", method = RequestMethod.POST)
     public String addNewMaintenanceList(MaintenanceList maintenance, RedirectAttributes redirectAttributes) {
 
-        SimpleDateFormat  format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        maintenance.setListTime(format.format(new Date()));
-        maintenance.setUserId("1000");
-        maintenance.setUserName("wenge");
-        MaintenanceList distinctNumberAndBuildingNumber =(maintenanceListService.queryDistinctNumberAndBuildingNumber(maintenance));
-        MaintenanceList equipmentNumber =(maintenanceListService.queryEquipmentNumber(maintenance));
-        String repairGroupId = equipmentNumber.getRepairGroupId();
-        String listNumber = distinctNumberAndBuildingNumber.getDistinctNumber() + distinctNumberAndBuildingNumber.getBuildingNumber()+distinctNumberAndBuildingNumber.getRoomNumber() + equipmentNumber.getEquipmentNumber();
-        maintenance.setListNumber(listNumber);
-        maintenance.setRepairGroupId(repairGroupId);
+
+
 
         boolean save = maintenanceListService.saveNewMaintenanceList(maintenance);
 
@@ -95,7 +85,7 @@ public class UserMaintenanceListController {
         } else {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
 
-            return "redirect:/user/maintenance/list/route.action";
+            return "redirect:/user/maintenance/list/router.action";
         }
     }
 
@@ -105,6 +95,13 @@ public class UserMaintenanceListController {
      */
     @RequestMapping("/success")
     public  ModelAndView success() {
+        List<PrintModel> pmList = new ArrayList<PrintModel>();
+        pmList.add(new PrintModel("编号:", "10000"));//文字打印
+
+        //生成二维码的同时，添加到打印队列中
+
+        PrinterUtils p = new PrinterUtils(pmList, "运输单(司机)", 340, 10, 10);//设置打印的标题
+        p.commonPrint();
         ModelAndView modelAndView = new ModelAndView("user/maintenance/list/success");
         return  modelAndView;
     }
