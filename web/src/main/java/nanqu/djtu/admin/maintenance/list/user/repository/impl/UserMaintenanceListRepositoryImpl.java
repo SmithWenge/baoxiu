@@ -170,7 +170,7 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
      */
     @Override
     public boolean insertNew(MaintenanceList list) {
-        String sql = "INSERT INTO baoxiu_maintenancelist (listNumber, userId, userName, repairGroupId, roomId, buildingId, distinctId, listDescription, equipmentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO baoxiu_maintenancelist (listNumber, userId, userName, repairGroupId, roomId, buildingId, distinctId, listDescription, equipmentId, listState) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Object[] args = {
                 list.getListNumber(),
                 list.getUserId(),
@@ -180,7 +180,8 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
                 list.getBuildingId(),
                 list.getDistinctId(),
                 list.getListDescription(),
-                list.getEquipmentId()
+                list.getEquipmentId(),
+                list.getListState()
         };
 
         try {
