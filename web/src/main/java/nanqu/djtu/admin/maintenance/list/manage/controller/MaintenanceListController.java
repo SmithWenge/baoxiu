@@ -43,7 +43,7 @@ public class MaintenanceListController {
      */
     @ResponseBody
     @RequestMapping("/route/page")
-    public Map<String, Object> listFirstPage(MaintenanceList list,@PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable) {
+    public Map<String, Object> listFirstPage(MaintenanceList list, @PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable) {
 
         Map<String, Object> mapData = new HashMap<>();
 

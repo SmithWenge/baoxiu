@@ -17,9 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Created by Administrator on 2017/4/4.
- */
 @Repository
 public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRepositoryI {
     private static final Logger LOG = LoggerFactory.getLogger(UserMaintenanceListRepositoryImpl.class);
@@ -331,11 +328,14 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
      * @param list 保修单信息
      * @return 如果添加成功返回true, else false
      */
-
     @Override
     public boolean insertNewListState(MaintenanceList list) {
-       String sql ="INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid,listNumber, listState, liststatetime) VALUES (?,?,?,?)";
-        Object[] args = {PrimaryKeyUtil.uuidPrimaryKey(),list.getListNumber(),list.getListState(),list.getListStatusTime() };
+        String sql ="INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid,listNumber, listState) VALUES (?, ?, ?)";
+        Object[] args = {
+                PrimaryKeyUtil.uuidPrimaryKey(),
+                list.getListNumber(),
+                list.getListState()
+        };
 
         try {
                 return  jdbcTemplate.update(sql,args) == 1;
