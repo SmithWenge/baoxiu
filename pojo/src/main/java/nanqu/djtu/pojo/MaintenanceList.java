@@ -2,6 +2,7 @@ package nanqu.djtu.pojo;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 public class MaintenanceList {
     private String listNumber;
@@ -24,8 +25,25 @@ public class MaintenanceList {
     private String roomName;
     private String buildingName;
     private String listPicture;
-    private String listStatusTime;
+    private String liststatetime;
     private String liststateStr;
+    private List<MaintenanceList> lists;
+
+    public List<MaintenanceList> getLists() {
+        return lists;
+    }
+
+    public void setLists(List<MaintenanceList> lists) {
+        this.lists = lists;
+    }
+
+    public String getListstatetime() {
+        return liststatetime;
+    }
+
+    public void setListstatetime(String liststatetime) {
+        this.liststatetime = liststatetime;
+    }
 
     public String getListstateStr() {
         return liststateStr;
@@ -57,14 +75,6 @@ public class MaintenanceList {
 
     public void setListPicture(String listPicture) {
         this.listPicture = listPicture;
-    }
-
-    public String getListStatusTime() {
-        return listStatusTime;
-    }
-
-    public void setListStatusTime(String listStatusTime) {
-        this.listStatusTime = listStatusTime;
     }
 
     public String getEquipmentNumber() {

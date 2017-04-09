@@ -1,5 +1,6 @@
 package nanqu.djtu.shiro.manage.controller;
 
+import nanqu.djtu.pojo.Permission;
 import nanqu.djtu.pojo.Role;
 import nanqu.djtu.pojo.User;
 import nanqu.djtu.shiro.manage.service.RoleManageServiceI;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -46,7 +48,56 @@ public class RoleManageController {
      */
     @RequestMapping("/routeAdd")
     public ModelAndView routeAddRole() {
+        List<Permission> permissions = roleManageService.queryPermissions();
+
+        List<Permission> distinctList = new ArrayList<>();
+        List<Permission> buildingList = new ArrayList<>();
+        List<Permission> roomList = new ArrayList<>();
+        List<Permission> setList = new ArrayList<>();
+        List<Permission> equipmentList = new ArrayList<>();
+        List<Permission> printerList = new ArrayList<>();
+        List<Permission> workerInfoList = new ArrayList<>();
+        List<Permission> workerTypeList = new ArrayList<>();
+        List<Permission> repairGroupList = new ArrayList<>();
+        List<Permission> maintenanceListList = new ArrayList<>();
+
+        for (Permission premission : permissions) {
+            String premissionName = premission.getPermissionName();
+            if (premissionName.substring(0, 3).equals("set")) {
+                setList.add(premission);
+            } else if (premissionName.substring(0, 4).equals("room")) {
+                roomList.add(premission);
+            } else if (premissionName.substring(0, 8).equals("distinct")) {
+                distinctList.add(premission);
+            } else if (premissionName.substring(0, 8).equals("building")) {
+                buildingList.add(premission);
+            } else if (premissionName.substring(0, 7).equals("printer")) {
+                printerList.add(premission);
+            } else if (premissionName.substring(0, 9).equals("equipment")) {
+                equipmentList.add(premission);
+            } else if (premissionName.substring(0, 10).equals("workerInfo")) {
+                workerInfoList.add(premission);
+            } else if (premissionName.substring(0, 10).equals("workerType")) {
+                workerTypeList.add(premission);
+            } else if (premissionName.substring(0, 11).equals("repairGroup")) {
+                repairGroupList.add(premission);
+            } else if (premissionName.substring(0, 15).equals("maintenanceList")) {
+                maintenanceListList.add(premission);
+            }
+        }
+
         ModelAndView mav = new ModelAndView("admin/role/add");
+
+        mav.addObject("distinct", distinctList);
+        mav.addObject("building", buildingList);
+        mav.addObject("room", roomList);
+        mav.addObject("printer", printerList);
+        mav.addObject("equipment", equipmentList);
+        mav.addObject("set", setList);
+        mav.addObject("workerInfo", workerInfoList);
+        mav.addObject("workerType", workerTypeList);
+        mav.addObject("repairGroup", repairGroupList);
+        mav.addObject("maintenanceList", maintenanceListList);
 
         return mav;
     }
@@ -153,6 +204,107 @@ public class RoleManageController {
     @RequestMapping("/edit/route/{roleId}")
     public ModelAndView route2RoleEdit(@PathVariable String roleId) {
         ModelAndView mav = new ModelAndView("admin/role/edit");
+
+        Role role = roleManageService.queryRoleInfo(roleId);
+        List<Permission> checkedPermissions = roleManageService.queryRoleCheckPermissions(roleId);
+        List<Permission> uncheckedPermissions = roleManageService.queryRoleUnckeckedPermissions(roleId);
+
+        List<Permission> hadDistinctList = new ArrayList<>();
+        List<Permission> hadBuildingList = new ArrayList<>();
+        List<Permission> hadRoomList = new ArrayList<>();
+        List<Permission> hadSetList = new ArrayList<>();
+        List<Permission> hadEquipmentList = new ArrayList<>();
+        List<Permission> hadPrinterList = new ArrayList<>();
+        List<Permission> hadWorkerInfoList = new ArrayList<>();
+        List<Permission> hadWorkerTypeList = new ArrayList<>();
+        List<Permission> hadRepairGroupList = new ArrayList<>();
+        List<Permission> hadMaintenanceListList = new ArrayList<>();
+
+        for (Permission premission : checkedPermissions) {
+            String premissionName = premission.getPermissionName();
+            if (premissionName.substring(0, 3).equals("set")) {
+                hadSetList.add(premission);
+            } else if (premissionName.substring(0, 4).equals("room")) {
+                hadRoomList.add(premission);
+            } else if (premissionName.substring(0, 8).equals("distinct")) {
+                hadDistinctList.add(premission);
+            } else if (premissionName.substring(0, 8).equals("building")) {
+                hadBuildingList.add(premission);
+            } else if (premissionName.substring(0, 7).equals("printer")) {
+                hadPrinterList.add(premission);
+            } else if (premissionName.substring(0, 9).equals("equipment")) {
+                hadEquipmentList.add(premission);
+            } else if (premissionName.substring(0, 10).equals("workerInfo")) {
+                hadWorkerInfoList.add(premission);
+            } else if (premissionName.substring(0, 10).equals("workerType")) {
+                hadWorkerTypeList.add(premission);
+            } else if (premissionName.substring(0, 11).equals("repairGroup")) {
+                hadRepairGroupList.add(premission);
+            } else if (premissionName.substring(0, 15).equals("maintenanceList")) {
+                hadMaintenanceListList.add(premission);
+            }
+        }
+
+        List<Permission> distinctList = new ArrayList<>();
+        List<Permission> buildingList = new ArrayList<>();
+        List<Permission> roomList = new ArrayList<>();
+        List<Permission> setList = new ArrayList<>();
+        List<Permission> equipmentList = new ArrayList<>();
+        List<Permission> printerList = new ArrayList<>();
+        List<Permission> workerInfoList = new ArrayList<>();
+        List<Permission> workerTypeList = new ArrayList<>();
+        List<Permission> repairGroupList = new ArrayList<>();
+        List<Permission> maintenanceListList = new ArrayList<>();
+
+        for (Permission premission : uncheckedPermissions) {
+            String premissionName = premission.getPermissionName();
+            if (premissionName.substring(0, 3).equals("set")) {
+                setList.add(premission);
+            } else if (premissionName.substring(0, 4).equals("room")) {
+                roomList.add(premission);
+            } else if (premissionName.substring(0, 8).equals("distinct")) {
+                distinctList.add(premission);
+            } else if (premissionName.substring(0, 8).equals("building")) {
+                buildingList.add(premission);
+            } else if (premissionName.substring(0, 7).equals("printer")) {
+                printerList.add(premission);
+            } else if (premissionName.substring(0, 9).equals("equipment")) {
+                equipmentList.add(premission);
+            } else if (premissionName.substring(0, 10).equals("workerInfo")) {
+                workerInfoList.add(premission);
+            } else if (premissionName.substring(0, 10).equals("workerType")) {
+                workerTypeList.add(premission);
+            } else if (premissionName.substring(0, 11).equals("repairGroup")) {
+                repairGroupList.add(premission);
+            } else if (premissionName.substring(0, 15).equals("maintenanceList")) {
+                maintenanceListList.add(premission);
+            }
+        }
+
+        mav.addObject("role", role);
+
+        mav.addObject("checkedDistinct", hadDistinctList);
+        mav.addObject("checkedBuilding", hadBuildingList);
+        mav.addObject("checkedRoom", hadRoomList);
+        mav.addObject("checkedPrinter", hadPrinterList);
+        mav.addObject("checkedEquipment", hadEquipmentList);
+        mav.addObject("checkedSet", hadSetList);
+        mav.addObject("checkedWorkerInfo", hadWorkerInfoList);
+        mav.addObject("checkedWorkerType", hadWorkerTypeList);
+        mav.addObject("checkedRepairGroup", hadRepairGroupList);
+        mav.addObject("checkedMaintenanceList", hadMaintenanceListList);
+
+        mav.addObject("uncheckedPermissions", uncheckedPermissions);
+        mav.addObject("distinct", distinctList);
+        mav.addObject("building", buildingList);
+        mav.addObject("room", roomList);
+        mav.addObject("printer", printerList);
+        mav.addObject("equipment", equipmentList);
+        mav.addObject("set", setList);
+        mav.addObject("workerInfo", workerInfoList);
+        mav.addObject("workerType", workerTypeList);
+        mav.addObject("repairGroup", repairGroupList);
+        mav.addObject("maintenanceList", maintenanceListList);
 
         return mav;
     }

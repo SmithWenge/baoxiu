@@ -112,7 +112,7 @@ public class MaintenanceListController {
     }
 
     /**
-     * 路由到查看详情编辑页面
+     * 路由到查看详情页面
      *
      * @param listNumber 位置Id
      * @return 位置编辑页面和相位置信息
