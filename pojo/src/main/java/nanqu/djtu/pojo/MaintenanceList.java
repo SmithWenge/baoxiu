@@ -28,6 +28,8 @@ public class MaintenanceList {
     private String liststatetime;
     private String liststateStr;
     private List<MaintenanceList> lists;
+    private String listStatusTime;
+
 
     public List<MaintenanceList> getLists() {
         return lists;
@@ -240,5 +242,9 @@ public class MaintenanceList {
 
     public String getListDescription() {
         return listDescription;
+    }
+
+    public String getListStatusTime() {
+        return listStatusTime;
     }
 }
