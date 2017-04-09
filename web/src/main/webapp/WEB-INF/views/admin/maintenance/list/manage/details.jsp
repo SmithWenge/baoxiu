@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="layui-form-item">
-        <label class="layui-form-label">状态</label>
+        <label class="layui-form-label">当前状态</label>
         <div class="layui-input-block">
           <input type="text" value="${list.liststateStr}" class="layui-input" readonly>
         </div>
@@ -67,23 +67,34 @@
         </div>
       </div>
       <div class="layui-form-item">
-        <label class="layui-form-label">保修时间</label>
-        <div class="layui-input-block">
-          <input type="text" value="${list.listTime}" class="layui-input" readonly>
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">更新时间</label>
-        <div class="layui-input-block">
-          <input type="text" value="${list.listStatusTime}" class="layui-input" readonly>
-        </div>
-      </div>
-      <div class="layui-form-item">
         <label class="layui-form-label">描述</label>
         <div class="layui-input-block">
           <textarea class="layui-textarea" readonly>${list.listDescription}</textarea>
         </div>
       </div>
+      <div class="form-group">
+        <label class="layui-form-label">状态变更表</label>
+      </div>
+      <table class="layui-table" style="margin-left: 110px; width: 88%">
+        <colgroup>
+          <col width="200">
+          <col>
+        </colgroup>
+        <thead>
+        <tr>
+          <th>报修单状态</th>
+          <th>更改时间</th>
+        </tr>
+        </thead>
+        <tbody>
+          <c:forEach items="${list.lists}" var="model">
+            <tr>
+              <td>${model.liststateStr}</td>
+              <td>${model.liststatetime}</td>
+            </tr>
+          </c:forEach>
+        </tbody>
+      </table>
 
     </div>
   </fieldset>
