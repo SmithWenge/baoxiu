@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,14 +45,14 @@ public class MaintenanceListController {
      */
     @ResponseBody
     @RequestMapping("/route/page")
-    public Map<String, Object> listFirstPage(MaintenanceList list,@PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable) {
+    public Map<String, Object> listFirstPage(MaintenanceList list, @PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable) {
 
         Map<String, Object> mapData = new HashMap<>();
 
         Page<MaintenanceList> page = maintenanceListService.query4Page(list, pageable);
         mapData.put(ConstantFields.PAGE_KEY, page);
 
-        mapData.put("condition",list);
+        mapData.put("condition", list);
 
         List<MaintenanceList> distincts = maintenanceListService.queryDistincts();
         mapData.put("distincts", distincts);
@@ -63,6 +65,7 @@ public class MaintenanceListController {
 
     /**
      * 二级联动根据校区查询地点
+     *
      * @param distinct
      * @return
      */
@@ -130,5 +133,21 @@ public class MaintenanceListController {
         } else {
             return new ModelAndView("redirect:/admin/maintenance/list/manage/index.action");
         }
+    }
+
+    @RequestMapping("/status/dispatch/{listNumber}")
+    public String update(@PathVariable String listNumber, RedirectAttributes redirectAttributes, HttpSession session) {
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+        boolean update = maintenanceListService.updatestate(listNumber, user);
+        if (update) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+
+            return "redirect:/admin/maintenance/list/manage/list";
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+
+            return "redirect:/admin/maintenance/list/manage/list";
+        }
+
     }
 }

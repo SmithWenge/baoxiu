@@ -95,14 +95,30 @@
         <thead>
         <tr>
           <td>序号</td>
-          <td>保修单号</td>
-          <td>保修单状态</td>
+          <td>报修单号</td>
+          <td>报修单状态</td>
           <td>设备名</td>
           <td>维修小组</td>
           <td>报修时间</td>
+          <td>操作维修状态</td>>
         </tr>
         </thead>
         <tbody id="pageTableBody">
+        <tr>
+          <td>序号</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>
+            <div class="layui-btn-group">
+              <a href="${contextPath}/admin/place/distinct/edit/route/${distinct.distinctId}.action">
+                <button class="layui-btn layui-btn-normal" >查询</button>
+              </a>
+            </div>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>

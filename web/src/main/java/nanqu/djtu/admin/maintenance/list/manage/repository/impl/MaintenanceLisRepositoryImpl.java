@@ -2,10 +2,12 @@ package nanqu.djtu.admin.maintenance.list.manage.repository.impl;
 
 import com.google.common.base.Strings;
 import nanqu.djtu.admin.maintenance.list.manage.repository.MaintenanceLisRepositoryI;
+import nanqu.djtu.admin.place.distinct.repository.impl.PlaceDistinctRepositoryImpl;
 import nanqu.djtu.dictionary.feature.manager.IDictionaryManager;
 import nanqu.djtu.dictionary.feature.manager.impl.DefaultDictionaryManager;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.util.RepositoryUtils;
+import nanqu.djtu.utils.PrimaryKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -286,6 +288,40 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             return null;
         }
     }
+
+    @Override
+    public boolean updateliststate(String listNumber) {
+        String sql="UPDATE baoxiu_maintenancelist SET listState =2 WHERE listNumber = ? AND deleteFlag = 0";
+        Object[] args = {
+                    listNumber
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[ListNumber] update listState error with info {}.", e.getMessage());
+
+            return false;
+        }
+    }
+
+    @Override
+    public boolean insertliststate(String listNumber) {
+        String sql = "INSERT INTO baoxiu_liststatetime (listState) VALUES ( ? )";
+        Object[] args = {
+                    listNumber
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[ListNumber] add new liststate error with info {}.", e.getMessage());
+
+            return false;
+        }
+
+    }
+
 
     class Select4detailsRowMapper implements RowMapper<MaintenanceList> {
 

@@ -63,4 +63,8 @@ public interface MaintenanceLisRepositoryI {
      * @return
      */
     MaintenanceList select4details(String listNumber);
+
+    boolean updateliststate(String listNumber);
+
+    boolean insertliststate(String listNumber);
 }
