@@ -7,10 +7,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common</artifactId>
+    <artifactId>wechat</artifactId>
     <packaging>jar</packaging>
 
-    <name>common</name>
+    <name>wechat</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -18,6 +18,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.github.sd4324530</groupId>
+            <artifactId>fastweixin</artifactId>
+            <version>1.3.14</version>
+        </dependency>
         <dependency>
             <groupId>nanqu</groupId>
             <artifactId>pojo</artifactId>

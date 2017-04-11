@@ -16,6 +16,7 @@
     <module>framework</module>
     <module>pojo</module>
     <module>api</module>
+    <module>wechat</module>
   </modules>
 
   <name>baoxiu web</name>

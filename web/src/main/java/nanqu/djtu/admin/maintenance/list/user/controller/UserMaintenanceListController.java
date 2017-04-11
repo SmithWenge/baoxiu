@@ -71,14 +71,12 @@ public class UserMaintenanceListController {
      * @return true else false
      */
     @RequestMapping(value = "/add/do", method = RequestMethod.POST)
-    public String addNewMaintenanceList(MaintenanceList maintenance, RedirectAttributes redirectAttributes) {
+    public String addNewMaintenanceList(MaintenanceList maintenanceList, RedirectAttributes redirectAttributes) {
 
-
-
-
-        boolean save = maintenanceListService.saveNewMaintenanceList(maintenance);
+        boolean save = maintenanceListService.saveNewMaintenanceList(maintenanceList);
 
         if (save) {
+
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
 
             return "redirect:/user/maintenance/list/success.action";
@@ -95,14 +93,8 @@ public class UserMaintenanceListController {
      */
     @RequestMapping("/success")
     public  ModelAndView success() {
-        List<PrintModel> pmList = new ArrayList<PrintModel>();
-        pmList.add(new PrintModel("编号:", "10000"));//文字打印
 
-        //生成二维码的同时，添加到打印队列中
-
-        PrinterUtils p = new PrinterUtils(pmList, "运输单(司机)", 340, 10, 10);//设置打印的标题
-        p.commonPrint();
-        ModelAndView modelAndView = new ModelAndView("user/maintenance/list/success");
+        ModelAndView  modelAndView = new ModelAndView("user/maintenance/list/success");
         return  modelAndView;
     }
 

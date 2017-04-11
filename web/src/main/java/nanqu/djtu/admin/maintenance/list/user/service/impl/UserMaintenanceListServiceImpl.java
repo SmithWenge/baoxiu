@@ -94,5 +94,10 @@ public class UserMaintenanceListServiceImpl implements UserMaintenanceListServic
         }
     }
 
+    @Override
+    public MaintenanceList selectMaintenaceList(String listNumber) {
+       return maintenanceListRepository.selectMaintenaceList(listNumber);
+    }
+
 
 }

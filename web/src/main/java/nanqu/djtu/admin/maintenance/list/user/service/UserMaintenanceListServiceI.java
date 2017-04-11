@@ -19,4 +19,5 @@ public interface UserMaintenanceListServiceI {
 
     boolean saveNewMaintenanceList(MaintenanceList maintenance);
 
+    MaintenanceList selectMaintenaceList(String listNUmber);
 }

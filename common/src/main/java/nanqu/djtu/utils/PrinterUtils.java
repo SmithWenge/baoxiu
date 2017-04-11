@@ -1,5 +1,6 @@
 package nanqu.djtu.utils;
 
+import nanqu.djtu.pojo.MaintenanceList;
 import org.apache.commons.lang3.StringUtils;
 
 import java.awt.Font;
@@ -13,8 +14,9 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.util.List;
 
+
 /**
- * Created by zwz on 2017/4/9.
+ * zhangwenyue
  */
 public class PrinterUtils implements Printable {
     /**
@@ -64,11 +66,13 @@ public class PrinterUtils implements Printable {
 
         try {
             job.print();
+            return 1;
         } catch (PrinterException e) {
             System.out.println("================打印出现异常");
+            return 0;
+
         }
 
-        return 0;
     }
 
     @Override
@@ -81,21 +85,21 @@ public class PrinterUtils implements Printable {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setFont(new Font(title, Font.PLAIN, 12));
         g2d.drawString(title, marginLeft, marginTop);
-        g2d.setFont(new Font(title, Font.PLAIN, 8));
+        g2d.setFont(new Font(title, Font.PLAIN, 10 ));
         int i = 1;
-        g2d.drawString("--------------------------------------------", 7, 20);
+        g2d.drawString("----------------------------------------------------------------------", 7, 20);
         for (PrintModel m : listModel) {
             if(!m.getIsWrap()){
                 if(StringUtils.isNotBlank(m.getName())){
-                    g2d.drawString(m.getName() + m.getVal(), 7, 30+i*12);
+                    g2d.drawString(m.getName() + m.getVal(), 7, 30+i*24);
                 }else if (null != m.getImage()) {
                     g2d.drawImage(m.getImage(), 15, 20+i*12, null);
                     i+=8;
                 }
             }else {
-                g2d.drawString(m.getName(), 7, 30+i*12);
+                g2d.drawString(m.getName(), 7, 30+i*24);
                 i++;
-                g2d.drawString(m.getVal(), 7, 30+i*12);
+                g2d.drawString(m.getVal(), 7, 30+i*24);
             }
             i++;
         }
@@ -109,6 +113,7 @@ public class PrinterUtils implements Printable {
         this.height = height;
         this.marginLeft = marginLeft;
         this.marginTop = marginTop;
+
     }
 
     public PrinterUtils(List<PrintModel> listModel, String title, Integer height) {
