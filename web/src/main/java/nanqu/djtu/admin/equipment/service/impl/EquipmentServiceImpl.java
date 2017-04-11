@@ -25,18 +25,18 @@ public class EquipmentServiceImpl implements EquipmentServiceI {
 
     @Override
     public Page<Equipment> query4Page(Equipment equipment, Pageable pageable) {
-        String roomId = equipment.getRoomId();
-        String buildingId = equipment.getBuildingId();
+//        String roomId = equipment.getRoomId();
+//        String buildingId = equipment.getBuildingId();
 
-        if (Strings.isNullOrEmpty(roomId) && (!Strings.isNullOrEmpty(buildingId))) {
-            String setId = equipmentRepository.selectSetIdWithBuilding(buildingId);
-
-            equipment.setSetId(setId);
-        } else if (!Strings.isNullOrEmpty(roomId)) {
-            String setId = equipmentRepository.selectSetIdWithRoom(roomId);
-
-            equipment.setSetId(setId);
-        }
+//        if (Strings.isNullOrEmpty(roomId) && (!Strings.isNullOrEmpty(buildingId))) {
+//            String setId = equipmentRepository.selectSetIdWithBuilding(buildingId);
+//
+//            equipment.setSetId(setId);
+//        } else if (!Strings.isNullOrEmpty(roomId)) {
+//            String setId = equipmentRepository.selectSetIdWithRoom(roomId);
+//
+//            equipment.setSetId(setId);
+//        }
 
         return equipmentRepository.select4Page(equipment, pageable);
     }

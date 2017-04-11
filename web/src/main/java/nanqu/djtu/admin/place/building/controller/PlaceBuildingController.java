@@ -1,4 +1,5 @@
 package nanqu.djtu.admin.place.building.controller;
+
 import com.google.common.base.Optional;
 import nanqu.djtu.admin.place.building.service.PlaceBuildingServiceI;
 import nanqu.djtu.pojo.AdminUser;
@@ -16,9 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+
 /**
  * @author zhangwenyue
  */
+
 @Controller
 @RequestMapping("/admin/place/building")
 public class PlaceBuildingController {
@@ -28,7 +31,7 @@ public class PlaceBuildingController {
     /**
      *查询地点信息
      *
-     * @return地点信息的列表和数据
+     * @return 地点信息的列表和数据
      */
     @RequestMapping("/list")
     public ModelAndView list() {
@@ -36,7 +39,7 @@ public class PlaceBuildingController {
 
         ModelAndView mav = new ModelAndView("admin/place/building/list");
 
-        mav.addObject("building",building);
+        mav.addObject("building", building);
 
         return  mav;
     }
@@ -49,12 +52,10 @@ public class PlaceBuildingController {
     @RequestMapping("/add/route")
     public ModelAndView routeAdd() {
         List<PlaceDistinct>  placeDistincts = placeBuildingService.placeDistinctQuery4List();
-        List<EquipmentSet>  equipmentSets = placeBuildingService.equipmentSetQuery4List();
 
         ModelAndView modelAndView = new ModelAndView("admin/place/building/add");
 
         modelAndView.addObject("placeDistincts",placeDistincts);
-        modelAndView.addObject("equipmentSets",equipmentSets);
 
         return modelAndView;
     }
@@ -69,8 +70,6 @@ public class PlaceBuildingController {
     @RequestMapping(value = "/add/do", method = RequestMethod.POST)
     public String save(PlaceBuilding building, RedirectAttributes redirectAttributes, HttpSession session) {
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
-        String buildingId = building.getBuildingId();
-        String setId = building.getSetId();
 
         boolean save = placeBuildingService.saveNewPlaceDistinct(building, user);
 
@@ -137,13 +136,15 @@ public class PlaceBuildingController {
 
         if (Optional.fromNullable(building).isPresent()) {
             ModelAndView mav = new ModelAndView("admin/place/building/edit");
-            mav.addObject("building", building);
-            return mav;
 
+            mav.addObject("building", building);
+
+            return mav;
         } else {
             return new ModelAndView("redirect:/admin/place/building/list.action");
         }
     }
+
     /**
      * 保存地点信息修改
      *
