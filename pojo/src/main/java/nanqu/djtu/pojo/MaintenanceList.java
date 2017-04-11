@@ -13,7 +13,6 @@ public class MaintenanceList {
     private String buildingId;
     private String distinctId;
     private String equipmentId;
-    private int listState;
     private String listDescription;
     private String listTime;
     private String startListTime;
@@ -28,6 +27,8 @@ public class MaintenanceList {
     private String liststatetime;
     private String liststateStr;
     private List<MaintenanceList> lists;
+    private int listState;
+
 
     public List<MaintenanceList> getLists() {
         return lists;

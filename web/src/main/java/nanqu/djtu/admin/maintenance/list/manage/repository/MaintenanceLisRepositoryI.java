@@ -64,14 +64,26 @@ public interface MaintenanceLisRepositoryI {
      */
     MaintenanceList select4details(String listNumber);
 
+    /**
+     * 更改维修状态为已派单
+     * @param listNumber
+     * @return
+     */
     boolean updateliststate(String listNumber);
-
     boolean insertliststate(String listNumber);
 
     /**
      * 查看详情中的状态列表
-     * @param ListNumber
+     * @paramlistNumber
      * @return
      */
     List<MaintenanceList> selectStatusWithListNum(String listNumber);
+
+    /**
+     * 更改维修状态为待评价
+     * @param listNumber
+     * @return
+     */
+    boolean updatestate(String listNumber);
+    boolean insertstate(String listNumber);
 }

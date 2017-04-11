@@ -76,22 +76,28 @@ public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public boolean updatestate(String listNumber, AdminUser user) {
-
-
         boolean update = maintenanceLisRepository.updateliststate(listNumber);
         boolean insert = maintenanceLisRepository.insertliststate(listNumber);
 
         if (update && insert) {
             LOG.info("[ListState] update  liststate {} success with user {}.",listNumber,user.getAdminName());
-
         } else {
             LOG.warn("[ListState] delete place distinct {} failure with user {}.", listNumber, user.getAdminName());
-
         }
 
         return insert;
-
-
+    }
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    @Override
+    public boolean done(String listNumber, AdminUser user) {
+        boolean update2 = maintenanceLisRepository.updatestate(listNumber);
+        boolean insert2 = maintenanceLisRepository.insertstate(listNumber);
+        if (update2 && insert2) {
+            LOG.info("[ListState] update  liststate {} success with user {}.",listNumber,user.getAdminName());
+        } else {
+            LOG.warn("[ListState] delete place distinct {} failure with user {}.", listNumber, user.getAdminName());
+        }
+        return insert2;
     }
 
 }

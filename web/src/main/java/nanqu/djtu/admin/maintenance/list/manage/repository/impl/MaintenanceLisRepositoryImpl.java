@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -34,15 +35,15 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     @Override
     public Page<MaintenanceList> select4Page(MaintenanceList list, Pageable pageable) {
-        StringBuilder sql = new StringBuilder("SELECT listNumber,listState,equipmentName,groupName,liststatetime FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId WHERE R.deleteFlag = 0");
+        StringBuilder sql = new StringBuilder("SELECT listNumber,listState,equipmentName,groupName,listStatusTime FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId WHERE R.deleteFlag = 0");
         List<Object> argsList = new ArrayList<>();
         if (!Strings.isNullOrEmpty(list.getStartListTime())) {
-            sql.append(" AND M.liststatetime >= ?");
+            sql.append(" AND M.listStatusTime>= ?");
             argsList.add(list.getStartListTime());
         }
 
         if (!Strings.isNullOrEmpty(list.getStopListTime())) {
-            sql.append(" AND M.liststatetime <= ?");
+            sql.append(" AND M.listStatusTime <= ?");
             argsList.add(list.getStopListTime());
         }
 
@@ -71,7 +72,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             argsList.add(list.getRepairGroupId());
         }
 
-        sql.append(" ORDER BY M.liststatetime DESC");
+        sql.append(" ORDER BY M.listStatusTime DESC");
         Object[] args = argsList.toArray();
 
         return repositoryUtils.select4Page(sql.toString(), pageable, args, new Query4PageRowmapper());
@@ -90,7 +91,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             list.setListState(String.valueOf(listState));
             list.setEquipmentName(resultSet.getString("equipmentName"));
             list.setGroupName(resultSet.getString("groupName"));
-            list.setListstatetime(format.format(resultSet.getTimestamp("liststatetime")));
+            list.setListstatetime(format.format(resultSet.getTimestamp("listStatusTime")));
             list.setListstateStr(dictionary.dictionary(listState, "listState").getItemValue());
 
             return list;
@@ -274,7 +275,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     @Override
     public MaintenanceList select4details(String listNumber) {
-        String sql = "SELECT listNumber,userName,groupName,roomName,buildingName,distinctName,equipmentName,listState,listDescription,listPicture FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.groupName LEFT JOIN baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";        Object[] args = {
+        String sql = "SELECT listNumber,userName,groupName,roomName,buildingName,distinctName,equipmentName,listState,listDescription,listPicture FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId LEFT JOIN baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";        Object[] args = {
                 listNumber
         };
 
@@ -287,6 +288,11 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
         }
     }
 
+    /**
+     * 更改状态为已派单
+     * @param listNumber
+     * @return
+     */
     @Override
     public boolean updateliststate(String listNumber) {
         String sql="UPDATE baoxiu_maintenancelist SET listState =2 WHERE listNumber = ? AND deleteFlag = 0";
@@ -302,12 +308,14 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             return false;
         }
     }
-
     @Override
     public boolean insertliststate(String listNumber) {
-        String sql = "INSERT INTO baoxiu_liststatetime (listState) VALUES ( ? )";
+        String sql = "INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid, listNumber, listState ) VALUES ( ?,?,2 )";
         Object[] args = {
-                    listNumber
+                PrimaryKeyUtil.uuidPrimaryKey(),
+                listNumber
+
+
         };
 
         try {
@@ -320,6 +328,46 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     }
 
+    /**
+     * 更改状态为已完成
+     * @param listNumber
+     * @return
+     */
+    @Override
+    public boolean updatestate(String listNumber) {
+        String sql="UPDATE baoxiu_maintenancelist SET listState =8 WHERE listNumber = ? AND deleteFlag = 0";
+        Object[] args = {
+                listNumber
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[ListNumber] update listState error with info {}.", e.getMessage());
+
+            return false;
+        }
+    }
+
+    @Override
+    public boolean insertstate(String listNumber) {
+        String sql = "INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid, listNumber, listState ) VALUES ( ?,?,8 )";
+        Object[] args = {
+                PrimaryKeyUtil.uuidPrimaryKey(),
+                listNumber,
+
+
+
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[ListNumber] add new liststate error with info {}.", e.getMessage());
+
+            return false;
+        }
+    }
 
     class Select4detailsRowMapper implements RowMapper<MaintenanceList> {
 
@@ -375,7 +423,6 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             return lists;
         }
     }
-
     class SelectStatusWithListNumRowMapper implements RowMapper<MaintenanceList> {
 
         @Override

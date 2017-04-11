@@ -334,8 +334,8 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
 
     @Override
     public boolean insertNewListState(MaintenanceList list) {
-       String sql ="INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid,listNumber, listState, liststatetime) VALUES (?,?,?,?)";
-        Object[] args = {PrimaryKeyUtil.uuidPrimaryKey(),list.getListNumber(),list.getListState(),list.getListStatusTime() };
+       String sql ="INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid,listNumber, listState) VALUES (?,?,?)";
+        Object[] args = {PrimaryKeyUtil.uuidPrimaryKey(),list.getListNumber(),list.getListState()};
 
         try {
                 return  jdbcTemplate.update(sql,args) == 1;

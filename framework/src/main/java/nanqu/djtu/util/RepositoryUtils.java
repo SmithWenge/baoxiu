@@ -31,6 +31,7 @@ public class RepositoryUtils<T> {
         try {
             list = jdbcTemplate.query(pageSql, args, rowMapper);
         } catch (Exception e) {
+            e.printStackTrace();
             list = new ArrayList<>();
         }
 
