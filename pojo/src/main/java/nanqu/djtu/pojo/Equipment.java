@@ -17,6 +17,16 @@ public class Equipment {
 
     private String buildingId;  // 地点Id
     private String roomId;  // 位置Id
+    private String roomName; // 位置名称
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public String getRoomName() {
+
+        return roomName;
+    }
 
     public void setBuildingId(String buildingId) {
         this.buildingId = buildingId;

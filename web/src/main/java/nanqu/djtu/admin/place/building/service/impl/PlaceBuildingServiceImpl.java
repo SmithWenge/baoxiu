@@ -16,7 +16,6 @@ import java.util.List;
 
 @Repository
 public class PlaceBuildingServiceImpl implements PlaceBuildingServiceI {
-
     private static final Logger LOG = LoggerFactory.getLogger(PlaceBuildingServiceImpl.class);
 
     @Autowired
@@ -41,11 +40,12 @@ public class PlaceBuildingServiceImpl implements PlaceBuildingServiceI {
     public boolean saveNewPlaceDistinct(PlaceBuilding building, AdminUser user) {
         boolean insert = placeBuildingRepository.insertNewPlaceDistinct(building);
 
-        if(insert) {
+        if (insert) {
             LOG.info("[PlaceBuilding] add new place building success with user {}.", user.getAdminName());
-        }else {
+        } else {
             LOG.warn("[PlaceBuilding] add new place building failure with user {}.", user.getAdminName());
         }
+
         return insert;
 
     }
@@ -58,12 +58,14 @@ public class PlaceBuildingServiceImpl implements PlaceBuildingServiceI {
     @Override
     public boolean deleteDistinct(String buildingId, AdminUser user) {
         boolean delete = placeBuildingRepository.deletePlaceBuilding(buildingId);
+
         if (delete) {
             LOG.info("[PlaceBuilding] delete place buildingId {} success with user {}.", buildingId, user.getAdminName());
         } else {
             LOG.warn("[PlaceBuilding] delete place buildingId {} failure with user {}.", buildingId, user.getAdminName());
         }
-        return  false;
+
+        return delete;
     }
 
     @Override

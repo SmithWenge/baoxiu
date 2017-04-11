@@ -38,7 +38,7 @@
                 <li class="layui-nav-item" id="two">
                     <a href="javascript:;"><i class="layui-icon">&#xe641;</i> 设备管理</a>
                     <dl class="layui-nav-child">
-                        <dd id="set"><a href="${contextPath}/admin/set/index.action"><i class="layui-icon">&#xe602;</i> 设备组管理</a></dd>
+                        <%--<dd id="set"><a href="${contextPath}/admin/set/index.action"><i class="layui-icon">&#xe602;</i> 设备组管理</a></dd>--%>
                         <dd id="equipment"><a href="${contextPath}/admin/equipment/index.action"><i class="layui-icon">&#xe602;</i> 设备管理</a></dd>
                         <dd id="printer"><a href="${contextPath}/admin/printer/list.action"><i class="layui-icon">&#xe602;</i> 打印机管理</a></dd>
                     </dl>
@@ -66,6 +66,7 @@
                     <a href="javascript:;"><i class="layui-icon">&#xe62d;</i> 用户管理</a>
                     <dl class="layui-nav-child">
                         <dd id="role"><a href="${contextPath}/admin/role/list.action"><i class="layui-icon">&#xe602;</i> 角色管理</a></dd>
+                        <dd id="userInfo"><a href="${contextPath}/admin/userInfo/list.action"><i class="layui-icon">&#xe602;</i> 用户信息管理</a></dd>
                     </dl>
                 </li>
             </ul>

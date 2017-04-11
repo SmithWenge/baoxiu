@@ -1,7 +1,10 @@
 package nanqu.djtu.admin.maintenance.list.user.repository.impl;
 
 
+import com.google.common.base.Strings;
 import nanqu.djtu.admin.maintenance.list.user.repository.UserMaintenanceListRepositoryI;
+import nanqu.djtu.dictionary.feature.manager.IDictionaryManager;
+import nanqu.djtu.dictionary.feature.manager.impl.DefaultDictionaryManager;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.utils.PrimaryKeyUtil;
 import org.slf4j.Logger;
@@ -17,9 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Created by Administrator on 2017/4/4.
- */
 @Repository
 public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRepositoryI {
     private static final Logger LOG = LoggerFactory.getLogger(UserMaintenanceListRepositoryImpl.class);
@@ -28,6 +28,7 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
 
     /**
      * 查询校区信息列表
+     *
      * @return 所有未删除的校区信息
      */
     @Override
@@ -43,7 +44,6 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
             return new ArrayList<>();
         }
     }
-
 
 
     private class Select4ListRowMapper implements RowMapper<PlaceDistinct> {
@@ -62,6 +62,7 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
 
     /**
      * 查询地点
+     *
      * @return
      */
     @Override
@@ -81,7 +82,6 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
     }
 
 
-
     class SelectBuildingsRowMapper implements RowMapper<PlaceBuilding> {
 
         @Override
@@ -97,6 +97,7 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
 
     /**
      * 查询位置信息
+     *
      * @return 未删除的位置信息列表
      */
     @Override
@@ -140,8 +141,8 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
         Object[] args = {};
 
         try {
-            return  jdbcTemplate.query(sql, args, new queryEquipmentRowMapper());
-        }catch (Exception e) {
+            return jdbcTemplate.query(sql, args, new queryEquipmentRowMapper());
+        } catch (Exception e) {
             LOG.error("[Equipment] query4List error with info {}.", e.getMessage());
 
             return new ArrayList<>();
@@ -152,7 +153,7 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
     private class queryEquipmentRowMapper implements RowMapper<Equipment> {
 
         @Override
-        public Equipment  mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public Equipment mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             Equipment equipment = new Equipment();
             equipment.setEquipmentId(rs.getString("equipmentId"));
@@ -162,6 +163,7 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
             return equipment;
         }
     }
+
     /**
      * 添加新的保修单
      *
@@ -328,22 +330,82 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
 
     /**
      * 添加保修状态
+     *
      * @param list 保修单信息
      * @return 如果添加成功返回true, else false
      */
-
     @Override
     public boolean insertNewListState(MaintenanceList list) {
        String sql ="INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid,listNumber, listState) VALUES (?,?,?)";
         Object[] args = {PrimaryKeyUtil.uuidPrimaryKey(),list.getListNumber(),list.getListState()};
+        String sql = "INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid,listNumber, listState) VALUES (?, ?, ?)";
+        Object[] args = {
+                PrimaryKeyUtil.uuidPrimaryKey(),
+                list.getListNumber(),
+                list.getListState()
+        };
 
         try {
-                return  jdbcTemplate.update(sql,args) == 1;
-        }catch (Exception e){
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
             LOG.error("[Maintenance] add new maintenance error with info {}.", e.getMessage());
 
             return false;
 
+        }
+    }
+
+    /**
+     * 打印保修单详情
+     *
+     * @return
+     */
+    @Override
+    public MaintenanceList selectMaintenaceList(String listNumber) {
+        String sql = "SELECT listNumber,userName,groupName,roomName,buildingName,distinctName,equipmentName,listState,listDescription,listPicture FROM baoxiu.baoxiu_maintenancelist AS M LEFT JOIN baoxiu.baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId LEFT JOIN baoxiu.baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu.baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu.baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu.baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";
+        Object[] args = {
+                listNumber
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, new Select4detailsRowMapper());
+        } catch (Exception e) {
+            LOG.error("[MaintenanceList] query4details error with info {}.", e.getMessage());
+
+            return null;
+        }
+    }
+
+    class Select4detailsRowMapper implements RowMapper<MaintenanceList> {
+
+        @Override
+        public MaintenanceList mapRow(ResultSet resultSet, int i) throws SQLException {
+            MaintenanceList list = new MaintenanceList();
+            IDictionaryManager dictionary = DefaultDictionaryManager.getInstance();
+
+            int listState = resultSet.getInt("listState");
+            String groupName = resultSet.getString("groupName");
+            String roomName = resultSet.getString("roomName");
+            String buildingName = resultSet.getString("buildingName");
+            String distinctName = resultSet.getString("distinctName");
+            String listDescription = resultSet.getString("listDescription");
+            String listPicture = resultSet.getString("listPicture");
+
+
+            list.setGroupName(Strings.isNullOrEmpty(groupName) ? "无" : groupName);
+            list.setRoomName(Strings.isNullOrEmpty(roomName) ? "无" : roomName);
+            list.setBuildingName(Strings.isNullOrEmpty(buildingName) ? "无" : buildingName);
+            list.setDistinctName(Strings.isNullOrEmpty(distinctName) ? "无" : distinctName);
+            list.setListDescription(Strings.isNullOrEmpty(listDescription) ? "无" : listDescription);
+            list.setListPicture(Strings.isNullOrEmpty(listPicture) ? "default_list.png" : listPicture);
+
+            list.setListNumber(resultSet.getString("listNumber"));
+            list.setUserName(resultSet.getString("userName"));
+            list.setEquipmentName(resultSet.getString("equipmentName"));
+            list.setListState(String.valueOf(resultSet.getInt("listState")));
+            list.setListstateStr(dictionary.dictionary(listState, "listState").getItemValue());
+
+            return list;
         }
     }
 }

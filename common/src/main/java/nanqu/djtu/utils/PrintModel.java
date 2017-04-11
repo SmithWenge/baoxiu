@@ -1,12 +1,18 @@
 package nanqu.djtu.utils;
 
+import nanqu.djtu.pojo.MaintenanceList;
+import sun.applet.Main;
+
 import java.awt.*;
-import java.util.ArrayList;
+import java.awt.List;
+import java.util.*;
 
 /**
  * Created by zwz on 2017/4/9.
  */
 public class PrintModel {
+
+
     /**
      * 变量前面的文字描述
      */
@@ -97,6 +103,7 @@ public class PrintModel {
     public void setImage(Image image) {
         this.image = image;
     }
+
 
 }
 
