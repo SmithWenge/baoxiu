@@ -48,8 +48,7 @@ public class UserMaintenanceListServiceImpl implements UserMaintenanceListServic
     @Transactional
     @Override
     public boolean saveNewMaintenanceList(MaintenanceList list) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        list.setListTime(format.format(new Date()));
+
 
         try{
 
@@ -93,6 +92,11 @@ public class UserMaintenanceListServiceImpl implements UserMaintenanceListServic
         } else {
             return false;
         }
+    }
+
+    @Override
+    public MaintenanceList selectMaintenaceList(String listNumber) {
+       return maintenanceListRepository.selectMaintenaceList(listNumber);
     }
 
 

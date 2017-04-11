@@ -99,4 +99,11 @@ public interface UserMaintenanceListRepositoryI {
      */
 
     boolean insertNewListState(MaintenanceList list);
+
+    /**
+     * 查看保修单详情
+     * @return
+     */
+
+    MaintenanceList selectMaintenaceList(String listNumber);
 }

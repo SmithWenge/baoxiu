@@ -66,6 +66,7 @@
                     <a href="javascript:;"><i class="layui-icon">&#xe62d;</i> 用户管理</a>
                     <dl class="layui-nav-child">
                         <dd id="role"><a href="${contextPath}/admin/role/list.action"><i class="layui-icon">&#xe602;</i> 角色管理</a></dd>
+                        <dd id="userInfo"><a href="${contextPath}/admin/userInfo/list.action"><i class="layui-icon">&#xe602;</i> 用户信息管理</a></dd>
                     </dl>
                 </li>
             </ul>
