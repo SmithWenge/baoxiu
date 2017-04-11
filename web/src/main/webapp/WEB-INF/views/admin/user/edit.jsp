@@ -68,10 +68,11 @@
         </div>
         <div class="layui-form-item">
           <label class="layui-form-label">状态</label>
-          <div class="layui-input-block" id="adminState" " lay-verify="adminState">
+          <div class="layui-input-block" id="adminState"  lay-verify="adminState">
           <input  value=1 name="adminState" title="激活" checked="" type="radio">
           <input  value=0 name="adminState" title="未激活" type="radio">
         </div>
+          </div>
         <div class="layui-form-item">
           <div class="layui-input-block">
             <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addAdminUser">保存</button>
