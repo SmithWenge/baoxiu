@@ -16,8 +16,36 @@ public class Equipment {
     private String setId;  // 设备组Id
 
     private String buildingId;  // 地点Id
+    private String buildingName; // 地点名
     private String roomId;  // 位置Id
     private String roomName; // 位置名称
+    private String distinctId; // 校区Id
+    private String distinctName; // 校区名
+
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
+    }
+
+    public void setDistinctId(String distinctId) {
+        this.distinctId = distinctId;
+    }
+
+    public void setDistinctName(String distinctName) {
+        this.distinctName = distinctName;
+    }
+
+    public String getBuildingName() {
+
+        return buildingName;
+    }
+
+    public String getDistinctId() {
+        return distinctId;
+    }
+
+    public String getDistinctName() {
+        return distinctName;
+    }
 
     public void setRoomName(String roomName) {
         this.roomName = roomName;

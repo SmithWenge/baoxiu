@@ -11,4 +11,9 @@ public class HomeController {
     public ModelAndView homeIndex() {
         return new ModelAndView("admin/home/index");
     }
+
+    @RequestMapping("/app/index")
+    public ModelAndView appIndex() {
+        return new ModelAndView("user/maintenance/list/add");
+    }
 }
