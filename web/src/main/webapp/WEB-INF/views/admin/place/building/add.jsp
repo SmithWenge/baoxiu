@@ -6,31 +6,20 @@
 <div class="layui-body body">
   <fieldset class="layui-elem-field">
     <legend>
-            <span class="layui-breadcrumb">
-              <a href="${contextPath}/admin/place/building/list.action">地点管理</a>
-              <a><cite>地点添加</cite></a>
-            </span>
+      <span class="layui-breadcrumb">
+        <a href="${contextPath}/admin/place/building/list.action">地点管理</a>
+        <a><cite>地点添加</cite></a>
+      </span>
     </legend>
     <div style="width: 30%; margin-top: 15px; ">
       <form action="${contextPath}/admin/place/building/add/do.action" method="post" class="layui-form">
         <div class="layui-form-item">
           <label class="layui-form-label">校区名</label>
           <div class="layui-input-block">
-              <select name="distinctId" id="distinctId" lay-verify="distinctId">
-                <c:forEach items="${placeDistincts}" var="placeDistincts">
-                  <option  value="${placeDistincts.distinctId}" >${placeDistincts.distinctName}</option>
-                  </c:forEach>
-              </select>
-            </div>
-          </div>
-        <div class="layui-form-item">
-          <label class="layui-form-label">设备组编号</label>
-          <div class="layui-input-block">
-            <select name="setId" lay-verify="setId" id="setId">
-              <option value="">可不选</option>
-              <c:forEach items="${equipmentSets}" var="equipmentSets">
-                <option  value="${equipmentSets.setId}" >${equipmentSets.setName}</option>
-              </c:forEach>
+            <select name="distinctId" id="distinctId" lay-verify="distinctId">
+              <c:forEach items="${placeDistincts}" var="placeDistincts">
+                <option  value="${placeDistincts.distinctId}" >${placeDistincts.distinctName}</option>
+                </c:forEach>
             </select>
           </div>
         </div>
