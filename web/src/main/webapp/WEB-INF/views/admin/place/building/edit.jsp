@@ -6,16 +6,15 @@
 <div class="layui-body body">
   <fieldset class="layui-elem-field">
     <legend>
-            <span class="layui-breadcrumb">
-              <a href="${contextPath}/admin/place/building/list.action">地点管理</a>
-              <a><cite>地点修改</cite></a>
-            </span>
+      <span class="layui-breadcrumb">
+        <a href="${contextPath}/admin/place/building/list.action">地点管理</a>
+        <a><cite>地点修改</cite></a>
+      </span>
     </legend>
     <div style="width: 30%; margin-top: 15px; ">
       <form action="${contextPath}/admin/place/building/edit/do.action" method="post" class="layui-form">
         <input type="hidden" name="buildingId" value="${building.buildingId}">
         <input type="hidden" name="distinctId" id="distinctId" value="${building.distinctId}">
-        <input type="hidden" name="setId" value="${building.setId}">
 
         <div class="layui-form-item">
           <label class="layui-form-label">地点编号</label>

@@ -13,16 +13,11 @@ public interface UserMaintenanceListServiceI {
     List<PlaceBuilding> queryBuildingsByDistinctId(String distinctId);
 
 
-
     List<PlaceRoom> queryPlaceRoomByBuildingId(String buildingId);
 
     List<Equipment> queryEquipment();
 
     boolean saveNewMaintenanceList(MaintenanceList maintenance);
 
-
-
-    MaintenanceList queryDistinctNumberAndBuildingNumber(MaintenanceList maintenance);
-
-    MaintenanceList queryEquipmentNumber(MaintenanceList maintenance);
+    MaintenanceList selectMaintenaceList(String listNUmber);
 }

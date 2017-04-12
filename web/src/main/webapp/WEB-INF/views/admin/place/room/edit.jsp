@@ -29,23 +29,6 @@
                         </select>
                     </div>
                 </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">选择设备组</label>
-                    <div class="layui-input-block">
-                        <select name="setId" id="setId" lay-filter="setId">
-                            <c:forEach items="${sets}" var="set">
-                                <c:if test="${room.setId == set.setId}">
-                                    <option value="${set.setId}" selected>${set.setName}</option>
-                                </c:if>
-                                <c:if test="${room.setId != set.setId}">
-                                    <option value="${set.setId}">${set.setName}</option>
-                                </c:if>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
-
                 <div class="layui-form-item">
                     <label class="layui-form-label">位置编号</label>
                     <div class="layui-input-block">

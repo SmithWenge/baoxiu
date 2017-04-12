@@ -37,17 +37,18 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
     @Override
     public Page<Equipment> select4Page(Equipment equipment, Pageable pageable) {
         StringBuilder builder = new StringBuilder();
-        builder.append("SELECT E.equipmentId, E.equipmentName, E.equipmentNumber, RG.groupName,");
-        builder.append(" RG.groupNumber FROM baoxiu_equipmentset ES LEFT JOIN baoxiu_equipment E ON ES.equipmentId =");
-        builder.append(" E.equipmentId LEFT JOIN baoxiu_repairgroup RG ON E.repairGroupId = RG.repairGroupId WHERE");
-        builder.append(" E.deleteFlag = 0");
+        builder.append("SELECT equipmentId, equipmentName, equipmentNumber, RG.groupName, RG.groupName, PR.roomName");
+        builder.append(" FROM baoxiu_equipment E LEFT JOIN baoxiu_repairgroup RG ON E.repairGroupId = RG.repairGroupId");
+        builder.append(" LEFT JOIN baoxiu_placeroom PR ON PR.roomId = E.roomId WHERE E.deleteFlag = 0");
 
         List<Object> argList = new ArrayList<Object>();
 
-        if (!Strings.isNullOrEmpty(equipment.getSetId())) {
-            builder.append(" AND ES.setId = ?");
+        String roomId = equipment.getRoomId();
 
-            argList.add(equipment.getSetId());
+        if (!Strings.isNullOrEmpty(roomId)) {
+            builder.append(" AND PR.roomId = ?");
+
+            argList.add(roomId);
         }
 
         Object[] args = argList.toArray();
@@ -67,6 +68,7 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
             equipment.setEquipmentNumber(rs.getString("equipmentNumber"));
             equipment.setRepairGroupName(rs.getString("groupName"));
             equipment.setRepairGroupNumber(rs.getString("groupNumber"));
+            equipment.setRoomName(rs.getString("roomName"));
 
             return equipment;
         }

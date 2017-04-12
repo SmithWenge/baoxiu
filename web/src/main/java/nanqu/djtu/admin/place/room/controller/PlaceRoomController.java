@@ -73,10 +73,8 @@ public class PlaceRoomController {
     public ModelAndView routeAdd() {
         ModelAndView mav = new ModelAndView("admin/place/room/add");
 
-        List<EquipmentSet> sets = placeRoomService.querySets();
         List<PlaceDistinct> distincts = placeRoomService.queryDistincts();
         mav.addObject("distincts", distincts);
-        mav.addObject("sets", sets);
 
         return mav;
     }
@@ -143,10 +141,8 @@ public class PlaceRoomController {
             ModelAndView mav = new ModelAndView("admin/place/room/edit");
 
             List<PlaceBuilding> buildings = placeRoomService.queryBuildings4Edit();
-            List<EquipmentSet> sets = placeRoomService.querySets();
             mav.addObject("room", room);
             mav.addObject("buildings", buildings);
-            mav.addObject("sets", sets);
 
             return mav;
         } else {
