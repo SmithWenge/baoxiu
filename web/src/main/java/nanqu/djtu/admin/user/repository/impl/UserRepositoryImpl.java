@@ -27,7 +27,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
 
     @Override
     public List<AdminUser> queryAdminUserList() {
-       String sql = "SELECT baoxiu.baoxiu_adminuser.adminUserId,username,adminName,userId,password,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone  FROM baoxiu.baoxiu_adminuser join baoxiu.shiro_user on (baoxiu.baoxiu_adminuser.adminUserId = baoxiu.shiro_user.adminUserId ) where baoxiu.baoxiu_adminuser.deleteflag = 0 and baoxiu.shiro_user.deleteFlag = 0 ;";
+       String sql = "SELECT AD.adminUserId,username,adminName,userId,password,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone  FROM baoxiu_adminuser AS AD join shiro_user AS US on (AD.adminUserId = US.adminUserId ) where AD.deleteflag = 0 and US.deleteFlag = 0 ;";
         Object[] args = {};
 
         try {
@@ -62,7 +62,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
     }
     @Override
     public boolean saveNewAdminUser(AdminUser adminUser) {
-        String sql = "INSERT into baoxiu.baoxiu_adminuser(adminUserId,adminName,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone) VALUES (?,?,?,?,?,?,?,?)";
+        String sql = "INSERT into baoxiu_adminuser(adminUserId,adminName,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone) VALUES (?,?,?,?,?,?,?,?)";
         Object[] args = {
                 adminUser.getAdminUserId(),
                 adminUser.getAdminName(),
@@ -90,7 +90,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
      */
     @Override
     public boolean query4AdminNumberUnique(String adminNumber) {
-        String sql = "SELECT count(1) as NUM FROM baoxiu.baoxiu_adminuser where adminNumber = ?";
+        String sql = "SELECT count(1) as NUM FROM baoxiu_adminuser where adminNumber = ?";
         Object[] args = {adminNumber};
 
         try{
@@ -123,7 +123,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
      */
     @Override
     public boolean saveNewUser(AdminUser adminUser) {
-        String sql = "INSERT into baoxiu.shiro_user(userId, username,password,adminUserId) values(?,?,?,?)";
+        String sql = "INSERT into shiro_user(userId, username,password,adminUserId) values(?,?,?,?)";
         Object[] args = {
                 PrimaryKeyUtil.uuidPrimaryKey(),
                 adminUser.getUsername(),
@@ -142,7 +142,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
 
     @Override
     public AdminUser query4Edit(String adminUserId) {
-        String sql = "SELECT baoxiu.baoxiu_adminuser.adminUserId,userId, username,password,adminName,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone  FROM baoxiu.baoxiu_adminuser join baoxiu.shiro_user on (baoxiu.baoxiu_adminuser.adminUserId = baoxiu.shiro_user.adminUserId ) where baoxiu.baoxiu_adminuser.adminUserId = ? ";
+        String sql = "SELECT AD.adminUserId,userId, username,password,adminName,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone  FROM baoxiu_adminuser AS AD join shiro_user AS US on (AD.adminUserId = US.adminUserId ) where AD.adminUserId = ? ";
         Object[] args  = {adminUserId};
         try{
             return jdbcTemplate.queryForObject(sql,args,new queryAdminUserListRowMapper() );
@@ -161,7 +161,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
      */
     @Override
     public boolean updateAdminUser(AdminUser adminUser) {
-        String sql = "UPDATE baoxiu.baoxiu_adminuser set  adminName=?,adminGender=?,adminEmail = ?,adminNumber = ?,adminState = ? ,adminCard= ?,adminTelephone=? where adminUserId = ?";
+        String sql = "UPDATE baoxiu_adminuser set  adminName=?,adminGender=?,adminEmail = ?,adminNumber = ?,adminState = ? ,adminCard= ?,adminTelephone=? where adminUserId = ?";
         Object[] args = {
                 adminUser.getAdminName(),
                 adminUser.getAdminGender(),
@@ -184,7 +184,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
     }
     @Override
     public boolean updateUser(AdminUser adminUser) {
-        String  sql = "UPDATE  baoxiu.shiro_user set username = ?,password = ?  WHERE deleteFlag = 0 AND UserId = ?";
+        String  sql = "UPDATE  shiro_user set username = ?,password = ?  WHERE deleteFlag = 0 AND UserId = ?";
         Object[] args = {
                 adminUser.getUsername(),
                 PasswordUtils.encrypt(adminUser.getPassword()),
@@ -200,7 +200,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
 
     @Override
     public boolean deleteAdminUser(String adminUserId) {
-       String sql = "UPDATE  baoxiu.baoxiu_adminuser set deleteFlag = 1 where adminUserId = ?";
+       String sql = "UPDATE baoxiu_adminuser set deleteFlag = 1 where adminUserId = ?";
         Object[] args = {adminUserId};
 
         try {
@@ -213,7 +213,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
 
     @Override
     public boolean deleteUser(String userId) {
-       String sql = "UPDATE baoxiu.shiro_user SET deleteFlag = 1 WHERE userId =?";
+       String sql = "UPDATE shiro_user SET deleteFlag = 1 WHERE userId =?";
         Object[] args = {userId};
 
         try {
@@ -227,7 +227,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
 
     @Override
     public AdminUser selectUserIdByAdminUserId(String adminUserId) {
-        String sql = "SELECT userId FROM baoxiu.shiro_user WHERE adminUserId = ?";
+        String sql = "SELECT userId FROM shiro_user WHERE adminUserId = ?";
         Object[] args = {adminUserId};
 
         try{
@@ -259,7 +259,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
 
     @Override
     public boolean updatePassword(AdminUser adminUser) {
-        String sql = "UPDATE  baoxiu.shiro_user SET password = ? WHERE userId = ?";
+        String sql = "UPDATE  shiro_user SET password = ? WHERE userId = ?";
         Object[] args = {
                 PasswordUtils.encrypt(adminUser.getPassword()),
                 adminUser.getUserId()
