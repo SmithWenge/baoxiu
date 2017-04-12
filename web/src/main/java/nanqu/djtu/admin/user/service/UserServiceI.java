@@ -24,4 +24,6 @@ public interface UserServiceI {
     boolean deleteAdminUser(AdminUser adminUser, AdminUser user);
 
     AdminUser selectUserIdByAdminUserId(String adminUserId);
+
+    boolean updatePassword(AdminUser adminUser, AdminUser user);
 }

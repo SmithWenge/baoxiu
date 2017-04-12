@@ -82,4 +82,16 @@ public class UserServiceyImpl implements UserServiceI {
         return userRepository.selectUserIdByAdminUserId(adminUserId);
     }
 
+    @Override
+    public boolean updatePassword(AdminUser adminUser, AdminUser user) {
+        boolean update = userRepository.updatePassword(adminUser);
+
+        if(update) {
+            LOG.info("[AdminUser] update password success with user {}.", user.getAdminName());
+        }else {
+            LOG.warn("[AdminUser] update password failure with user {}.", user.getAdminName());
+        }
+        return update;
+    }
+
 }

@@ -71,4 +71,12 @@ public interface UserRepositoryI {
      */
 
     AdminUser selectUserIdByAdminUserId(String adminUserId);
+
+    /**
+     * 修改管理员用户密码
+     * @param adminUser
+     * @return
+     */
+
+    boolean updatePassword(AdminUser adminUser);
 }
