@@ -176,6 +176,62 @@ public class UserController {
             return "redirect:/admin/userInfo/list.action";
         }
     }
+    /**
+     * 管理员用户信息
+     * @return 用户信息页面
+     */
+    @RequestMapping("/changePassword/list")
+    public ModelAndView changePasswordList() {
+        List<AdminUser> users = userService.queryAdminUserList();
 
+        ModelAndView mav = new ModelAndView("admin/password/list");
+
+        mav.addObject("user", users);
+
+        return  mav;
+    }
+    /**
+     * 路由到管理员用户密码编辑页面
+     *
+     * @param adminUserId, 用户Id
+     * @return 管理员用户密码编辑页面和相对用户信息
+     */
+    @RequestMapping("/changePassword/edit/route/{adminUserId}")
+    public ModelAndView routeChangePasswordEdit(@PathVariable String adminUserId) {
+        AdminUser adminUser= userService.query4Edit(adminUserId);
+
+        if (Optional.fromNullable(adminUser).isPresent()) {
+            ModelAndView mav = new ModelAndView("/admin/password/edit");
+            mav.addObject("adminUser", adminUser);
+            return mav;
+
+        } else {
+            return new ModelAndView("redirect:/admin/userInfo/list.action");
+        }
+    }
+
+    /**
+     * 保存用户密码信息修改
+     *
+     * @param adminUser 用户信息
+     * @param redirectAttributes 修改操作提示信息
+     * @return 保存成功返回list, else edit page
+     */
+    @RequestMapping(value = "/changePassword/edit/do", method = RequestMethod.POST)
+    public String saveEditPassword(AdminUser adminUser, RedirectAttributes redirectAttributes, HttpSession session) {
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+
+        boolean update = userService.updatePassword(adminUser, user);
+
+        if (update) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+
+            return "redirect:/admin/userInfo/changePassword/list.action";
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+
+            return "redirect:/admin/userInfo/changePassword/edit/route/" +adminUser.getAdminUserId() + ".action";
+        }
+    }
 
 }

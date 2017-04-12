@@ -16,7 +16,7 @@
             <li class="layui-nav-item">
                 <a href="">${sessionScope.adminInfo.adminName}</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">修改密码</a></dd>
+                    <dd><a href="${contextPath}/login/changePassword.action">修改密码</a></dd>
                     <dd><a href="${contextPath}/login/logout.action">退出</a></dd>
                 </dl>
             </li>
@@ -67,6 +67,7 @@
                     <dl class="layui-nav-child">
                         <dd id="role"><a href="${contextPath}/admin/role/list.action"><i class="layui-icon">&#xe602;</i> 角色管理</a></dd>
                         <dd id="userInfo"><a href="${contextPath}/admin/userInfo/list.action"><i class="layui-icon">&#xe602;</i> 用户信息管理</a></dd>
+                        <dd id="password"><a href="${contextPath}/admin/userInfo/changePassword/list.action"><i class="layui-icon">&#xe602;</i>用户密码管理</a></dd>
                     </dl>
                 </li>
             </ul>

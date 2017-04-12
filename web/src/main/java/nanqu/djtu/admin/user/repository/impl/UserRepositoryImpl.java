@@ -75,7 +75,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
         };
 
         try {
-                return  jdbcTemplate.update(sql,args) == 1;
+                return  jdbcTemplate.update(sql, args) == 1;
         }catch (Exception e) {
             LOG.error("[AdminUser] add new adminUser error with info {}.", e.getMessage());
             return false;
@@ -111,7 +111,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
         Object[] args = {username};
 
         try{
-            return  jdbcTemplate.queryForObject(sql,args,Integer.class) == 0;
+            return  jdbcTemplate.queryForObject(sql, args, Integer.class) == 0;
         }catch(Exception e){
             return false;
         }
@@ -251,4 +251,25 @@ public class UserRepositoryImpl implements UserRepositoryI{
         }
     }
 
+    /**
+     * 修改管理员用户密码
+     * @param adminUser
+     * @return
+     */
+
+    @Override
+    public boolean updatePassword(AdminUser adminUser) {
+        String sql = "UPDATE  baoxiu.shiro_user SET password = ? WHERE userId = ?";
+        Object[] args = {
+                PasswordUtils.encrypt(adminUser.getPassword()),
+                adminUser.getUserId()
+        };
+
+        try {
+            return jdbcTemplate.update(sql,args) == 1;
+        }catch (Exception e){
+            LOG.error("[AdminUser] update password error with info {}.", e.getMessage());
+            return false;
+        }
+    }
 }
