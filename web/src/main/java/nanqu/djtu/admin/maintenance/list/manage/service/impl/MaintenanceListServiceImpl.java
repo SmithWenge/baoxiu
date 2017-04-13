@@ -40,17 +40,7 @@ public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
 
     @Override
     public List<Equipment> queryEquipmentsWithRoom(PlaceRoom room) {
-        String roomId = room.getRoomId();
-        String BuildingId = room.getBuildingId();
-        List<Equipment> list;
-
-        if (Strings.isNullOrEmpty(roomId) && !Strings.isNullOrEmpty(BuildingId)) {
-            list = maintenanceLisRepository.selectEquipmentsWithBuildingId(room);
-        } else {
-            list = maintenanceLisRepository.selectEquipmentsWithRoomId(room);
-        }
-
-        return list;
+        return maintenanceLisRepository.selectEquipmentsWithRoomId(room);
     }
 
     @Override

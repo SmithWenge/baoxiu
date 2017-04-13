@@ -326,7 +326,8 @@
         "equipmentId": condition.equipmentId,
         "repairGroupId": condition.repairGroupId,
         "stopListTime": condition.stopListTime,
-        "startListTime": condition.startListTime
+        "startListTime": condition.startListTime,
+        "liststateStr": condition.listState
       };
       $.ajax({
         type: 'post',
@@ -359,7 +360,8 @@
         "equipmentId": condition.equipmentId,
         "repairGroupId": condition.repairGroupId,
         "stopListTime": condition.stopListTime,
-        "startListTime": condition.startListTime
+        "startListTime": condition.startListTime,
+        "liststateStr": condition.listState
       };
       $.ajax({
         type: 'post',

@@ -94,7 +94,7 @@ public class MaintenanceListController {
     }
 
     /**
-     * 位置或地点查询设备组的二级联动
+     * 位置或地点查询设备的二级联动
      *
      * @param room 位置对象
      * @return 这个位置下设备组的List

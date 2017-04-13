@@ -59,9 +59,9 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             argsList.add(list.getEquipmentId());
         }
 
-        if (list.getListState() > 0) {
+        if (!Strings.isNullOrEmpty(list.getListstateStr())) {
             sql.append(" AND M.listState = ?");
-            argsList.add(list.getListState());
+            argsList.add(list.getListstateStr());
         }
 
         if (!Strings.isNullOrEmpty(list.getRepairGroupId())) {
@@ -229,7 +229,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     @Override
     public List<Equipment> selectEquipmentsWithRoomId(PlaceRoom room) {
-        String sql = "SELECT equipmentId,equipmentName FROM baoxiu_equipment WHERE equipmentId IN (SELECT ES.equipmentId FROM baoxiu_set AS S LEFT JOIN baoxiu_equipmentset AS ES ON s.setId = ES.setId WHERE S.setId IN (SELECT S.setId FROM baoxiu_set AS S LEFT JOIN baoxiu_placeroom AS R ON s.setId = R.setId WHERE roomId = ? AND S.deleteFlag = 0))";
+        String sql = "SELECT equipmentId,equipmentName FROM baoxiu_equipment WHERE roomId = ? AND deleteFlag = 0";
         Object[] args = {
                 room.getRoomId()
         };
@@ -272,7 +272,8 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     @Override
     public MaintenanceList select4details(String listNumber) {
-        String sql = "SELECT listNumber,userName,groupName,roomName,buildingName,distinctName,equipmentName,listState,listDescription,listPicture FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.groupName LEFT JOIN baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";        Object[] args = {
+        String sql = "SELECT listNumber,userName,groupName,roomName,buildingName,distinctName,equipmentName,listState,listDescription,listPicture FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId LEFT JOIN baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";
+        Object[] args = {
                 listNumber
         };
 
