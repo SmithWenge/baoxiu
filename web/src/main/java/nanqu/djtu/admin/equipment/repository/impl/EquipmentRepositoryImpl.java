@@ -37,9 +37,10 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
     @Override
     public Page<Equipment> select4Page(Equipment equipment, Pageable pageable) {
         StringBuilder builder = new StringBuilder();
-        builder.append("SELECT equipmentId, equipmentName, equipmentNumber, RG.groupName, RG.groupName, PR.roomName");
+        builder.append("SELECT equipmentId, equipmentName, equipmentNumber, RG.groupName, RG.groupNumber, PR.roomName, PB.buildingName");
         builder.append(" FROM baoxiu_equipment E LEFT JOIN baoxiu_repairgroup RG ON E.repairGroupId = RG.repairGroupId");
-        builder.append(" LEFT JOIN baoxiu_placeroom PR ON PR.roomId = E.roomId WHERE E.deleteFlag = 0");
+        builder.append(" LEFT JOIN baoxiu_placeroom PR ON PR.roomId = E.roomId LEFT JOIN baoxiu_placebuilding PB ON");
+        builder.append(" PR.buildingId = PB.buildingId WHERE E.deleteFlag = 0");
 
         List<Object> argList = new ArrayList<Object>();
 
@@ -69,6 +70,7 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
             equipment.setRepairGroupName(rs.getString("groupName"));
             equipment.setRepairGroupNumber(rs.getString("groupNumber"));
             equipment.setRoomName(rs.getString("roomName"));
+            equipment.setBuildingName(rs.getString("buildingName"));
 
             return equipment;
         }
@@ -313,12 +315,13 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
      */
     @Override
     public boolean insertNewEquipment(Equipment equipment) {
-        String sql = "INSERT INTO baoxiu_equipment (equipmentId, equipmentName, repairGroupId, equipmentNumber) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO baoxiu_equipment (equipmentId, equipmentName, repairGroupId, equipmentNumber, roomId) VALUES (?, ?, ?, ?, ?)";
         Object[] args = {
                 equipment.getEquipmentId(),
                 equipment.getEquipmentName(),
                 equipment.getRepairGroupId(),
-                equipment.getEquipmentNumber()
+                equipment.getEquipmentNumber(),
+                equipment.getRoomId()
         };
 
         try {
@@ -406,9 +409,12 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
     @Override
     public Equipment select4Edit(String equipmentId) {
         StringBuilder builder = new StringBuilder();
-        builder.append("SELECT E.equipmentId, E.equipmentName, E.repairGroupId, E.equipmentNumber, ES.setId FROM baoxiu_equipment E");
-        builder.append(" LEFT JOIN baoxiu_equipmentset ES ON E.equipmentId = ES.equipmentId WHERE E.equipmentId = ?");
-        builder.append(" AND E.deleteFlag = 0");
+        builder.append("SELECT E.equipmentId, E.equipmentName, E.equipmentNumber, E.repairGroupId, E.roomId,");
+        builder.append(" RG.groupName, PR.roomName, PB.buildingId, PB.buildingName, PD.distinctId, PD.distinctName FROM");
+        builder.append(" baoxiu_equipment E LEFT JOIN baoxiu_repairgroup RG ON E.repairGroupId = RG.repairGroupId LEFT");
+        builder.append(" JOIN baoxiu_placeroom PR ON PR.roomId = E.roomId LEFT JOIN baoxiu_placebuilding PB ON");
+        builder.append(" PB.buildingId = PR.buildingId LEFT JOIN baoxiu_placedistinct PD ON PB.distinctId =");
+        builder.append(" PD.distinctId WHERE E.equipmentId = ? AND E.deleteFlag = 0");
 
         Object[] args = {
                 equipmentId
@@ -434,7 +440,13 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
             equipment.setEquipmentName(rs.getString("equipmentName"));
             equipment.setRepairGroupId(rs.getString("repairGroupId"));
             equipment.setEquipmentNumber(rs.getString("equipmentNumber"));
-            equipment.setSetId(rs.getString("setId"));
+            equipment.setRepairGroupName(rs.getString("groupName"));
+            equipment.setRoomId(rs.getString("roomId"));
+            equipment.setRoomName(rs.getString("roomName"));
+            equipment.setBuildingId(rs.getString("buildingId"));
+            equipment.setBuildingName(rs.getString("buildingName"));
+            equipment.setDistinctId(rs.getString("distinctId"));
+            equipment.setDistinctName(rs.getString("distinctName"));
 
             return equipment;
         }
@@ -448,11 +460,12 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
      */
     @Override
     public boolean updateEquipment(Equipment equipment) {
-        String sql = "UPDATE baoxiu_equipment SET equipmentName = ?, repairGroupId = ?, equipmentNumber = ? WHERE equipmentId = ? AND deleteFlag = 0";
+        String sql = "UPDATE baoxiu_equipment SET equipmentName = ?, repairGroupId = ?, equipmentNumber = ?, roomId = ? WHERE equipmentId = ? AND deleteFlag = 0";
         Object[] args = {
                 equipment.getEquipmentName(),
                 equipment.getRepairGroupId(),
                 equipment.getEquipmentNumber(),
+                equipment.getRoomId(),
                 equipment.getEquipmentId()
         };
 

@@ -19,6 +19,7 @@
 			<value>
 				<!-- anon表示地址不需要任何权限即可访问 -->
 				/static/**=anon
+				/app/**=anon
 				<!-- 数据库连接监控 -->
 				/druid/**=anon
 				/admin/routeLogin.action=anon

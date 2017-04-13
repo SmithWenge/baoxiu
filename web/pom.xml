@@ -41,6 +41,11 @@
             <artifactId>api</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>nanqu</groupId>
+            <artifactId>app.user</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
