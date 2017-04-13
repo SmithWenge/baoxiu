@@ -3,7 +3,9 @@ package nanqu.djtu.admin.user.service.impl;
 import nanqu.djtu.admin.place.distinct.repository.impl.PlaceDistinctRepositoryImpl;
 import nanqu.djtu.admin.user.repository.UserRepositoryI;
 import nanqu.djtu.admin.user.service.UserServiceI;
+import nanqu.djtu.log.repository.ILogRepository;
 import nanqu.djtu.pojo.AdminUser;
+import nanqu.djtu.pojo.LogContent;
 import nanqu.djtu.utils.PrimaryKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +20,12 @@ public class UserServiceyImpl implements UserServiceI {
     private static final Logger LOG = LoggerFactory.getLogger(PlaceDistinctRepositoryImpl.class);
     @Autowired
     private UserRepositoryI userRepository;
+    @Autowired
+    private ILogRepository logRepository;
 
     @Override
     public List<AdminUser> queryAdminUserList() {
-        return userRepository.queryAdminUserList();
+        return userRepository.selectAdminUserList();
     }
 
     @Transactional
@@ -92,6 +96,46 @@ public class UserServiceyImpl implements UserServiceI {
             LOG.warn("[AdminUser] update password failure with user {}.", user.getAdminName());
         }
         return update;
+    }
+
+    @Override
+    public List<AdminUser> queryAdminUserRolesList() {
+        List<AdminUser> list = userRepository.selectAdminUserRolesList();
+
+        for (AdminUser user : list) {
+            user.setRoleList(userRepository.selectExitRolesById(user.getUserId()));
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<AdminUser> queryExitRolesById(String userId) {
+        return userRepository.selectExitRolesById(userId);
+    }
+
+    @Override
+    public List<AdminUser> queryUnExitRolesById(String userId) {
+        return userRepository.selectUnExitRolesById(userId);
+    }
+
+    @Transactional
+    @Override
+    public boolean editUserRole(String[] roles, AdminUser user, String logUser) {
+        boolean deleteOldRoles = userRepository.deleteOldRole(user.getUserId());
+        boolean insertNewRoles = false;
+
+        if (deleteOldRoles) {
+            insertNewRoles = userRepository.insertNewRoles(user.getUserId(), roles);
+
+            if (insertNewRoles) {
+                LogContent logContent = new LogContent(logUser, "用户绑定角色" + user.getUserId(), 1, 4);
+                logRepository.insertLog(logContent);
+            }
+
+        }
+
+        return insertNewRoles && insertNewRoles;
     }
 
 }

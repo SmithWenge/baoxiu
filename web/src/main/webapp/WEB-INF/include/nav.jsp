@@ -68,6 +68,7 @@
                         <dd id="role"><a href="${contextPath}/admin/role/list.action"><i class="layui-icon">&#xe602;</i> 角色管理</a></dd>
                         <dd id="userInfo"><a href="${contextPath}/admin/userInfo/list.action"><i class="layui-icon">&#xe602;</i> 用户信息管理</a></dd>
                         <dd id="password"><a href="${contextPath}/admin/userInfo/changePassword/list.action"><i class="layui-icon">&#xe602;</i>用户密码管理</a></dd>
+                        <dd id="userRole"><a href="${contextPath}/admin/userInfo/userRole/list.action"><i class="layui-icon">&#xe602;</i> 用户权限管理</a></dd>
                     </dl>
                 </li>
             </ul>

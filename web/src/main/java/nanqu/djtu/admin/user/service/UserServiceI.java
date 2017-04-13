@@ -16,7 +16,6 @@ public interface UserServiceI {
 
     boolean query4UsernameUnique(String username);
 
-
     AdminUser query4Edit(String adminUserId);
 
     boolean updateAdminUser(AdminUser adminUser, AdminUser user);
@@ -26,4 +25,12 @@ public interface UserServiceI {
     AdminUser selectUserIdByAdminUserId(String adminUserId);
 
     boolean updatePassword(AdminUser adminUser, AdminUser user);
+
+    List<AdminUser> queryAdminUserRolesList();
+
+    List<AdminUser> queryExitRolesById(String userId);
+
+    List<AdminUser> queryUnExitRolesById(String userId);
+
+    boolean editUserRole(String[] roles, AdminUser user, String logUser);
 }

@@ -9,10 +9,12 @@ import nanqu.djtu.utils.PrimaryKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,16 +24,16 @@ import java.util.Objects;
 @Repository
 public class UserRepositoryImpl implements UserRepositoryI{
     private static final Logger LOG = LoggerFactory.getLogger(PlaceDistinctRepositoryImpl.class);
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<AdminUser> queryAdminUserList() {
-       String sql = "SELECT baoxiu.baoxiu_adminuser.adminUserId,username,adminName,userId,password,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone  FROM baoxiu.baoxiu_adminuser join baoxiu.shiro_user on (baoxiu.baoxiu_adminuser.adminUserId = baoxiu.shiro_user.adminUserId ) where baoxiu.baoxiu_adminuser.deleteflag = 0 and baoxiu.shiro_user.deleteFlag = 0 ;";
-        Object[] args = {};
+    public List<AdminUser> selectAdminUserList() {
+       String sql = "SELECT A.adminUserId,username,adminName,userId,password,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone FROM baoxiu_adminuser AS A LEFT JOIN shiro_user AS U on A.adminUserId = U.adminUserId where A.deleteflag = 0";        Object[] args = {};
 
         try {
-            return jdbcTemplate.query(sql,args,new queryAdminUserListRowMapper() );
+            return jdbcTemplate.query(sql,args,new SelectAdminUserListRowMapper() );
         }catch(Exception e){
             LOG.error("[AdminUser] query4List error with info {}.", e.getMessage());
 
@@ -40,11 +42,11 @@ public class UserRepositoryImpl implements UserRepositoryI{
 
     }
 
-    private class queryAdminUserListRowMapper implements RowMapper<AdminUser> {
+    private class SelectAdminUserListRowMapper implements RowMapper<AdminUser> {
 
         @Override
         public AdminUser mapRow(ResultSet rs, int rowNum) throws SQLException {
-           AdminUser adminUser = new AdminUser();
+            AdminUser adminUser = new AdminUser();
             adminUser.setAdminUserId(rs.getString("adminUserId"));
             adminUser.setAdminName(rs.getString("adminName"));
             adminUser.setAdminGender(rs.getInt("adminGender"));
@@ -83,6 +85,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
 
 
     }
+
     /**
      * 编号唯一性判断
      * @param adminNumber 管理员编号
@@ -99,6 +102,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
             return false;
         }
     }
+
     /**
      * 验证登录名的唯一
      *
@@ -145,7 +149,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
         String sql = "SELECT baoxiu.baoxiu_adminuser.adminUserId,userId, username,password,adminName,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone  FROM baoxiu.baoxiu_adminuser join baoxiu.shiro_user on (baoxiu.baoxiu_adminuser.adminUserId = baoxiu.shiro_user.adminUserId ) where baoxiu.baoxiu_adminuser.adminUserId = ? ";
         Object[] args  = {adminUserId};
         try{
-            return jdbcTemplate.queryForObject(sql,args,new queryAdminUserListRowMapper() );
+            return jdbcTemplate.queryForObject(sql,args,new SelectAdminUserListRowMapper() );
         } catch(Exception e){
             LOG.error("[AdminUser] query4List error with info {}.", e.getMessage());
 
@@ -231,7 +235,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
         Object[] args = {adminUserId};
 
         try{
-            return  jdbcTemplate.queryForObject(sql,args,new selectUserIdByAdminUserIdRowMApper());
+            return  jdbcTemplate.queryForObject(sql, args, new selectUserIdByAdminUserIdRowMApper());
         }catch(Exception e){
             LOG.error("[AdminUser] selectUserIdByAdminUserId error with info {}.", e.getMessage());
 
@@ -256,7 +260,6 @@ public class UserRepositoryImpl implements UserRepositoryI{
      * @param adminUser
      * @return
      */
-
     @Override
     public boolean updatePassword(AdminUser adminUser) {
         String sql = "UPDATE  baoxiu.shiro_user SET password = ? WHERE userId = ?";
@@ -271,5 +274,148 @@ public class UserRepositoryImpl implements UserRepositoryI{
             LOG.error("[AdminUser] update password error with info {}.", e.getMessage());
             return false;
         }
+    }
+
+    /**
+     * 查询所有的用户以及角色
+     * @return
+     */
+    @Override
+    public List<AdminUser> selectAdminUserRolesList() {
+        String sql = "SELECT A.adminUserId,adminName,userId,adminNumber FROM baoxiu_adminuser AS A LEFT JOIN shiro_user AS U on A.adminUserId = U.adminUserId where A.deleteflag = 0";
+        Object[] args = {};
+
+        try {
+            return jdbcTemplate.query(sql,args,new SelectAdminUserRolesListRowMapper() );
+        }catch(Exception e){
+            LOG.error("[AdminUser] query4List error with info {}.", e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
+    class SelectAdminUserRolesListRowMapper implements RowMapper {
+
+        @Override
+        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+            AdminUser adminUser = new AdminUser();
+            adminUser.setAdminUserId(rs.getString("adminUserId"));
+            adminUser.setAdminName(rs.getString("adminName"));
+            adminUser.setAdminNumber(rs.getString("adminNumber"));
+            adminUser.setUserId(rs.getString("userId"));
+
+            return adminUser;
+        }
+    }
+
+    /**
+     * 查询用户已选的角色
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<AdminUser> selectExitRolesById(String userId) {
+        String sql = "SELECT U.userId,R.roleId,R.roleName FROM shiro_userrole AS U LEFT JOIN shiro_role AS R ON U.roleId = R.roleId WHERE U.userId = ?";
+        Object[] args = {
+                userId
+        };
+
+        try {
+            return jdbcTemplate.query(sql,args,new SelectExitRolesByIdRowMapper() );
+        }catch(Exception e){
+            LOG.error("[AdminUser] select roles error with info {}.", e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
+    class SelectExitRolesByIdRowMapper implements RowMapper<AdminUser> {
+
+        @Override
+        public AdminUser mapRow(ResultSet rs, int rowNum) throws SQLException {
+            AdminUser user = new AdminUser();
+            user.setRoleId(rs.getString("roleId"));
+            user.setRoleName(rs.getString("roleName"));
+            user.setUserId(rs.getString("userId"));
+
+            return user;
+        }
+    }
+
+    /**
+     * 查询用户没有的角色
+     * @param
+     * @return
+     */
+    @Override
+    public List<AdminUser> selectUnExitRolesById(String userId) {
+        String sql = "SELECT roleId,roleName FROM shiro_role WHERE roleId NOT IN (SELECT roleId FROM shiro_userrole WHERE userId = ?)";
+
+        Object[] args = {
+                userId
+        };
+
+        try {
+            return jdbcTemplate.query(sql,args,new SelectUnExitRolesByIdRowMapper() );
+        }catch(Exception e){
+            LOG.error("[AdminUser] select roles error with info {}.", e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
+    class SelectUnExitRolesByIdRowMapper implements RowMapper<AdminUser> {
+
+        @Override
+        public AdminUser mapRow(ResultSet rs, int rowNum) throws SQLException {
+            AdminUser user = new AdminUser();
+            user.setRoleId(rs.getString("roleId"));
+            user.setRoleName(rs.getString("roleName"));
+
+            return user;
+        }
+    }
+
+    /**
+     * 删除用户原来绑定的角色
+     * @param userId
+     * @return
+     */
+    @Override
+    public Boolean deleteOldRole(String userId) {
+        String sql = "DELETE FROM shiro_userrole WHERE userId = ?";
+        Object[] args = {
+                userId
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) >= 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * 为用户新添加角色
+     * @param userId
+     * @param roles
+     * @return
+     */
+    @Override
+    public Boolean insertNewRoles(final String userId, final String[] roles) {
+        int[] result = jdbcTemplate.batchUpdate("INSERT INTO shiro_userrole (userId, roleId) VALUES (?, ?)", new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
+                preparedStatement.setString(1, userId);
+                preparedStatement.setString(2, roles[i]);
+            }
+
+            @Override
+            public int getBatchSize() {
+                return roles.length;
+            }
+        });
+
+        return result.length == roles.length;
     }
 }
