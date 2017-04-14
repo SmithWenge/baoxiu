@@ -70,4 +70,11 @@ public interface MaintenanceLisRepositoryI {
      * @return
      */
     List<MaintenanceList> selectStatusWithListNum(String listNumber);
+
+    /**
+     * 编辑报修单
+     * @param list
+     * @return
+     */
+    Boolean updateMaintenanceList(MaintenanceList list);
 }

@@ -355,4 +355,32 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             return list;
         }
     }
+
+    /**
+     * 编辑报修单
+     * @param list
+     * @return
+     */
+    @Override
+    public Boolean updateMaintenanceList(MaintenanceList list) {
+        String sql = "UPDATE baoxiu_maintenancelist SET userTel = ?, repairGroupId = ?, distinctId = ?, buildingId = ?, roomId = ?, equipmentId = ?, listDescription = ? WHERE listNumber = ? AND deleteFlag = 0";
+        Object[] args = {
+                list.getUserTel(),
+                list.getRepairGroupId(),
+                list.getDistinctId(),
+                list.getBuildingId(),
+                list.getRoomId(),
+                list.getEquipmentId(),
+                list.getListDescription(),
+                list.getListNumber()
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[maintenanceList] update maintenanceList {} error with info {}.", list.getListNumber(), e.getMessage());
+
+            return false;
+        }
+    }
 }

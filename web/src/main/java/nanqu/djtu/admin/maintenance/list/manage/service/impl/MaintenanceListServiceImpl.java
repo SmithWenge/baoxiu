@@ -4,6 +4,8 @@ import com.google.common.base.Strings;
 import nanqu.djtu.admin.maintenance.list.manage.repository.MaintenanceLisRepositoryI;
 import nanqu.djtu.admin.maintenance.list.manage.service.MaintenanceListServiceI;
 import nanqu.djtu.pojo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @Service
 public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
+    private static final Logger LOG = LoggerFactory.getLogger(MaintenanceListServiceImpl.class);
 
     @Autowired
     private MaintenanceLisRepositoryI maintenanceLisRepository;
@@ -55,5 +58,18 @@ public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
         list.setLists(lists);
 
         return list;
+    }
+
+    @Override
+    public Boolean editMaintenanceList(MaintenanceList list, AdminUser user) {
+        boolean update = maintenanceLisRepository.updateMaintenanceList(list);
+
+        if (update) {
+            LOG.info("[PlaceDistinct] update MaintenanceList {} success with user {}.", list.getListNumber(), user.getAdminName());
+        } else {
+            LOG.warn("[PlaceDistinct] update MaintenanceList {} failure with user {}.", list.getListNumber(), user.getAdminName());
+        }
+
+        return update;
     }
 }
