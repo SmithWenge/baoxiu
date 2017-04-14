@@ -51,9 +51,7 @@ public class UserMaintenanceListServiceImpl implements UserMaintenanceListServic
 
 
         try{
-
             list.setUserId(URLDecoder.decode("100", Charsets.UTF_8.displayName()));
-            list.setUserName(URLDecoder.decode("wenge", Charsets.UTF_8.displayName()));
             list.setListDescription(URLDecoder.decode(list.getListDescription(), Charsets.UTF_8.displayName()));
 
         }catch (UnsupportedEncodingException e){

@@ -66,7 +66,7 @@ public interface MaintenanceLisRepositoryI {
 
     /**
      * 查看详情中的状态列表
-     * @param ListNumber
+     * @param listNumber
      * @return
      */
     List<MaintenanceList> selectStatusWithListNum(String listNumber);

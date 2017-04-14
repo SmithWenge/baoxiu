@@ -272,7 +272,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     @Override
     public MaintenanceList select4details(String listNumber) {
-        String sql = "SELECT listNumber,userName,groupName,roomName,buildingName,distinctName,equipmentName,listState,listDescription,listPicture FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId LEFT JOIN baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";
+        String sql = "SELECT listNumber,userTel,groupName,roomName,buildingName,distinctName,equipmentName,listState,listDescription,listPicture FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId LEFT JOIN baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";
         Object[] args = {
                 listNumber
         };
@@ -310,7 +310,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             list.setListPicture(Strings.isNullOrEmpty(listPicture) ? "default_list.png" : listPicture);
 
             list.setListNumber(resultSet.getString("listNumber"));
-            list.setUserName(resultSet.getString("userName"));
+            list.setUserTel(resultSet.getString("userTel"));
             list.setEquipmentName(resultSet.getString("equipmentName"));
             list.setListState(String.valueOf(resultSet.getInt("listState")));
             list.setListstateStr(dictionary.dictionary(listState,"listState").getItemValue());

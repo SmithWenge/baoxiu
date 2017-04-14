@@ -23,11 +23,11 @@ public class MaintenanceListApiRepositoryImpl implements MaintenanceListApiRepos
      */
     @Override
     public boolean insertNew(MaintenanceList list) {
-        String sql = "INSERT INTO baoxiu_maintenancelist (listNumber, userId, userName, repairGroupId, roomId, buildingId, distinctId, listDescription, equipmentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO baoxiu_maintenancelist (listNumber, userId, userTel, repairGroupId, roomId, buildingId, distinctId, listDescription, equipmentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Object[] args = {
                 list.getListNumber(),
                 list.getUserId(),
-                list.getUserName(),
+                list.getUserTel(),
                 list.getRepairGroupId(),
                 list.getRoomId(),
                 list.getBuildingId(),
