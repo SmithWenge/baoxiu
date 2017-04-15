@@ -322,8 +322,9 @@
               '<a href="${contextPath}/admin/maintenance/list/manage/status/dispatch/' + listNumber +'.action">' +
               ' <button class="layui-btn layui-btn-normal" >派单</button>&#xe642;</i>' +
               '</button> </a><a href="${contextPath}/admin/maintenance/list/manage/status/done/' + listNumber + '.action">' +
-              ' <button class="layui-btn layui-btn-normal" >完成</button>&#xe640;</i></button>' +
-              '</a></div>'
+              ' <button class="layui-btn layui-btn-normal" >完成</button>&#xe640;</i></button>' + '<a href="${contextPath}/admin/maintenance/list/manage/edit/route/' + listNumber +'.action">' +
+              '<button class="layui-btn layui-btn-small layui-btn-warm"><i class="layui-icon">&#xe642;</i>' +
+              '</button> </a></div>'
 
     }
 
