@@ -5,13 +5,11 @@ import nanqu.djtu.admin.user.service.UserServiceI;
 import nanqu.djtu.pojo.AdminUser;
 
 import nanqu.djtu.pojo.PlaceBuilding;
+import nanqu.djtu.pojo.User;
 import nanqu.djtu.utils.ConstantFields;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -234,4 +232,63 @@ public class UserController {
         }
     }
 
+    /**
+     * 管理员用户权限
+     * @return 用户权限页面
+     */
+    @RequestMapping("/userRole/list")
+    public ModelAndView userRoleList() {
+        List<AdminUser> users = userService.queryAdminUserRolesList();
+
+        ModelAndView mav = new ModelAndView("admin/userRole/list");
+        mav.addObject("users", users);
+
+        return  mav;
+    }
+
+    /**
+     * 跳转到用户角色添加页面
+     * @return 添加角色页面
+    */
+    @RequestMapping("/editRole/route/{userId}")
+    public ModelAndView addRoleRoute(@PathVariable String userId) {
+        List<AdminUser> exitUsers = userService.queryExitRolesById(userId);
+        List<AdminUser> users = userService.queryUnExitRolesById(userId);
+
+        AdminUser user = new AdminUser();
+        user.setUserId(userId);
+
+        ModelAndView mav = new ModelAndView("admin/userRole/edit");
+        mav.addObject("exitUsers",exitUsers);
+        mav.addObject("users",users);
+        mav.addObject("user",user);
+
+        return mav;
+    }
+
+    /**
+     * 保存新的用户的角色
+     *
+     * @param editRoles 新的角色
+     * @param user 用户
+     * @return 路由到用户角色编辑页面
+     */
+    @RequestMapping(value = "userRole/save", method = RequestMethod.POST)
+    public String saveEditUserRole(@RequestParam String[] editRoles, AdminUser user, HttpSession session,
+                                   RedirectAttributes redirectAttributes) {
+        if (editRoles.length <= 0) {
+            return "redirect:/admin/userInfo/editRole/route/" + user.getUserId() + ".action";
+        }
+
+        User shiroUser = (User) session.getAttribute(ConstantFields.LOGIN_KEY);
+        String logUser = shiroUser.getUsername();
+
+        if (userService.editUserRole(editRoles, user, logUser)) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+            return "redirect:/admin/userInfo/userRole/list.action";
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+            return "redirect:/admin/userInfo/editRole/route/" + user.getUserId() + ".action";
+        }
+    }
 }

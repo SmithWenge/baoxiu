@@ -13,7 +13,7 @@
     </legend>
     <div style="width: 80%; margin-top: 15px; ">
       <div class="layui-form-item">
-        <label class="layui-form-label">报修单编号</label>
+        <label class="layui-form-label">报修图片</label>
         <div class="layui-input-block">
           <img src="${contextPath}/static/maintencePictures/${list.listPicture}" style="width: 20%; margin-top: 15px; ">
         </div>
@@ -25,9 +25,9 @@
         </div>
       </div>
       <div class="layui-form-item">
-        <label class="layui-form-label">报修人姓名</label>
+        <label class="layui-form-label">报修人电话</label>
         <div class="layui-input-block">
-          <input type="text" value="${list.userName}" class="layui-input" readonly>
+          <input type="text" value="${list.userTel}" class="layui-input" readonly>
         </div>
       </div>
       <div class="layui-form-item">

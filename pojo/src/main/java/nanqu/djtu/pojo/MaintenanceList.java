@@ -1,7 +1,5 @@
 package nanqu.djtu.pojo;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 public class MaintenanceList {

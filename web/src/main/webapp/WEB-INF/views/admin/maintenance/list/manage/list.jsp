@@ -100,6 +100,7 @@
           <td>设备名</td>
           <td>维修小组</td>
           <td>最新状态时间</td>
+          <td>操作</td>
         </tr>
         </thead>
         <tbody id="pageTableBody">
@@ -312,6 +313,14 @@
       });
     }
 
+    // 拼接操作字符转
+    function createOpsBtnGroup(listNumber) {
+      return '<div class="layui-btn-group">' +
+              '<a href="${contextPath}/admin/maintenance/list/manage/edit/route/' + listNumber +'.action">' +
+              '<button class="layui-btn layui-btn-small layui-btn-warm"><i class="layui-icon">&#xe642;</i>' +
+              '</button> </a></div>'
+    }
+
     // 分页
     var laypage = layui.laypage;
 
@@ -326,7 +335,8 @@
         "equipmentId": condition.equipmentId,
         "repairGroupId": condition.repairGroupId,
         "stopListTime": condition.stopListTime,
-        "startListTime": condition.startListTime
+        "startListTime": condition.startListTime,
+        "liststateStr": condition.listState
       };
       $.ajax({
         type: 'post',
@@ -342,8 +352,14 @@
           loadStateData();
 
           $.each(result.page.content, function (i, item) {
+            if(item.equipmentName == null) {
+              var maBtn = createOpsBtnGroup(item.listNumber);
+            } else {
+              var maBtn = "";
+            }
+
             var trData = "<tr><td>" + (i + 1) + "</td><td><a href=\"${contextPath}/admin/maintenance/list/manage/details/route/" + item.listNumber + ".action\">" + item.listNumber + "</a></td><td>" + item.liststateStr + "</td>";
-            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.liststatetime + "</td>";
+            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.liststatetime + "</td><td>" + maBtn + "</td></tr>";
             $("#pageTableBody").append(trData);
           });
         }
@@ -359,7 +375,8 @@
         "equipmentId": condition.equipmentId,
         "repairGroupId": condition.repairGroupId,
         "stopListTime": condition.stopListTime,
-        "startListTime": condition.startListTime
+        "startListTime": condition.startListTime,
+        "liststateStr": condition.listState
       };
       $.ajax({
         type: 'post',

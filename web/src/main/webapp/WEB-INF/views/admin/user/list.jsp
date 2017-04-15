@@ -67,26 +67,6 @@
     //导航栏选择
     $("#six").attr("class", "layui-nav-item layui-nav-itemed");
     $("#userInfo").attr("class", "layui-this");
-
-    // 删除提示弹出提示
-    function deleteConfirm($deleteBtn) {
-      event.preventDefault();
-
-      layer.confirm('确定要删除 ?', {
-        btn: ['确定', '取消']
-      }, function(index, layero) {
-        layer.closeAll('dialog');
-        $deleteBtn.unbind('click');
-        $deleteBtn.trigger('click');
-      }, function(index) {
-
-      });
-    }
-
-    $(":button.layui-btn-danger").click(function () {
-      var $deleteBtn = $(this);
-      deleteConfirm($deleteBtn);
-    });
   });
 </script>
 

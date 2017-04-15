@@ -1,6 +1,8 @@
 package nanqu.djtu.admin.maintenance.list.manage.controller;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Strings;
+import nanqu.djtu.admin.equipment.service.EquipmentServiceI;
 import nanqu.djtu.admin.maintenance.list.manage.service.MaintenanceListServiceI;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.utils.ConstantFields;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +26,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin/maintenance/list/manage")
 public class MaintenanceListController {
-
+    @Autowired
+    private EquipmentServiceI equipmentService;
     @Autowired
     private MaintenanceListServiceI maintenanceListService;
 
@@ -94,7 +99,7 @@ public class MaintenanceListController {
     }
 
     /**
-     * 位置或地点查询设备组的二级联动
+     * 位置或地点查询设备的二级联动
      *
      * @param room 位置对象
      * @return 这个位置下设备组的List
@@ -118,17 +123,72 @@ public class MaintenanceListController {
      * @return 位置编辑页面和相位置信息
      */
     @RequestMapping("/details/route/{listNumber}")
-    public ModelAndView routeEdit(@PathVariable String listNumber) {
+    public ModelAndView routeDetail(@PathVariable String listNumber) {
         MaintenanceList list = maintenanceListService.query4details(listNumber);
 
         if (Optional.fromNullable(list).isPresent()) {
             ModelAndView mav = new ModelAndView("admin/maintenance/list/manage/details");
-
             mav.addObject("list", list);
 
             return mav;
         } else {
+
             return new ModelAndView("redirect:/admin/maintenance/list/manage/index.action");
+        }
+    }
+
+    /**
+     * 路由到编辑页面
+     *
+     * @param listNumber 位置Id
+     * @return 位置编辑页面和相位置信息
+     */
+    @RequestMapping("/edit/route/{listNumber}")
+    public ModelAndView routeEdit(@PathVariable String listNumber) {
+        MaintenanceList list = maintenanceListService.query4details(listNumber);
+
+        if (Optional.fromNullable(list).isPresent()) {
+            ModelAndView mav = new ModelAndView("admin/maintenance/list/manage/edit");
+            List<RepairGroup> groups = equipmentService.queryAllRepairGroup();
+            List<PlaceDistinct> distincts = equipmentService.queryAllPlaceDistincts();
+
+            mav.addObject("groups", groups);
+            mav.addObject("distincts", distincts);
+            mav.addObject("list", list);
+
+            return mav;
+        } else {
+
+            return new ModelAndView("redirect:/admin/maintenance/list/manage/index.action");
+        }
+    }
+
+    /**
+     * 路由到编辑页面
+     *
+     * @param
+     * @return 位置编辑页面和相位置信息
+     */
+    @RequestMapping("/edit/do")
+    public String Edit(MaintenanceList list, RedirectAttributes redirectAttributes, HttpSession session) {
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+
+        if (Strings.isNullOrEmpty(list.getListNumber())) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+
+            return "redirect:/admin/maintenance/list/manage/edit/route/" + list.getListNumber() + ".action";
+        }
+
+        boolean update = maintenanceListService.editMaintenanceList(list, user);
+
+        if (update) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+
+            return "redirect:/admin/maintenance/list/manage/index.action";
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+
+            return "redirect:/admin/maintenance/list/manage/edit/route/" + list.getListNumber() + ".action";
         }
     }
 }
