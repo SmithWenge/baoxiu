@@ -61,6 +61,7 @@ public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
 
         return list;
     }
+
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     @Override
     public boolean updatestate(String listNumber, AdminUser user) {
@@ -88,5 +89,20 @@ public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
         return insert2;
     }
 
+
+
+
+    @Override
+    public Boolean editMaintenanceList(MaintenanceList list, AdminUser user) {
+        boolean update = maintenanceLisRepository.updateMaintenanceList(list);
+
+        if (update) {
+            LOG.info("[PlaceDistinct] update MaintenanceList {} success with user {}.", list.getListNumber(), user.getAdminName());
+        } else {
+            LOG.warn("[PlaceDistinct] update MaintenanceList {} failure with user {}.", list.getListNumber(), user.getAdminName());
+        }
+
+        return update;
+    }
 
 }

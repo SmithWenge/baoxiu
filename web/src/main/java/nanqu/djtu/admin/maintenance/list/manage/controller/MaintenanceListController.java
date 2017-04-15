@@ -55,7 +55,7 @@ public class MaintenanceListController {
         Page<MaintenanceList> page = maintenanceListService.query4Page(list, pageable);
         mapData.put(ConstantFields.PAGE_KEY, page);
 
-        mapData.put("condition",list);
+        mapData.put("condition", list);
 
         List<MaintenanceList> distincts = maintenanceListService.queryDistincts();
         mapData.put("distincts", distincts);
@@ -68,6 +68,7 @@ public class MaintenanceListController {
 
     /**
      * 二级联动根据校区查询地点
+     *
      * @param distinct
      * @return
      */
@@ -138,6 +139,33 @@ public class MaintenanceListController {
     }
 
     /**
+     * 路由到编辑页面
+     *
+     * @param listNumber 位置Id
+     * @return 位置编辑页面和相位置信息
+     */
+    @RequestMapping("/edit/route/{listNumber}")
+    public ModelAndView routeEdit(@PathVariable String listNumber) {
+        MaintenanceList list = maintenanceListService.query4details(listNumber);
+
+        if (Optional.fromNullable(list).isPresent()) {
+            ModelAndView mav = new ModelAndView("admin/maintenance/list/manage/edit");
+            List<RepairGroup> groups = equipmentService.queryAllRepairGroup();
+            List<PlaceDistinct> distincts = equipmentService.queryAllPlaceDistincts();
+
+            mav.addObject("groups", groups);
+            mav.addObject("distincts", distincts);
+
+            mav.addObject("list", list);
+
+            return mav;
+        } else {
+
+            return new ModelAndView("redirect:/admin/maintenance/list/manage/index.action");
+        }
+    }
+
+    /**
      * 用户更改状态变为派单
      * @param listNumber
      * @return返回报修单列表
@@ -155,26 +183,7 @@ public class MaintenanceListController {
 
             return "redirect:/admin/maintenance/list/manage/index.action";
         }
-    }
-    /**
-     * 更改状态为已完成
-     * @param listNumber
-     * @return返回报修单列表
-     */
-    @RequestMapping("/status/done/{listNumber}")
-    public String done(@PathVariable String listNumber,RedirectAttributes redirectAttributes, HttpSession session)
-    {
-        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
-        boolean update2 = maintenanceListService.done(listNumber,user);
-        if (update2) {
-            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
-
-            return "redirect:/admin/maintenance/list/manage/index.action";
-        } else {
-            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
-
-            return "redirect:/admin/maintenance/list/manage/index.action";
-        }
 
     }
+
 }

@@ -101,6 +101,9 @@
           <td>维修小组</td>
           <td>报修时间</td>
           <td>操作维修状态</td>
+          <td>最新状态时间</td>
+          <td>操作</td>
+
         </tr>
         </thead>
         <tbody id="pageTableBody">
@@ -321,6 +324,7 @@
               '</button> </a><a href="${contextPath}/admin/maintenance/list/manage/status/done/' + listNumber + '.action">' +
               ' <button class="layui-btn layui-btn-normal" >完成</button>&#xe640;</i></button>' +
               '</a></div>'
+
     }
 
     // 分页
@@ -337,7 +341,8 @@
         "equipmentId": condition.equipmentId,
         "repairGroupId": condition.repairGroupId,
         "stopListTime": condition.stopListTime,
-        "startListTime": condition.startListTime
+        "startListTime": condition.startListTime,
+        "liststateStr": condition.listState
       };
       $.ajax({
         type: 'post',
@@ -353,9 +358,16 @@
           loadStateData();
 
           $.each(result.page.content, function (i, item) {
+
             var trData = "<tr><td>" + (i + 1) + "</td><td><a href=\"${contextPath}/admin/maintenance/list/manage/details/route/" + item.listNumber + ".action\">" + item.listNumber + "</a></td><td>" + item.liststateStr ;
             trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.listTime + "</td>"+ "</td>"+"</td><td>" + createOpsBtnGroup(item.listNumber) + "</td>";
-            $("#pageTableBody").append(trData);
+
+            if(item.equipmentName == null) {
+              var maBtn = createOpsBtnGroup(item.listNumber);
+            } else {
+              var maBtn = "";
+            }
+
           });
         }
       });
