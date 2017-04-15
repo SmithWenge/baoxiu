@@ -28,7 +28,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label">报修人电话</label>
           <div class="layui-input-block">
-            <input type="text" value="${list.userTel}" name="userTel" class="layui-input">
+            <input type="text" value="${list.userTel}" name="userTel" class="layui-input" readonly>
           </div>
         </div>
         <div class="layui-form-item">
