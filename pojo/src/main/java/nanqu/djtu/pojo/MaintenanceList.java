@@ -30,6 +30,26 @@ public class MaintenanceList {
     private List<MaintenanceList> lists;
     private String listStatusTime;
 
+    public int getSum() {
+        return sum;
+    }
+
+    public void setSum(int sum) {
+        this.sum = sum;
+    }
+
+    private int sum;
+
+    public String getUserTel() {
+        return userTel;
+    }
+
+    public void setUserTel(String userTel) {
+        this.userTel = userTel;
+    }
+
+    private String userTel;
+
 
     public List<MaintenanceList> getLists() {
         return lists;
