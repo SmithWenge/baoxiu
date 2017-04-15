@@ -264,7 +264,6 @@
 </div>
 
 <div id="u175" class="ax_default icon">
-    <img id="u175_img" class="img " src="${contextPath}/static/worker/images/home/u175.png"/>
     <div id="u176" class="text" style="display: none; visibility: hidden">
         <p><span></span></p>
     </div>

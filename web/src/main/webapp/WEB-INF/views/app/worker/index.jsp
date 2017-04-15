@@ -101,11 +101,11 @@
 
     <form action="${contextPath}/app/worker/login.action" method="post">
         <div id="u14" class="ax_default text_field">
-            <input id="u14_input" name="workTel" type="text" value=""/>
+            <input id="u14_input" name="workerTel" type="text"/>
         </div>
 
         <div id="u15" class="ax_default text_field">
-            <input id="u15_input" name="workerPass" type="password" value=""/>
+            <input id="u15_input" name="workerPass" type="password"/>
         </div>
 
         <div id="u8" class="ax_default label">

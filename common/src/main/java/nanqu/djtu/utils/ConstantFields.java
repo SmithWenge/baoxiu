@@ -22,6 +22,8 @@ public class ConstantFields {
     public static final String LOGIN_KEY = "shiroLogin";
     /* 用户登录后信息 */
     public static final String SESSION_LOGIN_KEY = "adminInfo";
+    /* 工人登录后信息 */
+    public static final String SESSION_WORKER_LOGIN_KEY = "workerInfo";
 
     /* 日志查询条件存储 */
     public static final String LOG_QUERY = "logQuery";
