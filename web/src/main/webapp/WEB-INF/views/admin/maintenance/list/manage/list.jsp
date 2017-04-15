@@ -100,10 +100,10 @@
           <td>设备名</td>
           <td>维修小组</td>
           <td>报修时间</td>
-          <td>操作维修状态</td>>
+          <td>操作维修状态</td>
         </tr>
         </thead>
-        <tbody id="pageTableBody" >
+        <tbody id="pageTableBody">
         </tbody>
       </table>
     </div>
@@ -312,6 +312,7 @@
         });
       });
     }
+
     // 拼接操作字符转
     function createOpsBtnGroup(listNumber) {
       return '<div class="layui-btn-group">' +
@@ -360,6 +361,7 @@
       });
     }
 
+
     // 初始化页面加载数据
     function loadPageData() {
       var pageData = {
@@ -369,7 +371,8 @@
         "equipmentId": condition.equipmentId,
         "repairGroupId": condition.repairGroupId,
         "stopListTime": condition.stopListTime,
-        "startListTime": condition.startListTime
+        "startListTime": condition.startListTime,
+        "liststateStr": condition.listState
       };
       $.ajax({
         type: 'post',

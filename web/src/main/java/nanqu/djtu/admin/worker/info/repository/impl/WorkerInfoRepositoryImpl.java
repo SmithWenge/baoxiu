@@ -32,7 +32,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
      */
     @Override
     public List<WorkerInfo> query4List() {
-        String sql = "SELECT userId,workerName,workerUnit,workerDepartment,workerJob,workerState,groupName,typeName,baoxiu.baoxiu_workerinfo.repairGroupId,baoxiu.baoxiu_workerinfo.typeId FROM (baoxiu.baoxiu_workerinfo join baoxiu.baoxiu_repairgroup on(baoxiu.baoxiu_workerinfo.repairGroupId = baoxiu.baoxiu_repairgroup.repairGroupId) )join baoxiu.baoxiu_workertype on(baoxiu.baoxiu_workerinfo.typeId = baoxiu.baoxiu_workertype.typeId) where baoxiu.baoxiu_workerinfo.deleteFlag = 0";
+        String sql = "SELECT userId,workerName,workerUnit,workerDepartment,workerJob,workerState,groupName,typeName,GR.repairGroupId,INFO.typeId FROM (baoxiu_workerinfo AS INFO join baoxiu_repairgroup AS GR on(INFO.repairGroupId = GR.repairGroupId) )join baoxiu_workertype AS TY on(INFO.typeId = TY.typeId) where INFO.deleteFlag = 0";
         Object[] args = {};
 
         try {
@@ -72,7 +72,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
 
     @Override
     public List<RepairGroup> repairGroupQuery4List() {
-        String sql = "SELECT repairGroupId,groupNumber,groupName,groupPrinterIp FROM baoxiu.baoxiu_repairgroup where deleteFlag = 0";
+        String sql = "SELECT repairGroupId,groupNumber,groupName,groupPrinterIp FROM baoxiu_repairgroup where deleteFlag = 0";
         Object[] args = {};
 
         try {
@@ -107,7 +107,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
      */
     @Override
     public List<WorkerType> workerTypeQuery4List() {
-        String sql = "SELECT typeId,typeName FROM baoxiu.baoxiu_workertype where deleteFlag = 0";
+        String sql = "SELECT typeId,typeName FROM baoxiu_workertype where deleteFlag = 0";
         Object[] args = {};
 
         try {
@@ -142,7 +142,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
 
     @Override
     public boolean insertNewWorkerInfo(WorkerInfo info) {
-        String sql = "INSERT INTO  baoxiu.baoxiu_workerinfo(userId,workerName,workerUnit,workerDepartment,workerJob,workerState,repairGroupId,typeId,deleteFlag) VALUES(?,?,?,?,?,?,?,?,0);";
+        String sql = "INSERT INTO baoxiu_workerinfo(userId,workerName,workerUnit,workerDepartment,workerJob,workerState,repairGroupId,typeId,deleteFlag) VALUES(?,?,?,?,?,?,?,?,0);";
         Object[] args = {
                 PrimaryKeyUtil.uuidPrimaryKey(),
                 info.getWorkerName(),
@@ -173,7 +173,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
 
     @Override
     public boolean deleteWorkerInfo(String userId) {
-        String sql = "UPDATE baoxiu.baoxiu_workerinfo set deleteFlag = 1 WHERE userId = ? AND deleteFlag = 0";
+        String sql = "UPDATE baoxiu_workerinfo set deleteFlag = 1 WHERE userId = ? AND deleteFlag = 0";
         Object[] args = {userId};
 
         try {
@@ -194,7 +194,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
 
     @Override
     public WorkerInfo query4Edit(String userId) {
-        String sql = "SELECT userId,workerName,workerUnit,workerDepartment,workerJob,workerState,groupName,typeName,baoxiu.baoxiu_workerinfo.repairGroupId,baoxiu.baoxiu_workerinfo.typeId FROM (baoxiu.baoxiu_workerinfo join baoxiu.baoxiu_repairgroup on(baoxiu.baoxiu_workerinfo.repairGroupId = baoxiu.baoxiu_repairgroup.repairGroupId) )join baoxiu.baoxiu_workertype on(baoxiu.baoxiu_workerinfo.typeId = baoxiu.baoxiu_workertype.typeId) where baoxiu.baoxiu_workerinfo.deleteFlag = 0";
+        String sql = "SELECT userId,workerName,workerUnit,workerDepartment,workerJob,workerState,groupName,typeName,INFO.repairGroupId,INFO.typeId FROM (baoxiu_workerinfo AS INFO join baoxiu_repairgroup AS RP on(INFO.repairGroupId = RP.repairGroupId) )join baoxiu_workertype AS TY on(INFO.typeId = TY.typeId) where INFO.deleteFlag = 0";
         Object[] args = {};
 
         try {
@@ -217,7 +217,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
 
     @Override
     public boolean updateWorkerInfo(WorkerInfo info) {
-        String sql = "UPDATE baoxiu.baoxiu_workerinfo SET workerName =?,workerUnit=?,workerDepartment=?,workerJob = ?,workerState = ?,repairGroupId = ?,typeId = ? WHERE userId= ? and deleteFlag=0";
+        String sql = "UPDATE baoxiu_workerinfo SET workerName =?,workerUnit=?,workerDepartment=?,workerJob = ?,workerState = ?,repairGroupId = ?,typeId = ? WHERE userId= ? and deleteFlag=0";
         Object[] args = {
                 info.getWorkerName(),
                 info.getWorkerUnite(),

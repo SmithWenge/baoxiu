@@ -1,6 +1,7 @@
 package nanqu.djtu.admin.equipment.controller;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Strings;
 import nanqu.djtu.admin.equipment.service.EquipmentServiceI;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.utils.ConstantFields;
@@ -122,13 +123,13 @@ public class EquipmentController {
      */
     @RequestMapping("/add/route")
     public ModelAndView routeAdd() {
-        List<EquipmentSet> sets = equipmentService.queryAllEquipmentSets();
         List<RepairGroup> groups = equipmentService.queryAllRepairGroup();
+        List<PlaceDistinct> distincts = equipmentService.queryAllPlaceDistincts();
 
         ModelAndView mav = new ModelAndView("admin/equipment/add");
 
-        mav.addObject("sets", sets);
         mav.addObject("groups", groups);
+        mav.addObject("distincts", distincts);
 
         return mav;
     }
@@ -188,11 +189,11 @@ public class EquipmentController {
 
             mav.addObject("equipment", equipment);
 
-            List<EquipmentSet> sets = equipmentService.queryAllEquipmentSets();
             List<RepairGroup> groups = equipmentService.queryAllRepairGroup();
+            List<PlaceDistinct> distincts = equipmentService.queryAllPlaceDistincts();
 
-            mav.addObject("sets", sets);
             mav.addObject("groups", groups);
+            mav.addObject("distincts", distincts);
 
             return mav;
         } else {
@@ -210,6 +211,12 @@ public class EquipmentController {
     @RequestMapping(value = "/edit/do", method = RequestMethod.POST)
     public String saveEdit(Equipment equipment, RedirectAttributes redirectAttributes, HttpSession session) {
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+
+        if (Strings.isNullOrEmpty(equipment.getRoomId())) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+
+            return "redirect:/admin/equipment/edit/route/" + equipment.getEquipmentId() + ".action";
+        }
 
         boolean update = equipmentService.updateEquipment(equipment, user);
 

@@ -5,13 +5,11 @@ import nanqu.djtu.admin.user.service.UserServiceI;
 import nanqu.djtu.pojo.AdminUser;
 
 import nanqu.djtu.pojo.PlaceBuilding;
+import nanqu.djtu.pojo.User;
 import nanqu.djtu.utils.ConstantFields;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -176,6 +174,121 @@ public class UserController {
             return "redirect:/admin/userInfo/list.action";
         }
     }
+    /**
+     * 管理员用户信息
+     * @return 用户信息页面
+     */
+    @RequestMapping("/changePassword/list")
+    public ModelAndView changePasswordList() {
+        List<AdminUser> users = userService.queryAdminUserList();
 
+        ModelAndView mav = new ModelAndView("admin/password/list");
 
+        mav.addObject("user", users);
+
+        return  mav;
+    }
+    /**
+     * 路由到管理员用户密码编辑页面
+     *
+     * @param adminUserId, 用户Id
+     * @return 管理员用户密码编辑页面和相对用户信息
+     */
+    @RequestMapping("/changePassword/edit/route/{adminUserId}")
+    public ModelAndView routeChangePasswordEdit(@PathVariable String adminUserId) {
+        AdminUser adminUser= userService.query4Edit(adminUserId);
+
+        if (Optional.fromNullable(adminUser).isPresent()) {
+            ModelAndView mav = new ModelAndView("/admin/password/edit");
+            mav.addObject("adminUser", adminUser);
+            return mav;
+
+        } else {
+            return new ModelAndView("redirect:/admin/userInfo/list.action");
+        }
+    }
+
+    /**
+     * 保存用户密码信息修改
+     *
+     * @param adminUser 用户信息
+     * @param redirectAttributes 修改操作提示信息
+     * @return 保存成功返回list, else edit page
+     */
+    @RequestMapping(value = "/changePassword/edit/do", method = RequestMethod.POST)
+    public String saveEditPassword(AdminUser adminUser, RedirectAttributes redirectAttributes, HttpSession session) {
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+
+        boolean update = userService.updatePassword(adminUser, user);
+
+        if (update) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+
+            return "redirect:/admin/userInfo/changePassword/list.action";
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+
+            return "redirect:/admin/userInfo/changePassword/edit/route/" +adminUser.getAdminUserId() + ".action";
+        }
+    }
+
+    /**
+     * 管理员用户权限
+     * @return 用户权限页面
+     */
+    @RequestMapping("/userRole/list")
+    public ModelAndView userRoleList() {
+        List<AdminUser> users = userService.queryAdminUserRolesList();
+
+        ModelAndView mav = new ModelAndView("admin/userRole/list");
+        mav.addObject("users", users);
+
+        return  mav;
+    }
+
+    /**
+     * 跳转到用户角色添加页面
+     * @return 添加角色页面
+    */
+    @RequestMapping("/editRole/route/{userId}")
+    public ModelAndView addRoleRoute(@PathVariable String userId) {
+        List<AdminUser> exitUsers = userService.queryExitRolesById(userId);
+        List<AdminUser> users = userService.queryUnExitRolesById(userId);
+
+        AdminUser user = new AdminUser();
+        user.setUserId(userId);
+
+        ModelAndView mav = new ModelAndView("admin/userRole/edit");
+        mav.addObject("exitUsers",exitUsers);
+        mav.addObject("users",users);
+        mav.addObject("user",user);
+
+        return mav;
+    }
+
+    /**
+     * 保存新的用户的角色
+     *
+     * @param editRoles 新的角色
+     * @param user 用户
+     * @return 路由到用户角色编辑页面
+     */
+    @RequestMapping(value = "userRole/save", method = RequestMethod.POST)
+    public String saveEditUserRole(@RequestParam String[] editRoles, AdminUser user, HttpSession session,
+                                   RedirectAttributes redirectAttributes) {
+        if (editRoles.length <= 0) {
+            return "redirect:/admin/userInfo/editRole/route/" + user.getUserId() + ".action";
+        }
+
+        User shiroUser = (User) session.getAttribute(ConstantFields.LOGIN_KEY);
+        String logUser = shiroUser.getUsername();
+
+        if (userService.editUserRole(editRoles, user, logUser)) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+            return "redirect:/admin/userInfo/userRole/list.action";
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+            return "redirect:/admin/userInfo/editRole/route/" + user.getUserId() + ".action";
+        }
+    }
 }

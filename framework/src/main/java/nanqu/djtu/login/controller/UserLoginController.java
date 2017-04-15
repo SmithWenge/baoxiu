@@ -3,6 +3,7 @@ package nanqu.djtu.login.controller;
 import com.google.common.base.Optional;
 import nanqu.djtu.login.service.UserLoginServiceI;
 import nanqu.djtu.pojo.AdminUser;
+import nanqu.djtu.pojo.PlaceBuilding;
 import nanqu.djtu.pojo.User;
 import nanqu.djtu.utils.ConstantFields;
 import nanqu.djtu.utils.PasswordUtils;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -104,12 +106,51 @@ public class UserLoginController {
      * @return 重登向到登陆页面请求
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpSession session) {
+      public String logout(HttpSession session) {
         session.removeAttribute(ConstantFields.SESSION_LOGIN_KEY);
 
         Subject currentUser = SecurityUtils.getSubject();
         currentUser.logout();
 
         return "redirect:/login/route.action";
+    }
+    /**
+     * 用户修改密码
+     *
+     * @param session request会话信息
+     * @return 重登向到登陆页面请求
+     */
+    @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
+    public ModelAndView changePassword(HttpSession session) {
+
+        AdminUser user = (AdminUser)session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+        AdminUser adminUser = userLoginService.queryUserId(user.getAdminUserId());
+        ModelAndView modelAndView = new ModelAndView("admin/login/changePassword");
+        modelAndView.addObject("adminUser", adminUser);
+        return modelAndView;
+    }
+
+    /**
+     * 保存密码修改
+     *
+     * @param adminUser 用户信息
+     * @param redirectAttributes 修改操作提示信息
+     * @return 保存成功返回list, else edit page
+     */
+   @RequestMapping(value = "/changePassword/do", method = RequestMethod.POST)
+    public String saveEditPlaceDistinct(AdminUser adminUser, RedirectAttributes redirectAttributes, HttpSession session) {
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+
+        boolean update = userLoginService.updatePassword(adminUser, user);
+
+        if (update) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+
+            return "redirect:/admin/home/index.action";
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+
+            return "redirect:/admin/changePassword" + adminUser.getUserId() + ".action";
+        }
     }
 }

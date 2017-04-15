@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/include/nav.jsp"%>
@@ -48,9 +50,6 @@
                     <div class="layui-input-block">
                         <select name="equipmentId" id="equipmentId" lay-filter="equipmentId">
                             <option value="0">请选择设备</option>
-                            <c:forEach items="${equipments}" var="equipments">
-                                <option value="${equipments.equipmentId}">${equipments.equipmentName}</option>
-                            </c:forEach>
                         </select>
                     </div>
                 </div>
@@ -126,7 +125,7 @@
             });
         });
 
-        // 加载地点数据
+        // 加载位置数据
         function loadRoomData(result) {
             var $ = layui.jquery;
             var $form = $('#placeRoomForm');
@@ -155,11 +154,48 @@
                 type: 'post',
                 contentType: 'application/x-www-form-urlencoded',
                 dataType: 'json',
-                url: '${contextPath}/user/maintenance/list//placeRoom.action',
+                url: '${contextPath}/user/maintenance/list/placeRoom.action',
                 data: postData,
                 success: function (result) {
                     // 配置校区查询
                     loadRoomData(result);
+                }
+            });
+        });
+        // 加载设备数据
+        function loadEquipmentData(result) {
+            var $ = layui.jquery;
+            var $form = $('#placeRoomForm');
+            var form = layui.form();
+            var optionsValue = '';
+
+            var equipments = result.equipments;
+
+            if(equipments.length > 0) {
+                for (var i = 0; i < equipments.length; i++) {
+                    optionsValue += '<option value="' + equipments[i].equipmentId + '">' + equipments[i].equipmentName + '</option>';
+                }
+            }
+
+            $form.find('select[id=equipmentId]').empty();
+            $form.find('select[id=equipmentId]').append(optionsValue);
+            form.render();
+        }
+
+        form.on('select(roomId)', function(data) {
+            var postData = {
+                "roomId": data.value
+            };
+
+            $.ajax({
+                type: 'post',
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                url: '${contextPath}/user/maintenance/list/equipment.action',
+                data: postData,
+                success: function (result) {
+                    // 配置设施查询
+                    loadEquipmentData(result);
                 }
             });
         });
@@ -188,3 +224,6 @@
 
 
 <%@ include file="/WEB-INF/include/footer.jsp"%>
+
+
+

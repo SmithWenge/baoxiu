@@ -12,7 +12,7 @@
             </span>
         </legend>
         <div style="width: 30%; margin-top: 15px; ">
-            <form action="${contextPath}/admin/equipment/add/do.action" method="post" class="layui-form">
+            <form action="${contextPath}/admin/equipment/add/do.action" method="post" class="layui-form" id="equipmentAddForm">
                 <div class="layui-form-item">
                     <label class="layui-form-label">设备名</label>
                     <div class="layui-input-block">
@@ -26,12 +26,28 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">设备组</label>
+                    <label class="layui-form-label">校区</label>
                     <div class="layui-input-block">
-                        <select name="setId" lay-filter="aihao" id="setIdSelect">
-                            <c:forEach items="${sets}" var="set">
-                                <option value="${set.setId}">${set.setName}</option>
+                        <select name="distinctId" lay-filter="distinctId" id="distinctId">
+                            <c:forEach items="${distincts}" var="distinct">
+                                <option value="${distinct.distinctId}">${distinct.distinctName}</option>
                             </c:forEach>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">地点</label>
+                    <div class="layui-input-block">
+                        <select name="buildingId" id="buildingId" lay-filter="buildingId">
+                            <option value="">请选择地点</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">位置</label>
+                    <div class="layui-input-block">
+                        <select name="roomId" id="roomId" lay-filter="roomId">
+                            <option value="">请选择位置</option>
                         </select>
                     </div>
                 </div>
@@ -61,8 +77,88 @@
 <script>
     $(function () {
         // 导航栏选择
+        // 导航栏选择
         $("#two").attr("class", "layui-nav-item layui-nav-itemed");
-        $("#set").attr("class", "layui-this");
+        $("#equipment").attr("class", "layui-this");
+
+        // 加载位置信息
+        function loadRoomData(result) {
+            var $ = layui.jquery;
+            var $form = $('#equipmentAddForm');
+            var form = layui.form();
+
+            var rooms = result.rooms;
+            var optionsValue = '<option value="-100">请选择位置</option>';
+
+            for (var i = 0; i < rooms.length; i++) {
+                optionsValue += '<option value="' + rooms[i].roomId + '">' + rooms[i].roomName + '</option>';
+            }
+
+            $form.find('select[id=roomId]').empty();
+            $form.find('select[id=roomId]').append(optionsValue);
+            form.render();
+        }
+
+        // 加载地点数据
+        function loadBuildingData(result) {
+            var $ = layui.jquery;
+            var $form = $('#equipmentAddForm');
+            var form = layui.form();
+
+            var buildings = result.buildings;
+            var optionsValue = '<option value="-100">请选择地点</option>';
+
+            for (var i = 0; i < buildings.length; i++) {
+                optionsValue += '<option value="' + buildings[i].buildingId + '">' + buildings[i].buildingName + '</option>';
+            }
+
+            $form.find('select[id=buildingId]').empty();
+            $form.find('select[id=buildingId]').append(optionsValue);
+            form.render();
+
+            form.on('select(buildingId)', function(data) {
+                var postData = {
+                    "buildingId": data.value
+                };
+
+                $.ajax({
+                    type: 'post',
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    url: '${contextPath}/admin/equipment/building/rooms.action',
+                    data: postData,
+                    success: function (result) {
+                        loadRoomData(result);
+                    }
+                });
+            });
+        }
+
+        // 加载校区数据
+        function loadDistinctData() {
+            var $ = layui.jquery;
+            var $form = $('#equipmentAddForm');
+            var form = layui.form();
+
+            form.on('select(distinctId)', function(data) {
+                var postData = {
+                    "distinctId": data.value
+                };
+
+                $.ajax({
+                    type: 'post',
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    url: '${contextPath}/admin/equipment/distinct/buildings.action',
+                    data: postData,
+                    success: function (result) {
+                        loadBuildingData(result);
+                    }
+                });
+            });
+        }
+
+        loadDistinctData();
 
         // 表单验证
         var form = layui.form();

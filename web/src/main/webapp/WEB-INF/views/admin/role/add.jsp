@@ -118,6 +118,12 @@
 <script type="text/javascript" src="${contextPath}/static/plugin/jquery/jquery.validate.min.js"></script>
 
 <script type="text/javascript">
+    $(function () {
+        // 导航栏选择
+        $("#six").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#role").attr("class", "layui-this");
+    });
+
     // 中文验证
     jQuery.validator.addMethod("zhongwen", function(value, element) {
         return this.optional(element) || /^[\u4e00-\u9fa5]+$/.test(value);

@@ -1,6 +1,8 @@
 package nanqu.djtu.admin.maintenance.list.manage.controller;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Strings;
+import nanqu.djtu.admin.equipment.service.EquipmentServiceI;
 import nanqu.djtu.admin.maintenance.list.manage.service.MaintenanceListServiceI;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.utils.ConstantFields;
@@ -24,7 +26,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin/maintenance/list/manage")
 public class MaintenanceListController {
-
+    @Autowired
+    private EquipmentServiceI equipmentService;
     @Autowired
     private MaintenanceListServiceI maintenanceListService;
 
@@ -52,7 +55,7 @@ public class MaintenanceListController {
         Page<MaintenanceList> page = maintenanceListService.query4Page(list, pageable);
         mapData.put(ConstantFields.PAGE_KEY, page);
 
-        mapData.put("condition", list);
+        mapData.put("condition",list);
 
         List<MaintenanceList> distincts = maintenanceListService.queryDistincts();
         mapData.put("distincts", distincts);
@@ -65,7 +68,6 @@ public class MaintenanceListController {
 
     /**
      * 二级联动根据校区查询地点
-     *
      * @param distinct
      * @return
      */
@@ -97,7 +99,7 @@ public class MaintenanceListController {
     }
 
     /**
-     * 位置或地点查询设备组的二级联动
+     * 位置或地点查询设备的二级联动
      *
      * @param room 位置对象
      * @return 这个位置下设备组的List
@@ -121,16 +123,16 @@ public class MaintenanceListController {
      * @return 位置编辑页面和相位置信息
      */
     @RequestMapping("/details/route/{listNumber}")
-    public ModelAndView routeEdit(@PathVariable String listNumber) {
+    public ModelAndView routeDetail(@PathVariable String listNumber) {
         MaintenanceList list = maintenanceListService.query4details(listNumber);
 
         if (Optional.fromNullable(list).isPresent()) {
             ModelAndView mav = new ModelAndView("admin/maintenance/list/manage/details");
-
             mav.addObject("list", list);
 
             return mav;
         } else {
+
             return new ModelAndView("redirect:/admin/maintenance/list/manage/index.action");
         }
     }
@@ -153,9 +155,7 @@ public class MaintenanceListController {
 
             return "redirect:/admin/maintenance/list/manage/index.action";
         }
-
     }
-
     /**
      * 更改状态为已完成
      * @param listNumber

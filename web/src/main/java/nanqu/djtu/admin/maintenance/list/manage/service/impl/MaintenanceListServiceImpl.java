@@ -1,27 +1,25 @@
 package nanqu.djtu.admin.maintenance.list.manage.service.impl;
 
-import ch.qos.logback.classic.Logger;
 import com.google.common.base.Strings;
 import nanqu.djtu.admin.maintenance.list.manage.repository.MaintenanceLisRepositoryI;
 import nanqu.djtu.admin.maintenance.list.manage.service.MaintenanceListServiceI;
-import nanqu.djtu.admin.place.distinct.repository.impl.PlaceDistinctRepositoryImpl;
 import nanqu.djtu.pojo.*;
-import nanqu.djtu.utils.PrimaryKeyUtil;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+
 @Service
 public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
+    private static final Logger LOG = LoggerFactory.getLogger(MaintenanceListServiceImpl.class);
 
-    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(MaintenanceListServiceImpl.class);
     @Autowired
     private MaintenanceLisRepositoryI maintenanceLisRepository;
 
@@ -47,17 +45,7 @@ public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
 
     @Override
     public List<Equipment> queryEquipmentsWithRoom(PlaceRoom room) {
-        String roomId = room.getRoomId();
-        String BuildingId = room.getBuildingId();
-        List<Equipment> list;
-
-        if (Strings.isNullOrEmpty(roomId) && !Strings.isNullOrEmpty(BuildingId)) {
-            list = maintenanceLisRepository.selectEquipmentsWithBuildingId(room);
-        } else {
-            list = maintenanceLisRepository.selectEquipmentsWithRoomId(room);
-        }
-
-        return list;
+        return maintenanceLisRepository.selectEquipmentsWithRoomId(room);
     }
 
     @Override
@@ -99,5 +87,6 @@ public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
         }
         return insert2;
     }
+
 
 }
