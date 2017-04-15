@@ -29,15 +29,15 @@ public class HomeRepositoryImpl implements HomeRepositoryI {
     private RepositoryUtils<MaintenanceList> repositoryUtils;
     @Override
     public Page<MaintenanceList> select4Page(MaintenanceList list, Pageable pageable) {
-        StringBuilder sql = new StringBuilder("SELECT listNumber,listState,equipmentName,groupName,listStatusTime FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId WHERE R.deleteFlag = 0");
+        StringBuilder sql = new StringBuilder("SELECT listNumber,listState,equipmentName,groupName,liststatetime FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId WHERE R.deleteFlag = 0");
         List<Object> argsList = new ArrayList<>();
         if (!Strings.isNullOrEmpty(list.getStartListTime())) {
-            sql.append(" AND M.listStatusTime>= ?");
+            sql.append(" AND M.liststatetime>= ?");
             argsList.add(list.getStartListTime());
         }
 
         if (!Strings.isNullOrEmpty(list.getStopListTime())) {
-            sql.append(" AND M.listStatusTime <= ?");
+            sql.append(" AND M.liststatetime <= ?");
             argsList.add(list.getStopListTime());
         }
 
@@ -66,7 +66,7 @@ public class HomeRepositoryImpl implements HomeRepositoryI {
             argsList.add(list.getRepairGroupId());
         }
 
-        sql.append(" ORDER BY M.listStatusTime DESC");
+        sql.append(" ORDER BY M.liststatetime DESC");
         Object[] args = argsList.toArray();
 
         return repositoryUtils.select4Page(sql.toString(), pageable, args, new Query4PageRowmapper());
@@ -85,7 +85,7 @@ public class HomeRepositoryImpl implements HomeRepositoryI {
             list.setListState(String.valueOf(listState));
             list.setEquipmentName(resultSet.getString("equipmentName"));
             list.setGroupName(resultSet.getString("groupName"));
-            list.setListstatetime(format.format(resultSet.getTimestamp("listStatusTime")));
+            list.setListstatetime(format.format(resultSet.getTimestamp("liststatetime")));
             list.setListstateStr(dictionary.dictionary(listState, "listState").getItemValue());
 
             return list;
