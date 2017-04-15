@@ -70,7 +70,7 @@ public interface MaintenanceLisRepositoryI {
      * @return
      */
     List<MaintenanceList> selectStatusWithListNum(String listNumber);
-<<<<<<< HEAD
+
     /**
      * 更改维修状态为已派单
      * @param listNumber
@@ -78,6 +78,7 @@ public interface MaintenanceLisRepositoryI {
      */
     boolean updateliststate(String listNumber);
     boolean insertliststate(String listNumber);
+
     /**
      * 更改维修状态为待评价
      * @param listNumber
@@ -85,8 +86,6 @@ public interface MaintenanceLisRepositoryI {
      */
     boolean updatestate(String listNumber);
     boolean insertstate(String listNumber);
-=======
->>>>>>> 20f506c83ee04d3d1bb0dbb24899fe1da86ee3f8
 
     /**
      * 编辑报修单
