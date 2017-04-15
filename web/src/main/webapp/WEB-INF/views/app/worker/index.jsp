@@ -85,13 +85,6 @@
         </div>
     </div>
 
-    <div id="u8" class="ax_default label">
-        <div id="u8_div" class=""></div>
-        <div id="u9" class="text" style="visibility: visible;">
-            <p><span>登录</span></p>
-        </div>
-    </div>
-
     <div id="u10" class="ax_default icon">
         <img id="u10_img" class="img " src="${contextPath}/static/worker/images/index/u10.png"/>
         <div id="u11" class="text" style="display: none; visibility: hidden">
@@ -106,13 +99,22 @@
         </div>
     </div>
 
-    <div id="u14" class="ax_default text_field">
-        <input id="u14_input" type="text" value=""/>
-    </div>
+    <form action="${contextPath}/app/worker/login.action" method="post">
+        <div id="u14" class="ax_default text_field">
+            <input id="u14_input" name="workTel" type="text" value=""/>
+        </div>
 
-    <div id="u15" class="ax_default text_field">
-        <input id="u15_input" type="password" value=""/>
-    </div>
+        <div id="u15" class="ax_default text_field">
+            <input id="u15_input" name="workerPass" type="password" value=""/>
+        </div>
+
+        <div id="u8" class="ax_default label">
+            <div id="u8_div" class=""></div>
+            <div id="u9" class="text" style="visibility: visible;">
+                <p><span><input type="submit" value="登录"></span></p>
+            </div>
+        </div>
+    </form>
 
     <div id="u16" class="ax_default _一级标题">
         <div id="u16_div" class=""></div>
