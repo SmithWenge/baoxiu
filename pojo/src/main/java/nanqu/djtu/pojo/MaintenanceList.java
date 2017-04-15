@@ -1,13 +1,11 @@
 package nanqu.djtu.pojo;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 public class MaintenanceList {
     private String listNumber;
     private String userId;
-    private String userName;
+    private String userTel;
     private String repairGroupId;
     private String roomId;
     private String buildingId;
@@ -30,6 +28,13 @@ public class MaintenanceList {
     private List<MaintenanceList> lists;
     private String listStatusTime;
 
+    public String getUserTel() {
+        return userTel;
+    }
+
+    public void setUserTel(String userTel) {
+        this.userTel = userTel;
+    }
 
     public List<MaintenanceList> getLists() {
         return lists;
@@ -172,10 +177,6 @@ public class MaintenanceList {
         this.userId = userId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public void setRepairGroupId(String repairGroupId) {
         this.repairGroupId = repairGroupId;
     }
@@ -210,10 +211,6 @@ public class MaintenanceList {
 
     public String getUserId() {
         return userId;
-    }
-
-    public String getUserName() {
-        return userName;
     }
 
     public String getRepairGroupId() {

@@ -28,7 +28,6 @@ public class MaintenanceListApiServiceImpl implements MaintenanceListApiServiceI
 
         try {
             list.setUserId(URLDecoder.decode(list.getUserId(), Charsets.UTF_8.displayName()));
-            list.setUserName(URLDecoder.decode(list.getUserName(), Charsets.UTF_8.displayName()));
             list.setListDescription(URLDecoder.decode(list.getListDescription(), Charsets.UTF_8.displayName()));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

@@ -172,11 +172,11 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
      */
     @Override
     public boolean insertNew(MaintenanceList list) {
-        String sql = "INSERT INTO baoxiu_maintenancelist (listNumber, userId, userName, repairGroupId, roomId, buildingId, distinctId, listDescription, equipmentId, listState) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO baoxiu_maintenancelist (listNumber, userId, userTel, repairGroupId, roomId, buildingId, distinctId, listDescription, equipmentId, listState) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Object[] args = {
                 list.getListNumber(),
                 list.getUserId(),
-                list.getUserName(),
+                list.getUserTel(),
                 list.getRepairGroupId(),
                 list.getRoomId(),
                 list.getBuildingId(),
@@ -360,7 +360,7 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
      */
     @Override
     public MaintenanceList selectMaintenaceList(String listNumber) {
-        String sql = "SELECT listNumber,userName,groupName,roomName,buildingName,distinctName,equipmentName,listState,listDescription,listPicture FROM baoxiu.baoxiu_maintenancelist AS M LEFT JOIN baoxiu.baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId LEFT JOIN baoxiu.baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu.baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu.baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu.baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";
+        String sql = "SELECT listNumber,userTel,groupName,roomName,buildingName,distinctName,equipmentName,listState,listDescription,listPicture FROM baoxiu.baoxiu_maintenancelist AS M LEFT JOIN baoxiu.baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId LEFT JOIN baoxiu.baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu.baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu.baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu.baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";
         Object[] args = {
                 listNumber
         };
@@ -398,7 +398,7 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
             list.setListPicture(Strings.isNullOrEmpty(listPicture) ? "default_list.png" : listPicture);
 
             list.setListNumber(resultSet.getString("listNumber"));
-            list.setUserName(resultSet.getString("userName"));
+            list.setUserTel(resultSet.getString("userTel"));
             list.setEquipmentName(resultSet.getString("equipmentName"));
             list.setListState(String.valueOf(resultSet.getInt("listState")));
             list.setListstateStr(dictionary.dictionary(listState, "listState").getItemValue());

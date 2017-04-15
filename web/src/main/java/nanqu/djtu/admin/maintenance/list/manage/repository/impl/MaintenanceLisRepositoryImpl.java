@@ -59,9 +59,9 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             argsList.add(list.getEquipmentId());
         }
 
-        if (list.getListState() > 0) {
+        if (!Strings.isNullOrEmpty(list.getListstateStr())) {
             sql.append(" AND M.listState = ?");
-            argsList.add(list.getListState());
+            argsList.add(list.getListstateStr());
         }
 
         if (!Strings.isNullOrEmpty(list.getRepairGroupId())) {
@@ -229,7 +229,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     @Override
     public List<Equipment> selectEquipmentsWithRoomId(PlaceRoom room) {
-        String sql = "SELECT equipmentId,equipmentName FROM baoxiu_equipment WHERE equipmentId IN (SELECT ES.equipmentId FROM baoxiu_set AS S LEFT JOIN baoxiu_equipmentset AS ES ON s.setId = ES.setId WHERE S.setId IN (SELECT S.setId FROM baoxiu_set AS S LEFT JOIN baoxiu_placeroom AS R ON s.setId = R.setId WHERE roomId = ? AND S.deleteFlag = 0))";
+        String sql = "SELECT equipmentId,equipmentName FROM baoxiu_equipment WHERE roomId = ? AND deleteFlag = 0";
         Object[] args = {
                 room.getRoomId()
         };
@@ -272,7 +272,8 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     @Override
     public MaintenanceList select4details(String listNumber) {
-        String sql = "SELECT listNumber,userName,groupName,roomName,buildingName,distinctName,equipmentName,listState,listDescription,listPicture FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.groupName LEFT JOIN baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";        Object[] args = {
+        String sql = "SELECT listNumber,userTel,groupName,roomName,buildingName,distinctName,equipmentName,listState,listDescription,listPicture FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId LEFT JOIN baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";
+        Object[] args = {
                 listNumber
         };
 
@@ -309,7 +310,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             list.setListPicture(Strings.isNullOrEmpty(listPicture) ? "default_list.png" : listPicture);
 
             list.setListNumber(resultSet.getString("listNumber"));
-            list.setUserName(resultSet.getString("userName"));
+            list.setUserTel(resultSet.getString("userTel"));
             list.setEquipmentName(resultSet.getString("equipmentName"));
             list.setListState(String.valueOf(resultSet.getInt("listState")));
             list.setListstateStr(dictionary.dictionary(listState,"listState").getItemValue());
@@ -352,6 +353,34 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             list.setListstatetime(format.format(resultSet.getTimestamp("liststatetime")));
 
             return list;
+        }
+    }
+
+    /**
+     * 编辑报修单
+     * @param list
+     * @return
+     */
+    @Override
+    public Boolean updateMaintenanceList(MaintenanceList list) {
+        String sql = "UPDATE baoxiu_maintenancelist SET userTel = ?, repairGroupId = ?, distinctId = ?, buildingId = ?, roomId = ?, equipmentId = ?, listDescription = ? WHERE listNumber = ? AND deleteFlag = 0";
+        Object[] args = {
+                list.getUserTel(),
+                list.getRepairGroupId(),
+                list.getDistinctId(),
+                list.getBuildingId(),
+                list.getRoomId(),
+                list.getEquipmentId(),
+                list.getListDescription(),
+                list.getListNumber()
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[maintenanceList] update maintenanceList {} error with info {}.", list.getListNumber(), e.getMessage());
+
+            return false;
         }
     }
 }
