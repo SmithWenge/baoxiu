@@ -1,16 +1,23 @@
 package nanqu.djtu.app.worker.repository.impl;
 
+import com.google.common.base.Strings;
 import nanqu.djtu.app.worker.repository.WorkerRepositoryI;
+import nanqu.djtu.dictionary.feature.manager.IDictionaryManager;
+import nanqu.djtu.dictionary.feature.manager.impl.DefaultDictionaryManager;
+import nanqu.djtu.pojo.MaintenanceList;
 import nanqu.djtu.pojo.WorkerInfo;
+import nanqu.djtu.utils.PrimaryKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Repository
@@ -20,6 +27,12 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * 登录查询
+     * @param workerTel
+     * @param workerPass
+     * @return
+     */
     @Override
     public WorkerInfo workerLogin(String workerTel, String workerPass) {
         String sql = "SELECT userId,workerName,workerUnit,workerDepartment,workerJob,workerState,repairGroupId,typeId,workerTel,workerPass FROM baoxiu_workerinfo WHERE workerTel = ? AND workerPass = ? AND deleteFlag = 0";
@@ -54,6 +67,255 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
             info.setWorkerPass(resultSet.getString("workerPass"));
 
             return info;
+        }
+    }
+
+    /**
+     * 根据状态查询维修单列表
+     * @param listState,userId
+     * @return
+     */
+    @Override
+    public List<MaintenanceList> selectMaintenanceListByState(int listState, String userId) {
+        String sql = "SELECT listNumber FROM baoxiu_maintenancelist WHERE listState = ? AND repairGroupId IN (SELECT repairGroupId FROM baoxiu_workerinfo WHERE userId = ? AND deleteFlag = 0)";
+        Object[] args = {
+                listState,
+                userId
+        };
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectMaintenanceListByStateRowMapper());
+        } catch (Exception e) {
+            LOG.error("[workerManage] selectMaintenanceListByState error with info {}.", e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
+    class SelectMaintenanceListByStateRowMapper implements RowMapper<MaintenanceList> {
+
+        @Override
+        public MaintenanceList mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+            MaintenanceList list = new MaintenanceList();
+            list.setListNumber(resultSet.getString("listNumber"));
+
+            return list;
+        }
+    }
+
+    /**
+     * 根据状态查询维修单列表
+     * @param listState,userId
+     * @return
+     */
+    @Override
+    public List<MaintenanceList> selectListStateTimesByState(int listState, String userId) {
+        String sql = "SELECT L.listNumber,L.liststatetime,L.listDescription FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_liststatetime AS L ON M.listNumber = L.listNumber WHERE L.listState = 1 AND M.listState = ? AND repairGroupId IN (SELECT repairGroupId FROM baoxiu_workerinfo WHERE userId = ? AND deleteFlag = 0)";
+        Object[] args = {
+                listState,
+                userId
+        };
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectListStateTimesByStateRowMapper());
+        } catch (Exception e) {
+            LOG.error("[workerManage] selectListStateTimesByState error with info {}.", e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
+    class SelectListStateTimesByStateRowMapper implements RowMapper<MaintenanceList> {
+
+        @Override
+        public MaintenanceList mapRow(ResultSet rs, int rowNum) throws SQLException {
+            MaintenanceList list = new MaintenanceList();
+            list.setListstatetime(rs.getString("liststatetime"));
+            list.setListNumber(rs.getString("listNumber"));
+            list.setListDescription(rs.getString("listDescription"));
+
+            return list;
+        }
+    }
+
+    @Override
+    public List<MaintenanceList> selectMaintenanceLists(String userId) {
+        String sql = "SELECT listNumber,listState FROM baoxiu_maintenancelist WHERE repairGroupId IN (SELECT repairGroupId FROM baoxiu_workerinfo WHERE userId = ? AND deleteFlag = 0) ORDER BY liststatetime DESC LIMIT 35";
+        Object[] args = {
+                userId
+        };
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectMaintenanceListsRowMapper());
+        } catch (Exception e) {
+            LOG.error("[workerManage] selectMaintenanceLists error with info {}.", e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
+    class SelectMaintenanceListsRowMapper implements RowMapper<MaintenanceList> {
+
+        @Override
+        public MaintenanceList mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+            MaintenanceList list = new MaintenanceList();
+            list.setListNumber(resultSet.getString("listNumber"));
+            list.setListState(String.valueOf(resultSet.getInt("listState")));
+
+            return list;
+        }
+    }
+
+    @Override
+    public List<MaintenanceList> selectListStateTimes(String userId) {
+        String sql = "SELECT L.listNumber,L.liststatetime,L.listDescription FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_liststatetime AS L ON M.listNumber = L.listNumber WHERE L.listState = 1 AND repairGroupId IN (SELECT repairGroupId FROM baoxiu_workerinfo WHERE userId = ? AND deleteFlag = 0) ORDER BY L.liststatetime DESC LIMIT 35";
+        Object[] args = {
+                userId
+        };
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectListStateTimesRowMapper());
+        } catch (Exception e) {
+            LOG.error("[workerManage] selectListStateTimes error with info {}.", e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
+    class SelectListStateTimesRowMapper implements RowMapper<MaintenanceList> {
+
+        @Override
+        public MaintenanceList mapRow(ResultSet rs, int rowNum) throws SQLException {
+            MaintenanceList list = new MaintenanceList();
+            list.setListstatetime(rs.getString("liststatetime"));
+            list.setListNumber(rs.getString("listNumber"));
+            list.setListDescription(rs.getString("listDescription"));
+
+            return list;
+        }
+    }
+
+    @Override
+    public MaintenanceList select4details(String listNumber) {
+        String sql = "SELECT listNumber,userTel,groupName,roomName,buildingName,distinctName,equipmentName,listState,listPicture FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId LEFT JOIN baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";
+        Object[] args = {
+                listNumber
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, new Select4detailsRowMapper());
+        } catch (Exception e) {
+            LOG.error("[workerMaintenanceList] query4details error with info {}.", e.getMessage());
+
+            return null;
+        }
+    }
+
+    class Select4detailsRowMapper implements RowMapper<MaintenanceList> {
+
+        @Override
+        public MaintenanceList mapRow(ResultSet resultSet, int i) throws SQLException {
+            MaintenanceList list = new MaintenanceList();
+            IDictionaryManager dictionary = DefaultDictionaryManager.getInstance();
+
+            int listState = resultSet.getInt("listState");
+            String groupName = resultSet.getString("groupName");
+            String roomName = resultSet.getString("roomName");
+            String buildingName = resultSet.getString("buildingName");
+            String distinctName = resultSet.getString("distinctName");
+            String listPicture = resultSet.getString("listPicture");
+
+
+            list.setGroupName(Strings.isNullOrEmpty(groupName) ? "无" : groupName);
+            list.setRoomName(Strings.isNullOrEmpty(roomName) ? "无" : roomName);
+            list.setBuildingName(Strings.isNullOrEmpty(buildingName) ? "无" : buildingName);
+            list.setDistinctName(Strings.isNullOrEmpty(distinctName) ? "无" : distinctName);
+            list.setListPicture(Strings.isNullOrEmpty(listPicture) ? "default_list.png" : listPicture);
+
+            list.setListNumber(resultSet.getString("listNumber"));
+            list.setUserTel(resultSet.getString("userTel"));
+            list.setEquipmentName(resultSet.getString("equipmentName"));
+            list.setListState(String.valueOf(resultSet.getInt("listState")));
+            list.setListstateStr(dictionary.dictionary(listState,"listState").getItemValue());
+
+            return list;
+        }
+    }
+
+    @Override
+    public List<MaintenanceList> selectStatusWithListNum(String listNumber) {
+        String sql = "SELECT listState,liststatetime,listDescription FROM baoxiu_liststatetime WHERE listNumber = ? AND deleteFlag = 0 ORDER BY liststatetime DESC";
+        Object[] args = {
+                listNumber
+        };
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectStatusWithListNumRowMapper());
+        } catch (Exception e) {
+            LOG.error("[workerMaintenanceList] select status {}'s MaintenanceList error with info {}.", listNumber, e.getMessage());
+
+            MaintenanceList list = new MaintenanceList();
+            List<MaintenanceList> lists = new ArrayList<>();
+            list.setListstateStr("暂无更新");
+            list.setListstatetime("暂无更新");
+            lists.add(list);
+
+            return lists;
+        }
+    }
+
+    class SelectStatusWithListNumRowMapper implements RowMapper<MaintenanceList> {
+
+        @Override
+        public MaintenanceList mapRow(ResultSet resultSet, int i) throws SQLException {
+            MaintenanceList list = new MaintenanceList();
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            IDictionaryManager dictionary = DefaultDictionaryManager.getInstance();
+            String listDescription = resultSet.getString("listDescription");
+
+            list.setListDescription(Strings.isNullOrEmpty(listDescription) ? "无" : listDescription);
+            list.setListstateStr(dictionary.dictionary(resultSet.getInt("listState"), "listState").getItemValue());
+            list.setListstatetime(format.format(resultSet.getTimestamp("liststatetime")));
+
+            return list;
+        }
+    }
+
+    @Override
+    public Boolean insertState(String time, MaintenanceList list) {
+        String sql = "INSERT INTO baoxiu_liststatetime (liststatetimeid, listNumber, listState, liststatetime,listDescription) VALUES (?, ?, ?, ?, ?)";
+        Object[] args = {
+                PrimaryKeyUtil.uuidPrimaryKey(),
+                list.getListNumber(),
+                list.getListState(),
+                time,
+                list.getListDescription()
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[liststatetime] add new state error with info {}.", e.getMessage());
+
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean update(String time, MaintenanceList list) {
+        String sql = "UPDATE baoxiu_maintenancelist SET listState = ?, liststatetime = ? WHERE listNumber = ? AND deleteFlag = 0";
+        Object[] args = {
+                list.getListState(),
+                time,
+                list.getListNumber()
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[PlaceDistinct] delete place distinct error with info {}.", e.getMessage());
+
+            return false;
         }
     }
 }

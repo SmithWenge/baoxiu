@@ -14,6 +14,15 @@ public class WorkerInfo {
     private String typeName;
     private String workerTel;
     private String workerPass;
+    private int listState;
+
+    public int getListState() {
+        return listState;
+    }
+
+    public void setListState(int listState) {
+        this.listState = listState;
+    }
 
     public int getWorkerStateInt() {
         return workerStateInt;

@@ -272,7 +272,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     @Override
     public MaintenanceList select4details(String listNumber) {
-        String sql = "SELECT listNumber,userTel,groupName,roomName,buildingName,distinctName,equipmentName,listState,listDescription,listPicture FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId LEFT JOIN baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";
+        String sql = "SELECT listNumber,userTel,groupName,roomName,buildingName,distinctName,equipmentName,listState,listPicture FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId LEFT JOIN baoxiu_placeroom AS PR ON M.roomId = PR.roomId LEFT JOIN baoxiu_placebuilding AS PB ON M.buildingId = PB.buildingId LEFT JOIN baoxiu_placedistinct AS PD ON M.distinctId = PD.distinctId LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId WHERE listNumber = ?";
         Object[] args = {
                 listNumber
         };
@@ -280,7 +280,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
         try {
             return jdbcTemplate.queryForObject(sql, args, new Select4detailsRowMapper());
         } catch (Exception e) {
-            LOG.error("[MaintenanceList] query4details error with info {}.", e.getMessage());
+            LOG.error("[workerMaintenanceList] query4details error with info {}.", e.getMessage());
 
             return null;
         }
@@ -298,7 +298,6 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             String roomName = resultSet.getString("roomName");
             String buildingName = resultSet.getString("buildingName");
             String distinctName = resultSet.getString("distinctName");
-            String listDescription = resultSet.getString("listDescription");
             String listPicture = resultSet.getString("listPicture");
 
 
@@ -306,7 +305,6 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             list.setRoomName(Strings.isNullOrEmpty(roomName) ? "无" : roomName);
             list.setBuildingName(Strings.isNullOrEmpty(buildingName) ? "无" : buildingName);
             list.setDistinctName(Strings.isNullOrEmpty(distinctName) ? "无" : distinctName);
-            list.setListDescription(Strings.isNullOrEmpty(listDescription) ? "无" : listDescription);
             list.setListPicture(Strings.isNullOrEmpty(listPicture) ? "default_list.png" : listPicture);
 
             list.setListNumber(resultSet.getString("listNumber"));
@@ -321,7 +319,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     @Override
     public List<MaintenanceList> selectStatusWithListNum(String listNumber) {
-        String sql = "SELECT listState,liststatetime FROM baoxiu_liststatetime WHERE listNumber = ? AND deleteFlag = 0 ORDER BY liststatetime DESC";
+        String sql = "SELECT listState,liststatetime,listDescription FROM baoxiu_liststatetime WHERE listNumber = ? AND deleteFlag = 0 ORDER BY liststatetime DESC";
         Object[] args = {
                 listNumber
         };
@@ -329,7 +327,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
         try {
             return jdbcTemplate.query(sql, args, new SelectStatusWithListNumRowMapper());
         } catch (Exception e) {
-            LOG.error("[MaintenanceList] select status {}'s MaintenanceList error with info {}.", listNumber, e.getMessage());
+            LOG.error("[workerMaintenanceList] select status {}'s MaintenanceList error with info {}.", listNumber, e.getMessage());
 
             MaintenanceList list = new MaintenanceList();
             List<MaintenanceList> lists = new ArrayList<>();
@@ -348,7 +346,9 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             MaintenanceList list = new MaintenanceList();
             SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             IDictionaryManager dictionary = DefaultDictionaryManager.getInstance();
+            String listDescription = resultSet.getString("listDescription");
 
+            list.setListDescription(Strings.isNullOrEmpty(listDescription) ? "无" : listDescription);
             list.setListstateStr(dictionary.dictionary(resultSet.getInt("listState"), "listState").getItemValue());
             list.setListstatetime(format.format(resultSet.getTimestamp("liststatetime")));
 
