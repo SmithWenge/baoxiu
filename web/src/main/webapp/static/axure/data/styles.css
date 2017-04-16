@@ -94,3 +94,134 @@
 ._文本段落 {
   text-align:left;
 }
+
+/*list*/
+.listNew {
+  height:400px;
+  width:351px;
+  margin-left:13px;
+  margin-top:115px;
+  color: #0E4D94;
+}
+.list_1 {
+  height:60px;
+  margin-top: 12px;
+  margin-bottom: 10px;
+}
+.listp {
+  font-size: 14px;
+  margin-top: 14px;
+  margin-left: 40px;
+  float: left;
+  height:22px;
+}
+.listDetails {
+  float: left;
+  margin-left:15px;
+}
+.listDetails_1 {
+  font-size: 16px;
+  margin: 0px;
+  height: 20px;
+}
+.xian {
+  width: 321px;
+  border-bottom: 1px solid #0E4D94;
+  margin-top: 12px;
+  margin-left: 15px;
+  float: left;
+}
+.button-done {
+  color: #fff;
+  float: left;
+  background: #33CC00;
+  height:24px;
+  margin-left: 15px;
+  display: inline-block;
+  padding: 0px 10px 0 10px;
+  margin-top: 8px;
+  margin-bottom: 0;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;"
+}
+.button-doing {
+  color: #fff;
+  float: left;
+  background: #169BD5;
+  height:24px;
+  margin-left: 15px;
+  display: inline-block;
+  padding: 0px 10px 0 10px;
+  margin-top: 8px;
+  margin-bottom: 0;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;"
+}
+.button-await {
+  color: #fff;
+  float: left;
+  background: #FFCC66;
+  height:24px;
+  margin-left: 15px;
+  display: inline-block;
+  padding: 0px 10px 0 10px;
+  margin-top: 8px;
+  margin-bottom: 0;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;"
+}
+.details_1 {
+  height: 20px;
+  width:180px;
+  font-size: 13px;
+  margin-top: 10px;
+  color: #0E4D94;
+  float: left;
+}
+.details_2 {
+  height: 20px;
+  margin-left: 20px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #0E4D94;
+  float: left;
+}

@@ -5,7 +5,7 @@ import java.util.List;
 public class MaintenanceList {
     private String listNumber;
     private String userId;
-    private String userTel;
+    private String userName;
     private String repairGroupId;
     private String roomId;
     private String buildingId;
@@ -27,6 +27,16 @@ public class MaintenanceList {
     private String liststateStr;
     private List<MaintenanceList> lists;
 
+    public int getSum() {
+        return sum;
+    }
+
+    public void setSum(int sum) {
+        this.sum = sum;
+    }
+
+    private int sum;
+
     public String getUserTel() {
         return userTel;
     }
@@ -34,6 +44,9 @@ public class MaintenanceList {
     public void setUserTel(String userTel) {
         this.userTel = userTel;
     }
+
+    private String userTel;
+
 
     public List<MaintenanceList> getLists() {
         return lists;
@@ -176,6 +189,10 @@ public class MaintenanceList {
         this.userId = userId;
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public void setRepairGroupId(String repairGroupId) {
         this.repairGroupId = repairGroupId;
     }
@@ -210,6 +227,10 @@ public class MaintenanceList {
 
     public String getUserId() {
         return userId;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
     public String getRepairGroupId() {
