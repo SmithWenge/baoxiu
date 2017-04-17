@@ -108,8 +108,13 @@ public class UserAppController {
     @RequestMapping(value = "/add/do", method = RequestMethod.POST)
     public ModelAndView addNewMaintenanceList(MaintenanceList maintenanceList, RedirectAttributes redirectAttributes) {
         if(maintenanceList.getUserTel() == null){
-            ModelAndView modelAndView = new ModelAndView("app/user/addFirstStep");
-
+            MaintenanceList list = userAppService.selectAllName(maintenanceList);
+            maintenanceList.setDistinctName(list.getDistinctName());
+            maintenanceList.setBuildingName(list.getBuildingName());
+            maintenanceList.setRoomName(list.getRoomName());
+            maintenanceList.setEquipmentName(list.getEquipmentName());
+            ModelAndView modelAndView = new ModelAndView("app/user/addTwoStep");
+            modelAndView.addObject("maintenance", maintenanceList);
             return modelAndView;
         }
 
@@ -117,8 +122,13 @@ public class UserAppController {
 
         if (list == null){
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
-            ModelAndView modelAndView = new ModelAndView("app/user/addFirstStep");
-
+            MaintenanceList list1 = userAppService.selectAllName(maintenanceList);
+            maintenanceList.setDistinctName(list1.getDistinctName());
+            maintenanceList.setBuildingName(list1.getBuildingName());
+            maintenanceList.setRoomName(list1.getRoomName());
+            maintenanceList.setEquipmentName(list1.getEquipmentName());
+            ModelAndView modelAndView = new ModelAndView("app/user/addTwoStep");
+            modelAndView.addObject("maintenance", maintenanceList);
             return modelAndView;
         } else {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
