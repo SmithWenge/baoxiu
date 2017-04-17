@@ -209,7 +209,7 @@
 
         <!-- Unnamed (矩形) -->
         <div id="u501" class="ax_default box_1">
-            <div id="u501_div" class=""></div>
+            <div id="u501_div" class=""></div>u
             <!-- Unnamed () -->
             <div id="u502" class="text" style="display: none; visibility: hidden">
                 <p><span></span></p>
