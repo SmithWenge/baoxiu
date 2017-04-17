@@ -82,7 +82,6 @@ public class UserAppController {
         map.put("equipments", userAppService.queryPlaceRoomByRoomId(room.getRoomId()));
         return map;
     }
-
     /**
      * 路由到手机添加页面
      * @param maintenanceList
@@ -99,7 +98,6 @@ public class UserAppController {
         modelAndView.addObject("maintenance", maintenanceList);
         return modelAndView;
     }
-
     /**
      * 保修单添加
      * @param
@@ -143,9 +141,8 @@ public class UserAppController {
             return modelAndView;
         }
     }
-
     /**
-     * 根据保修单号查保修单
+     * 根据保修单号查保修单历史记录
      * @param listNumber
      * @return
      */
@@ -154,7 +151,6 @@ public class UserAppController {
         MaintenanceList maintenanceList = userAppService.selectOneMaintenance(listNumber);
         List<MaintenanceList> allStates = userAppService.selectAllState(listNumber);
         MaintenanceList list = userAppService.selectAllName(maintenanceList);
-
         maintenanceList.setDistinctName(list.getDistinctName());
         maintenanceList.setBuildingName(list.getBuildingName());
         maintenanceList.setRoomName(list.getRoomName());
@@ -166,7 +162,6 @@ public class UserAppController {
 
         return modelAndView;
     }
-
     /**
      * 路由到通过电话查保修单的页面
      * @return
@@ -191,16 +186,21 @@ public class UserAppController {
 
         return modelAndView;
     }
-
+    /**
+     * 路由到我的保修
+     * @param userTel
+     * @return
+     */
     @RequestMapping(value = "/turn/repairList/router/{userTel}")
     public ModelAndView turnToRepairList(@PathVariable String userTel){
         ModelAndView modelAndView = new ModelAndView("app/user/repairList");
-
+        MaintenanceList maintenanceList = new MaintenanceList();
+        maintenanceList.setUserTel(userTel);
         List<MaintenanceList> maintenanceLists = userAppService.selectMaintenanceListByTel(userTel);
         modelAndView.addObject("maintenanceLists",maintenanceLists);
+        modelAndView.addObject("userTel",maintenanceList);
 
         return modelAndView;
     }
-
 
 }

@@ -135,7 +135,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public boolean insertNew(MaintenanceList list) {
-        String sql = "INSERT INTO baoxiu_maintenancelist (listNumber, userId, userTel, repairGroupId, roomId, buildingId, distinctId, equipmentId, listState,listDescription) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO baoxiu_maintenancelist (listNumber, userId, userTel, repairGroupId, roomId, buildingId, distinctId, equipmentId, listState,listDescription) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Object[] args = {
                 list.getListNumber(),
                 list.getUserId(),
@@ -145,8 +145,8 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
                 list.getBuildingId(),
                 list.getDistinctId(),
                 list.getEquipmentId(),
-                list.getListDescription(),
-                list.getListState()
+                list.getListState(),
+                list.getListDescription()
         };
 
         try {
@@ -168,10 +168,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
     @Override
     public String selectRepairGroupId(String equipmentId) {
         String sql = "SELECT repairGroupId FROM baoxiu_equipment WHERE equipmentId = ?";
-        Object[] args = {
-                equipmentId
-        };
-
+        Object[] args = {equipmentId};
         try {
             return jdbcTemplate.queryForObject(sql, args, String.class);
         } catch (Exception e) {
@@ -190,10 +187,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
     @Override
     public String selectDistinctNumber(String distinctId) {
         String sql = "SELECT distinctNumber FROM baoxiu_placedistinct WHERE distinctId = ?";
-        Object[] args = {
-                distinctId
-        };
-
+        Object[] args = {distinctId};
         try {
             return jdbcTemplate.queryForObject(sql, args, String.class);
         } catch (Exception e) {
@@ -212,10 +206,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
     @Override
     public String selectBuildingNumber(String buildingId) {
         String sql = "SELECT buildingNumber FROM baoxiu_placebuilding WHERE buildingId = ?";
-        Object[] args = {
-                buildingId
-        };
-
+        Object[] args = {buildingId};
         try {
             return jdbcTemplate.queryForObject(sql, args, String.class);
         } catch (Exception e) {
@@ -234,10 +225,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
     @Override
     public String selectRoomNumber(String roomId) {
         String sql = "SELECT roomNumber FROM baoxiu_placeroom WHERE roomId = ?";
-        Object[] args = {
-                roomId
-        };
-
+        Object[] args = {roomId};
         try {
             return jdbcTemplate.queryForObject(sql, args, String.class);
         } catch (Exception e) {
@@ -256,10 +244,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
     @Override
     public String selectEquipmentNumber(String equipmentId) {
         String sql = "SELECT equipmentNumber FROM baoxiu_equipment WHERE equipmentId = ?";
-        Object[] args = {
-                equipmentId
-        };
-
+        Object[] args = {equipmentId};
         try {
             return jdbcTemplate.queryForObject(sql, args, String.class);
         } catch (Exception e) {
@@ -278,10 +263,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
     @Override
     public boolean selectIfExistMaintenanceList(String listId) {
         String sql = "SELECT COUNT(1) AS NUM FROM baoxiu_maintenancelist WHERE listNumber = ? AND deleteFLag = 0 ";
-        Object[] args = {
-                listId
-        };
-
+        Object[] args = {listId};
         try {
             return jdbcTemplate.queryForObject(sql, args, Integer.class) == 0;
         } catch (Exception e) {
@@ -299,7 +281,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public boolean insertNewListState(MaintenanceList list) {
-        String sql = "INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid, listNumber, listState, listDescription) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO baoxiu_liststatetime (liststatetimeid, listNumber, listState, listDescription) VALUES (?, ?, ?, ?)";
         Object[] args = {
                 PrimaryKeyUtil.uuidPrimaryKey(),
                 list.getListNumber(),
@@ -323,7 +305,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public List<Equipment> queryPlaceRoomByRoomId(String roomId) {
-        String sql = "SELECT equipmentId,equipmentName FROM baoxiu.baoxiu_equipment WHERE roomId = ?";
+        String sql = "SELECT equipmentId,equipmentName FROM baoxiu_equipment WHERE roomId = ?";
         Object[] args = {roomId};
 
         try {
@@ -394,7 +376,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public List<MaintenanceList> selectMaintenanceListByTel(String userTel) {
-        String sql = "SELECT listNumber, repairGroupId, roomId, buildingId, userTel, listState, distinctId, equipmentId, liststatetime FROM baoxiu_maintenancelist WHERE userTel = ? AND deleteFlag = 0";
+        String sql = "SELECT listNumber, repairGroupId, roomId, buildingId, userTel, listState, distinctId, equipmentId, liststatetime, listDescription FROM baoxiu_maintenancelist WHERE userTel = ? AND deleteFlag = 0";
         Object[] args = {
                 userTel
         };
@@ -438,7 +420,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public MaintenanceList selectOneMaintenance(String listNumber) {
-        String sql = "SELECT listNumber, userTel, repairGroupId, roomId, buildingId, distinctId, equipmentId, listState, liststatetime FROM baoxiu_maintenancelist WHERE listNumber = ?";
+        String sql = "SELECT listNumber, userTel, repairGroupId, roomId, buildingId, distinctId, equipmentId, listState, liststatetime,listDescription FROM baoxiu_maintenancelist WHERE listNumber = ?";
         Object[] args = {
                 listNumber
         };
@@ -453,7 +435,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
 
     @Override
     public int sumOfMaintenance() {
-        String sql = "SELECT count(listNumber) FROM baoxiu.baoxiu_maintenancelist WHERE listState < 7;";
+        String sql = "SELECT count(listNumber) FROM baoxiu_maintenancelist WHERE listState < 7;";
         Object[] args = {};
 
         try{
@@ -489,7 +471,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public List<MaintenanceList> selectAllState(String listNumber) {
-        String sql = "SELECT listNumber, listState, liststatetime, listDescription FROM baoxiu.baoxiu_liststatetime where listNumber= ? ORDER BY liststatetime";
+        String sql = "SELECT listNumber, listState, liststatetime, listDescription FROM baoxiu_liststatetime where listNumber= ? ORDER BY liststatetime";
         Object[] args = {listNumber};
 
         try {

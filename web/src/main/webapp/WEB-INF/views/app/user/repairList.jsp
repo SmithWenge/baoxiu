@@ -79,15 +79,15 @@
 
 
 
-  <!-- Unnamed (矩形) -->
-  <div id="u189" class="ax_default primary_button">
-    <img id="u189_img" class="img " src="${contextPath}/static/axure/images/repairlist/u189.png"/>
-    <!-- Unnamed () -->
-    <div id="u190" class="text">
-      <p><span>返回首页</span></p>
+   <a href="${contextPath}/app/user/index.action">
+    <div id="u189" class="ax_default primary_button">
+      <img id="u189_img" class="img " src="${contextPath}/static/axure/images/repairlist/u189.png"/>
+      <!-- Unnamed () -->
+      <div id="u190" class="text">
+        <p><span>返回首页</span></p>
+      </div>
     </div>
-  </div>
-
+  </a>
   <!-- Unnamed (Top) -->
 
   <!-- Unnamed (矩形) -->
@@ -119,14 +119,8 @@
           <button class="button-done">
             <c:if test="${maintenance.listState == 1}">已提交</c:if>
             <c:if test="${maintenance.listState == 2}">已派单</c:if>
-            <c:if test="${maintenance.listState == 3}">延期</c:if>
-            <c:if test="${maintenance.listState == 4}">等待派单</c:if>
-            <c:if test="${maintenance.listState == 5}">正在备件</c:if>
-            <c:if test="${maintenance.listState == 6}">已催单</c:if>
-            <c:if test="${maintenance.listState == 7}">以评价</c:if>
-            <c:if test="${maintenance.listState == 8}">待评价</c:if>
-            <c:if test="${maintenance.listState == 9}">其他</c:if>
-
+            <c:if test="${maintenance.listState == 3}">已处理</c:if>
+            <c:if test="${maintenance.listState == 4}">已评价</c:if>
           </button>
           <p class="listp">${maintenance.listNumber}</p>
           <p class="listp ">${maintenance.liststatetime}</p>
