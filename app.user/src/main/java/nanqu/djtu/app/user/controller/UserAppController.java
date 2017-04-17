@@ -99,6 +99,7 @@ public class UserAppController {
         modelAndView.addObject("maintenance", maintenanceList);
         return modelAndView;
     }
+
     /**
      * 保修单添加
      * @param
@@ -106,11 +107,13 @@ public class UserAppController {
      */
     @RequestMapping(value = "/add/do", method = RequestMethod.POST)
     public ModelAndView addNewMaintenanceList(MaintenanceList maintenanceList, RedirectAttributes redirectAttributes) {
-        MaintenanceList  list = userAppService.saveNewMaintenanceList(maintenanceList);
         if(maintenanceList.getUserTel() == null){
             ModelAndView modelAndView = new ModelAndView("app/user/addFirstStep");
+
             return modelAndView;
         }
+
+        MaintenanceList  list = userAppService.saveNewMaintenanceList(maintenanceList);
 
         if (list == null){
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
@@ -137,17 +140,20 @@ public class UserAppController {
      * @return
      */
     @RequestMapping(value = "/select/oneMaintenance/{listNumber}")
-    public  ModelAndView selecltOneMaintenance(@PathVariable String listNumber){
+    public  ModelAndView selectOneMaintenance(@PathVariable String listNumber){
         MaintenanceList maintenanceList = userAppService.selectOneMaintenance(listNumber);
         List<MaintenanceList> allStates = userAppService.selectAllState(listNumber);
         MaintenanceList list = userAppService.selectAllName(maintenanceList);
+
         maintenanceList.setDistinctName(list.getDistinctName());
         maintenanceList.setBuildingName(list.getBuildingName());
         maintenanceList.setRoomName(list.getRoomName());
         maintenanceList.setEquipmentName(list.getEquipmentName());
+
         ModelAndView modelAndView = new ModelAndView("app/user/details");
-        modelAndView.addObject("allStates",allStates);
-        modelAndView.addObject("maintenanceList",maintenanceList);
+        modelAndView.addObject("allStates", allStates);
+        modelAndView.addObject("maintenanceList", maintenanceList);
+
         return modelAndView;
     }
 
@@ -159,24 +165,30 @@ public class UserAppController {
     public String myMaintenanceRouter(){
         return "app/user/track";
     }
+
     /**
      * 根据电话查所有的保修单
      * @param maintenanceList
      * @return
      */
     @RequestMapping(value = "/select/all/maintenance", method = RequestMethod.POST)
-    public  ModelAndView selecltMaintenances(MaintenanceList maintenanceList){
+    public  ModelAndView selectMaintenance(MaintenanceList maintenanceList){
         List<MaintenanceList> maintenanceLists =userAppService.selectMaintenanceListByTel(maintenanceList.getUserTel());
+
         ModelAndView modelAndView = new ModelAndView("app/user/repairList");
         modelAndView.addObject("maintenanceLists",maintenanceLists);
         modelAndView.addObject("userTel",maintenanceList);
+
         return modelAndView;
     }
+
     @RequestMapping(value = "/turn/repairList/router/{userTel}")
     public ModelAndView turnToRepairList(@PathVariable String userTel){
         ModelAndView modelAndView = new ModelAndView("app/user/repairList");
+
         List<MaintenanceList> maintenanceLists = userAppService.selectMaintenanceListByTel(userTel);
         modelAndView.addObject("maintenanceLists",maintenanceLists);
+
         return modelAndView;
     }
 
