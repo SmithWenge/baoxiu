@@ -134,40 +134,37 @@
         </div>
 
         <!-- all (形状) -->
-        <div id="u466" class="ax_default icon" data-label="all">
-            <img id="u466_img" class="img " src="${contextPath}/static/worker/images/home/all_u169.png"/>
-            <!-- Unnamed () -->
-            <div id="u467" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
+        <a href="${contextPath}/app/worker/routeLatestList.action">
+            <div id="u466" class="ax_default icon" data-label="all">
+                <img id="u466_img" class="img " src="${contextPath}/static/worker/images/home/all_u169.png"/>
+                <!-- Unnamed () -->
+                <div id="u467" class="text" style="display: none; visibility: hidden">
+                    <p><span></span></p>
+                </div>
             </div>
-        </div>
+        </a>
 
         <!-- todo (形状) -->
-        <div id="u468" class="ax_default icon" data-label="todo">
-            <img id="u468_img" class="img " src="${contextPath}/static/worker/images/home/todo_u171.png"/>
-            <!-- Unnamed () -->
-            <div id="u469" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
+        <a href="${contextPath}/app/worker/routeWaitingList.action">
+            <div id="u468" class="ax_default icon" data-label="todo">
+                <img id="u468_img" class="img " src="${contextPath}/static/worker/images/home/todo_u171.png"/>
+                <!-- Unnamed () -->
+                <div id="u469" class="text" style="display: none; visibility: hidden">
+                    <p><span></span></p>
+                </div>
             </div>
-        </div>
+        </a>
 
         <!-- home (形状) -->
-        <div id="u470" class="ax_default icon" data-label="home">
-            <img id="u470_img" class="img " src="${contextPath}/static/worker/images/home/home_u173.png"/>
-            <!-- Unnamed () -->
-            <div id="u471" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
+        <a href="${contextPath}/app/worker/routeDoingList.action">
+            <div id="u470" class="ax_default icon" data-label="home">
+                <img id="u470_img" class="img " src="${contextPath}/static/worker/images/home/home_u173.png"/>
+                <!-- Unnamed () -->
+                <div id="u471" class="text" style="display: none; visibility: hidden">
+                    <p><span></span></p>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Unnamed (形状) -->
-    <div id="u472" class="ax_default icon">
-        <img id="u472_img" class="img " src="${contextPath}/static/worker/images/home/u175.png"/>
-        <!-- Unnamed () -->
-        <div id="u473" class="text" style="display: none; visibility: hidden">
-            <p><span></span></p>
-        </div>
+        </a>
     </div>
 
     <!-- Unnamed (Top) -->
@@ -178,28 +175,6 @@
         <!-- Unnamed () -->
         <div id="u476" class="text" style="visibility: visible;">
             <p><span>大连交通大学后勤维修处理系统</span></p>
-        </div>
-    </div>
-
-    <!-- Unnamed (组合) -->
-    <div id="u477" class="ax_default">
-
-        <!-- Unnamed (椭圆形) -->
-        <div id="u478" class="ax_default ellipse">
-            <img id="u478_img" class="img " src="${contextPath}/static/worker/images/home/u181.png"/>
-            <!-- Unnamed () -->
-            <div id="u479" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-            </div>
-        </div>
-
-        <!-- Unnamed (形状) -->
-        <div id="u480" class="ax_default icon">
-            <img id="u480_img" class="img " src="${contextPath}/static/worker/images/home/u183.png"/>
-            <!-- Unnamed () -->
-            <div id="u481" class="text" style="display: none; visibility: hidden">
-                <p><span></span></p>
-            </div>
         </div>
     </div>
 
