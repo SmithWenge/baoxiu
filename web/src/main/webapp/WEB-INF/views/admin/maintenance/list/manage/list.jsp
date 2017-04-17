@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/include/nav.jsp"%>
@@ -40,15 +42,10 @@
         <div class="layui-input-inline" style="width:130px;">
           <select name="listState" id="listState" lay-filter="listState">
             <option value=-1>请选择状态</option>
-            <option value=1>已提交</option>
-            <option value=2>已派单</option>
-            <option value=3>延期</option>
-            <option value=4>等待派单</option>
-            <option value=5>正在备件</option>
-            <option value=6>已催单</option>
-            <option value=7>已评价</option>
-            <option value=8>待评价</option>
-            <option value=9>其他</option>
+            <option value=1>已报修</option>
+            <option value=2>已接单</option>
+            <option value=3>已处理</option>
+            <option value=4>已评价</option>
           </select>
         </div>
         <div class="layui-input-inline">
@@ -95,30 +92,16 @@
         <thead>
         <tr>
           <td>序号</td>
-          <td>报修单号</td>
-          <td>报修单状态</td>
+          <td>保修单号</td>
+          <td>保修单状态</td>
           <td>设备名</td>
           <td>维修小组</td>
-          <td>报修时间</td>
-          <td>操作维修状态</td>>
+          <td>最新状态时间</td>
+          <td>操作</td>
+          <td>更改状态</td>
         </tr>
         </thead>
         <tbody id="pageTableBody">
-        <tr>
-          <td>序号</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>
-            <div class="layui-btn-group">
-              <a href="${contextPath}/admin/place/distinct/edit/route/${distinct.distinctId}.action">
-                <button class="layui-btn layui-btn-normal" >查询</button>
-              </a>
-            </div>
-          </td>
-        </tr>
         </tbody>
       </table>
     </div>
@@ -328,6 +311,24 @@
       });
     }
 
+    // 拼接操作字符转
+    function createOpsBtnGroup(listNumber) {
+      return '<div class="layui-btn-group">' +
+              '<a href="${contextPath}/admin/maintenance/list/manage/edit/route/' + listNumber +'.action">' +
+              '<button class="layui-btn layui-btn-small layui-btn-warm"><i class="layui-icon">&#xe642;</i>' +
+              '</button> </a></div>'
+    }
+
+    function createStateBtnGroup(listNumber) {
+      return '<div class="layui-btn-group">' +
+              '<a href="${contextPath}/admin/maintenance/list/manage/status/dispatch/'+listNumber+'.action">'+
+              ' <button class="layui-btn layui-btn-normal" >派单</button>&#xe642;</i>'+
+              '</button> </a><a href="${contextPath}/admin/maintenance/list/manage/status/done/' + listNumber + '.action">'+
+              ' <button class="layui-btn layui-btn-danger " >完成</button>&#xe640;</i></button>' +
+              '</button> </a></div>'
+    }
+
+
     // 分页
     var laypage = layui.laypage;
 
@@ -342,7 +343,8 @@
         "equipmentId": condition.equipmentId,
         "repairGroupId": condition.repairGroupId,
         "stopListTime": condition.stopListTime,
-        "startListTime": condition.startListTime
+        "startListTime": condition.startListTime,
+        "liststateStr": condition.listState
       };
       $.ajax({
         type: 'post',
@@ -358,8 +360,14 @@
           loadStateData();
 
           $.each(result.page.content, function (i, item) {
+            if(item.equipmentName == null) {
+              var maBtn = createOpsBtnGroup(item.listNumber);
+            } else {
+              var maBtn = "";
+            }
+
             var trData = "<tr><td>" + (i + 1) + "</td><td><a href=\"${contextPath}/admin/maintenance/list/manage/details/route/" + item.listNumber + ".action\">" + item.listNumber + "</a></td><td>" + item.liststateStr + "</td>";
-            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.listTime + "</td>";
+            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.liststatetime + "</td><td>" + maBtn + "</td><td>" + createStateBtnGroup(item.listNumber) + "</td></tr>";
             $("#pageTableBody").append(trData);
           });
         }
@@ -375,7 +383,8 @@
         "equipmentId": condition.equipmentId,
         "repairGroupId": condition.repairGroupId,
         "stopListTime": condition.stopListTime,
-        "startListTime": condition.startListTime
+        "startListTime": condition.startListTime,
+        "liststateStr": condition.listState
       };
       $.ajax({
         type: 'post',
@@ -441,3 +450,4 @@
 </script>
 
 <%@ include file="/WEB-INF/include/footer.jsp"%>
+

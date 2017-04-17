@@ -42,6 +42,8 @@
                 <thead>
                 <tr>
                     <td>序号</td>
+                    <td>地点</td>
+                    <td>位置</td>
                     <td>设备名</td>
                     <td>设备编号</td>
                     <td>维修小组</td>
@@ -210,7 +212,7 @@
                     loadDistinctData(result);
 
                     $.each(result.page.content, function (i, item) {
-                        var trData = "<tr><td>" + (i + 1) + "</td><td>" + item.equipmentName + "</td><td>" + item.equipmentNumber + "</td>";
+                        var trData = "<tr><td>" + (i + 1) + "</td><td>" + item.buildingName + "</td><td>" + item.roomName + "</td><td>" + item.equipmentName + "</td><td>" + item.equipmentNumber + "</td>";
                         trData += "<td>" + item.repairGroupName + "</td><td>" + item.repairGroupNumber + "</td><td>" + createOpsBtnGroup(item.equipmentId) + "</td></tr>";
                         $("#pageTableBody").append(trData);
                     });

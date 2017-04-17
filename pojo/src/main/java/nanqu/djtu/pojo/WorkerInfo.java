@@ -4,8 +4,50 @@ public class WorkerInfo {
     private String userId;
     private String workerName;
     private String workerUnite;
-    private String  workerDepartment;
+    private String workerDepartment;
     private String workerJob;
+    private String workerState;
+    private int workerStateInt;
+    private String repairGroupId;
+    private String typeId;
+    private String groupName;
+    private String typeName;
+    private String workerTel;
+    private String workerPass;
+    private int listState;
+
+    public int getListState() {
+        return listState;
+    }
+
+    public void setListState(int listState) {
+        this.listState = listState;
+    }
+
+    public int getWorkerStateInt() {
+        return workerStateInt;
+    }
+
+    public void setWorkerStateInt(int workerStateInt) {
+        this.workerStateInt = workerStateInt;
+    }
+
+    public void setWorkerTel(String workerTel) {
+        this.workerTel = workerTel;
+    }
+
+    public void setWorkerPass(String workerPass) {
+        this.workerPass = workerPass;
+    }
+
+    public String getWorkerTel() {
+
+        return workerTel;
+    }
+
+    public String getWorkerPass() {
+        return workerPass;
+    }
 
     public String getWorkerState() {
         return workerState;
@@ -14,10 +56,6 @@ public class WorkerInfo {
     public void setWorkerState(String workerState) {
         this.workerState = workerState;
     }
-
-    private String  workerState;
-    private String repairGroupId;
-    private String typeId;
 
     public String getGroupName() {
         return groupName;
@@ -34,9 +72,6 @@ public class WorkerInfo {
     public void setTypeName(String typeName) {
         this.typeName = typeName;
     }
-
-    private String groupName;
-    private String typeName;
 
     public String getUserId() {
         return userId;

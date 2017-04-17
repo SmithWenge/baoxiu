@@ -9,20 +9,8 @@ import java.util.List;
  */
 public interface UserMaintenanceListServiceI {
     List<PlaceDistinct> query4ListPlaceDistinct();
-
     List<PlaceBuilding> queryBuildingsByDistinctId(String distinctId);
-
-
-
     List<PlaceRoom> queryPlaceRoomByBuildingId(String buildingId);
-
-    List<Equipment> queryEquipment();
-
     boolean saveNewMaintenanceList(MaintenanceList maintenance);
-
-
-
-    MaintenanceList queryDistinctNumberAndBuildingNumber(MaintenanceList maintenance);
-
-    MaintenanceList queryEquipmentNumber(MaintenanceList maintenance);
+    List<Equipment> queryEquipmentByRoomId(String equipmentId);
 }

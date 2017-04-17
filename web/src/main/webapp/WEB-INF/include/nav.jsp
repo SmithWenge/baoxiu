@@ -16,7 +16,7 @@
             <li class="layui-nav-item">
                 <a href="">${sessionScope.adminInfo.adminName}</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">修改密码</a></dd>
+                    <dd><a href="${contextPath}/login/changePassword.action">修改密码</a></dd>
                     <dd><a href="${contextPath}/login/logout.action">退出</a></dd>
                 </dl>
             </li>
@@ -38,7 +38,7 @@
                 <li class="layui-nav-item" id="two">
                     <a href="javascript:;"><i class="layui-icon">&#xe641;</i> 设备管理</a>
                     <dl class="layui-nav-child">
-                        <dd id="set"><a href="${contextPath}/admin/set/index.action"><i class="layui-icon">&#xe602;</i> 设备组管理</a></dd>
+                        <%--<dd id="set"><a href="${contextPath}/admin/set/index.action"><i class="layui-icon">&#xe602;</i> 设备组管理</a></dd>--%>
                         <dd id="equipment"><a href="${contextPath}/admin/equipment/index.action"><i class="layui-icon">&#xe602;</i> 设备管理</a></dd>
                         <dd id="printer"><a href="${contextPath}/admin/printer/list.action"><i class="layui-icon">&#xe602;</i> 打印机管理</a></dd>
                     </dl>
@@ -60,6 +60,15 @@
                     <a href="javascript:;"><i class="layui-icon">&#xe62d;</i> 报修单</a>
                     <dl class="layui-nav-child">
                         <dd id="maintenanceList"><a href="${contextPath}/admin/maintenance/list/manage/index.action"><i class="layui-icon">&#xe602;</i> 报修单管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item" id="six">
+                    <a href="javascript:;"><i class="layui-icon">&#xe62d;</i> 用户管理</a>
+                    <dl class="layui-nav-child">
+                        <dd id="role"><a href="${contextPath}/admin/role/list.action"><i class="layui-icon">&#xe602;</i> 角色管理</a></dd>
+                        <dd id="userInfo"><a href="${contextPath}/admin/userInfo/list.action"><i class="layui-icon">&#xe602;</i> 用户信息管理</a></dd>
+                        <dd id="password"><a href="${contextPath}/admin/userInfo/changePassword/list.action"><i class="layui-icon">&#xe602;</i>用户密码管理</a></dd>
+                        <dd id="userRole"><a href="${contextPath}/admin/userInfo/userRole/list.action"><i class="layui-icon">&#xe602;</i> 用户权限管理</a></dd>
                     </dl>
                 </li>
             </ul>

@@ -13,7 +13,7 @@
     </legend>
     <div style="width: 80%; margin-top: 15px; ">
       <div class="layui-form-item">
-        <label class="layui-form-label">报修单编号</label>
+        <label class="layui-form-label">报修图片</label>
         <div class="layui-input-block">
           <img src="${contextPath}/static/maintencePictures/${list.listPicture}" style="width: 20%; margin-top: 15px; ">
         </div>
@@ -25,9 +25,9 @@
         </div>
       </div>
       <div class="layui-form-item">
-        <label class="layui-form-label">报修人姓名</label>
+        <label class="layui-form-label">报修人电话</label>
         <div class="layui-input-block">
-          <input type="text" value="${list.userName}" class="layui-input" readonly>
+          <input type="text" value="${list.userTel}" class="layui-input" readonly>
         </div>
       </div>
       <div class="layui-form-item">
@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="layui-form-item">
-        <label class="layui-form-label">状态</label>
+        <label class="layui-form-label">当前状态</label>
         <div class="layui-input-block">
           <input type="text" value="${list.liststateStr}" class="layui-input" readonly>
         </div>
@@ -66,24 +66,31 @@
           <input type="text" value="${list.equipmentName}" class="layui-input" readonly>
         </div>
       </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">保修时间</label>
-        <div class="layui-input-block">
-          <input type="text" value="${list.listTime}" class="layui-input" readonly>
-        </div>
+      <div class="form-group">
+        <label class="layui-form-label">状态变更表</label>
       </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">更新时间</label>
-        <div class="layui-input-block">
-          <input type="text" value="${list.listStatusTime}" class="layui-input" readonly>
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">描述</label>
-        <div class="layui-input-block">
-          <textarea class="layui-textarea" readonly>${list.listDescription}</textarea>
-        </div>
-      </div>
+      <table class="layui-table" style="margin-left: 110px; width: 88%">
+        <colgroup>
+          <col width="200">
+          <col>
+        </colgroup>
+        <thead>
+        <tr>
+          <th>报修单状态</th>
+          <th>更改时间</th>
+          <th>描述</th>
+        </tr>
+        </thead>
+        <tbody>
+          <c:forEach items="${list.lists}" var="model">
+            <tr>
+              <td>${model.liststateStr}</td>
+              <td>${model.liststatetime}</td>
+              <td>${model.listDescription}</td>
+            </tr>
+          </c:forEach>
+        </tbody>
+      </table>
 
     </div>
   </fieldset>

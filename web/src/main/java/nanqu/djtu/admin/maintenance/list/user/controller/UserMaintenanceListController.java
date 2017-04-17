@@ -4,6 +4,8 @@ package nanqu.djtu.admin.maintenance.list.user.controller;
 import nanqu.djtu.admin.maintenance.list.user.service.UserMaintenanceListServiceI;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.utils.ConstantFields;
+import nanqu.djtu.utils.PrinterUtils;
+import nanqu.djtu.utils.PrintModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,11 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author zhangwenyue
@@ -33,12 +31,10 @@ public class UserMaintenanceListController {
     @RequestMapping("/router")
     public ModelAndView list() {
         List<PlaceDistinct> placeDistincts = maintenanceListService.query4ListPlaceDistinct();
-        List<Equipment> equipments =  maintenanceListService.queryEquipment();
 
         ModelAndView mav = new ModelAndView("user/maintenance/list/add");
 
         mav.addObject("placeDistincts", placeDistincts);
-        mav.addObject("equipments", equipments);
 
         return mav;
     }
@@ -68,34 +64,37 @@ public class UserMaintenanceListController {
         return map;
     }
     /**
+     * 二级联动查设备信息
+     * @param placeRoom
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/equipment", method = RequestMethod.POST)
+    public Map<String, List<Equipment>> epuipments(PlaceRoom placeRoom) {
+        Map<String, List<Equipment>> map = new HashMap<>();
+        map.put("equipments", maintenanceListService.queryEquipmentByRoomId(placeRoom.getRoomId()));
+        return map;
+    }
+
+    /**
      * 保修单添加
      * @param
      * @return true else false
      */
     @RequestMapping(value = "/add/do", method = RequestMethod.POST)
-    public String addNewMaintenanceList(MaintenanceList maintenance, RedirectAttributes redirectAttributes) {
+    public String addNewMaintenanceList(MaintenanceList maintenanceList, RedirectAttributes redirectAttributes) {
 
-        SimpleDateFormat  format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        maintenance.setListTime(format.format(new Date()));
-        maintenance.setUserId("1000");
-        maintenance.setUserName("wenge");
-        MaintenanceList distinctNumberAndBuildingNumber =(maintenanceListService.queryDistinctNumberAndBuildingNumber(maintenance));
-        MaintenanceList equipmentNumber =(maintenanceListService.queryEquipmentNumber(maintenance));
-        String repairGroupId = equipmentNumber.getRepairGroupId();
-        String listNumber = distinctNumberAndBuildingNumber.getDistinctNumber() + distinctNumberAndBuildingNumber.getBuildingNumber()+distinctNumberAndBuildingNumber.getRoomNumber() + equipmentNumber.getEquipmentNumber();
-        maintenance.setListNumber(listNumber);
-        maintenance.setRepairGroupId(repairGroupId);
-
-        boolean save = maintenanceListService.saveNewMaintenanceList(maintenance);
+        boolean save = maintenanceListService.saveNewMaintenanceList(maintenanceList);
 
         if (save) {
+
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
 
             return "redirect:/user/maintenance/list/success.action";
         } else {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
 
-            return "redirect:/user/maintenance/list/route.action";
+            return "redirect:/user/maintenance/list/router.action";
         }
     }
 
@@ -105,7 +104,8 @@ public class UserMaintenanceListController {
      */
     @RequestMapping("/success")
     public  ModelAndView success() {
-        ModelAndView modelAndView = new ModelAndView("user/maintenance/list/success");
+
+        ModelAndView  modelAndView = new ModelAndView("user/maintenance/list/success");
         return  modelAndView;
     }
 

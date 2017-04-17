@@ -4,7 +4,6 @@ public class PlaceBuilding {
     private String buildingId;
     private String buildingName;
     private String distinctId;
-    private String setId;
     private String hiddenBuildingNumber;
 
     public String getDistinctNumber() {
@@ -57,14 +56,6 @@ public class PlaceBuilding {
 
     public void setDistinctId(String distinctId) {
         this.distinctId = distinctId;
-    }
-
-    public String getSetId() {
-        return setId;
-    }
-
-    public void setSetId(String setId) {
-        this.setId = setId;
     }
 
     public String getBuildingNumber() {

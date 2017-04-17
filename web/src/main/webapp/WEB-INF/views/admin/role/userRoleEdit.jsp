@@ -4,15 +4,6 @@
 
 <link href="${contextPath}/static/plugins/jquery-datetimepicker/jquery.datetimepicker.css" rel="stylesheet" type="text/css">
 
-<%--系管理>系修改--%>
-<style>
-    #user_manage {
-        background: whitesmoke;
-        border-left: 4px solid #fed350;
-        border-right: 4px solid #fed350;
-        color: #444;
-    }
-</style>
 <div class="panel panel-default" style="float: left; width: 90%; border-radius: 0px;">
     <div class="panel-heading" style="padding-bottom: 0px; padding-top: 0px; padding-left: 0px; border-radius: 0px;">
         <ol class="breadcrumb" style="padding-bottom: 8px;margin-bottom: 0px;">
@@ -62,9 +53,11 @@
 
 <%@include file="/WEB-INF/include/javascript.jsp"%>
 
-<script type="text/javascript">
+<script>
     $(function () {
-        $("#userManageNav").trigger("click");
+        // 导航栏选择
+        $("#six").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#role").attr("class", "layui-this");
     });
 </script>
 

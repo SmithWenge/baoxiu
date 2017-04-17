@@ -22,6 +22,8 @@ public class ConstantFields {
     public static final String LOGIN_KEY = "shiroLogin";
     /* 用户登录后信息 */
     public static final String SESSION_LOGIN_KEY = "adminInfo";
+    /* 工人登录后信息 */
+    public static final String SESSION_WORKER_LOGIN_KEY = "workerInfo";
 
     /* 日志查询条件存储 */
     public static final String LOG_QUERY = "logQuery";
@@ -35,7 +37,7 @@ public class ConstantFields {
     public static final String DEFAULT_GROUP_ID = "0";
 
     /* 定义各个编号的最小长度 */
-    public static final int MIN_NUMBER_LENGTH = 6;
+    public static final int MIN_NUMBER_LENGTH = 4;
 
     /* 定义各个编号的前面补充 */
     public static final char PAD_NUMBER_CHAR = '0';

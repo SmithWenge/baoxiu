@@ -37,23 +37,26 @@ public class PlaceRoomRepositoryImpl implements PlaceRoomRepositoryI{
      */
     @Override
     public Page<PlaceRoom> query4Page(PlaceRoom room, Pageable pageable) {
-        StringBuilder sql = new StringBuilder("SELECT roomId,roomName,distinctName,buildingName,setName,roomNumber FROM baoxiu_placeroom AS R LEFT JOIN baoxiu_placebuilding AS B ON R.buildingId = B.buildingId LEFT JOIN baoxiu_placedistinct AS D ON B.distinctId = D.distinctId LEFT JOIN baoxiu_set AS S ON R.setId = S.setId WHERE R.deleteFlag = 0");
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT roomId, roomName, distinctName, buildingName, roomNumber FROM baoxiu_placeroom AS R LEFT");
+        builder.append(" JOIN baoxiu_placebuilding AS B ON R.buildingId = B.buildingId LEFT JOIN baoxiu_placedistinct AS");
+        builder.append(" D ON B.distinctId = D.distinctId WHERE R.deleteFlag = 0");
 
         List<Object> list = new ArrayList<>();
         if (room.getDistinctId() != null && !room.getDistinctId().equals("")) {
-            sql.append(" AND D.distinctId = ?");
+            builder.append(" AND D.distinctId = ?");
             list.add(room.getDistinctId());
         }
 
         if (room.getBuildingId() != null && !room.getBuildingId().equals("")) {
-            sql.append(" AND B.buildingId = ?");
+            builder.append(" AND B.buildingId = ?");
             list.add(room.getBuildingId());
         }
 
-        sql.append(" ORDER BY roomId DESC");
+        builder.append(" ORDER BY roomId DESC");
         Object[] args = list.toArray();
 
-        return repositoryUtils.select4Page(sql.toString(), pageable, args, new Select4PageRowMapper());
+        return repositoryUtils.select4Page(builder.toString(), pageable, args, new Select4PageRowMapper());
     }
 
     class Select4PageRowMapper implements RowMapper<PlaceRoom> {
@@ -66,7 +69,6 @@ public class PlaceRoomRepositoryImpl implements PlaceRoomRepositoryI{
             room.setRoomName(resultSet.getString("roomName"));
             room.setDistinctName(resultSet.getString("distinctName"));
             room.setBuildingName(resultSet.getString("buildingName"));
-            room.setSetName(resultSet.getString("setName"));
             room.setRoomNumber(resultSet.getString("roomNumber"));
 
             return room;
@@ -80,12 +82,11 @@ public class PlaceRoomRepositoryImpl implements PlaceRoomRepositoryI{
      */
     @Override
     public boolean insertNewPlaceRoom(PlaceRoom room) {
-        String sql = "INSERT INTO baoxiu_placeroom (roomId, roomName, buildingId, setId, roomNumber) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO baoxiu_placeroom (roomId, roomName, buildingId, roomNumber) VALUES (?, ?, ?, ?)";
         Object[] args = {
                 PrimaryKeyUtil.uuidPrimaryKey(),
                 room.getRoomName(),
                 room.getBuildingId(),
-                room.getSetId(),
                 room.getRoomNumber()
         };
 
@@ -126,13 +127,16 @@ public class PlaceRoomRepositoryImpl implements PlaceRoomRepositoryI{
      */
     @Override
     public PlaceRoom select4Edit(String roomId) {
-        String sql = "SELECT roomId,roomName,distinctName,buildingName,setName,roomNumber FROM baoxiu_placeroom AS R LEFT JOIN baoxiu_placebuilding AS B ON R.buildingId = B.buildingId LEFT JOIN baoxiu_placedistinct AS D ON B.distinctId = D.distinctId LEFT JOIN baoxiu_set AS S ON R.setId = S.setId WHERE R.deleteFlag = 0 AND R.roomId = ?";
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT roomId,roomName,distinctName,buildingName,roomNumber FROM baoxiu_placeroom AS R LEFT JOIN");
+        builder.append(" baoxiu_placebuilding AS B ON R.buildingId = B.buildingId LEFT JOIN baoxiu_placedistinct AS D ON");
+        builder.append(" B.distinctId = D.distinctId WHERE R.deleteFlag = 0 AND R.roomId = ?");
         Object[] args = {
                 roomId
         };
 
         try {
-            return jdbcTemplate.queryForObject(sql, args, new Select4PageRowMapper());
+            return jdbcTemplate.queryForObject(builder.toString(), args, new Select4PageRowMapper());
         } catch (Exception e) {
             LOG.error("[PlaceRoom] query4Edit error with info {}.", e.getMessage());
 
@@ -147,11 +151,10 @@ public class PlaceRoomRepositoryImpl implements PlaceRoomRepositoryI{
      */
     @Override
     public boolean updatePlaceRoom(PlaceRoom room) {
-        String sql = "UPDATE baoxiu_placeroom SET roomName = ?, buildingId = ?, setId = ?, roomNumber = ? WHERE roomId = ? AND deleteFlag = 0";
+        String sql = "UPDATE baoxiu_placeroom SET roomName = ?, buildingId = ?, roomNumber = ? WHERE roomId = ? AND deleteFlag = 0";
         Object[] args = {
                 room.getRoomName(),
                 room.getBuildingId(),
-                room.getSetId(),
                 room.getRoomNumber(),
                 room.getRoomId()
         };

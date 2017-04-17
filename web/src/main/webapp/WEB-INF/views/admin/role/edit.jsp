@@ -1,675 +1,261 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/include/nav.jsp"%>
-<%@include file="/WEB-INF/include/message.jsp"%>
+<%@ include file="/WEB-INF/include/nav.jsp"%>
 
-<link href="${contextPath}/static/plugins/jquery-datetimepicker/jquery.datetimepicker.css" rel="stylesheet" type="text/css">
+<!-- 内容主体 -->
+<div class="layui-body body">
+    <fieldset class="layui-elem-field">
+        <legend>
+            <span class="layui-breadcrumb">
+              <a href="${contextPath}/admin/role/list.action">角色管理</a>
+              <a><cite>角色编辑</cite></a>
+            </span>
+        </legend>
+        <div style="width: 98%; margin-top: 15px;">
+            <form action="${contextPath}/admin/role/edit/save.action" method="post" class="layui-form" id="roleAddForm">
+                <input type="hidden" value="${role.roleId}" name="roleId">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">角色名</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="inputRoleName" placeholder="输入" name="roleName" value="${role.roleName}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">角色中文名</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="inputRoleZHCNName" placeholder="输入" name="roleZHCNName" value="${role.roleZHCNName}" class="layui-input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="layui-form-label">角色已有权限</label>
+                </div>
+                <div class="fenduan" style="margin-left: 5%;">
+                    <c:if test="${checkedDistinct.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">校区管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${checkedDistinct}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}" checked>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${checkedBuilding.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">地点管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${checkedBuilding}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}" checked>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${checkedRoom.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">位置管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${checkedRoom}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}" checked>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${checkedSet.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">设备组管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${checkedSet}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}" checked>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${checkedEquipment.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">设备管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${checkedEquipment}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}" checked>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${checkedPrinter.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">打印机管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${checkedPrinter}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}" checked>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${checkedWorkerInfo.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">工人信息管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${checkedWorkerInfo}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}" checked>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${checkedWorkerType.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">工种管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${checkedWorkerType}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}" checked>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${checkedRepairGroup.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">维修小组管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${checkedRepairGroup}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}" checked>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${checkedMaintenanceList.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">报修单管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${checkedMaintenanceList}" var="maintenanceList">
+                                    <input type="checkbox" name="editPermissions" value="${maintenanceList.permissionId}" title="${maintenanceList.permissionZHCNName}" checked>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                </div>
+                <div class="form-group">
+                    <label class="layui-form-label">角色未有权限</label>
+                </div>
+                <div class="fenduan" style="margin-left: 5%;">
+                    <c:if test="${distinct.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">校区管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${distinct}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}">
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${building.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">地点管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${building}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}">
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${room.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">位置管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${room}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}">
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${set.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">设备组管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${set}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}">
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${equipment.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">设备管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${equipment}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}">
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${printer.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">打印机管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${printer}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}">
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${workerInfo.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">工人信息管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${workerInfo}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}">
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${workerType.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">工种管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${workerType}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}">
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${repairGroup.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">维修小组管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${repairGroup}" var="permission">
+                                    <input type="checkbox" name="editPermissions" value="${permission.permissionId}" title="${permission.permissionZHCNName}">
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${maintenanceList.size() > 0}">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">报修单管理权限</label>
+                            <div class="layui-input-block">
+                                <c:forEach items="${maintenanceList}" var="maintenanceList">
+                                    <input type="checkbox" name="editPermissions" value="${maintenanceList.permissionId}" title="${maintenanceList.permissionZHCNName}">
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
+                </div>
 
-<%--系管理>系添加--%>
-<style>
-    #role {
-        background: whitesmoke;
-        border-left: 4px solid #fed350;
-        border-right: 4px solid #fed350;
-        color: #444;
-    }
-</style>
-<div class="panel panel-default" style="float: left; width: 90%; border-radius: 0px;">
-    <div class="panel-heading" style="padding-bottom: 0px; padding-top: 0px; padding-left: 0px; border-radius: 0px;">
-        <ol class="breadcrumb" style="padding-bottom: 8px;margin-bottom: 0px;">
-            <li>
-                <a href="${contextPath}/admin/role/list.action"><span class="glyphicon glyphicon-map-marker"></span> &nbsp;角色管理</a>
-            </li>
-            <li>角色编辑</li>
-        </ol>
-    </div>
-    <div class="panel-body">
-        <div class="row" style="margin-top: 5px;">
-            <div class="col-md-12">
-                <form class="form-horizontal" action="${contextPath}/admin/role/edit/save.action" method="post" id="roleAddForm">
-                    <input type="hidden" value="${role.roleId}" name="roleId">
-                    <div class="form-group">
-                        <label for="inputRoleName" class="col-sm-2 control-label">角色名</label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="inputRoleName" value="${role.roleName}" name="roleName">
-                        </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceDistinct">保存</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                     </div>
-                    <div class="form-group">
-                        <label for="inputRoleZHCNName" class="col-sm-2 control-label">角色中文名</label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="inputRoleZHCNName" value="${role.roleZHCNName}" name="roleZHCNName">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">角色已有权限</label>
-                    </div>
-                        <div class="fenduan" style="margin-left: 5%;">
-                            <c:if test="${checkedDepartment.size() > 0}">
-                                <div class="from-group" style="height: 30px;">
-                                    <label class="col-sm-2 control-label">系管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedDepartment}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedcourse.size() > 0}">
-                                <div class="from-group" style="height: 30px;">
-                                    <label class="col-sm-2 control-label">课程管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedcourse}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedmajor.size() > 0}">
-                                <div class="from-group" style="height: 30px;">
-                                    <label class="col-sm-2 control-label">专业管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedmajor}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedteacher.size() > 0}">
-                                <div class="from-group" style="height: 30px;">
-                                    <label class="col-sm-2 control-label">教师管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedteacher}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedstudent.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">学生管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedstudent}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkeddisciplinary.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">违纪管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkeddisciplinary}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedscore.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">成绩管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedscore}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedmonitor.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">班级管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedmonitor}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedchangeCourse.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">换课管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedchangeCourse}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedmemberCount.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">人员统计管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedmemberCount}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkeddownSign.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">线下报名管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkeddownSign}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedbackcolorSet.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">背景色管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedbackcolorSet}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedmessageSet.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">基础信息管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedmessageSet}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedlog.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">日志管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedlog}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkeduser.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">用户管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkeduser}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedregister.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">新学员管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedregister}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedcharge.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">收费管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedregister}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedfinanceCount.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">收费统计管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedfinanceCount}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedfinanceAnalysis.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">财务分析管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedfinanceAnalysis}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedbill.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">发票管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedbill}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedunpayment.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">未缴费管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedunpayment}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedpayment.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">已缴费管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedpayment}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedrefund.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">退课费用管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedrefund}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedfinanceChangeCourse.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">换课费用管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedfinanceChangeCourse}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${checkedroom.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">房间管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${checkedroom}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" checked value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                        </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">角色未有权限</label>
-                    </div>
-                        <div class="fenduan" style="margin-left: 5%">
-                            <c:if test="${department.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">系管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${department}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${course.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">课程管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${course}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${major.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">专业管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${major}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${teacher.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">教师管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${teacher}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${student.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">学生管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${student}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${disciplinary.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">违纪管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${disciplinary}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${score.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">成绩管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${score}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${monitor.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">班级管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${monitor}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${changeCourse.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">换课管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${changeCourse}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${memberCount.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">人员统计管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${memberCount}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${downSign.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">线下报名管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${downSign}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${backcolorSet.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">背景色管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${backcolorSet}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${messageSet.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">基础信息管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${messageSet}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${log.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">日志管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${log}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${user.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">用户管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${user}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${register.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">新学员管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${register}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${charge.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">收费管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${charge}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${financeCount.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">收费统计管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${financeCount}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${financeAnalysis.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">财务分析管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${financeAnalysis}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${bill.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">发票管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${bill}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${unpayment.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">未缴费管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${unpayment}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${payment.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">已缴费管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${payment}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${refund.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">退课费用管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${refund}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${financeChangeCourse.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">换课费用管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${financeChangeCourse}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${room.size() > 0}">
-                                <div class="from-group" style="height: 30px">
-                                    <label class="col-sm-2 control-label">房间管理权限</label>
-                                    <div class="col-sm-10">
-                                        <c:forEach items="${room}" var="permission">
-                                            <label class="checkbox-inline" style="margin-left: 0px">
-                                                <input type="checkbox" value="${permission.permissionId}" name="editPermissions"> ${permission.permissionZHCNName}
-                                            </label>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </c:if>
-                        </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-success">保存</button>
-                            <button type="button" id="backMark" class="btn btn-default" style="margin-left: 100px">返回</button>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </form>
         </div>
-    </div>
+    </fieldset>
 </div>
 
 <%@include file="/WEB-INF/include/javascript.jsp"%>
 
 <script type="text/javascript">
     $(function () {
-        $("#userManageNav").trigger("click");
+        // 导航栏选择
+        $("#six").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#role").attr("class", "layui-this");
     });
-</script>
 
-<script type="text/javascript">
     // 中文验证
     jQuery.validator.addMethod("zhongwen", function(value, element) {
         return this.optional(element) || /^[\u4e00-\u9fa5]+$/.test(value);
