@@ -43,7 +43,6 @@ public class UserAppServiceImpl implements UserAppServiceI {
     @Transactional
     @Override
     public MaintenanceList saveNewMaintenanceList(MaintenanceList list) {
-
         list.setUserId(PrimaryKeyUtil.uuidPrimaryKey());
         list.setListDescription(list.getListDescription());
 
@@ -74,11 +73,11 @@ public class UserAppServiceImpl implements UserAppServiceI {
 
         boolean notExit = userAppRepository.selectIfExistMaintenanceList(builder.toString());
 
-
         if (notExit) {
             if (userAppRepository.insertNew(list) && userAppRepository.insertNewListState(list)) {
                 return list;
             }
+
             return null;
         } else {
             return null;

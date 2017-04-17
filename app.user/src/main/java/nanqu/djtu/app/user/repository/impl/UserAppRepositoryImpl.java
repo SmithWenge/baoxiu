@@ -135,7 +135,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public boolean insertNew(MaintenanceList list) {
-        String sql = "INSERT INTO baoxiu_maintenancelist (listNumber, userId, userTel, repairGroupId, roomId, buildingId, distinctId, listDescription, equipmentId, listState) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO baoxiu_maintenancelist (listNumber, userId, userTel, repairGroupId, roomId, buildingId, distinctId, equipmentId, listState) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Object[] args = {
                 list.getListNumber(),
                 list.getUserId(),
@@ -144,7 +144,6 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
                 list.getRoomId(),
                 list.getBuildingId(),
                 list.getDistinctId(),
-                list.getListDescription(),
                 list.getEquipmentId(),
                 list.getListState()
         };
@@ -299,11 +298,12 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public boolean insertNewListState(MaintenanceList list) {
-        String sql = "INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid,listNumber, listState) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid, listNumber, listState, listDescription) VALUES (?, ?, ?, ?)";
         Object[] args = {
                 PrimaryKeyUtil.uuidPrimaryKey(),
                 list.getListNumber(),
                 list.getListState(),
+                list.getListDescription()
         };
 
         try {
@@ -355,7 +355,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public MaintenanceList selectAllName(MaintenanceList maintenanceList) {
-        String sql = "SELECT buildingName,distinctName,roomName,equipmentName FROM baoxiu.baoxiu_placedistinct AS DI LEFT JOIN baoxiu.baoxiu_placebuilding AS BU ON (DI.distinctId = BU.distinctId) LEFT JOIN baoxiu.baoxiu_placeroom AS RO ON(BU.buildingId = RO.buildingId) LEFT JOIN baoxiu.baoxiu_equipment AS EQ ON(RO.roomId = EQ.roomId) WHERE DI.deleteFlag = 0 AND DI.distinctId = ? AND BU.deleteFlag = 0 AND BU.buildingId =? AND RO.deleteFlag = 0 AND RO.roomId = ? AND EQ.deleteFlag = 0 AND EQ.equipmentId = ?";
+        String sql = "SELECT buildingName,distinctName,roomName,equipmentName FROM baoxiu_placedistinct AS DI LEFT JOIN baoxiu_placebuilding AS BU ON DI.distinctId = BU.distinctId LEFT JOIN baoxiu_placeroom AS RO ON BU.buildingId = RO.buildingId LEFT JOIN baoxiu_equipment AS EQ ON RO.roomId = EQ.roomId  WHERE DI.deleteFlag = 0 AND DI.distinctId = ? AND BU.deleteFlag = 0 AND BU.buildingId =? AND RO.deleteFlag = 0 AND RO.roomId = ? AND EQ.deleteFlag = 0 AND EQ.equipmentId = ?";
         Object[] args = {
                 maintenanceList.getDistinctId(),
                 maintenanceList.getBuildingId(),
@@ -394,15 +394,16 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public List<MaintenanceList> selectMaintenanceListByTel(String userTel) {
-        String sql = "SELECT listNumber,repairGroupId,roomId,buildingId, userTel, listState,distinctId,equipmentId, liststatetime, listDescription FROM baoxiu.baoxiu_maintenancelist WHERE userTel = ? AND deleteFlag = 0";
+        String sql = "SELECT listNumber, repairGroupId, roomId, buildingId, userTel, listState, distinctId, equipmentId, liststatetime FROM baoxiu_maintenancelist WHERE userTel = ? AND deleteFlag = 0";
         Object[] args = {
                 userTel
         };
 
-        try{
-                return jdbcTemplate.query(sql, args, new SelectMaintenanceListByTelRowMapper());
-        }catch (Exception e){
+        try {
+            return jdbcTemplate.query(sql, args, new SelectMaintenanceListByTelRowMapper());
+        } catch (Exception e) {
             LOG.error("[API] select maintenances error with info {}.", e.getMessage());
+
             return new ArrayList<>();
         }
     }
@@ -418,7 +419,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
             maintenanceList.setUserTel(rs.getString("userTel"));
             maintenanceList.setListState(rs.getString("listState"));
             maintenanceList.setListstatetime(rs.getString("liststatetime"));
-            maintenanceList.setListDescription(rs.getString("listDescription"));
+//            maintenanceList.setListDescription(rs.getString("listDescription"));
             maintenanceList.setRepairGroupId(rs.getString("repairGroupId"));
             maintenanceList.setRoomId(rs.getString("roomId"));
             maintenanceList.setBuildingId(rs.getString("buildingId"));
@@ -437,7 +438,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public MaintenanceList selectOneMaintenance(String listNumber) {
-        String sql = "SELECT listNumber, userTel, repairGroupId, roomId, buildingId, distinctId, equipmentId, listState, listDescription, liststatetime FROM baoxiu.baoxiu_maintenancelist WHERE listNumber = ?";
+        String sql = "SELECT listNumber, userTel, repairGroupId, roomId, buildingId, distinctId, equipmentId, listState, liststatetime FROM baoxiu_maintenancelist WHERE listNumber = ?";
         Object[] args = {
                 listNumber
         };
@@ -488,7 +489,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public List<MaintenanceList> selectAllState(String listNumber) {
-        String sql = "SELECT listNumber, listState, liststatetime FROM baoxiu.baoxiu_liststatetime where listNumber= ? ORDER BY liststatetime";
+        String sql = "SELECT listNumber, listState, liststatetime, listDescription FROM baoxiu.baoxiu_liststatetime where listNumber= ? ORDER BY liststatetime";
         Object[] args = {listNumber};
 
         try {
@@ -508,6 +509,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
             maintenanceList.setListNumber(rs.getString("listNumber"));
             maintenanceList.setListState(rs.getString("listState"));
             maintenanceList.setListstatetime(rs.getString("liststatetime"));
+            maintenanceList.setListDescription(rs.getString("listDescription"));
 
             return maintenanceList;
         }
