@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/include/nav.jsp"%>
@@ -95,15 +97,13 @@
         <thead>
         <tr>
           <td>序号</td>
-          <td>报修单号</td>
-          <td>报修单状态</td>
+          <td>保修单号</td>
+          <td>保修单状态</td>
           <td>设备名</td>
           <td>维修小组</td>
-          <td>报修时间</td>
-          <td>操作维修状态</td>
           <td>最新状态时间</td>
           <td>操作</td>
-
+          <td>更改状态</td>
         </tr>
         </thead>
         <tbody id="pageTableBody">
@@ -319,13 +319,13 @@
     // 拼接操作字符转
     function createOpsBtnGroup(listNumber) {
       return '<div class="layui-btn-group">' +
-              '<a href="${contextPath}/admin/maintenance/list/manage/status/dispatch/' + listNumber +'.action">' +
-              ' <button class="layui-btn layui-btn-normal" >派单</button>&#xe642;</i>' +
-              '</button> </a><a href="${contextPath}/admin/maintenance/list/manage/status/done/' + listNumber + '.action">' +
-              ' <button class="layui-btn layui-btn-normal" >完成</button>&#xe640;</i></button>' + '<a href="${contextPath}/admin/maintenance/list/manage/edit/route/' + listNumber +'.action">' +
+              '<a href="${contextPath}/admin/maintenance/list/manage/status/dispatch/'+listNumber+'.action">'+
+              ' <button class="layui-btn layui-btn-normal" >派单</button>&#xe642;</i>'+
+              '</button> </a><a href="${contextPath}/admin/maintenance/list/manage/status/done/' + listNumber + '.action">'+
+              ' <button class="layui-btn layui-btn-normal" >完成</button>&#xe640;</i></button>'+
+              '<a href="${contextPath}/admin/maintenance/list/manage/edit/route/' + listNumber +'.action">' +
               '<button class="layui-btn layui-btn-small layui-btn-warm"><i class="layui-icon">&#xe642;</i>' +
               '</button> </a></div>'
-
     }
 
     // 分页
@@ -359,21 +359,19 @@
           loadStateData();
 
           $.each(result.page.content, function (i, item) {
-
-            var trData = "<tr><td>" + (i + 1) + "</td><td><a href=\"${contextPath}/admin/maintenance/list/manage/details/route/" + item.listNumber + ".action\">" + item.listNumber + "</a></td><td>" + item.liststateStr ;
-            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.listTime + "</td>"+ "</td>"+"</td><td>" + createOpsBtnGroup(item.listNumber) + "</td>";
-
             if(item.equipmentName == null) {
               var maBtn = createOpsBtnGroup(item.listNumber);
             } else {
               var maBtn = "";
             }
 
+            var trData = "<tr><td>" + (i + 1) + "</td><td><a href=\"${contextPath}/admin/maintenance/list/manage/details/route/" + item.listNumber + ".action\">" + item.listNumber + "</a></td><td>" + item.liststateStr + "</td>";
+            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.liststatetime + "</td><td>" + maBtn + "</td><td></td></tr>";
+            $("#pageTableBody").append(trData);
           });
         }
       });
     }
-
 
     // 初始化页面加载数据
     function loadPageData() {
@@ -451,3 +449,4 @@
 </script>
 
 <%@ include file="/WEB-INF/include/footer.jsp"%>
+
