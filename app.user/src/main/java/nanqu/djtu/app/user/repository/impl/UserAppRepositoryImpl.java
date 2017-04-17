@@ -135,7 +135,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public boolean insertNew(MaintenanceList list) {
-        String sql = "INSERT INTO baoxiu_maintenancelist (listNumber, userId, userTel, repairGroupId, roomId, buildingId, distinctId, equipmentId, listState) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO baoxiu_maintenancelist (listNumber, userId, userTel, repairGroupId, roomId, buildingId, distinctId, equipmentId, listState,listDescription) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Object[] args = {
                 list.getListNumber(),
                 list.getUserId(),
@@ -145,6 +145,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
                 list.getBuildingId(),
                 list.getDistinctId(),
                 list.getEquipmentId(),
+                list.getListDescription(),
                 list.getListState()
         };
 
@@ -303,7 +304,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
                 PrimaryKeyUtil.uuidPrimaryKey(),
                 list.getListNumber(),
                 list.getListState(),
-                list.getListDescription()
+                "提交成功"
         };
 
         try {
@@ -382,7 +383,6 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
             maintenanceList.setRoomName(rs.getString("roomName"));
             maintenanceList.setEquipmentName(rs.getString("equipmentName"));
 
-
             return maintenanceList;
         }
     }
@@ -419,7 +419,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
             maintenanceList.setUserTel(rs.getString("userTel"));
             maintenanceList.setListState(rs.getString("listState"));
             maintenanceList.setListstatetime(rs.getString("liststatetime"));
-//            maintenanceList.setListDescription(rs.getString("listDescription"));
+            maintenanceList.setListDescription(rs.getString("listDescription"));
             maintenanceList.setRepairGroupId(rs.getString("repairGroupId"));
             maintenanceList.setRoomId(rs.getString("roomId"));
             maintenanceList.setBuildingId(rs.getString("buildingId"));
