@@ -314,14 +314,20 @@
     // 拼接操作字符转
     function createOpsBtnGroup(listNumber) {
       return '<div class="layui-btn-group">' +
-              '<a href="${contextPath}/admin/maintenance/list/manage/status/dispatch/'+listNumber+'.action">'+
-              ' <button class="layui-btn layui-btn-normal" >派单</button>&#xe642;</i>'+
-              '</button> </a><a href="${contextPath}/admin/maintenance/list/manage/status/done/' + listNumber + '.action">'+
-              ' <button class="layui-btn layui-btn-normal" >完成</button>&#xe640;</i></button>'+
               '<a href="${contextPath}/admin/maintenance/list/manage/edit/route/' + listNumber +'.action">' +
               '<button class="layui-btn layui-btn-small layui-btn-warm"><i class="layui-icon">&#xe642;</i>' +
               '</button> </a></div>'
     }
+
+    function createStateBtnGroup(listNumber) {
+      return '<div class="layui-btn-group">' +
+              '<a href="${contextPath}/admin/maintenance/list/manage/status/dispatch/'+listNumber+'.action">'+
+              ' <button class="layui-btn layui-btn-normal" >派单</button>&#xe642;</i>'+
+              '</button> </a><a href="${contextPath}/admin/maintenance/list/manage/status/done/' + listNumber + '.action">'+
+              ' <button class="layui-btn layui-btn-danger " >完成</button>&#xe640;</i></button>' +
+              '</button> </a></div>'
+    }
+
 
     // 分页
     var laypage = layui.laypage;
@@ -361,7 +367,7 @@
             }
 
             var trData = "<tr><td>" + (i + 1) + "</td><td><a href=\"${contextPath}/admin/maintenance/list/manage/details/route/" + item.listNumber + ".action\">" + item.listNumber + "</a></td><td>" + item.liststateStr + "</td>";
-            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.liststatetime + "</td><td>" + maBtn + "</td><td></td></tr>";
+            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.liststatetime + "</td><td>" + maBtn + "</td><td>" + createStateBtnGroup(item.listNumber) + "</td></tr>";
             $("#pageTableBody").append(trData);
           });
         }
