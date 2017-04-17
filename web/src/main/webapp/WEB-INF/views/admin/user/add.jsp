@@ -165,7 +165,7 @@
       },
       adminTelephone: function (value) {
         if (!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(value))) {
-          return "请合法手机号";
+          return "请输入合法手机号";
         }
       }
     });

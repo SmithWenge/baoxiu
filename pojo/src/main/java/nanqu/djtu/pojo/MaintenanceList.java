@@ -11,6 +11,7 @@ public class MaintenanceList {
     private String buildingId;
     private String distinctId;
     private String equipmentId;
+    private int listState;
     private String listDescription;
     private String listTime;
     private String startListTime;
@@ -25,9 +26,16 @@ public class MaintenanceList {
     private String liststatetime;
     private String liststateStr;
     private List<MaintenanceList> lists;
-    private int listState;
-
     private String listStatusTime;
+    private int sum;
+
+    public int getSum() {
+        return sum;
+    }
+
+    public void setSum(int sum) {
+        this.sum = sum;
+    }
 
     public String getUserTel() {
         return userTel;

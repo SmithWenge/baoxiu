@@ -4,15 +4,33 @@ public class WorkerInfo {
     private String userId;
     private String workerName;
     private String workerUnite;
-    private String  workerDepartment;
+    private String workerDepartment;
     private String workerJob;
-    private String  workerState;
+    private String workerState;
+    private int workerStateInt;
     private String repairGroupId;
     private String typeId;
     private String groupName;
     private String typeName;
     private String workerTel;
     private String workerPass;
+    private int listState;
+
+    public int getListState() {
+        return listState;
+    }
+
+    public void setListState(int listState) {
+        this.listState = listState;
+    }
+
+    public int getWorkerStateInt() {
+        return workerStateInt;
+    }
+
+    public void setWorkerStateInt(int workerStateInt) {
+        this.workerStateInt = workerStateInt;
+    }
 
     public void setWorkerTel(String workerTel) {
         this.workerTel = workerTel;

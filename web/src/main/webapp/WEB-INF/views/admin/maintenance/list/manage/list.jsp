@@ -42,15 +42,10 @@
         <div class="layui-input-inline" style="width:130px;">
           <select name="listState" id="listState" lay-filter="listState">
             <option value=-1>请选择状态</option>
-            <option value=1>已提交</option>
-            <option value=2>已派单</option>
-            <option value=3>延期</option>
-            <option value=4>等待派单</option>
-            <option value=5>正在备件</option>
-            <option value=6>已催单</option>
-            <option value=7>已评价</option>
-            <option value=8>待评价</option>
-            <option value=9>其他</option>
+            <option value=1>已报修</option>
+            <option value=2>已接单</option>
+            <option value=3>已处理</option>
+            <option value=4>已评价</option>
           </select>
         </div>
         <div class="layui-input-inline">

@@ -66,7 +66,18 @@
                     <c:forEach items="${lists}" var="list">
                         <a href="${contextPath}/app/worker/routeDetails/${list.listNumber}.action">
                             <div class="list_1">
-                                <button class="button-await">已接单</button>
+                                <c:if test="${list.listState == 1}">
+                                    <button class="button-doing">已报修</button>
+                                </c:if>
+                                <c:if test="${list.listState == 2}">
+                                    <button class="button-await">已接单</button>
+                                </c:if>
+                                <c:if test="${list.listState == 3}">
+                                    <button class="button-done">已处理</button>
+                                </c:if>
+                                <c:if test="${list.listState == 4}">
+                                    <button class="button-done">已评价</button>
+                                </c:if>
                                 <p class="listp">${list.listNumber}</p>
                                 <p class="listp ">${list.liststatetime}</p>
                                 <div class="listDetails" >
@@ -158,7 +169,7 @@
 <div id="u185" class="ax_default box_1">
     <div id="u185_div" class=""></div>
     <div id="u186" class="text" style="visibility: visible;">
-        <p><span>在办工作</span></p>
+        <p><span>最近的35项操作</span></p>
     </div>
 </div>
 

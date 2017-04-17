@@ -30,6 +30,11 @@
             <artifactId>common</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>nanqu</groupId>
+            <artifactId>nanqu.framework</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

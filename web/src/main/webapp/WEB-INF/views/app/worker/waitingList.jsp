@@ -14,7 +14,7 @@
     <link href="${contextPath}/static/worker/resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet"/>
     <link href="${contextPath}/static/worker/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
     <link href="${contextPath}/static/worker/data/styles.css" type="text/css" rel="stylesheet"/>
-    <link href="${contextPath}/static/worker/files/index/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="${contextPath}/static/worker/files/home/styles.css" type="text/css" rel="stylesheet"/>
     <script src="${contextPath}/static/worker/resources/scripts/jquery-1.7.1.min.js"></script>
     <script src="${contextPath}/static/worker/resources/scripts/jquery-ui-1.8.10.custom.min.js"></script>
     <script src="${contextPath}/static/worker/resources/scripts/axure/axQuery.js"></script>
@@ -44,7 +44,7 @@
     <script src="${contextPath}/static/worker/resources/scripts/axure/adaptive.js"></script>
     <script src="${contextPath}/static/worker/resources/scripts/axure/tree.js"></script>
     <script src="${contextPath}/static/worker/resources/scripts/axure/init.temp.js"></script>
-    <script src="${contextPath}/static/worker/files/index/data.js"></script>
+    <script src="${contextPath}/static/worker/files/home/data.js"></script>
     <script src="${contextPath}/static/worker/resources/scripts/axure/legacy.js"></script>
     <script src="${contextPath}/static/worker/resources/scripts/axure/viewer.js"></script>
     <script src="${contextPath}/static/worker/resources/scripts/axure/math.js"></script>
@@ -55,81 +55,113 @@
     </script>
 </head>
 <body>
+
 <div id="base" class="">
 
-    <div id="u0" class="ax_default box_1">
-        <div id="u0_div" class=""></div>
-        <div id="u1" class="text" style="display: none; visibility: hidden">
-            <p><span></span></p>
-        </div>
-    </div>
-
-    <div id="u2" class="ax_default box_1">
-        <div id="u2_div" class=""></div>
-        <div id="u3" class="text" style="display: none; visibility: hidden">
-            <p><span></span></p>
-        </div>
-    </div>
-
-    <div id="u4" class="ax_default line">
-        <img id="u4_img" class="img " src="${contextPath}/static/worker/images/index/u4.png"/>
-        <div id="u5" class="text" style="display: none; visibility: hidden">
-            <p><span></span></p>
-        </div>
-    </div>
-
-    <div id="u6" class="ax_default line">
-        <img id="u6_img" class="img " src="${contextPath}/static/worker/images/index/u4.png"/>
-        <div id="u7" class="text" style="display: none; visibility: hidden">
-            <p><span></span></p>
-        </div>
-    </div>
-
-    <div id="u10" class="ax_default icon">
-        <img id="u10_img" class="img " src="${contextPath}/static/worker/images/index/u10.png"/>
-        <div id="u11" class="text" style="display: none; visibility: hidden">
-            <p><span></span></p>
-        </div>
-    </div>
-
-    <div id="u12" class="ax_default icon">
-        <img id="u12_img" class="img " src="${contextPath}/static/worker/images/index/u12.png"/>
-        <div id="u13" class="text" style="display: none; visibility: hidden">
-            <p><span></span></p>
-        </div>
-    </div>
-
-    <form action="${contextPath}/app/worker/login.action" method="post">
-        <div id="u14" class="ax_default text_field">
-            <input id="u14_input" name="workerTel" type="text"/>
-        </div>
-
-        <div id="u15" class="ax_default text_field">
-            <input id="u15_input" name="workerPass" type="password"/>
-        </div>
-
-        <div id="u8" class="ax_default label">
-            <div id="u8_div" class=""></div>
-            <div id="u9" class="text" style="visibility: visible;">
-                <p><span><input type="submit" value="登录"></span></p>
+    <!-- list (动态面板) -->
+    <div id="u20" class="ax_default" data-label="list">
+        <div id="u20_state0" class="panel_state" data-label="State1">
+            <div id="u20_state0_content" class="panel_state_content">
+                <div class="listNew">
+                    <c:forEach items="${lists}" var="list">
+                        <a href="${contextPath}/app/worker/routeDetails/${list.listNumber}.action">
+                            <div class="list_1">
+                                <button class="button-doing">已报修</button>
+                                <p class="listp">${list.listNumber}</p>
+                                <p class="listp ">${list.liststatetime}</p>
+                                <div class="listDetails" >
+                                    <p class="listDetails_1">${list.listDescription}</p>
+                                </div>
+                                <div class="xian"></div>
+                            </div>
+                        </a>
+                    </c:forEach>
+                </div>
             </div>
-        </div>
-    </form>
-
-    <div id="u16" class="ax_default _一级标题">
-        <div id="u16_div" class=""></div>
-        <div id="u17" class="text" style="visibility: visible;">
-            <p><span>大连交通大学</span></p><p><span>后勤维修处理系统</span></p>
-        </div>
-    </div>
-
-    <div id="u18" class="ax_default label">
-        <div id="u18_div" class=""></div>
-        <div id="u19" class="text" style="visibility: visible;">
-            <p><span>大连交通大学56工作室设计制作</span></p>
         </div>
     </div>
 </div>
+
+<!-- Unnamed (Bottom) -->
+
+<!-- Unnamed (组合) -->
+<div id="u166" class="ax_default">
+
+    <!-- Unnamed (矩形) -->
+    <div id="u167" class="ax_default box_1">
+        <div id="u167_div" class=""></div>
+        <!-- Unnamed () -->
+        <div id="u168" class="text" style="display: none; visibility: hidden">
+            <p><span></span></p>
+        </div>
+    </div>
+
+    <!-- all (形状) -->
+    <a href="${contextPath}/app/worker/routeLatestList.action">
+        <div id="u169" class="ax_default icon" data-label="all">
+            <img id="u169_img" class="img " src="${contextPath}/static/worker/images/home/all_u169.png"/>
+            <!-- Unnamed () -->
+            <div id="u170" class="text" style="display: none; visibility: hidden">
+                <p><span></span></p>
+            </div>
+        </div>
+    </a>
+
+    <!-- todo (形状) -->
+    <a href="${contextPath}/app/worker/routeWaitingList.action">
+        <div id="u171" class="ax_default icon" data-label="todo">
+            <img id="u171_img" class="img " src="${contextPath}/static/worker/images/home/todo_u171.png"/>
+            <!-- Unnamed () -->
+            <div id="u172" class="text" style="display: none; visibility: hidden">
+                <p><span></span></p>
+            </div>
+        </div>
+    </a>
+
+    <a href="${contextPath}/app/worker/routeDoingList.action">
+        <div id="u173" class="ax_default icon" data-label="home">
+            <img id="u174_img" class="img " src="${contextPath}/static/worker/images/home/home_u173.png"/>
+            <div id="u174" class="text" style="display: none; visibility: hidden">
+                <p><span></span></p>
+            </div>
+        </div>
+    </a>
+</div>
+
+<div id="u175" class="ax_default icon">
+    <div id="u176" class="text" style="display: none; visibility: hidden">
+        <p><span></span></p>
+    </div>
+</div>
+
+<div id="u178" class="ax_default box_1">
+    <div id="u178_div" class=""></div>
+    <div id="u179" class="text" style="visibility: visible;">
+        <p><span>大连交通大学后勤维修处理系统</span></p>
+    </div>
+</div>
+
+<div id="u180" class="ax_default">
+    <div id="u181" class="ax_default ellipse">
+        <div id="u182" class="text" style="display: none; visibility: hidden">
+            <p><span></span></p>
+        </div>
+    </div>
+
+    <div id="u183" class="ax_default icon">
+        <div id="u184" class="text" style="display: none; visibility: hidden">
+            <p><span></span></p>
+        </div>
+    </div>
+</div>
+
+<div id="u185" class="ax_default box_1">
+    <div id="u185_div" class=""></div>
+    <div id="u186" class="text" style="visibility: visible;">
+        <p><span>待办工作</span></p>
+    </div>
+</div>
+
 </body>
 </html>
 

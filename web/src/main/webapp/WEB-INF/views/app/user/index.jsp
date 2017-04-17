@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
@@ -39,7 +38,7 @@
     </script>
 </head>
 <body>
-<div id="base" class="">
+<a id="base" class="">
 
     <div id="u0" class="ax_default box_1">
         <img id="u0_img" class="img " src="${contextPath}/static/axure/images/index/u0.png"/>
@@ -75,21 +74,22 @@
             <p><span></span></p>
         </div>
     </div>
-
+    <a href="${contextPath}/app/user/maintenance/add/router.action">
     <div id="u10" class="ax_default label">
         <img id="u10_img" class="img " src="${contextPath}/static/axure/images/index/u10.png"/>
         <div id="u11" class="text">
-            <p><span>我要报修</span></p>
+          <p><span>我要报修</span></p>
         </div>
     </div>
-
+    </a>
+<a href="${contextPath}/app/user/my/maintenance/router.action">
     <div id="u12" class="ax_default label">
         <img id="u12_img" class="img " src="${contextPath}/static/axure/images/index/u10.png"/>
         <div id="u13" class="text">
             <p><span>我的报修</span></p>
         </div>
     </div>
-
+</a>
     <div id="u14" class="ax_default label">
         <img id="u14_img" class="img " src="${contextPath}/static/axure/images/index/u14.png"/>
         <div id="u15" class="text">
@@ -160,11 +160,11 @@
         </div>
     </div>
 
-    <div id="u34" class="ax_default">
-    </div>
+    <%--<div id="u34" class="ax_default">--%>
+    <%--</div>--%>
 
-    <div id="u35" class="ax_default">
-    </div>
+    <%--<div id="u35" class="ax_default">--%>
+    <%--</div>--%>
 
     <div id="u37" class="ax_default box_1">
         <img id="u37_img" class="img " src="${contextPath}/static/axure/images/index/u37.png"/>
