@@ -55,7 +55,7 @@ public class MaintenanceListController {
         Page<MaintenanceList> page = maintenanceListService.query4Page(list, pageable);
         mapData.put(ConstantFields.PAGE_KEY, page);
 
-        mapData.put("condition",list);
+        mapData.put("condition", list);
 
         List<MaintenanceList> distincts = maintenanceListService.queryDistincts();
         mapData.put("distincts", distincts);
@@ -68,6 +68,7 @@ public class MaintenanceListController {
 
     /**
      * 二级联动根据校区查询地点
+     *
      * @param distinct
      * @return
      */
@@ -154,6 +155,7 @@ public class MaintenanceListController {
 
             mav.addObject("groups", groups);
             mav.addObject("distincts", distincts);
+
             mav.addObject("list", list);
 
             return mav;
@@ -164,23 +166,14 @@ public class MaintenanceListController {
     }
 
     /**
-     * 路由到编辑页面
-     *
-     * @param
-     * @return 位置编辑页面和相位置信息
+     * 用户更改状态变为派单
+     * @param listNumber
+     * @return返回报修单列表
      */
-    @RequestMapping("/edit/do")
-    public String Edit(MaintenanceList list, RedirectAttributes redirectAttributes, HttpSession session) {
+    @RequestMapping("/status/dispatch/{listNumber}")
+    public String update(@PathVariable String listNumber, RedirectAttributes redirectAttributes, HttpSession session) {
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
-
-        if (Strings.isNullOrEmpty(list.getListNumber())) {
-            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
-
-            return "redirect:/admin/maintenance/list/manage/edit/route/" + list.getListNumber() + ".action";
-        }
-
-        boolean update = maintenanceListService.editMaintenanceList(list, user);
-
+        boolean update = maintenanceListService.updatestate(listNumber, user);
         if (update) {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
 
@@ -188,7 +181,9 @@ public class MaintenanceListController {
         } else {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
 
-            return "redirect:/admin/maintenance/list/manage/edit/route/" + list.getListNumber() + ".action";
+            return "redirect:/admin/maintenance/list/manage/index.action";
         }
+
     }
+
 }

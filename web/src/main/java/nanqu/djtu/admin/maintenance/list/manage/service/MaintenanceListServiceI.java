@@ -16,5 +16,8 @@ public interface MaintenanceListServiceI {
     List<Equipment> queryEquipmentsWithRoom(PlaceRoom room);
     List<MaintenanceList> queryGroups();
     MaintenanceList query4details(String listNumber);
+    boolean updatestate(String listNumber, AdminUser user);
+    boolean done(String listNumber, AdminUser user);
     Boolean editMaintenanceList(MaintenanceList list,AdminUser user);
+
 }

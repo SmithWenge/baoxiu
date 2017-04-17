@@ -31,12 +31,10 @@ public class UserMaintenanceListController {
     @RequestMapping("/router")
     public ModelAndView list() {
         List<PlaceDistinct> placeDistincts = maintenanceListService.query4ListPlaceDistinct();
-        List<Equipment> equipments =  maintenanceListService.queryEquipment();
 
         ModelAndView mav = new ModelAndView("user/maintenance/list/add");
 
         mav.addObject("placeDistincts", placeDistincts);
-        mav.addObject("equipments", equipments);
 
         return mav;
     }
@@ -65,6 +63,19 @@ public class UserMaintenanceListController {
         map.put("rooms", maintenanceListService.queryPlaceRoomByBuildingId(placeBuilding.getBuildingId()));
         return map;
     }
+    /**
+     * 二级联动查设备信息
+     * @param placeRoom
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/equipment", method = RequestMethod.POST)
+    public Map<String, List<Equipment>> epuipments(PlaceRoom placeRoom) {
+        Map<String, List<Equipment>> map = new HashMap<>();
+        map.put("equipments", maintenanceListService.queryEquipmentByRoomId(placeRoom.getRoomId()));
+        return map;
+    }
+
     /**
      * 保修单添加
      * @param
