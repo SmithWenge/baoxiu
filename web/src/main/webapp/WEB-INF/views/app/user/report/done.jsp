@@ -8,18 +8,59 @@
             <h1 class="title title-2" style=" color: #FFF; font-weight: bold;">大连交通大学后勤报修系统</h1>
         </header>
 
-        <div class="card demo-card-header-pic">
-            <div valign="bottom" class="card-header color-white no-border">
-                <img class='card-cover' src="${contextPath}/static/images/app/user_done.png" alt="报修单添加已完成">
+        <div class="card">
+            <div class="card-content">
+                <div class="list-block media-list">
+                    <ul>
+                        <li class="item-content">
+                            <div class="item-media">
+                                <img src="${contextPath}/static/images/app/user_done.png" width="44">
+                            </div>
+                            <div class="item-inner">
+                                <p><b>我们已经受理您的报修</b></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
+        </div>
+
+        <div class="card">
             <div class="card-content">
                 <div class="card-content-inner">
-                    <p class="color-blue">我们已经受理您的报修</p>
+                    <div class="list-block">
+                        <ul>
+                            <li class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">单号</div>
+                                    <div class="item-after">00000001111112222222333333</div>
+                                </div>
+                            </li>
+                            <li class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">报修时间</div>
+                                    <div class="item-after">2017/02/12 11:30</div>
+                                </div>
+                            </li>
+                            <li class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">报修人手机</div>
+                                    <div class="item-after">15812135555</div>
+                                </div>
+                            </li>
+                            <li class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">报修队列数</div>
+                                    <div class="item-after">4条</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="#" class="link">赞</a>
-                <a href="#" class="link">更多</a>
+                <a href="../track/track.html" class="button button-fill button-success">我的报修</a>
+                <a href="../index.html" class="button button-fill button-primary">返回首页</a>
             </div>
         </div>
 
