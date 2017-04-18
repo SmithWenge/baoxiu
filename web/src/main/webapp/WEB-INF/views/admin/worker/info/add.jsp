@@ -14,9 +14,15 @@
     <div style="width: 30%; margin-top: 15px; ">
       <form action="${contextPath}/admin/worker/info/add/do.action" method="post" class="layui-form">
         <div class="layui-form-item">
-          <label class="layui-form-label">姓名</label>
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-block">
+          <input type="text" name="workerName" lay-verify="workerName" placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">电话</label>
           <div class="layui-input-block">
-            <input type="text" name="workerName" lay-verify="workerName" placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" name="workerTel" lay-verify="workerTel" placeholder="请输入" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item">
@@ -108,6 +114,11 @@
 
         if (!(/^[\u4e00-\u9fa5]+$/.test(value))) {
           return "请输入中文";
+        }
+      },
+      workerTel:function(value){
+        if (!(/^[0-9]+$/.test(value))) {
+          return "请填写数字序列";
         }
       },
       workerUnite: function (value) {

@@ -1,10 +1,8 @@
 package nanqu.djtu.admin.repairgroup.service.impl;
 
-import nanqu.djtu.admin.place.building.repository.PlaceBuildingRepositoryI;
 import nanqu.djtu.admin.repairgroup.repository.RepairGroupRepositoryI;
 import nanqu.djtu.admin.repairgroup.service.RepairGroupServiceI;
 import nanqu.djtu.pojo.AdminUser;
-import nanqu.djtu.pojo.PlaceDistinct;
 import nanqu.djtu.pojo.RepairGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -116,6 +116,22 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
         }
     }
 
+    @Override
+    public List<Equipment> queryEquipmentByRoomId(String roomId) {
+        String sql = "SELECT equipmentId , equipmentName, repairGroupId FROM baoxiu_equipment WHERE roomId=? AND deleteFlag = 0;";
+        Object[] args = {
+                roomId
+        };
+
+        try {
+            return jdbcTemplate.query(sql, args, new queryEquipmentRowMapper());
+        } catch (Exception e) {
+            LOG.error("[Equipment] query4List error with info {}.", e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
     private class SelectRoomWithBuildingIdRowMapper implements RowMapper<PlaceRoom> {
 
         @Override
@@ -129,26 +145,6 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
             return room;
         }
     }
-
-    /**
-     * 查询设备信息
-     *
-     * @return 未删除的设备信息
-     */
-    @Override
-    public List<Equipment> queryEquipment() {
-        String sql = "SELECT equipmentId , equipmentName,repairGroupId FROM baoxiu.baoxiu_equipment WHERE deleteFlag = 0;";
-        Object[] args = {};
-
-        try {
-            return jdbcTemplate.query(sql, args, new queryEquipmentRowMapper());
-        } catch (Exception e) {
-            LOG.error("[Equipment] query4List error with info {}.", e.getMessage());
-
-            return new ArrayList<>();
-        }
-    }
-
 
     private class queryEquipmentRowMapper implements RowMapper<Equipment> {
 
@@ -174,7 +170,7 @@ public class UserMaintenanceListRepositoryImpl implements UserMaintenanceListRep
     public boolean insertNew(MaintenanceList list) {
         String sql = "INSERT INTO baoxiu_maintenancelist (listNumber, userId, userTel, repairGroupId, roomId, buildingId, distinctId, listDescription, equipmentId, listState) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Object[] args = {
-                list.getListNumber(),
+                PrimaryKeyUtil.uuidPrimaryKey(),
                 list.getUserId(),
                 list.getUserTel(),
                 list.getRepairGroupId(),

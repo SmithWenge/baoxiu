@@ -15,6 +15,7 @@
         <tr>
           <td>序号</td>
           <td>姓名</td>
+          <td>电话</td>
           <td>单位</td>
           <td>部门</td>
           <td>职称</td>
@@ -29,6 +30,7 @@
           <tr>
             <td>${status.index + 1}</td>
             <td>${workerInfo.workerName}</td>
+            <td>${workerInfo.workerTel}</td>
             <td>${workerInfo.workerUnite}</td>
             <td>
               <c:if  test="${workerInfo.workerDepartment == 1}" >才艺</c:if>

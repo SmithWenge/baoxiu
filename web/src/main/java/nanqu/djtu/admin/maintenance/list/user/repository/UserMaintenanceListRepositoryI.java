@@ -5,9 +5,6 @@ import nanqu.djtu.pojo.*;
 
 import java.util.List;
 
-/**
- * Created by Administrator on 2017/4/4.
- */
 public interface UserMaintenanceListRepositoryI {
     /**
      * 查询校区信息列表
@@ -30,11 +27,11 @@ public interface UserMaintenanceListRepositoryI {
 
     /**
      * 查询设备信息
-     *
-     * @return 未删除的设备信息
+     * @return 未删除的位置信息列表
      */
 
-    List<Equipment> queryEquipment();
+    List<Equipment>queryEquipmentByRoomId(String roomId);
+
 
     /**
      * 查看这个设备的维修组
@@ -106,4 +103,5 @@ public interface UserMaintenanceListRepositoryI {
      */
 
     MaintenanceList selectMaintenaceList(String listNumber);
+
 }
