@@ -185,5 +185,28 @@ public class MaintenanceListController {
         }
 
     }
+    /**
+     * 更改状态为已完成
+     * @param listNumber
+     * @return返回报修单列表
+     */
+    @RequestMapping("/status/done/{listNumber}")
+    public String done(@PathVariable String listNumber,RedirectAttributes redirectAttributes, HttpSession session)
+    {
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+        boolean update2 = maintenanceListService.done(listNumber,user);
+        if (update2) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+
+            return "redirect:/admin/maintenance/list/manage/index.action";
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+
+            return "redirect:/admin/maintenance/list/manage/index.action";
+        }
+
+    }
+
+
 
 }

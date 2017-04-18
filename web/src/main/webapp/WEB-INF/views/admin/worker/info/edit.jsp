@@ -21,6 +21,12 @@
           </div>
         </div>
         <div class="layui-form-item">
+          <label class="layui-form-label">电话</label>
+          <div class="layui-input-block">
+            <input type="text" value="${infos.workerTel}" name="workerTel" lay-verify="workerTel" id="workerTel" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
           <label class="layui-form-label">单位</label>
           <div class="layui-input-block">
             <input type="text" name="workerUnite" lay-verify="workerUnite" value="${infos.workerUnite}" id="workerUnite" autocomplete="off" class="layui-input">
@@ -108,6 +114,11 @@
 
         if (!(/^[\u4e00-\u9fa5]+$/.test(value))) {
           return "请输入中文";
+        }
+      },
+      workerTel:function(value){
+        if (!(/^[0-9]+$/.test(value))) {
+          return "请填写数字序列";
         }
       },
       workerUnite: function (value) {
