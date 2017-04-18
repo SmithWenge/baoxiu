@@ -13,6 +13,7 @@ public class MaintenanceList {
     private String equipmentId;
     private int listState;
     private String listDescription;
+    private String listBigDescription;
     private String listTime;
     private String startListTime;
     private String stopListTime;
@@ -28,6 +29,14 @@ public class MaintenanceList {
     private List<MaintenanceList> lists;
     private String listStatusTime;
     private int sum;
+
+    public String getListBigDescription() {
+        return listBigDescription;
+    }
+
+    public void setListBigDescription(String listBigDescription) {
+        this.listBigDescription = listBigDescription;
+    }
 
     public int getSum() {
         return sum;

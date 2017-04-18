@@ -66,6 +66,12 @@
           <input type="text" value="${list.equipmentName}" class="layui-input" readonly>
         </div>
       </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">报修单描述</label>
+        <div class="layui-input-block">
+          <textarea class="layui-textarea">${list.listBigDescription}</textarea>
+        </div>
+      </div>
       <div class="form-group">
         <label class="layui-form-label">状态变更表</label>
       </div>
@@ -78,7 +84,7 @@
         <tr>
           <th>报修单状态</th>
           <th>更改时间</th>
-          <th>描述</th>
+          <th>更新描述</th>
         </tr>
         </thead>
         <tbody>
@@ -91,7 +97,6 @@
           </c:forEach>
         </tbody>
       </table>
-
     </div>
   </fieldset>
 </div>
