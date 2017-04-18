@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.rmi.MarshalledObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,8 +39,10 @@ public class UserAppController {
     @RequestMapping("/maintenance/add/router")
     public ModelAndView list() {
         List<PlaceDistinct> placeDistincts = userAppService.query4ListPlaceDistinct();
+
         ModelAndView mav = new ModelAndView("app/user/addFirstStep");
         mav.addObject("placeDistincts", placeDistincts);
+        
         return mav;
     }
 
