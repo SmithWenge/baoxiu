@@ -48,13 +48,8 @@
       <p>
         <c:if test="${state.listState == 1}">已提交</c:if>
         <c:if test="${state.listState == 2}">已派单</c:if>
-        <c:if test="${state.listState == 3}">延期</c:if>
-        <c:if test="${state.listState == 4}">等待派单</c:if>
-        <c:if test="${state.listState == 5}">正在备件</c:if>
-        <c:if test="${state.listState == 6}">已催单</c:if>
-        <c:if test="${state.listState == 7}">以评价</c:if>
-        <c:if test="${state.listState == 8}">待评价</c:if>
-        <c:if test="${state.listState == 9}">其他</c:if>
+        <c:if test="${state.listState == 3}">以处理</c:if>
+        <c:if test="${state.listState == 4}">已评价</c:if>
       </p>
     </div>
       </c:forEach>
@@ -96,7 +91,7 @@
     <img id="u255_img" class="img " src="${contextPath}/static/axure/images/details/u255.png"/>
     <!-- Unnamed () -->
     <div id="u256" class="text">
-      <p><span>报修单详情（00000000）</span></p>
+      <p><span>报修单详情（${maintenanceList.listNumber}）</span></p>
     </div>
   </div>
 
