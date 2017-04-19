@@ -32,7 +32,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
      */
     @Override
     public List<WorkerInfo> query4List() {
-        String sql = "SELECT userId,workerName,workerUnit,workerDepartment,workerJob,workerState,groupName,typeName,GR.repairGroupId,INFO.typeId FROM (baoxiu_workerinfo AS INFO join baoxiu_repairgroup AS GR on(INFO.repairGroupId = GR.repairGroupId) )join baoxiu_workertype AS TY on(INFO.typeId = TY.typeId) where INFO.deleteFlag = 0";
+        String sql = "SELECT userId,workerName,workerTel,workerUnit,workerDepartment,workerJob,workerState,groupName,typeName,GR.repairGroupId,INFO.typeId FROM (baoxiu_workerinfo AS INFO join baoxiu_repairgroup AS GR on(INFO.repairGroupId = GR.repairGroupId) )join baoxiu_workertype AS TY on(INFO.typeId = TY.typeId) where INFO.deleteFlag = 0";
         Object[] args = {};
 
         try {
@@ -51,6 +51,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
 
             info.setUserId(rs.getString("userId"));
             info.setWorkerName(rs.getString("workerName"));
+            info.setWorkerTel(rs.getString("workerTel"));
             info.setWorkerUnite(rs.getString("workerUnit"));
             info.setWorkerDepartment(Integer.toString(rs.getInt("workerDepartment")));
             info.setWorkerJob(rs.getString("workerJob"));
@@ -142,9 +143,10 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
 
     @Override
     public boolean insertNewWorkerInfo(WorkerInfo info) {
-        String sql = "INSERT INTO baoxiu_workerinfo(userId,workerName,workerUnit,workerDepartment,workerJob,workerState,repairGroupId,typeId,deleteFlag) VALUES(?,?,?,?,?,?,?,?,0);";
+        String sql = "INSERT INTO baoxiu_workerinfo(userId,workerName,workerTel,workerUnit,workerDepartment,workerJob,workerState,repairGroupId,typeId,deleteFlag) VALUES(?,?,?,?,?,?,?,?,?,0);";
         Object[] args = {
                 PrimaryKeyUtil.uuidPrimaryKey(),
+                info.getWorkerTel(),
                 info.getWorkerName(),
                 info.getWorkerUnite(),
                 Integer.parseInt(info.getWorkerDepartment()),
@@ -194,7 +196,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
 
     @Override
     public WorkerInfo query4Edit(String userId) {
-        String sql = "SELECT userId,workerName,workerUnit,workerDepartment,workerJob,workerState,groupName,typeName,INFO.repairGroupId,INFO.typeId FROM (baoxiu_workerinfo AS INFO join baoxiu_repairgroup AS RP on(INFO.repairGroupId = RP.repairGroupId) )join baoxiu_workertype AS TY on(INFO.typeId = TY.typeId) where INFO.deleteFlag = 0";
+        String sql = "SELECT userId,workerName,workerTel,workerUnit,workerDepartment,workerJob,workerState,groupName,typeName,INFO.repairGroupId,INFO.typeId FROM (baoxiu_workerinfo AS INFO join baoxiu_repairgroup AS RP on(INFO.repairGroupId = RP.repairGroupId) )join baoxiu_workertype AS TY on(INFO.typeId = TY.typeId) where INFO.deleteFlag = 0";
         Object[] args = {};
 
         try {
@@ -217,9 +219,10 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
 
     @Override
     public boolean updateWorkerInfo(WorkerInfo info) {
-        String sql = "UPDATE baoxiu_workerinfo SET workerName =?,workerUnit=?,workerDepartment=?,workerJob = ?,workerState = ?,repairGroupId = ?,typeId = ? WHERE userId= ? and deleteFlag=0";
+        String sql = "UPDATE baoxiu_workerinfo SET workerName =?,workerTel=?,workerUnit=?,workerDepartment=?,workerJob = ?,workerState = ?,repairGroupId = ?,typeId = ? WHERE userId= ? and deleteFlag=0";
         Object[] args = {
                 info.getWorkerName(),
+                info.getWorkerTel(),
                 info.getWorkerUnite(),
                 Integer.parseInt(info.getWorkerDepartment()),
                 info.getWorkerJob(),

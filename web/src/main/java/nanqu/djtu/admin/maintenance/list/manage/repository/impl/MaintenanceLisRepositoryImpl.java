@@ -405,7 +405,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
      */
     @Override
     public boolean updatestate(String listNumber) {
-        String sql="UPDATE baoxiu_maintenancelist SET listState =8 WHERE listNumber = ? AND deleteFlag = 0";
+        String sql="UPDATE baoxiu_maintenancelist SET listState =3 WHERE listNumber = ? AND deleteFlag = 0";
         Object[] args = {
                 listNumber
         };
@@ -421,7 +421,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     @Override
     public boolean insertstate(String listNumber) {
-        String sql = "INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid, listNumber, listState ) VALUES ( ?,?,8 )";
+        String sql = "INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid, listNumber, listState ) VALUES ( ?,?,3 )";
         Object[] args = {
                 PrimaryKeyUtil.uuidPrimaryKey(),
                 listNumber,
