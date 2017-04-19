@@ -3,7 +3,9 @@ package nanqu.djtu.admin.maintenance.list.manage.service.impl;
 import com.google.common.base.Strings;
 import nanqu.djtu.admin.maintenance.list.manage.repository.MaintenanceLisRepositoryI;
 import nanqu.djtu.admin.maintenance.list.manage.service.MaintenanceListServiceI;
+import nanqu.djtu.app.user.repository.UserAppRepositoryI;
 import nanqu.djtu.pojo.*;
+import nanqu.djtu.utils.ConstantFields;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
 
     @Autowired
     private MaintenanceLisRepositoryI maintenanceLisRepository;
+    @Autowired
+    private UserAppRepositoryI userAppRepository;
 
     @Override
     public Page<MaintenanceList> query4Page(MaintenanceList list, Pageable pageable) {
@@ -94,6 +98,21 @@ public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
 
     @Override
     public Boolean editMaintenanceList(MaintenanceList list, AdminUser user) {
+        // 拼接维修单编号
+        String distinctNumber = userAppRepository.selectDistinctNumber(list.getDistinctId());
+        String buildingNumber = userAppRepository.selectBuildingNumber(list.getBuildingId());
+        String roomNumber = userAppRepository.selectRoomNumber(list.getRoomId());
+        String equipmentNumber = userAppRepository.selectEquipmentNumber(list.getEquipmentId());
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(Strings.padStart(distinctNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
+        builder.append(Strings.padStart(buildingNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
+        builder.append(Strings.padStart(roomNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
+        builder.append(Strings.padStart(equipmentNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
+
+        list.setListNumber(builder.toString());
+
         boolean update = maintenanceLisRepository.updateMaintenanceList(list);
 
         if (update) {

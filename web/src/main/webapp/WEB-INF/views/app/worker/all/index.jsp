@@ -6,7 +6,7 @@
     <div class="page page-current">
         <header class="bar bar-nav" style="background-color: #0E4d94; position: static;">
             <h1 class="title" style=" color: #FFF; font-weight: bold;">大连交通大学后勤维修处理系统</h1>
-            <a class="icon pull-right" style="color: #fff;">
+            <a class="icon pull-right" href="${contextPath}/app/worker/routeWorkerInfo.action" style="color: #fff;">
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </a>
         </header>
@@ -18,118 +18,53 @@
                     </header>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header" style="font-size: .8rem;">
-                    <i class="fa fa-circle" aria-hidden="true" style="color:blue;"></i>
-                    维修单号：000000
-                </div>
-                <div class="card-content" style="font-size: .8rem;">
-                    <div class="card-content-inner">
-                        本部南区_教学楼_教室_灯
+            <c:forEach items="${lists}" var="list">
+                <div class="card">
+                    <div class="card-header" style="font-size: .8rem;">
+                        <c:if test="${list.listState == 1}">
+                            <i class="fa fa-circle" aria-hidden="true" style="color: green;"></i>
+                        </c:if>
+                        <c:if test="${list.listState == 2}">
+                            <i class="fa fa-circle" aria-hidden="true" style="color: yellow;"></i>
+                        </c:if>
+                        <c:if test="${list.listState == 3}">
+                            <i class="fa fa-circle" aria-hidden="true" style="color: red;"></i>
+                        </c:if>
+                        <c:if test="${list.listState == 4}">
+                            <i class="fa fa-circle" aria-hidden="true" style="color: blue;"></i>
+                        </c:if>
+                        维修单号：${list.listNumber}
+                    </div>
+                    <div class="card-content">
+                        <div class="card-content-inner">
+                                ${list.listBigDescription}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span>${list.liststatetime}</span>
+                        <a href="${contextPath}/app/worker/routeDetails/${list.listNumber}.action">详情>></a>
                     </div>
                 </div>
-                <div class="card-footer">
-                    2017年4月12日&nbsp;14：00
-                    <a href="#" class="link">详情>></a>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" style="font-size: .8rem;">
-                    <i class="fa fa-circle" aria-hidden="true" style="color:red;"></i>
-                    维修单号：000000
-                </div>
-                <div class="card-content">
-                    <div class="card-content-inner">
-                        本部南区_教学楼_教室_灯
-                    </div>
-                </div>
-                <div class="card-footer">
-                    2017年4月12日&nbsp;14：00
-                    <a href="#" class="link">详情>></a>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" style="font-size: .8rem;">
-                    <i class="fa fa-circle" aria-hidden="true" style="color:red;"></i>
-                    维修单号：000000
-                </div>
-                <div class="card-content">
-                    <div class="card-content-inner">
-                        本部南区_教学楼_教室_灯
-                    </div>
-                </div>
-                <div class="card-footer">
-                    2017年4月12日&nbsp;14：00
-                    <a href="#" class="link">详情>></a>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" style="font-size: .8rem;">
-                    <i class="fa fa-circle" aria-hidden="true" style="color:blue;"></i>
-                    维修单号：000000
-                </div>
-                <div class="card-content">
-                    <div class="card-content-inner">
-                        本部南区_教学楼_教室_灯
-                    </div>
-                </div>
-                <div class="card-footer">
-                    2017年4月12日&nbsp;14：00
-                    <a href="#" class="link">详情>></a>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" style="font-size: .8rem;">
-                    <i class="fa fa-circle" aria-hidden="true" style="color:blue;"></i>
-                    维修单号：000000
-                </div>
-                <div class="card-content">
-                    <div class="card-content-inner">
-                        本部南区_教学楼_教室_灯
-                    </div>
-                </div>
-                <div class="card-footer">
-                    2017年4月12日&nbsp;14：00
-                    <a href="#" class="link">详情>></a>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" style="font-size: .8rem;">
-                    <i class="fa fa-circle" aria-hidden="true" style="color:blue;"></i>
-                    维修单号：000000
-                </div>
-                <div class="card-content">
-                    <div class="card-content-inner">
-                        本部南区_教学楼_教室_灯
-                    </div>
-                </div>
-                <div class="card-footer">
-                    2017年4月12日&nbsp;14：00
-                    <a href="#" class="link">详情>></a>
-                </div>
-            </div>
+            </c:forEach>
             <div class="card">
                 <div class="card-footer"></div>
             </div>
         </div>
-
-
-        <nav class="bar bar-tab" style="background: #0E4d94;">
-            <a class="tab-item external active" href="#" style="color: #fff;">
-						    <span class="icon">
-						    	<i class="fa fa-home fa-lg" aria-hidden="true"></i>
-						    </span>
+        <nav class="bar bar-tab" style="background: #0E4d94;opacity: 1;">
+            <a class="tab-item external active" href="${contextPath}/app/worker/routeDoingList.action" style="color: #fff;">
+					    <span class="icon">
+					    	<i class="fa fa-home fa-lg" aria-hidden="true"></i>
+					    </span>
             </a>
-            <a class="tab-item external" href="#" style="color: #fff;">
-						    <span class="icon">
-						    	<i class="fa fa-bell-o" aria-hidden="true"></i>
-						    </span>
-                <span class="badge">2</span>
+            <a class="tab-item external" href="${contextPath}/app/worker/routeWaitingList.action" style="color: #fff;">
+					    <span class="icon">
+					    	<i class="fa fa-bell-o" aria-hidden="true"></i>
+					    </span>
             </a>
-            <a class="tab-item external" href="#" style="color: #fff;">
-						    <span class="icon">
-						    	<i class="fa fa-briefcase" aria-hidden="true"></i>
-						    </span>
+            <a class="tab-item external" href="${contextPath}/app/worker/routeLatestList.action" style="color: #fff;">
+					    <span class="icon">
+					    	<i class="fa fa-briefcase" aria-hidden="true"></i>
+					    </span>
             </a>
         </nav>
     </div>

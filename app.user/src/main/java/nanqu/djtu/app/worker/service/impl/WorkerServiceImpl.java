@@ -62,4 +62,21 @@ public class WorkerServiceImpl implements WorkerServiceI {
 
         return tmp1 && tmp2;
     }
+
+    @Override
+    public WorkerInfo queryWorkerInfo(String userId) {
+        return workerRepository.selectWorkerInfo(userId);
+    }
+
+    @Override
+    public Boolean changePass(WorkerInfo info, WorkerInfo workerInfo) {
+        Boolean change = workerRepository.changePass(info);
+        if (change) {
+            LOG.info("[worker] update password {} success with workerName {}.", workerInfo.getWorkerName(), workerInfo.getWorkerName());
+        } else {
+            LOG.warn("[worker] update password {} failure with workerName {}.", workerInfo.getWorkerName(), workerInfo.getWorkerName());
+        }
+
+        return change;
+    }
 }

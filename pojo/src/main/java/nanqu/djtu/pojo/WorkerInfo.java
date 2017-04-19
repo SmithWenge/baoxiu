@@ -14,7 +14,16 @@ public class WorkerInfo {
     private String typeName;
     private String workerTel;
     private String workerPass;
+    private String newWorkerPass;
     private int listState;
+
+    public String getNewWorkerPass() {
+        return newWorkerPass;
+    }
+
+    public void setNewWorkerPass(String newWorkerPass) {
+        this.newWorkerPass = newWorkerPass;
+    }
 
     public int getListState() {
         return listState;

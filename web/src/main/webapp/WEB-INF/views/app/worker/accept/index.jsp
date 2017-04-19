@@ -12,53 +12,43 @@
                 <div class="card-header">
                     <header class="bar bar-nav" style="background-color: #FFF;">
                         <h3 class="title">
-                            <i class="fa fa-circle" aria-hidden="true" style="color:#CC00FF;"></i>
-                            <b>报修单操作(00000000)</b>
+                            <c:if test="${list.listState == 1}">
+                                <i class="fa fa-circle" aria-hidden="true" style="color: green;"></i>
+                            </c:if>
+                            <c:if test="${list.listState == 2}">
+                                <i class="fa fa-circle" aria-hidden="true" style="color: yellow;"></i>
+                            </c:if>
+                            <c:if test="${list.listState == 3}">
+                                <i class="fa fa-circle" aria-hidden="true" style="color: red;"></i>
+                            </c:if>
+                            <c:if test="${list.listState == 4}">
+                                <i class="fa fa-circle" aria-hidden="true" style="color: blue;"></i>
+                            </c:if>
+                            <b>报修单操作(${list.listNumber})</b>
                         </h3>
                     </header>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-content">
-                        <div class="card-content-inner">
-                            <div class="list-block">
-                                <ul>
-                                    <li>
-                                        <div class="item-content">
-                                            <div class="item-media"><i class="icon icon-form-gender"></i></div>
-                                            <div class="item-inner">
-                                                <div class="item-input">
-                                                    <select>
-                                                        <option>请选择操作</option>
-                                                        <option>已修复</option>
-                                                        <option>经勘查，无故障</option>
-                                                        <option>非本部门维修范围</option>
-                                                        <option>等待缺少的配件</option>
-                                                        <option>其他情况</option>
-                                                        <select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <div class="card-content-inner">
+            <form action="${contextPath}/app/worker/edit.action" method="post">
+                <div class="card">
+                    <div class="card-header">
                         <div class="card-content">
                             <div class="card-content-inner">
                                 <div class="list-block">
                                     <ul>
+                                        <li><input type="hidden" name="listNumber" value="${list.listNumber}"></li>
                                         <li>
                                             <div class="item-content">
-                                                <div class="item-media"><i class="icon icon-form-email"></i>
-                                                </div>
+                                                <div class="item-media"><i class="icon icon-form-gender"></i></div>
                                                 <div class="item-inner">
                                                     <div class="item-input">
-                                                        <input type="text" placeholder="请填写紧要操作（可选）">
+                                                        <select name="listState">
+                                                            <option value="-1">请选择操作</option>
+                                                            <option value="1">已提交</option>
+                                                            <option value="2">已接单</option>
+                                                            <option value="3">已处理</option>
+                                                            <option value="4">已评价</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -68,21 +58,39 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <p class="link"></p>
-                    <div class="row">
-                        <div class="col-30" style="margin-right: .5rem;">
-                            <a href="done.html" class="button button-fill button-success">提交</a>
+                    <div class="card-content">
+                        <div class="card-content-inner">
+                            <div class="card-content">
+                                <div class="card-content-inner">
+                                    <div class="list-block">
+                                        <ul>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-media"><i class="icon icon-form-email"></i>
+                                                    </div>
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <input type="text" name="listDescription" placeholder="请填写紧要操作（可选）">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-30" style="margin-right: .5rem;">
-                            <a href="../index.html" class="button button-fill button-danger">放弃</a>
+                    </div>
+                    <div class="card-footer">
+                        <p class="link"></p>
+                        <div class="row">
+                            <div class="col-30" style="margin-right: .5rem;">
+                                <button type="submit" class="button">提交</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-            </div>
-
+            </form>
             <div class="card">
                 <div class="card-content">
                     <div class="card-content-inner">
@@ -92,35 +100,53 @@
                                     <div class="item-media"><i class="icon icon-f7"></i></div>
                                     <div class="item-inner">
                                         <div class="item-title">校区</div>
-                                        <div class="item-after">南区</div>
-                                    </div>
+                                        <div class="item-after">${list.distinctName}</div>
+                                    </div>`
                                 </li>
                                 <li class="item-content">
                                     <div class="item-media"><i class="icon icon-f7"></i></div>
                                     <div class="item-inner">
                                         <div class="item-title">地点</div>
-                                        <div class="item-after">教学楼</div>
+                                        <div class="item-after">${list.buildingName}</div>
                                     </div>
                                 </li>
                                 <li class="item-content">
                                     <div class="item-media"><i class="icon icon-f7"></i></div>
                                     <div class="item-inner">
                                         <div class="item-title">位置</div>
-                                        <div class="item-after">房间内</div>
+                                        <div class="item-after">${list.roomName}</div>
                                     </div>
                                 </li>
                                 <li class="item-content">
                                     <div class="item-media"><i class="icon icon-f7"></i></div>
                                     <div class="item-inner">
                                         <div class="item-title">设备</div>
-                                        <div class="item-after">灯</div>
+                                        <div class="item-after">${list.equipmentName}</div>
                                     </div>
                                 </li>
                                 <li class="item-content">
                                     <div class="item-media"><i class="icon icon-f7"></i></div>
                                     <div class="item-inner">
                                         <div class="item-title">故障描述</div>
-                                        <div class="item-after">305教室的灯不亮</div>
+                                        <div class="item-after">${list.listBigDescription}</div>
+                                    </div>
+                                </li>
+                                <li class="item-content">
+                                    <div class="item-media"><i class="icon icon-f7"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title">报修单状态</div>
+                                        <c:if test="${list.listState == 1}">
+                                            <div class="item-after">已提交</div>
+                                        </c:if>
+                                        <c:if test="${list.listState == 2}">
+                                            <div class="item-after">已接单</div>
+                                        </c:if>
+                                        <c:if test="${list.listState == 3}">
+                                            <div class="item-after">已处理</div>
+                                        </c:if>
+                                        <c:if test="${list.listState == 4}">
+                                            <div class="item-after">已评价</div>
+                                        </c:if>
                                     </div>
                                 </li>
                             </ul>
@@ -133,27 +159,15 @@
                     <div class="card-content-inner">
                         <div class="list-block" style="font-size: 0.7rem;">
                             <ul>
-                                <li class="item-content">
-                                    <div class="item-media"><i class="icon icon-f7"></i></div>
-                                    <div class="item-inner">
-                                        <div class="item-title">2017/4/13&nbsp;14:00</div>
-                                        <div class="item-after">系统派单（电工一组）</div>
-                                    </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-media"><i class="icon icon-f7"></i></div>
-                                    <div class="item-inner">
-                                        <div class="item-title">2017/4/13&nbsp;14:00</div>
-                                        <div class="item-after">管理员定义流程</div>
-                                    </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-media"><i class="icon icon-f7"></i></div>
-                                    <div class="item-inner">
-                                        <div class="item-title">2017/4/13&nbsp;14:00</div>
-                                        <div class="item-after">用户报修</div>
-                                    </div>
-                                </li>
+                                <c:forEach items="${list.lists}" var="model">
+                                    <li class="item-content">
+                                        <div class="item-media"><i class="icon icon-f7"></i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">${model.liststatetime}</div>
+                                            <div class="item-after">${model.listDescription}</div>
+                                        </div>
+                                    </li>
+                                </c:forEach>
                                 <li class="item-content">
                                     <div class="item-media"><i class="icon icon-f7"></i></div>
                                     <div class="item-inner">
@@ -170,18 +184,17 @@
         <div class="card-footer">
         </div>
         <nav class="bar bar-tab" style="background: #0E4d94;opacity: 1;">
-            <a class="tab-item external active" href="#" style="color: #fff;">
+            <a class="tab-item external active" href="${contextPath}/app/worker/routeDoingList.action" style="color: #fff;">
 					    <span class="icon">
 					    	<i class="fa fa-home fa-lg" aria-hidden="true"></i>
 					    </span>
             </a>
-            <a class="tab-item external" href="#" style="color: #fff;">
+            <a class="tab-item external" href="${contextPath}/app/worker/routeWaitingList.action" style="color: #fff;">
 					    <span class="icon">
 					    	<i class="fa fa-bell-o" aria-hidden="true"></i>
 					    </span>
-                <span class="badge">2</span>
             </a>
-            <a class="tab-item external" href="#" style="color: #fff;">
+            <a class="tab-item external" href="${contextPath}/app/worker/routeLatestList.action" style="color: #fff;">
 					    <span class="icon">
 					    	<i class="fa fa-briefcase" aria-hidden="true"></i>
 					    </span>

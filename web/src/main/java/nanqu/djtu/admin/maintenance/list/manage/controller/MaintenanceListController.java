@@ -204,9 +204,5 @@ public class MaintenanceListController {
 
             return "redirect:/admin/maintenance/list/manage/index.action";
         }
-
     }
-
-
-
 }

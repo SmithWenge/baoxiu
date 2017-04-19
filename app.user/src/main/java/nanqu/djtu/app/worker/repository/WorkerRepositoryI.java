@@ -71,4 +71,18 @@ public interface WorkerRepositoryI {
      * @return
      */
     Boolean update(String time, MaintenanceList list);
+
+    /**
+     * 查询工人信息
+     * @param userId
+     * @return
+     */
+    WorkerInfo selectWorkerInfo(String userId);
+
+    /**
+     * 修改密码
+     * @param info
+     * @return
+     */
+    Boolean changePass(WorkerInfo info);
 }

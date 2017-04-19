@@ -36,7 +36,7 @@
                                                         <option>非本部门维修范围</option>
                                                         <option>等待缺少的配件</option>
                                                         <option>其他情况</option>
-                                                        <select>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>

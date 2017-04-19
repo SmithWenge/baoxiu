@@ -288,7 +288,7 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
 
     @Override
     public Boolean insertState(String time, MaintenanceList list) {
-        String sql = "INSERT INTO baoxiu_liststatetime (liststatetimeid, listNumber, listState, liststatetime,listDescription) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO baoxiu_liststatetime (liststatetimeid, listNumber, listState, liststatetime, listDescription) VALUES (?, ?, ?, ?, ?)";
         Object[] args = {
                 PrimaryKeyUtil.uuidPrimaryKey(),
                 list.getListNumber(),
@@ -308,11 +308,10 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
 
     @Override
     public Boolean update(String time, MaintenanceList list) {
-        String sql = "UPDATE baoxiu_maintenancelist SET listState = ?, liststatetime = ?, listDescription = ? WHERE listNumber = ? AND deleteFlag = 0";
+        String sql = "UPDATE baoxiu_maintenancelist SET listState = ?, liststatetime = ? WHERE listNumber = ? AND deleteFlag = 0";
         Object[] args = {
                 list.getListState(),
                 time,
-                list.getListBigDescription(),
                 list.getListNumber()
         };
 
@@ -320,6 +319,59 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
             return jdbcTemplate.update(sql, args) == 1;
         } catch (Exception e) {
             LOG.error("[PlaceDistinct] delete place distinct error with info {}.", e.getMessage());
+
+            return false;
+        }
+    }
+
+    @Override
+    public WorkerInfo selectWorkerInfo(String userId) {
+        String sql = "SELECT workerName,workerUnit,workerDepartment,workerJob,workerState,groupName,typeName,workerTel FROM baoxiu_workerinfo AS I LEFT JOIN baoxiu_workertype AS T ON I.typeId = T.typeId LEFT JOIN baoxiu_repairgroup AS R ON I.repairGroupId = R.repairGroupId WHERE I.userId = ? AND I.deleteFlag = 0";
+        Object[] args = {
+                userId
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, new SelectWorkerInfoRowMapper());
+        } catch (Exception e) {
+            LOG.error("[WorkerInfo] select error with info {}.", e.getMessage());
+
+            return null;
+        }
+    }
+
+    class SelectWorkerInfoRowMapper implements RowMapper<WorkerInfo> {
+
+        @Override
+        public WorkerInfo mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+            WorkerInfo info = new WorkerInfo();
+            IDictionaryManager dictionary = DefaultDictionaryManager.getInstance();
+
+            info.setWorkerDepartment(dictionary.dictionary(resultSet.getInt("workerDepartment"), "workerDepartment").getItemValue());
+            info.setWorkerState(dictionary.dictionary(resultSet.getInt("workerState"), "workerState").getItemValue());
+            info.setWorkerName(resultSet.getString("workerName"));
+            info.setWorkerUnite(resultSet.getString("workerUnit"));
+            info.setWorkerJob(resultSet.getString("workerJob"));
+            info.setGroupName(resultSet.getString("groupName"));
+            info.setTypeName(resultSet.getString("typeName"));
+            info.setWorkerTel(resultSet.getString("workerTel"));
+
+            return info;
+        }
+    }
+
+    @Override
+    public Boolean changePass(WorkerInfo info) {
+        String sql = "UPDATE baoxiu_workerinfo SET workerPass = ? WHERE userId = ? AND deleteFlag = 0";
+        Object[] args = {
+            info.getNewWorkerPass(),
+            info.getUserId()
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[worker] change password  error", e.getMessage());
 
             return false;
         }
