@@ -414,7 +414,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
                 maintenanceList.setBuildingName(rs.getString("buildingName"));
             }
             if(rs.getString("equipmentName")==null){
-                maintenanceList.setDistinctName(ConstantFields.QI_TA);
+                maintenanceList.setEquipmentName(ConstantFields.QI_TA);
             }else{
                 maintenanceList.setEquipmentName(rs.getString("equipmentName"));
             }
