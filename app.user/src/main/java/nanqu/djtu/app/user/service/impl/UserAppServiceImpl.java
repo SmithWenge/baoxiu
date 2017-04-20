@@ -1,6 +1,5 @@
 package nanqu.djtu.app.user.service.impl;
 
-import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import nanqu.djtu.app.user.repository.UserAppRepositoryI;
 import nanqu.djtu.app.user.service.UserAppServiceI;
@@ -13,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.List;
 
 @Service

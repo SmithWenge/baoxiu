@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -35,13 +36,18 @@ public class WorkerController {
         return "app/worker/index";
     }
 
+    /**
+     * 路由到在办工作页面
+     * @param session
+     * @return 在办工作页面
+     */
     @RequestMapping("/routeDoingList")
     public ModelAndView routeDoingList( HttpSession session) {
         WorkerInfo sessionInfo = (WorkerInfo)session.getAttribute(ConstantFields.SESSION_WORKER_LOGIN_KEY);
         Optional<WorkerInfo> optional = Optional.fromNullable(sessionInfo);
 
         if (optional.isPresent()) {
-            ModelAndView mav = new ModelAndView("app/worker/doingList");
+            ModelAndView mav = new ModelAndView("app/worker/home/index");
             List<MaintenanceList> lists = workerService.queryMaintenanceListByState(2, sessionInfo);
             mav.addObject("lists", lists);
 
@@ -51,13 +57,18 @@ public class WorkerController {
         }
     }
 
+    /**
+     * 路由到待办工作页面
+     * @param session
+     * @return 待办工作页面
+     */
     @RequestMapping("/routeWaitingList")
     public ModelAndView routeWaitingList( HttpSession session) {
         WorkerInfo sessionInfo = (WorkerInfo) session.getAttribute(ConstantFields.SESSION_WORKER_LOGIN_KEY);
         Optional<WorkerInfo> optional = Optional.fromNullable(sessionInfo);
 
         if (optional.isPresent()) {
-            ModelAndView mav = new ModelAndView("app/worker/waitingList");
+            ModelAndView mav = new ModelAndView("app/worker/accept/todo");
             List<MaintenanceList> lists = workerService.queryMaintenanceListByState(1, sessionInfo);
             mav.addObject("lists", lists);
 
@@ -67,13 +78,18 @@ public class WorkerController {
         }
     }
 
+    /**
+     * 路由到最近操作页面
+     * @param session
+     * @return 最近操作页面
+     */
     @RequestMapping("/routeLatestList")
     public ModelAndView routeLatestList( HttpSession session) {
         WorkerInfo sessionInfo = (WorkerInfo) session.getAttribute(ConstantFields.SESSION_WORKER_LOGIN_KEY);
         Optional<WorkerInfo> optional = Optional.fromNullable(sessionInfo);
 
         if (optional.isPresent()) {
-            ModelAndView mav = new ModelAndView("app/worker/latestList");
+            ModelAndView mav = new ModelAndView("app/worker/all/index");
             List<MaintenanceList> lists = workerService.queryLatest35MaintenanceList(sessionInfo);
             mav.addObject("lists", lists);
 
@@ -124,9 +140,13 @@ public class WorkerController {
 
         if (optional.isPresent()) {
             MaintenanceList list = workerService.query4details(listNumber);
-
             if (Optional.fromNullable(list).isPresent()) {
-                ModelAndView mav = new ModelAndView("app/worker/details");
+                ModelAndView mav = new ModelAndView();
+                if (list.getListState() != 4) {
+                    mav.setViewName("app/worker/accept/index");
+                } else {
+                    mav.setViewName("app/worker/all/details");
+                }
                 mav.addObject("list", list);
 
                 return mav;
@@ -139,6 +159,12 @@ public class WorkerController {
         }
     }
 
+    /**
+     *  编辑状态
+     * @param list
+     * @param session
+     * @return 在办工作页面
+     */
     @RequestMapping("/edit")
     public String edit(MaintenanceList list, HttpSession session) {
         WorkerInfo workerInfo = (WorkerInfo) session.getAttribute(ConstantFields.SESSION_WORKER_LOGIN_KEY);
@@ -154,5 +180,72 @@ public class WorkerController {
         } else {
             return "redirect:/app/worker/index.action";
         }
+    }
+
+    /**
+     * 路由到查看工人信息页面
+     *
+     * @param
+     * @return 工人信息页面
+     */
+    @RequestMapping("/routeWorkerInfo")
+    public ModelAndView routeDetail(HttpSession session) {
+        WorkerInfo workerInfo = (WorkerInfo) session.getAttribute(ConstantFields.SESSION_WORKER_LOGIN_KEY);
+        Optional<WorkerInfo> optional = Optional.fromNullable(workerInfo);
+
+        if (optional.isPresent()) {
+            ModelAndView mav = new ModelAndView("app/worker/userInfo");
+            WorkerInfo info = workerService.queryWorkerInfo(workerInfo.getUserId());
+            mav.addObject("info", info);
+
+            return mav;
+        } else {
+            return  new ModelAndView("redirect:/app/worker/index.action");
+        }
+    }
+
+    /**
+     * 更改工人密码
+     *
+     * @param session
+     * @return 工人信息页面
+     */
+    @RequestMapping("/changePass")
+    public String changePass(WorkerInfo info , HttpSession session,  RedirectAttributes redirectAttributes) {
+        WorkerInfo workerInfo = (WorkerInfo) session.getAttribute(ConstantFields.SESSION_WORKER_LOGIN_KEY);
+        Optional<WorkerInfo> optional = Optional.fromNullable(workerInfo);
+
+        if (optional.isPresent()) {
+            WorkerInfo loginInfo = workerService.workerLogin(info.getWorkerTel(), info.getWorkerPass());
+            Optional<WorkerInfo> optional2 = Optional.fromNullable(loginInfo);
+            if (optional2.isPresent()) {
+                info.setUserId(loginInfo.getUserId());
+                Boolean change = workerService.changePass(info,workerInfo);
+                if (change) {
+                    return "redirect:/app/worker/index.action";
+                } else {
+                    return "redirect:/app/worker/routeWorkerInfo.action";
+                }
+            } else {
+                redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE, "密码不正确，请重新输入");
+
+                return "redirect:/app/worker/routeWorkerInfo.action";
+            }
+        } else {
+
+            return  "redirect:/app/worker/index.action";
+        }
+    }
+
+    /**
+     * 退出登录页面
+     * @param session
+     * @return 登录页面
+     */
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("ConstantFields.SESSION_WORKER_LOGIN_KEY");
+
+        return "app/worker/index";
     }
 }

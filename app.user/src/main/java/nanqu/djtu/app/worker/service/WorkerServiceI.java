@@ -11,4 +11,6 @@ public interface WorkerServiceI {
     List<MaintenanceList> queryLatest35MaintenanceList(WorkerInfo info);
     MaintenanceList query4details(String listNumber);
     Boolean edit(MaintenanceList list,WorkerInfo info);
+    WorkerInfo queryWorkerInfo(String userId);
+    Boolean changePass(WorkerInfo info,WorkerInfo workerInfo);
 }

@@ -29,36 +29,12 @@ public class WorkerServiceImpl implements WorkerServiceI {
 
     @Override
     public List<MaintenanceList> queryMaintenanceListByState(int listState, WorkerInfo info) {
-        List<MaintenanceList> lists1 = workerRepository.selectMaintenanceListByState(listState, info.getUserId());
-        List<MaintenanceList> lists2 = workerRepository.selectListStateTimesByState(listState, info.getUserId());
-
-        for (MaintenanceList list1 : lists1) {
-            for (MaintenanceList list2 : lists2) {
-                if (list1.getListNumber().equals(list2.getListNumber())) {
-                    list1.setListstatetime(list2.getListstatetime());
-                    list1.setListDescription(list2.getListDescription());
-                }
-            }
-        }
-
-        return lists1;
+        return workerRepository.selectMaintenanceListByState(listState, info.getUserId());
     }
 
     @Override
     public List<MaintenanceList> queryLatest35MaintenanceList(WorkerInfo info) {
-        List<MaintenanceList> lists1 = workerRepository.selectMaintenanceLists(info.getUserId());
-        List<MaintenanceList> lists2 = workerRepository.selectListStateTimes(info.getUserId());
-
-        for (MaintenanceList list1 : lists1) {
-            for (MaintenanceList list2 : lists2) {
-                if (list1.getListNumber().equals(list2.getListNumber())) {
-                    list1.setListstatetime(list2.getListstatetime());
-                    list1.setListDescription(list2.getListDescription());
-                }
-            }
-        }
-
-        return lists1;
+        return workerRepository.selectMaintenanceLists(info.getUserId());
     }
 
     @Override
@@ -85,5 +61,22 @@ public class WorkerServiceImpl implements WorkerServiceI {
         }
 
         return tmp1 && tmp2;
+    }
+
+    @Override
+    public WorkerInfo queryWorkerInfo(String userId) {
+        return workerRepository.selectWorkerInfo(userId);
+    }
+
+    @Override
+    public Boolean changePass(WorkerInfo info, WorkerInfo workerInfo) {
+        Boolean change = workerRepository.changePass(info);
+        if (change) {
+            LOG.info("[worker] update password {} success with workerName {}.", workerInfo.getWorkerName(), workerInfo.getWorkerName());
+        } else {
+            LOG.warn("[worker] update password {} failure with workerName {}.", workerInfo.getWorkerName(), workerInfo.getWorkerName());
+        }
+
+        return change;
     }
 }

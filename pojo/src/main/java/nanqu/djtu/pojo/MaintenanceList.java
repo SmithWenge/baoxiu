@@ -13,6 +13,7 @@ public class MaintenanceList {
     private String equipmentId;
     private int listState;
     private String listDescription;
+    private String listBigDescription;
     private String listTime;
     private String startListTime;
     private String stopListTime;
@@ -38,6 +39,14 @@ public class MaintenanceList {
     }
     public int getEachDistinctMaintenanceListNumber() {
         return eachDistinctMaintenanceListNumber;
+    }
+
+    public String getListBigDescription() {
+        return listBigDescription;
+    }
+
+    public void setListBigDescription(String listBigDescription) {
+        this.listBigDescription = listBigDescription;
     }
 
     public void setEachDistinctMaintenanceListNumber(int eachDistinctMaintenanceListNumber) {

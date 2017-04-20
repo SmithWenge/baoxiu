@@ -5,6 +5,8 @@ public class ConstantFields {
     public static final int DEFAULT_PAGE_SIZE = 10;
     /* ajax分页中数据的KEY */
     public static final String PAGE_KEY = "page";
+    /* 消息操作key*/
+    public static final String OPERATION_MESSAGE = "message";
 
     public static final String SESSION_ROOM_SEARCH_KEY = "placeRoomSearchKey";
 

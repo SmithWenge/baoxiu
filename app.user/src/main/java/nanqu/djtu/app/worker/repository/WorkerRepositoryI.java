@@ -21,12 +21,12 @@ public interface WorkerRepositoryI {
      */
     List<MaintenanceList> selectMaintenanceListByState(int listState,String userId);
 
-    /**
-     * 根据状态查询维修单列表listStateTime
-     * @param listState,userId
-     * @return
-     */
-    List<MaintenanceList> selectListStateTimesByState(int listState,String userId);
+//    /**
+//     * 根据状态查询维修单列表listStateTime
+//     * @param listState,userId
+//     * @return
+//     */
+//    List<MaintenanceList> selectListStateTimesByState(int listState,String userId);
 
     /**
      * 查询维修单列表listNumber,listDescription
@@ -35,12 +35,12 @@ public interface WorkerRepositoryI {
      */
     List<MaintenanceList> selectMaintenanceLists(String userId);
 
-    /**
-     * 根据状态查询维修单列表listStateTime
-     * @param ,userId
-     * @return
-     */
-    List<MaintenanceList> selectListStateTimes(String userId);
+//    /**
+//     * 根据状态查询维修单列表listStateTime
+//     * @param ,userId
+//     * @return
+//     */
+//    List<MaintenanceList> selectListStateTimes(String userId);
 
     /**
      * 查看详情
@@ -71,4 +71,18 @@ public interface WorkerRepositoryI {
      * @return
      */
     Boolean update(String time, MaintenanceList list);
+
+    /**
+     * 查询工人信息
+     * @param userId
+     * @return
+     */
+    WorkerInfo selectWorkerInfo(String userId);
+
+    /**
+     * 修改密码
+     * @param info
+     * @return
+     */
+    Boolean changePass(WorkerInfo info);
 }
