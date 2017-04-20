@@ -140,4 +140,39 @@ public interface UserAppRepositoryI {
      * @return
      */
     List<MaintenanceList> selectAllState(String listNumber);
+
+    /**
+     * 查询校区
+     * @return校区集合
+     */
+    List<PlaceDistinct> queryDistincts();
+
+    /**
+     * 查询每个校区下有多少个保修单
+     * @param distinctId
+     * @return 保修单数
+     */
+    int queryEachDistinctMaintenanceNumber(String distinctId);
+
+    /**
+     * 根据Id查校区名
+     * @param maintenanceList
+     * @return 报修单对象
+     */
+    MaintenanceList selectDistinctName(MaintenanceList maintenanceList);
+
+    /**
+     * 根据Id查校区名和地点名
+     * @param maintenanceList
+     * @return 报修单对象
+     */
+    MaintenanceList selectDistinctNameAndBuildingName(MaintenanceList maintenanceList);
+
+    /**
+     * 根据Id查校区，地点，位置名
+     * @param maintenanceList
+     * @return
+     */
+    MaintenanceList  selectDistinctNameAndBuildingNameAndRoomName(MaintenanceList maintenanceList);
+
 }

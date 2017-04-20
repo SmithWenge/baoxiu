@@ -41,4 +41,10 @@ public class ConstantFields {
 
     /* 定义各个编号的前面补充 */
     public static final char PAD_NUMBER_CHAR = '0';
+
+    /* 定义保修单其他选项的默认值*/
+    public static final String OTHER_SELECT = "0";
+
+    /*定义其他选项的中文名*/
+    public static final String QI_TA ="其他";
 }

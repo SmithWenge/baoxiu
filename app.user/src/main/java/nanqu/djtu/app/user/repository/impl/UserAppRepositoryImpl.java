@@ -3,7 +3,9 @@ package nanqu.djtu.app.user.repository.impl;
 import com.google.common.base.Strings;
 import nanqu.djtu.app.user.repository.UserAppRepositoryI;
 import nanqu.djtu.pojo.*;
+import nanqu.djtu.utils.ConstantFields;
 import nanqu.djtu.utils.PrimaryKeyUtil;
+import org.omg.CORBA.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.lang.Object;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -360,6 +363,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
         public MaintenanceList mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             MaintenanceList maintenanceList = new MaintenanceList();
+
             maintenanceList.setDistinctName(rs.getString("distinctName"));
             maintenanceList.setBuildingName(rs.getString("buildingName"));
             maintenanceList.setRoomName(rs.getString("roomName"));
@@ -376,7 +380,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public List<MaintenanceList> selectMaintenanceListByTel(String userTel) {
-        String sql = "SELECT listNumber, repairGroupId, roomId, buildingId, userTel, listState, distinctId, equipmentId, liststatetime, listDescription FROM baoxiu_maintenancelist WHERE userTel = ? AND deleteFlag = 0";
+        String sql = "SELECT listNumber, liststatetime, listState, listDescription, DI.distinctName, BU.buildingName, RO.roomName,EQ.equipmentName  FROM baoxiu.baoxiu_maintenancelist AS MA LEFT JOIN baoxiu.baoxiu_placedistinct AS DI  ON(MA.distinctId = DI.distinctId) LEFT JOIN baoxiu.baoxiu_placebuilding AS BU ON(MA.buildingId = BU.buildingId) LEFT JOIN baoxiu.baoxiu_placeroom AS RO ON(MA.roomId = RO.roomId) LEFT JOIN baoxiu.baoxiu_equipment AS EQ ON(MA.equipmentId = EQ.equipmentId) WHERE MA.userTel= ? AND MA.deleteFlag = 0;";
         Object[] args = {
                 userTel
         };
@@ -389,8 +393,6 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
             return new ArrayList<>();
         }
     }
-
-
     private class SelectMaintenanceListByTelRowMapper implements RowMapper<MaintenanceList> {
 
         @Override
@@ -398,16 +400,25 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
 
             MaintenanceList maintenanceList = new MaintenanceList();
             maintenanceList.setListNumber(rs.getString("listNumber"));
-            maintenanceList.setUserTel(rs.getString("userTel"));
             maintenanceList.setListState(rs.getString("listState"));
             maintenanceList.setListstatetime(rs.getString("liststatetime"));
             maintenanceList.setListDescription(rs.getString("listDescription"));
-            maintenanceList.setRepairGroupId(rs.getString("repairGroupId"));
-            maintenanceList.setRoomId(rs.getString("roomId"));
-            maintenanceList.setBuildingId(rs.getString("buildingId"));
-            maintenanceList.setDistinctId(rs.getString("distinctId"));
-            maintenanceList.setEquipmentId(rs.getString("equipmentId"));
-
+            if(rs.getString("roomName")==null){
+                maintenanceList.setRoomName(ConstantFields.QI_TA);
+            }else {
+                maintenanceList.setRoomName(rs.getString("roomName"));
+            }
+            if(rs.getString("buildingName")==null){
+                maintenanceList.setBuildingName(ConstantFields.QI_TA);
+            }else {
+                maintenanceList.setBuildingName(rs.getString("buildingName"));
+            }
+            if(rs.getString("equipmentName")==null){
+                maintenanceList.setDistinctName(ConstantFields.QI_TA);
+            }else{
+                maintenanceList.setEquipmentName(rs.getString("equipmentName"));
+            }
+            maintenanceList.setDistinctName(rs.getString("distinctName"));
 
             return maintenanceList;
         }
@@ -426,12 +437,34 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
         };
 
         try {
-                return jdbcTemplate.queryForObject(sql, args, new SelectMaintenanceListByTelRowMapper());
+                return jdbcTemplate.queryForObject(sql, args, new SelectOneMaintenanceRowMapper());
         }catch (Exception e){
             LOG.error("[API] select oneMaintenances error with info {}.", e.getMessage());
             return null;
         }
     }
+    private class SelectOneMaintenanceRowMapper implements RowMapper<MaintenanceList> {
+
+        @Override
+        public MaintenanceList mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            MaintenanceList maintenanceList = new MaintenanceList();
+            maintenanceList.setListNumber(rs.getString("listNumber"));
+            maintenanceList.setListState(rs.getString("listState"));
+            maintenanceList.setListstatetime(rs.getString("liststatetime"));
+            maintenanceList.setListDescription(rs.getString("listDescription"));
+            maintenanceList.setUserTel(rs.getString("userTel"));
+            maintenanceList.setRepairGroupId(rs.getString("repairGroupId"));
+            maintenanceList.setRoomId(rs.getString("roomId"));
+            maintenanceList.setBuildingId(rs.getString("buildingId"));
+            maintenanceList.setDistinctId(rs.getString("distinctId"));
+            maintenanceList.setEquipmentId(rs.getString("equipmentId"));
+
+
+            return maintenanceList;
+        }
+    }
+
 
     @Override
     public int sumOfMaintenance() {
@@ -456,7 +489,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
         String sql = "SELECT liststatetime FROM baoxiu.baoxiu_maintenancelist WHERE listNumber = ?";
         Object[] args = {listNumber};
         try {
-            return jdbcTemplate.queryForObject(sql, args, String.class );
+            return jdbcTemplate.queryForObject(sql, args, String.class);
         }catch (Exception e){
             LOG.error("[API] select selectListStateTime error with info {}.", e.getMessage());
             return null;
@@ -475,7 +508,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
         Object[] args = {listNumber};
 
         try {
-            return  jdbcTemplate.query(sql,args, new SelectAllStateRowMapper());
+            return  jdbcTemplate.query(sql, args, new SelectAllStateRowMapper());
         }catch (Exception e){
             LOG.error("[API] select selectAllState error with info {}.", e.getMessage());
             return null;
@@ -493,6 +526,144 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
             maintenanceList.setListstatetime(rs.getString("liststatetime"));
             maintenanceList.setListDescription(rs.getString("listDescription"));
 
+            return maintenanceList;
+        }
+    }
+    /**
+     * 查询校区
+     * @return校区集合
+     */
+    @Override
+    public List<PlaceDistinct> queryDistincts() {
+       String sql = "SELECT distinctId, distinctName, distinctNumber FROM baoxiu_placedistinct WHERE deleteFlag = 0" ;
+        Object[] args = {};
+
+        try {
+            return jdbcTemplate.query(sql, args, new QueryDistinctsRowMapper());
+        }catch (Exception e){
+            LOG.error("[API] query PlaceDistinct error with info {}.", e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    private class QueryDistinctsRowMapper implements RowMapper<PlaceDistinct> {
+
+        @Override
+        public PlaceDistinct mapRow(ResultSet rs, int rowNum) throws SQLException {
+            PlaceDistinct distinct = new PlaceDistinct();
+
+            distinct.setDistinctId(rs.getString("distinctId"));
+            distinct.setDistinctName(rs.getString("distinctName"));
+            distinct.setDistinctNumber(rs.getString("distinctNumber"));
+
+            return distinct;
+        }
+    }
+    /**
+     * 查询每个校区下有多少个保修单
+     * @param distinctId
+     * @return 保修单数
+     */
+    @Override
+    public int queryEachDistinctMaintenanceNumber(String distinctId) {
+        String sql = "SELECT COUNT(listNumber) FROM baoxiu_maintenancelist WHERE distinctId = ?";
+        Object[] args = {distinctId};
+
+        try {
+            return jdbcTemplate.queryForInt(sql, args);
+        }catch (Exception e){
+            LOG.error("[API] query eachDistinctMaintenanceNumber error with info {}.", e.getMessage());
+            return 0;
+        }
+    }
+    /**
+     * 根据Id查校区名
+     * @param maintenanceList
+     * @return 报修单对象
+     */
+    @Override
+    public MaintenanceList selectDistinctName(MaintenanceList maintenanceList) {
+        String sql = "SELECT distinctName FROM baoxiu_placedistinct  WHERE  distinctId = ? ";
+        Object[] args = {
+                maintenanceList.getDistinctId()
+        };
+
+        try {
+                return jdbcTemplate.queryForObject(sql, args, new SelectDistinctNameRowMapper());
+        }catch (Exception e){
+            LOG.error("[API] select buildingName error with info {}.", e.getMessage());
+            return null;
+        }
+    }
+    private class SelectDistinctNameRowMapper implements RowMapper<MaintenanceList> {
+
+        @Override
+        public MaintenanceList mapRow(ResultSet rs, int rowNum) throws SQLException {
+           MaintenanceList maintenanceList= new MaintenanceList();
+
+            maintenanceList.setDistinctName(rs.getString("distinctName"));
+
+            return maintenanceList;
+        }
+    }
+    /**
+     * 根据Id查校区名和地点名
+     * @param maintenanceList
+     * @return 报修单对象
+     */
+    @Override
+    public MaintenanceList selectDistinctNameAndBuildingName(MaintenanceList maintenanceList) {
+       String sql = "SELECT buildingName,distinctName FROM baoxiu_placedistinct AS DI LEFT JOIN baoxiu_placebuilding AS BU ON DI.distinctId = BU.distinctId  WHERE DI.distinctId = ?  AND BU.buildingId =? ";
+        Object[] args = {
+                maintenanceList.getDistinctId(),
+                maintenanceList.getBuildingId()
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, new SelectDistinctNameAndBuildingNameRowMapper());
+        }catch (Exception e){
+            LOG.error("[API]  selectBuildingNameAndRoomName error with info {}.", e.getMessage());
+            return null;
+        }
+    }
+    private class SelectDistinctNameAndBuildingNameRowMapper implements RowMapper<MaintenanceList> {
+
+        @Override
+        public MaintenanceList mapRow(ResultSet rs, int rowNum) throws SQLException {
+            MaintenanceList maintenanceList= new MaintenanceList();
+            maintenanceList.setBuildingName(rs.getString("buildingName"));
+            maintenanceList.setDistinctName(rs.getString("distinctName"));
+            return maintenanceList;
+        }
+    }
+    /**
+     * 根据Id查校区，地点，位置名
+     * @param maintenanceList
+     * @return
+     */
+    @Override
+    public MaintenanceList selectDistinctNameAndBuildingNameAndRoomName(MaintenanceList maintenanceList) {
+       String sql = "SELECT buildingName,distinctName,roomName FROM baoxiu_placedistinct AS DI LEFT JOIN baoxiu_placebuilding AS BU ON DI.distinctId = BU.distinctId LEFT JOIN baoxiu_placeroom AS RO ON BU.buildingId = RO.buildingId  WHERE DI.deleteFlag = 0 AND DI.distinctId = ? AND BU.deleteFlag = 0 AND BU.buildingId =? AND RO.deleteFlag = 0 AND RO.roomId = ? ";
+        Object[] args = {
+                maintenanceList.getDistinctId(),
+                maintenanceList.getBuildingId(),
+                maintenanceList.getRoomId()
+        };
+        try {
+            return jdbcTemplate.queryForObject(sql,args, new SelectDistinctNameAndBuildingNameAndRoomNameRowMapper());
+        }catch (Exception e){
+            LOG.error("[API]  selectDistinctNameAndBuildingNameAndRoomName error with info {}.", e.getMessage());
+            return null;
+        }
+}
+    private class SelectDistinctNameAndBuildingNameAndRoomNameRowMapper implements RowMapper<MaintenanceList> {
+
+        @Override
+        public MaintenanceList mapRow(ResultSet rs, int rowNum) throws SQLException {
+            MaintenanceList maintenanceList= new MaintenanceList();
+            maintenanceList.setRoomName(rs.getString("roomName"));
+            maintenanceList.setBuildingName(rs.getString("buildingName"));
+            maintenanceList.setDistinctName(rs.getString("distinctName"));
             return maintenanceList;
         }
     }

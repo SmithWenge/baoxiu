@@ -18,15 +18,19 @@ public interface UserAppServiceI {
 
     List<Equipment> queryPlaceRoomByRoomId(String roomId);
 
-    MaintenanceList selectAllName(MaintenanceList maintenanceList);
+    MaintenanceList queryAllName(MaintenanceList maintenanceList);
 
-    List<MaintenanceList> selectMaintenanceListByTel(String userTel);
+    List<MaintenanceList> queryMaintenanceListByTel(String userTel);
 
-    MaintenanceList selectOneMaintenance(String listNumber);
+    MaintenanceList queryOneMaintenance(String listNumber);
 
     int sumOfMaintenance();
 
-    String selectListStateTime(String listNumber);
+    String queryListStateTime(String listNumber);
 
-    List<MaintenanceList> selectAllState(String listNumber);
+    List<MaintenanceList> queryAllState(String listNumber);
+
+    List<PlaceDistinct> queryDistincts();
+
+    int queryEachDistinctMaintenanceNumber(String distinctId);
 }

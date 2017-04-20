@@ -13,7 +13,7 @@
                     <header class="bar bar-nav" style="background-color: #FFF;">
                         <h3 class="title">
                             <i class="fa fa-circle" aria-hidden="true" style="color:#33CC00;"></i>
-                            <b>报修单详情（000000）</b>
+                            <b>报修单详情（${maintenanceList.listNumber}）</b>
                         </h3>
                     </header>
                 </div>
@@ -27,35 +27,35 @@
                                     <div class="item-media"><i class="icon icon-f7"></i></div>
                                     <div class="item-inner">
                                         <div class="item-title">校区</div>
-                                        <div class="item-after">南区</div>
+                                        <div class="item-after">${maintenanceList.distinctName}</div>
                                     </div>
                                 </li>
                                 <li class="item-content">
                                     <div class="item-media"><i class="icon icon-f7"></i></div>
                                     <div class="item-inner">
                                         <div class="item-title">地点</div>
-                                        <div class="item-after">教学楼</div>
+                                        <div class="item-after">${maintenanceList.buildingName}</div>
                                     </div>
                                 </li>
                                 <li class="item-content">
                                     <div class="item-media"><i class="icon icon-f7"></i></div>
                                     <div class="item-inner">
                                         <div class="item-title">位置</div>
-                                        <div class="item-after">房间内</div>
+                                        <div class="item-after">${maintenanceList.roomName}</div>
                                     </div>
                                 </li>
                                 <li class="item-content">
                                     <div class="item-media"><i class="icon icon-f7"></i></div>
                                     <div class="item-inner">
                                         <div class="item-title">设备</div>
-                                        <div class="item-after">灯</div>
+                                        <div class="item-after">${maintenanceList.equipmentName}</div>
                                     </div>
                                 </li>
                                 <li class="item-content">
                                     <div class="item-media"><i class="icon icon-f7"></i></div>
                                     <div class="item-inner">
                                         <div class="item-title">故障描述</div>
-                                        <div class="item-after">305教室的灯不亮</div>
+                                        <div class="item-after">${maintenanceList.listDescription}</div>
                                     </div>
                                 </li>
                             </ul>
@@ -68,49 +68,30 @@
                     <div class="card-content-inner">
                         <div class="list-block" style="font-size: 0.7rem;">
                             <ul>
-                                <li class="item-content">
-                                    <div class="item-media"><i class="icon icon-f7"></i>
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title">2017/4/13&nbsp;14:00</div>
-                                        <div class="item-after">维修完成</div>
-                                    </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-media"><i class="icon icon-f7"></i></div>
-                                    <div class="item-inner">
-                                        <div class="item-title">2017/4/13&nbsp;14:00</div>
-                                        <div class="item-after">备件延期</div>
-                                    </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-media"><i class="icon icon-f7"></i></div>
-                                    <div class="item-inner">
-                                        <div class="item-title">2017/4/13&nbsp;14:00</div>
-                                        <div class="item-after">张鹏接单</div>
-                                    </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-media"><i class="icon icon-f7"></i></div>
-                                    <div class="item-inner">
-                                        <div class="item-title">2017/4/13&nbsp;14:00</div>
-                                        <div class="item-after">系统派单（电工一组）</div>
-                                    </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-media"><i class="icon icon-f7"></i></div>
-                                    <div class="item-inner">
-                                        <div class="item-title">2017/4/13&nbsp;14:00</div>
-                                        <div class="item-after">管理员定义流程</div>
-                                    </div>
-                                </li>
+                                <c:forEach items="${allStates}" var="state">
+                                    <li class="item-content">
+                                        <div class="item-media"><i class="icon icon-f7"></i>
+                                        </div>
+                                        <div class="item-inner">
+                                            <div class="item-title">${state.liststatetime}</div>
+                                            <div class="item-after">
+                                                <c:if test="${state.listState == 1}">已提交</c:if>
+                                                <c:if test="${state.listState == 2}">已派单</c:if>
+                                                <c:if test="${state.listState == 3}">以处理</c:if>
+                                                <c:if test="${state.listState == 4}">已评价</c:if>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </c:forEach>
                             </ul>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="card-footer">
+                <div class="card-footer">
+                    <a href="${contextPath}/app/user/turn/repairList/router/${maintenanceList.userTel}.action" class="button button-fill button-success" >返回</a>
+                    <a href="${contextPath}/app/user/redirect/index.action" class="button button-fill button-primary">首页</a>
+                </div>
+         </div>
         </div>
         <nav class="bar bar-tab" style="background-color: #0E4d94;">
             <h3 class="title title-2" style=" color: #FFF; font-weight: bold;">程序设计：大连交通大学56工作室</h3>

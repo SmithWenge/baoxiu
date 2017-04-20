@@ -39,68 +39,84 @@ public class UserAppServiceImpl implements UserAppServiceI {
         return userAppRepository.queryPlaceRoomByBuildingId(buildingId);
     }
 
-
     @Transactional
     @Override
     public MaintenanceList saveNewMaintenanceList(MaintenanceList list) {
         list.setUserId(PrimaryKeyUtil.uuidPrimaryKey());
         list.setListDescription(list.getListDescription());
-
         String equipmentId = list.getEquipmentId();
+
         String repairGroupId = userAppRepository.selectRepairGroupId(equipmentId);
 
         if (Strings.isNullOrEmpty(repairGroupId)) {
             repairGroupId = ConstantFields.DEFAULT_GROUP_ID;
         }
 
-        list.setRepairGroupId(repairGroupId);
-
-        // 拼接维修单编号
-        String distinctNumber = userAppRepository.selectDistinctNumber(list.getDistinctId());
-        String buildingNumber = userAppRepository.selectBuildingNumber(list.getBuildingId());
-        String roomNumber = userAppRepository.selectRoomNumber(list.getRoomId());
-        String equipmentNumber = userAppRepository.selectEquipmentNumber(equipmentId);
-
-        StringBuilder builder = new StringBuilder();
-
-        builder.append(Strings.padStart(distinctNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
-        builder.append(Strings.padStart(buildingNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
-        builder.append(Strings.padStart(roomNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
-        builder.append(Strings.padStart(equipmentNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
-
-        list.setListNumber(builder.toString());
         list.setListState("1");
+        list.setRepairGroupId(repairGroupId);
+        String distinctId = list.getDistinctId();
+        String buildingId = list.getBuildingId();
+        String roomId = list.getRoomId();
+        //其他选项的判断
+        if(distinctId.equals(ConstantFields.OTHER_SELECT) || buildingId.equals(ConstantFields.OTHER_SELECT)|| roomId.equals(ConstantFields.OTHER_SELECT) || equipmentId.equals(ConstantFields.OTHER_SELECT)){
 
-        boolean notExit = userAppRepository.selectIfExistMaintenanceList(builder.toString());
+            list.setListNumber(PrimaryKeyUtil.uuidPrimaryKey());
 
-        if (notExit) {
             if (userAppRepository.insertNew(list) && userAppRepository.insertNewListState(list)) {
-                return list;
-            }
 
-            return null;
-        } else {
-            return null;
+                return list;
+
+            }else {
+
+                return null;
+
+            }
+        }else{
+            // 拼接维修单编号
+            String distinctNumber = userAppRepository.selectDistinctNumber(distinctId);
+            String buildingNumber = userAppRepository.selectBuildingNumber(list.getBuildingId());
+            String roomNumber = userAppRepository.selectRoomNumber(list.getRoomId());
+            String equipmentNumber = userAppRepository.selectEquipmentNumber(equipmentId);
+
+            StringBuilder builder = new StringBuilder();
+
+            builder.append(Strings.padStart(distinctNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
+            builder.append(Strings.padStart(buildingNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
+            builder.append(Strings.padStart(roomNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
+            builder.append(Strings.padStart(equipmentNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
+            list.setListNumber(builder.toString());
+            boolean notExit = userAppRepository.selectIfExistMaintenanceList(builder.toString());
+            if (notExit) {
+                if (userAppRepository.insertNew(list) && userAppRepository.insertNewListState(list)) {
+                    return list;
+                }
+                return null;
+            } else {
+
+                list.setMaintenanceExit(true);
+                return list;
+
+            }
         }
     }
-
     @Override
     public List<Equipment> queryPlaceRoomByRoomId(String roomId) {
         return userAppRepository.queryPlaceRoomByRoomId(roomId);
     }
 
     @Override
-    public MaintenanceList selectAllName(MaintenanceList maintenanceList) {
-        return userAppRepository. selectAllName(maintenanceList);
+    public MaintenanceList queryAllName(MaintenanceList maintenanceList) {
+        return  otherService( maintenanceList);
+
     }
 
     @Override
-    public List<MaintenanceList> selectMaintenanceListByTel(String userTel) {
+    public List<MaintenanceList> queryMaintenanceListByTel(String userTel) {
         return userAppRepository.selectMaintenanceListByTel(userTel);
     }
 
     @Override
-    public MaintenanceList selectOneMaintenance(String listNumber) {
+    public MaintenanceList queryOneMaintenance(String listNumber) {
         return userAppRepository.selectOneMaintenance(listNumber);
     }
 
@@ -110,14 +126,63 @@ public class UserAppServiceImpl implements UserAppServiceI {
     }
 
     @Override
-    public String selectListStateTime(String listNumber) {
+    public String queryListStateTime(String listNumber) {
 
         return userAppRepository.selectListStateTime(listNumber);
     }
 
     @Override
-    public List<MaintenanceList> selectAllState(String listNumber) {
+    public List<MaintenanceList> queryAllState(String listNumber) {
         return userAppRepository.selectAllState(listNumber);
+    }
+
+    @Override
+    public List<PlaceDistinct> queryDistincts() {
+        return userAppRepository.queryDistincts();
+    }
+
+    @Override
+    public int queryEachDistinctMaintenanceNumber(String distinctId) {
+        return userAppRepository.queryEachDistinctMaintenanceNumber(distinctId);
+    }
+
+    /**
+     * 有关其他的业务处理
+     * @param maintenanceList
+     * @return
+     */
+    public MaintenanceList otherService(MaintenanceList maintenanceList){
+        if(maintenanceList.getBuildingId().equals(ConstantFields.OTHER_SELECT)){
+
+            MaintenanceList list = userAppRepository.selectDistinctName(maintenanceList);
+            list.setBuildingName(ConstantFields.QI_TA);
+            list.setRoomName(ConstantFields.QI_TA);
+            list.setEquipmentName(ConstantFields.QI_TA);
+
+            return list;
+
+        }else if(maintenanceList.getRoomId().equals(ConstantFields.OTHER_SELECT)){
+
+            MaintenanceList list = userAppRepository.selectDistinctNameAndBuildingName(maintenanceList);
+
+            list.setRoomName(ConstantFields.QI_TA);
+            list.setEquipmentName(ConstantFields.QI_TA);
+
+            return list;
+
+        }else if(maintenanceList.getEquipmentId().equals(ConstantFields.OTHER_SELECT)){
+
+            MaintenanceList list = userAppRepository.selectDistinctNameAndBuildingNameAndRoomName(maintenanceList);
+
+            list.setEquipmentName(ConstantFields.QI_TA);
+
+            return list;
+
+        }else{
+
+            return userAppRepository.selectAllName(maintenanceList);
+
+        }
     }
 
 

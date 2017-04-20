@@ -34,7 +34,7 @@
                                                     </div>
                                                     <div class="item-inner">
                                                         <div class="item-title-row">
-                                                            <a href="report/index.html">
+                                                            <a href="${contextPath}/app/user/maintenance/add/router.action">
                                                                 <div class="item-title">我要报修</div>
                                                             </a>
                                                         </div>
@@ -62,7 +62,7 @@
                                                     <div class="item-inner">
                                                         <div class="item-title-row">
                                                             <div class="item-title">
-                                                                <a href="#">我的报修</a>
+                                                                <a href="${contextPath}/app/user/my/maintenance/router.action">我的报修</a>
                                                             </div>
                                                         </div>
                                                         <div class="item-subtitle">

@@ -28,7 +28,21 @@ public class MaintenanceList {
     private List<MaintenanceList> lists;
     private String listStatusTime;
     private int sum;
+    private int eachDistinctMaintenanceListNumber;//每个校区有多少保修单
+    private boolean maintenanceExit;//判断保修单是否存在
+    public boolean isMaintenanceExit() {
+        return maintenanceExit;
+    }
+    public void setMaintenanceExit(boolean maintenanceExit) {
+        this.maintenanceExit = maintenanceExit;
+    }
+    public int getEachDistinctMaintenanceListNumber() {
+        return eachDistinctMaintenanceListNumber;
+    }
 
+    public void setEachDistinctMaintenanceListNumber(int eachDistinctMaintenanceListNumber) {
+        this.eachDistinctMaintenanceListNumber = eachDistinctMaintenanceListNumber;
+    }
     public int getSum() {
         return sum;
     }

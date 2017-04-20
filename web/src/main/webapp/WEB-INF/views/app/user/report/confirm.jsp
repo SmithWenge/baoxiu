@@ -25,34 +25,34 @@
                                 <div class="item-media"><i class="icon icon-f7"></i></div>
                                 <div class="item-inner">
                                     <div class="item-title">校区</div>
-                                    <div class="item-after">南区</div>
+                                    <div class="item-after">${maintenance.distinctName}</div>
                                 </div>
                             </li>
                             <li class="item-content">
                                 <div class="item-media"><i class="icon icon-f7"></i></div>
                                 <div class="item-inner">
                                     <div class="item-title">地点</div>
-                                    <div class="item-after">教学楼</div>
+                                    <div class="item-after">${maintenance.buildingName}</div>
                                 </div>
                             </li>
                             <li class="item-content">
                                 <div class="item-media"><i class="icon icon-f7"></i></div>
                                 <div class="item-inner">
                                     <div class="item-title">位置</div>
-                                    <div class="item-after">房间内</div>
+                                    <div class="item-after">${maintenance.roomName}</div>
                                 </div>
                             </li>
                             <li class="item-content">
                                 <div class="item-media"><i class="icon icon-f7"></i></div>
                                 <div class="item-inner">
                                     <div class="item-title">设备</div>
-                                    <div class="item-after">灯</div>
+                                    <div class="item-after">${maintenance.equipmentName}</div>
                                 </div>
                             </li>
                             <li>
                                 <div class="item-content">
                                     <div class="item-inner">
-                                        <div class="content-padded" style="font-size: .7rem;">305教室中间的灯不亮.</div>
+                                        <div class="content-padded" style="font-size: .7rem;">${maintenance.listDescription}</div>
                                     </div>
                                 </div>
                             </li>
@@ -61,40 +61,45 @@
                 </div>
             </div>
         </div>
-
-        <div class="card">
-            <div class="card-header" style="padding: 0rem;;">
-                <div class="list-block">
-                    <ul>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-media"><i class="icon icon-form-email"></i></div>
-                                <div class="item-inner">
-                                    <div class="item-input">
-                                        <input type="text" placeholder="请输入您的手机号" autofocus="true">
+        <form action="${contextPath}/app/user/add/do.action" method="post" onsubmit="return checkSubmit();">
+            <div class="card">
+                <div class="card-header" style="padding: 0rem;;">
+                    <div class="list-block">
+                        <ul>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon icon-form-email"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <input type="text" placeholder="请输入您的手机号" autofocus="true" id="userTel" name="userTel">
+                                            <input type="hidden" name="distinctId" value="${maintenance.distinctId}">
+                                            <input type="hidden" name="buildingId" value="${maintenance.buildingId}">
+                                            <input type="hidden" name="roomId" value="${maintenance.roomId}">
+                                            <input type="hidden" name="equipmentId" value="${maintenance.equipmentId}">
+                                            <input type="hidden" name="listDescription" value="${maintenance.listDescription}">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card-content">
-                <div class="card-content-inner">注:手机号用来识别您的报修,务必准确输入.今后您查询报修进度需要输入您的手机号,并在后勤部门无法确定故障问题时用来与您联系,仅后勤处维修管理员可以查看您的联系方式,其他人无法获取.</div>
-            </div>
-            <div class="card-footer">
-                <a href="index.html" class="link">返回</a>
-                <div class="row">
-                    <div class="col-30" style="margin-right: .5rem;">
-                        <a href="done.html" class="button button-fill button-success">报修</a>
-                    </div>
-                    <div class="col-30" style="margin-right: .5rem;">
-                        <a href="../index.html" class="button button-fill button-danger">放弃</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+                <div class="card-content">
+                    <div class="card-content-inner">注:手机号用来识别您的报修,务必准确输入.今后您查询报修进度需要输入您的手机号,并在后勤部门无法确定故障问题时用来与您联系,仅后勤处维修管理员可以查看您的联系方式,其他人无法获取.</div>
+                </div>
+                <div class="card-footer">
+                    <a href="${contextPath}/app/user/maintenance/add/router.action" class="link">返回</a>
+                    <div class="row">
+                        <div class="col-30" style="margin-right: .5rem;">
+                            <button class="button button-fill button-success" type="submit">报修</button>
+                        </div>
+                        <div class="col-30" style="margin-right: .5rem;">
+                            <a href="${contextPath}/app/user/index.action" class="button button-fill button-danger">放弃</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-
+        </form>
         <nav class="bar bar-tab" style="background-color: #0E4d94;">
             <h1 class="title title-2" style=" color: #FFF; font-weight: bold;">程序设计：大连交通大学56工作室</h1>
         </nav>
@@ -102,7 +107,18 @@
 </div>
 
 <%@ include file="/WEB-INF/include/app/appJavascript.jsp"%>
+<script type="text/javascript">
+    function checkSubmit(){
+        var tel = document.getElementById("userTel");
+        if (!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(tel.value))) {
+            alert("请输入合法手机号");
+            return false;
+        }else{
+            return true;
+        }
 
+    }
+</script>
 
 
 <%@ include file="/WEB-INF/include/app/appFooter.jsp"%>

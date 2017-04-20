@@ -33,25 +33,25 @@
                             <li class="item-content">
                                 <div class="item-inner">
                                     <div class="item-title">单号</div>
-                                    <div class="item-after">00000001111112222222333333</div>
+                                    <div class="item-after">${maintenance.listNumber}</div>
                                 </div>
                             </li>
                             <li class="item-content">
                                 <div class="item-inner">
                                     <div class="item-title">报修时间</div>
-                                    <div class="item-after">2017/02/12 11:30</div>
+                                    <div class="item-after">${maintenance.liststatetime}</div>
                                 </div>
                             </li>
                             <li class="item-content">
                                 <div class="item-inner">
                                     <div class="item-title">报修人手机</div>
-                                    <div class="item-after">15812135555</div>
+                                    <div class="item-after">${maintenance.userTel}</div>
                                 </div>
                             </li>
                             <li class="item-content">
                                 <div class="item-inner">
                                     <div class="item-title">报修队列数</div>
-                                    <div class="item-after">4条</div>
+                                    <div class="item-after">${maintenance.sum}条</div>
                                 </div>
                             </li>
                         </ul>
@@ -59,8 +59,8 @@
                 </div>
             </div>
             <div class="card-footer">
-                <a href="../track/track.html" class="button button-fill button-success">我的报修</a>
-                <a href="../index.html" class="button button-fill button-primary">返回首页</a>
+                <a href="${contextPath}/app/user/my/maintenance/router.action" class="button button-fill button-success">我的报修</a>
+                <a href="${contextPath}/app/user/redirect/index.action" class="button button-fill button-primary">返回首页</a>
             </div>
         </div>
 

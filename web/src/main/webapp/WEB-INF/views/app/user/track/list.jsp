@@ -11,117 +11,30 @@
             <div class="card">
                 <div class="card-header">
                     <header class="bar bar-nav" style="background-color: #FFF;">
-                        <h1 class="title"><b>您的报修历史(13100000000)</b></h1>
+                        <h1 class="title"><b>您的报修历史(${userTel.userTel})</b></h1>
                     </header>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header" style="font-size: .8rem;">
-                    <i class="fa fa-circle" aria-hidden="true" style="color: green;"></i>
-                    维修单号：123456
-                </div>
-                <div class="card-content">
-                    <div class="card-content-inner">
-                        本部南区_教学楼_教室_灯
+            <c:forEach items="${maintenanceLists}" var="maintenance">
+                <div class="card">
+                    <div class="card-header" style="font-size: .8rem;">
+                        <i class="fa fa-circle" aria-hidden="true" style="color: green;"></i>
+                        维修单号：${maintenance.listNumber}
+                    </div>
+                    <div class="card-content">
+                        <div class="card-content-inner">
+                            ${maintenance.distinctName}_${maintenance.buildingName}_${maintenance.roomName}_${maintenance.equipmentName}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span>${maintenance.liststatetime}</span>
+                        <a href="${contextPath}/app/user/select/oneMaintenance/${maintenance.listNumber}.action">详情>></a>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <span>2015/01/15</span>
-                    <a href="#">详情>></a>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" style="font-size: .8rem;">
-                    <i class="fa fa-circle" aria-hidden="true" style="color: red;"></i>
-                    维修单号：123456
-                </div>
-                <div class="card-content">
-                    <div class="card-content-inner">
-                        本部南区_教学楼_教室_灯
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span>2015/01/15</span>
-                    <a href="#">详情>></a>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" style="font-size: .8rem;">
-                    <i class="fa fa-circle" aria-hidden="true" style="color: green;"></i>
-                    维修单号：123456
-                </div>
-                <div class="card-content">
-                    <div class="card-content-inner">
-                        本部南区_教学楼_教室_灯
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span>2015/01/15</span>
-                    <a href="#">详情>></a>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" style="font-size: .8rem;">
-                    <i class="fa fa-circle" aria-hidden="true" style="color: red;"></i>
-                    维修单号：123456
-                </div>
-                <div class="card-content">
-                    <div class="card-content-inner">
-                        本部南区_教学楼_教室_灯
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span>2015/01/15</span>
-                    <a href="#">详情>></a>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" style="font-size: .8rem;">
-                    <i class="fa fa-circle" aria-hidden="true" style="color: green;"></i>
-                    维修单号：123456
-                </div>
-                <div class="card-content">
-                    <div class="card-content-inner">
-                        本部南区_教学楼_教室_灯
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span>2015/01/15</span>
-                    <a href="#">详情>></a>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" style="font-size: .8rem;">
-                    <i class="fa fa-circle" aria-hidden="true" style="color: green;"></i>
-                    维修单号：123456
-                </div>
-                <div class="card-content">
-                    <div class="card-content-inner">
-                        本部南区_教学楼_教室_灯
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span>2015/01/15</span>
-                    <a href="#">详情>></a>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" style="font-size: .8rem;">
-                    <i class="fa fa-circle" aria-hidden="true" style="color: green;"></i>
-                    维修单号：123456
-                </div>
-                <div class="card-content">
-                    <div class="card-content-inner">
-                        本部南区_教学楼_教室_灯
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span>2015/01/15</span>
-                    <a href="#">详情>></a>
-                </div>
-            </div>
+            </c:forEach>
+
             <div class="content-block">
-                <p><a href="#" class="button button-big" style="background-color: #fff;">返回首页</a>
+                <p><a href="${contextPath}/app/user/redirect/index.action" class="button button-big" style="background-color: #fff;">返回首页</a>
                 </p>
             </div>
             <div class="card-header">
