@@ -30,7 +30,8 @@ public class UserRepositoryImpl implements UserRepositoryI{
 
     @Override
     public List<AdminUser> selectAdminUserList() {
-       String sql = "SELECT A.adminUserId,username,adminName,userId,password,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone FROM baoxiu_adminuser AS A LEFT JOIN shiro_user AS U on A.adminUserId = U.adminUserId where A.deleteflag = 0";        Object[] args = {};
+        String sql = "SELECT A.adminUserId,username,adminName,userId,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone FROM baoxiu_adminuser AS A LEFT JOIN shiro_user AS U on A.adminUserId = U.adminUserId where A.deleteflag = 0";
+        Object[] args = {};
 
         try {
             return jdbcTemplate.query(sql,args,new SelectAdminUserListRowMapper() );
@@ -56,7 +57,6 @@ public class UserRepositoryImpl implements UserRepositoryI{
             adminUser.setAdminCard(rs.getString("adminCard"));
             adminUser.setAdminTelephone(rs.getString("adminTelephone"));
             adminUser.setUsername(rs.getString("username"));
-            adminUser.setPassword(PasswordUtils.encrypt(rs.getString("password")));
             adminUser.setUserId(rs.getString("userId"));
 
             return adminUser;
@@ -146,7 +146,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
 
     @Override
     public AdminUser query4Edit(String adminUserId) {
-        String sql = "SELECT baoxiu.baoxiu_adminuser.adminUserId,userId, username,password,adminName,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone  FROM baoxiu.baoxiu_adminuser join baoxiu.shiro_user on (baoxiu.baoxiu_adminuser.adminUserId = baoxiu.shiro_user.adminUserId ) where baoxiu.baoxiu_adminuser.adminUserId = ? ";
+        String sql = "SELECT baoxiu.baoxiu_adminuser.adminUserId,userId, username,adminName,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone  FROM baoxiu.baoxiu_adminuser join baoxiu.shiro_user on (baoxiu.baoxiu_adminuser.adminUserId = baoxiu.shiro_user.adminUserId ) where baoxiu.baoxiu_adminuser.adminUserId = ? ";
         Object[] args  = {adminUserId};
         try{
             return jdbcTemplate.queryForObject(sql,args,new SelectAdminUserListRowMapper() );
@@ -188,10 +188,9 @@ public class UserRepositoryImpl implements UserRepositoryI{
     }
     @Override
     public boolean updateUser(AdminUser adminUser) {
-        String  sql = "UPDATE  baoxiu.shiro_user set username = ?,password = ?  WHERE deleteFlag = 0 AND UserId = ?";
+        String  sql = "UPDATE  baoxiu.shiro_user set username = ?WHERE deleteFlag = 0 AND UserId = ?";
         Object[] args = {
                 adminUser.getUsername(),
-                PasswordUtils.encrypt(adminUser.getPassword()),
                 adminUser.getUserId()
         };
         try {

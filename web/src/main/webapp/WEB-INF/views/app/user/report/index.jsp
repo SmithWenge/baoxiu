@@ -165,7 +165,6 @@
                     }
                 })
             }
-
         } );
         $('#roomId').on('change',function(){
             var postData = {
@@ -196,15 +195,8 @@
                     }
                 })
             }
-
-
         } );
-
         $('#distinctId').trigger("change");
     });
-
 </script>
-
-
-
 <%@ include file="/WEB-INF/include/app/appFooter.jsp"%>

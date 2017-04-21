@@ -14,7 +14,7 @@
           <td>工号</td>
           <td>姓名</td>
           <td>登陆名</td>
-          <td>操作</td>
+          <td>密码修改</td>
         </tr>
         </thead>
         <tbody>

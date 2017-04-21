@@ -55,12 +55,6 @@
           </div>
         </div>
         <div class="layui-form-item">
-          <label class="layui-form-label">密码</label>
-          <div class="layui-input-block">
-            <input type="text" name="password" lay-verify="password" value="请输入新密码" autocomplete="off" class="layui-input">
-          </div>
-        </div>
-        <div class="layui-form-item">
           <label class="layui-form-label">电话</label>
           <div class="layui-input-block">
             <input type="text" name="adminTelephone" lay-verify="adminTelephone" value="${adminUser.adminTelephone}" autocomplete="off" class="layui-input">
