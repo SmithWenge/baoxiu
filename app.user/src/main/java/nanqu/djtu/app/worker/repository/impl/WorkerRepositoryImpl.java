@@ -99,7 +99,7 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
             MaintenanceList list = new MaintenanceList();
             list.setListNumber(resultSet.getString("listNumber"));
             list.setListstatetime(resultSet.getString("liststatetime"));
-            list.setListBigDescription("listDescription");
+            list.setListBigDescription(resultSet.getString("listDescription"));
 
             return list;
         }
