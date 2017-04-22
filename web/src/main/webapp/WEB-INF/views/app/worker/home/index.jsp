@@ -49,11 +49,13 @@
                 <span class="icon">
                     <i class="fa fa-bell-o" aria-hidden="true"></i>
                 </span>
+                <span class="badge">${maintenanceList.waitToDoMaintenanceSum}</span>
             </a>
             <a class="tab-item external" href="${contextPath}/app/worker/routeLatestList.action" style="color: #fff;">
                 <span class="icon">
                     <i class="fa fa-briefcase" aria-hidden="true"></i>
                 </span>
+                <span class="badge">${maintenanceList.allDoMaintenanceSum}</span>
             </a>
         </nav>
     </div>

@@ -85,4 +85,26 @@ public interface WorkerRepositoryI {
      * @return
      */
     Boolean changePass(WorkerInfo info);
+
+    /**
+     * 查询待办的报修单数
+     * @return 报修单数
+     */
+
+    int selectTodoMiantenanceSum(String userId);
+
+    /**
+     * 查询所有需处理的报修单
+     * @param userId
+     * @return 报修单数
+     */
+
+    int selectallDoMaintenanceSum(String userId);
+
+    /**
+     * 查询所有在处理的报修单数
+     * @return
+     */
+
+    int selectOnDoMaintenanceSum(String userId);
 }
