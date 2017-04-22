@@ -59,8 +59,8 @@
         </div>
       </div>
       <div class="card-footer">
-        <a href="${contextPath}/app/user/my/maintenance/router.action" class="button button-fill button-success">我的报修</a>
-        <a href="${contextPath}/app/user/index.action" class="button button-fill button-primary">返回首页</a>
+        <a href="${contextPath}/app/user/my/maintenance/router.action" class="button button-fill button-success" external>我的报修</a>
+        <a href="${contextPath}/app/user/index.action" class="button button-fill button-primary" external>返回首页</a>
       </div>
     </div>
 

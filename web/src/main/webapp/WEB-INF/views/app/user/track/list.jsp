@@ -34,7 +34,7 @@
             </c:forEach>
 
             <div class="content-block">
-                <p><a href="${contextPath}/app/user/redirect/index.action" class="button button-big" style="background-color: #fff;">返回首页</a>
+                <p><a href="${contextPath}/app/user/redirect/index.action" class="button button-big" style="background-color: #fff;" external>返回首页</a>
                 </p>
             </div>
             <div class="card-header">
@@ -47,7 +47,5 @@
 </div>
 
 <%@ include file="/WEB-INF/include/app/appJavascript.jsp"%>
-
-
 
 <%@ include file="/WEB-INF/include/app/appFooter.jsp"%>

@@ -88,8 +88,8 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="${contextPath}/app/user/turn/repairList/router/${maintenanceList.userTel}.action" class="button button-fill button-success" >返回</a>
-                    <a href="${contextPath}/app/user/redirect/index.action" class="button button-fill button-primary">首页</a>
+                    <a href="${contextPath}/app/user/turn/repairList/router/${maintenanceList.userTel}.action" class="button button-fill button-success" external>返回</a>
+                    <a href="${contextPath}/app/user/redirect/index.action" class="button button-fill button-primary" external>首页</a>
                 </div>
          </div>
         </div>

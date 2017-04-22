@@ -38,8 +38,8 @@
             </div>
             <div class="content-block">
                 <div class="row">
-                    <div class="col-50"><button class="button button-big button-fill button-success" type="submit">查询</button></div>
-                    <div class="col-50"><a href="${contextPath}/app/user/redirect/index.action" class="button button-big button-fill button-warning">返回</a></div>
+                    <div class="col-50"><a href="${contextPath}/app/user/redirect/index.action" class="button button-big button-fill button-warning" external>返回</a></div>
+                    <div class="col-50"><button class="button button-big button-fill button-success" type="submit" style="float: right;">查询</button></div>
                 </div>
             </div>
             </form>

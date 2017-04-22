@@ -88,13 +88,13 @@
                     <div class="card-content-inner">注:手机号用来识别您的报修,务必准确输入.今后您查询报修进度需要输入您的手机号,并在后勤部门无法确定故障问题时用来与您联系,仅后勤处维修管理员可以查看您的联系方式,其他人无法获取.</div>
                 </div>
                 <div class="card-footer">
-                    <a href="${contextPath}/app/user/maintenance/add/router.action" class="link">返回</a>
+                    <a href="${contextPath}/app/user/maintenance/add/router.action" class="link" external>返回</a>
                     <div class="row">
                         <div class="col-30" style="margin-right: .5rem;">
                             <button class="button button-fill button-success" type="submit">报修</button>
                         </div>
                         <div class="col-30" style="margin-right: .5rem;">
-                            <a href="${contextPath}/app/user/index.action" class="button button-fill button-danger">放弃</a>
+                            <a href="${contextPath}/app/user/index.action" class="button button-fill button-danger" external>放弃</a>
                         </div>
                     </div>
                 </div>

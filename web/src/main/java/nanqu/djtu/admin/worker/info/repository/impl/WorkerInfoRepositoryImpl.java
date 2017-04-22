@@ -5,6 +5,7 @@ import nanqu.djtu.pojo.PlaceDistinct;
 import nanqu.djtu.pojo.RepairGroup;
 import nanqu.djtu.pojo.WorkerInfo;
 import nanqu.djtu.pojo.WorkerType;
+import nanqu.djtu.utils.ConstantFields;
 import nanqu.djtu.utils.PrimaryKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
      */
     @Override
     public List<WorkerInfo> query4List() {
-        String sql = "SELECT userId,workerName,workerTel,workerUnit,workerDepartment,workerJob,workerState,groupName,typeName,GR.repairGroupId,INFO.typeId FROM (baoxiu_workerinfo AS INFO join baoxiu_repairgroup AS GR on(INFO.repairGroupId = GR.repairGroupId) )join baoxiu_workertype AS TY on(INFO.typeId = TY.typeId) where INFO.deleteFlag = 0";
+        String sql = "SELECT userId, workerName, workerTel, workerUnit, workerDepartment ,workerJob, workerState ,groupName, typeName, GR.repairGroupId, INFO.typeId  FROM (baoxiu_workerinfo AS INFO join baoxiu_repairgroup AS GR ON(INFO.repairGroupId = GR.repairGroupId) )JOIN baoxiu_workertype AS TY ON(INFO.typeId = TY.typeId) WHERE INFO.deleteFlag = 0";
         Object[] args = {};
 
         try {
@@ -73,7 +74,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
 
     @Override
     public List<RepairGroup> repairGroupQuery4List() {
-        String sql = "SELECT repairGroupId,groupNumber,groupName,groupPrinterIp FROM baoxiu_repairgroup where deleteFlag = 0";
+        String sql = "SELECT repairGroupId, groupNumber, groupName, groupPrinterIp FROM baoxiu_repairgroup where deleteFlag = 0";
         Object[] args = {};
 
         try {
@@ -108,7 +109,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
      */
     @Override
     public List<WorkerType> workerTypeQuery4List() {
-        String sql = "SELECT typeId,typeName FROM baoxiu_workertype where deleteFlag = 0";
+        String sql = "SELECT typeId, typeName FROM baoxiu_workertype WHERE deleteFlag = 0";
         Object[] args = {};
 
         try {
@@ -140,10 +141,11 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
      * @param info 工人信息
      * @return true ,else false
      */
-
     @Override
     public boolean insertNewWorkerInfo(WorkerInfo info) {
-        String sql = "INSERT INTO baoxiu_workerinfo(userId,workerName,workerTel,workerUnit,workerDepartment,workerJob,workerState,repairGroupId,typeId,deleteFlag) VALUES(?,?,?,?,?,?,?,?,?,0);";
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("INSERT INTO baoxiu_workerinfo(userId, workerName, workerTel, workerUnit, workerDepartment, workerJob, workerState, repairGroupId, typeId, workerPass)");
+        buffer.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         Object[] args = {
                 PrimaryKeyUtil.uuidPrimaryKey(),
                 info.getWorkerTel(),
@@ -153,19 +155,19 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
                 info.getWorkerJob(),
                 Integer.parseInt(info.getWorkerState()),
                 info.getRepairGroupId(),
-                info.getTypeId()
+                info.getTypeId(),
+                ConstantFields.DEFAULT_WORKER_PASS
         };
 
         try {
-            return jdbcTemplate.update(sql,args) == 1;
-
-        }catch (Exception e){
-
+            return jdbcTemplate.update(buffer.toString(), args) == 1;
+        } catch (Exception e) {
             LOG.error("[WorkerInfo] add new place distinct error with info {}.", e.getMessage());
-            return false;
 
+            return false;
         }
     }
+
     /**
      * 删除工人
      *
@@ -175,7 +177,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
 
     @Override
     public boolean deleteWorkerInfo(String userId) {
-        String sql = "UPDATE baoxiu_workerinfo set deleteFlag = 1 WHERE userId = ? AND deleteFlag = 0";
+        String sql = "UPDATE baoxiu_workerinfo SET deleteFlag = 1 WHERE userId = ? AND deleteFlag = 0";
         Object[] args = {userId};
 
         try {
@@ -196,7 +198,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
 
     @Override
     public WorkerInfo query4Edit(String userId) {
-        String sql = "SELECT userId,workerName,workerTel,workerUnit,workerDepartment,workerJob,workerState,groupName,typeName,INFO.repairGroupId,INFO.typeId FROM (baoxiu_workerinfo AS INFO join baoxiu_repairgroup AS RP on(INFO.repairGroupId = RP.repairGroupId) )join baoxiu_workertype AS TY on(INFO.typeId = TY.typeId) where INFO.deleteFlag = 0";
+        String sql = "SELECT userId, workerName, workerTel, workerUnit, workerDepartment, workerJob, workerState, groupName, typeName, INFO.repairGroupId, INFO.typeId FROM (baoxiu_workerinfo AS INFO join baoxiu_repairgroup AS RP on(INFO.repairGroupId = RP.repairGroupId) )JOIN baoxiu_workertype AS TY on(INFO.typeId = TY.typeId) WHERE INFO.deleteFlag = 0";
         Object[] args = {};
 
         try {

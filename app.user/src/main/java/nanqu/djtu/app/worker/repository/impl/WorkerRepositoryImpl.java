@@ -28,7 +28,7 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
     private JdbcTemplate jdbcTemplate;
 
     /**
-     * 登录查询
+     * 工人登录查询
      * @param workerTel
      * @param workerPass
      * @return

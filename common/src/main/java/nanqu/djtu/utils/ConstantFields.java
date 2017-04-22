@@ -49,4 +49,5 @@ public class ConstantFields {
 
     /*定义其他选项的中文名*/
     public static final String QI_TA ="其他";
+    public static final String DEFAULT_WORKER_PASS = "000000";
 }

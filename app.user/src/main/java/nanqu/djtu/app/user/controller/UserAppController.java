@@ -35,7 +35,7 @@ public class UserAppController {
 
     /**
      * 重定向到index页面
-     * @return
+     * @return 用户手机首页
      */
     @RequestMapping("/redirect/index")
     public String userRedirectAppIndex() {
@@ -51,6 +51,7 @@ public class UserAppController {
         List<PlaceDistinct> placeDistincts = userAppService.query4ListPlaceDistinct();
 
         ModelAndView mav = new ModelAndView("app/user/report/index");
+
         mav.addObject("placeDistincts", placeDistincts);
         
         return mav;
@@ -65,6 +66,7 @@ public class UserAppController {
     @RequestMapping(value = "/buildings", method = RequestMethod.POST)
     public Map<String, List<PlaceBuilding>> buildings(PlaceDistinct placeDistinct) {
         Map<String, List<PlaceBuilding>> map = new HashMap<>();
+
         map.put("buildings", userAppService.queryBuildingsByDistinctId(placeDistinct.getDistinctId()));
 
         return map;
@@ -77,8 +79,11 @@ public class UserAppController {
     @ResponseBody
     @RequestMapping(value = "/placeRoom", method = RequestMethod.POST)
     public Map<String, List<PlaceRoom>> rooms(PlaceBuilding placeBuilding) {
+
         Map<String, List<PlaceRoom>> map = new HashMap<>();
+
         map.put("rooms", userAppService.queryPlaceRoomByBuildingId(placeBuilding.getBuildingId()));
+
         return map;
     }
     /**
@@ -90,7 +95,9 @@ public class UserAppController {
     @RequestMapping(value = "/equipment", method = RequestMethod.POST)
     public Map<String, List<Equipment>> equipments(PlaceRoom room) {
         Map<String, List<Equipment>> map = new HashMap<>();
+
         map.put("equipments", userAppService.queryPlaceRoomByRoomId(room.getRoomId()));
+
         return map;
     }
     /**
@@ -101,12 +108,16 @@ public class UserAppController {
     @RequestMapping(value = "/add/tel/router", method = RequestMethod.POST)
     public ModelAndView addTel(MaintenanceList maintenanceList){
         MaintenanceList list = userAppService.queryAllName(maintenanceList);
+
         maintenanceList.setDistinctName(list.getDistinctName());
         maintenanceList.setBuildingName(list.getBuildingName());
         maintenanceList.setRoomName(list.getRoomName());
         maintenanceList.setEquipmentName(list.getEquipmentName());
+
         ModelAndView modelAndView = new ModelAndView("app/user/report/confirm");
+
         modelAndView.addObject("maintenance", maintenanceList);
+
         return modelAndView;
     }
     /**
@@ -117,51 +128,70 @@ public class UserAppController {
     @RequestMapping(value = "/add/do", method = RequestMethod.POST)
     public ModelAndView addNewMaintenanceList(MaintenanceList maintenanceList, RedirectAttributes redirectAttributes) {
         if(maintenanceList.getUserTel() == null){
+
             MaintenanceList list = userAppService.queryAllName(maintenanceList);
+
             maintenanceList.setDistinctName(list.getDistinctName());
             maintenanceList.setBuildingName(list.getBuildingName());
             maintenanceList.setRoomName(list.getRoomName());
             maintenanceList.setEquipmentName(list.getEquipmentName());
+
             ModelAndView modelAndView = new ModelAndView("app/user/report/confirm");
+
             modelAndView.addObject("maintenance", maintenanceList);
+
             return modelAndView;
+
         }
 
         MaintenanceList  list = userAppService.saveNewMaintenanceList(maintenanceList);
 
         if (list == null){
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+
             MaintenanceList list1 = userAppService.queryAllName(maintenanceList);
+
             maintenanceList.setDistinctName(list1.getDistinctName());
             maintenanceList.setBuildingName(list1.getBuildingName());
             maintenanceList.setRoomName(list1.getRoomName());
             maintenanceList.setEquipmentName(list1.getEquipmentName());
+
             ModelAndView modelAndView = new ModelAndView("app/user/report/confirm");
+
             modelAndView.addObject("maintenance", maintenanceList);
+
             return modelAndView;
         } else {
             if(list.isMaintenanceExit()){
                 redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+
                 String listTime = userAppService.queryListStateTime(list.getListNumber());
                 int sum = userAppService.sumOfMaintenance();
+
                 maintenanceList.setSum(sum);
                 maintenanceList.setListNumber(list.getListNumber());
                 maintenanceList.setListstatetime(listTime);
+
                 ModelAndView modelAndView = new ModelAndView("app/user/report/undone");
                 modelAndView.addObject("maintenance",maintenanceList);
 
                 return modelAndView;
-            }
-            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
-            String listTime = userAppService.queryListStateTime(list.getListNumber());
-            int sum = userAppService.sumOfMaintenance();
-            maintenanceList.setSum(sum);
-            maintenanceList.setListNumber(list.getListNumber());
-            maintenanceList.setListstatetime(listTime);
-            ModelAndView modelAndView = new ModelAndView("app/user/report/done");
-            modelAndView.addObject("maintenance",maintenanceList);
+            }else{
+                redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
 
-            return modelAndView;
+                String listTime = userAppService.queryListStateTime(list.getListNumber());
+                int sum = userAppService.sumOfMaintenance();
+
+                maintenanceList.setSum(sum);
+                maintenanceList.setListNumber(list.getListNumber());
+                maintenanceList.setListstatetime(listTime);
+
+                ModelAndView modelAndView = new ModelAndView("app/user/report/done");
+                modelAndView.addObject("maintenance",maintenanceList);
+
+                return modelAndView;
+            }
+
         }
     }
     /**
@@ -174,6 +204,7 @@ public class UserAppController {
         MaintenanceList maintenanceList = userAppService.queryOneMaintenance(listNumber);
         List<MaintenanceList> allStates = userAppService.queryAllState(listNumber);
         MaintenanceList list = userAppService.queryAllName(maintenanceList);
+
         maintenanceList.setDistinctName(list.getDistinctName());
         maintenanceList.setBuildingName(list.getBuildingName());
         maintenanceList.setRoomName(list.getRoomName());
@@ -200,6 +231,7 @@ public class UserAppController {
             maintenanceList.setDistinctName(item.getDistinctName());
             maintenanceLists.add(maintenanceList);
         }
+
         ModelAndView modelAndView = new ModelAndView("app/user/track/index");
 
         modelAndView.addObject("maintenanceLists",maintenanceLists);

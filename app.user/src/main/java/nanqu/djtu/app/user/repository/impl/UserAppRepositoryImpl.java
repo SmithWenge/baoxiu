@@ -380,7 +380,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public List<MaintenanceList> selectMaintenanceListByTel(String userTel) {
-        String sql = "SELECT listNumber, liststatetime, listState, listDescription, DI.distinctName, BU.buildingName, RO.roomName,EQ.equipmentName  FROM baoxiu.baoxiu_maintenancelist AS MA LEFT JOIN baoxiu.baoxiu_placedistinct AS DI  ON(MA.distinctId = DI.distinctId) LEFT JOIN baoxiu.baoxiu_placebuilding AS BU ON(MA.buildingId = BU.buildingId) LEFT JOIN baoxiu.baoxiu_placeroom AS RO ON(MA.roomId = RO.roomId) LEFT JOIN baoxiu.baoxiu_equipment AS EQ ON(MA.equipmentId = EQ.equipmentId) WHERE MA.userTel= ? AND MA.deleteFlag = 0;";
+        String sql = "SELECT listNumber, liststatetime, listState, listDescription, DI.distinctName, BU.buildingName, RO.roomName, EQ.equipmentName FROM baoxiu_maintenancelist AS MA LEFT JOIN baoxiu_placedistinct AS DI  ON MA.distinctId = DI.distinctId LEFT JOIN baoxiu_placebuilding AS BU ON MA.buildingId = BU.buildingId LEFT JOIN baoxiu_placeroom AS RO ON MA.roomId = RO.roomId LEFT JOIN baoxiu_equipment AS EQ ON MA.equipmentId = EQ.equipmentId WHERE MA.userTel= ? AND MA.deleteFlag = 0";
         Object[] args = {
                 userTel
         };
