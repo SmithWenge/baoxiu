@@ -89,7 +89,7 @@
                         <div class="content-block" style="margin-top: 2rem; margin-bottom: 0.5rem;">
                             <div class="row">
                                 <div class="col-50">
-                                    <a href="${contextPath}/app/user/redirect/index.action" class="button button-big button-fill button-danger">放弃</a>
+                                    <a href="${contextPath}/app/user/redirect/index.action" class="button button-big button-fill button-danger" external>放弃</a>
                                 </div>
                                 <div class="col-50">
                                     <button class="button button-big button-fill button-success" type="submit">下一步</button>
@@ -136,11 +136,12 @@
                 }
             });
         });
+
         $('#buildingId').on('change',function(){
             var postData = {
                 "buildingId": $("#buildingId").val()
-
             };
+
             if(buildingId == 0) {
                 $("#roomId").append(new Option("其他", 0));
             } else {
@@ -165,11 +166,11 @@
                     }
                 })
             }
-        } );
+        });
+
         $('#roomId').on('change',function(){
             var postData = {
                 "roomId": $("#roomId").val()
-
             };
             if(roomId  == 0) {
                 $("#equipmentId").append(new Option("其他", 0));
@@ -195,7 +196,8 @@
                     }
                 })
             }
-        } );
+        });
+
         $('#distinctId').trigger("change");
     });
 </script>

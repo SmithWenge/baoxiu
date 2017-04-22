@@ -28,17 +28,17 @@
                                             <ul>
                                                 <li class="item-content">
                                                     <div class="item-media">
-                                                        <a href="report/index.html">
+                                                        <a href="${contextPath}/app/user/maintenance/add/router.action" external>
                                                             <i class="fa fa-wrench" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
                                                     <div class="item-inner">
                                                         <div class="item-title-row">
-                                                            <a href="${contextPath}/app/user/maintenance/add/router.action">
+                                                            <a href="${contextPath}/app/user/maintenance/add/router.action" external>
                                                                 <div class="item-title">我要报修</div>
                                                             </a>
                                                         </div>
-                                                        <a href="report/index.html">
+                                                        <a href="${contextPath}/app/user/maintenance/add/router.action" external>
                                                             <div class="item-subtitle">Repair</div>
                                                         </a>
                                                     </div>
@@ -55,18 +55,18 @@
                                             <ul>
                                                 <li class="item-content">
                                                     <div class="item-media">
-                                                        <a href="#">
+                                                        <a href="${contextPath}/app/user/my/maintenance/router.action" external>
                                                             <i class="fa fa-suitcase" aria-hidden="true"></i>
                                                         </a>
                                                     </div>
                                                     <div class="item-inner">
                                                         <div class="item-title-row">
                                                             <div class="item-title">
-                                                                <a href="${contextPath}/app/user/my/maintenance/router.action">我的报修</a>
+                                                                <a href="${contextPath}/app/user/my/maintenance/router.action" external>我的报修</a>
                                                             </div>
                                                         </div>
                                                         <div class="item-subtitle">
-                                                            <a href="#">Tracking</a>
+                                                            <a href="${contextPath}/app/user/my/maintenance/router.action" external>Tracking</a>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -82,7 +82,7 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <b>紧急保修方式</b>
+                <b>紧急报修方式</b>
             </div>
             <div class="card-content">
                 <div class="card-content-inner">自来水管线爆裂等需要紧急维修的情况,请直接拨打后勤处维修科24小时报修电话:<b style="color: green;">84108410</b>.</div>
@@ -118,7 +118,5 @@
 </div>
 
 <%@ include file="/WEB-INF/include/app/appJavascript.jsp"%>
-
-
 
 <%@ include file="/WEB-INF/include/app/appFooter.jsp"%>

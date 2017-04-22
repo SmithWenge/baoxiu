@@ -35,7 +35,7 @@ public class UserAppController {
 
     /**
      * 重定向到index页面
-     * @return
+     * @return 用户手机首页
      */
     @RequestMapping("/redirect/index")
     public String userRedirectAppIndex() {
