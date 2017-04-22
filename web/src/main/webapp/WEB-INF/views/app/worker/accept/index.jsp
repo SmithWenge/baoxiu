@@ -180,24 +180,24 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-footer">
+            <div class="card-header">
+            </div>
         </div>
         <nav class="bar bar-tab" style="background: #0E4d94;opacity: 1;">
             <a class="tab-item external active" href="${contextPath}/app/worker/routeDoingList.action" style="color: #fff;">
-					    <span class="icon">
-					    	<i class="fa fa-home fa-lg" aria-hidden="true"></i>
-					    </span>
+                <span class="icon">
+                    <i class="fa fa-home fa-lg" aria-hidden="true"></i>
+                </span>
             </a>
             <a class="tab-item external" href="${contextPath}/app/worker/routeWaitingList.action" style="color: #fff;">
-					    <span class="icon">
-					    	<i class="fa fa-bell-o" aria-hidden="true"></i>
-					    </span>
+                <span class="icon">
+                    <i class="fa fa-bell-o" aria-hidden="true"></i>
+                </span>
             </a>
             <a class="tab-item external" href="${contextPath}/app/worker/routeLatestList.action" style="color: #fff;">
-					    <span class="icon">
-					    	<i class="fa fa-briefcase" aria-hidden="true"></i>
-					    </span>
+                <span class="icon">
+                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                </span>
             </a>
         </nav>
     </div>

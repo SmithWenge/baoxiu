@@ -36,7 +36,7 @@
                 </div>
             </c:forEach>
             <div class="card">
-                <div class="card-footer"></div>
+                <div class="card-header"></div>
             </div>
         </div>
         <nav class="bar bar-tab" style="background: #0E4d94;opacity: 1;">
