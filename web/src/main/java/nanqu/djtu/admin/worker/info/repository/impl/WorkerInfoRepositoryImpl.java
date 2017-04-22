@@ -5,6 +5,7 @@ import nanqu.djtu.pojo.PlaceDistinct;
 import nanqu.djtu.pojo.RepairGroup;
 import nanqu.djtu.pojo.WorkerInfo;
 import nanqu.djtu.pojo.WorkerType;
+import nanqu.djtu.utils.ConstantFields;
 import nanqu.djtu.utils.PrimaryKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,10 +141,11 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
      * @param info 工人信息
      * @return true ,else false
      */
-
     @Override
     public boolean insertNewWorkerInfo(WorkerInfo info) {
-        String sql = "INSERT INTO baoxiu_workerinfo(userId,workerName,workerTel,workerUnit,workerDepartment,workerJob,workerState,repairGroupId,typeId,deleteFlag) VALUES(?,?,?,?,?,?,?,?,?,0);";
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("INSERT INTO baoxiu_workerinfo(userId, workerName, workerTel, workerUnit, workerDepartment, workerJob, workerState, repairGroupId, typeId, workerPass)");
+        buffer.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         Object[] args = {
                 PrimaryKeyUtil.uuidPrimaryKey(),
                 info.getWorkerTel(),
@@ -153,19 +155,19 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
                 info.getWorkerJob(),
                 Integer.parseInt(info.getWorkerState()),
                 info.getRepairGroupId(),
-                info.getTypeId()
+                info.getTypeId(),
+                ConstantFields.DEFAULT_WORKER_PASS
         };
 
         try {
-            return jdbcTemplate.update(sql,args) == 1;
-
-        }catch (Exception e){
-
+            return jdbcTemplate.update(buffer.toString(), args) == 1;
+        } catch (Exception e) {
             LOG.error("[WorkerInfo] add new place distinct error with info {}.", e.getMessage());
-            return false;
 
+            return false;
         }
     }
+
     /**
      * 删除工人
      *
