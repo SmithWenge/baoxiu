@@ -7,62 +7,63 @@
         <header class="bar bar-nav bar-nav-2" style="background-color: #0E4d94; position: static;">
             <h1 class="title title-2" style=" color: #FFF; font-weight: bold;">大连交通大学后勤报修系统</h1>
         </header>
-
-        <div class="card">
-            <div class="card-header">
-                <header class="bar bar-nav" style="background-color: #FFF;">
-                    <h1 class="title"><b>请确认您的报修信息</b></h1>
-                </header>
+        <div class="content">
+            <div class="card">
+                <div class="card-header">
+                    <header class="bar bar-nav" style="background-color: #FFF;">
+                        <h1 class="title"><b>请确认您的报修信息</b></h1>
+                    </header>
+                </div>
             </div>
-        </div>
 
-        <div class="card">
-            <div class="card-content">
-                <div class="card-content-inner">
-                    <div class="list-block">
-                        <ul>
-                            <li class="item-content">
-                                <div class="item-media"><i class="icon icon-f7"></i></div>
-                                <div class="item-inner">
-                                    <div class="item-title">校区</div>
-                                    <div class="item-after">${maintenance.distinctName}</div>
-                                </div>
-                            </li>
-                            <li class="item-content">
-                                <div class="item-media"><i class="icon icon-f7"></i></div>
-                                <div class="item-inner">
-                                    <div class="item-title">地点</div>
-                                    <div class="item-after">${maintenance.buildingName}</div>
-                                </div>
-                            </li>
-                            <li class="item-content">
-                                <div class="item-media"><i class="icon icon-f7"></i></div>
-                                <div class="item-inner">
-                                    <div class="item-title">位置</div>
-                                    <div class="item-after">${maintenance.roomName}</div>
-                                </div>
-                            </li>
-                            <li class="item-content">
-                                <div class="item-media"><i class="icon icon-f7"></i></div>
-                                <div class="item-inner">
-                                    <div class="item-title">设备</div>
-                                    <div class="item-after">${maintenance.equipmentName}</div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-content-inner">
+                        <div class="list-block">
+                            <ul>
+                                <li class="item-content">
+                                    <div class="item-media"><i class="icon icon-f7"></i></div>
                                     <div class="item-inner">
-                                        <div class="content-padded" style="font-size: .7rem;">${maintenance.listDescription}</div>
+                                        <div class="item-title">校区</div>
+                                        <div class="item-after">${maintenance.distinctName}</div>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
+                                </li>
+                                <li class="item-content">
+                                    <div class="item-media"><i class="icon icon-f7"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title">地点</div>
+                                        <div class="item-after">${maintenance.buildingName}</div>
+                                    </div>
+                                </li>
+                                <li class="item-content">
+                                    <div class="item-media"><i class="icon icon-f7"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title">位置</div>
+                                        <div class="item-after">${maintenance.roomName}</div>
+                                    </div>
+                                </li>
+                                <li class="item-content">
+                                    <div class="item-media"><i class="icon icon-f7"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title">设备</div>
+                                        <div class="item-after">${maintenance.equipmentName}</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-inner">
+                                            <div class="content-padded" style="font-size: .7rem;">${maintenance.listDescription}</div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <form action="${contextPath}/app/user/add/do.action" method="post" onsubmit="return checkSubmit();">
+
             <div class="card">
+                <form action="${contextPath}/app/user/add/do.action" method="post" onsubmit="return checkSubmit();">
                 <div class="card-header" style="padding: 0rem;;">
                     <div class="list-block">
                         <ul>
@@ -98,8 +99,11 @@
                         </div>
                     </div>
                 </div>
+                </form>
             </div>
-        </form>
+            <div class="card-header">
+            </div>
+        </div>
         <nav class="bar bar-tab" style="background-color: #0E4d94;">
             <h1 class="title title-2" style=" color: #FFF; font-weight: bold;">程序设计：大连交通大学56工作室</h1>
         </nav>

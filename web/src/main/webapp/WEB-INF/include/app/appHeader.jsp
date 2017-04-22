@@ -21,4 +21,3 @@
     <link rel="stylesheet" href="${contextPath}/static/plugin/font-awesome/css/font-awesome.min.css" />
 </head>
 <body>
-<div class="content">
