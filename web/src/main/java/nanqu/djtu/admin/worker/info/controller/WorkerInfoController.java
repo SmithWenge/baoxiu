@@ -107,16 +107,20 @@ public class WorkerInfoController {
     /**
      * 路由到工人编辑编辑页面
      *
-     * @param userId 校区Id
+     * @param userId 工人Id
      * @return 工人编辑页面和相工人信息
      */
     @RequestMapping("/edit/route/{userId}")
     public ModelAndView routeEdit(@PathVariable String userId) {
         WorkerInfo infos = workerInfoService.query4Edit(userId);
+        List<RepairGroup> repairGroups = workerInfoService.repairGroupQuery4List();
+        List<WorkerType> workerTypes = workerInfoService.workerTypeQuery4List();
 
         if (Optional.fromNullable(infos).isPresent()) {
-            ModelAndView mav = new ModelAndView("admin/worker/info/edit");
 
+            ModelAndView mav = new ModelAndView("admin/worker/info/edit");
+            mav.addObject("repairGroups",repairGroups);
+            mav.addObject("workerTypes",workerTypes);
             mav.addObject("infos", infos);
 
             return mav;

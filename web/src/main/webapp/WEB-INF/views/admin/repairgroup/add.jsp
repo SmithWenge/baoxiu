@@ -15,13 +15,13 @@
         <div style="width: 30%; margin-top: 15px; ">
             <form action="${contextPath}/admin/repairgroup/add/do.action" method="post" class="layui-form">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">维修小组编号</label>
+                    <label class="layui-form-label">小组编号</label>
                     <div class="layui-input-block">
                         <input type="text" name="groupNumber" lay-verify="groupNumber" placeholder="请输入编号" class="layui-input" id="groupNumber">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">维修小组名</label>
+                    <label class="layui-form-label">小组名</label>
                     <div class="layui-input-block">
                         <input type="text" name="groupName" lay-verify="groupName" placeholder="请输入" autocomplete="off" class="layui-input">
                     </div>
@@ -29,7 +29,12 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">打印机编号</label>
                     <div class="layui-input-block">
-                        <input type="text" name="groupPrinterIp" lay-verify="groupPrinterIp" placeholder="请输入编号" class="layui-input" >
+                        <select name="groupPrinterIp" id="groupPrinterIp" lay-verify="groupPrinterIp">
+                            <option value="">无</option>
+                            <c:forEach items="${printers}" var="printers">
+                                <option  value="${printers.printerZHCNName}" >${printers.printerZHCNName}</option>
+                            </c:forEach>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-form-item">

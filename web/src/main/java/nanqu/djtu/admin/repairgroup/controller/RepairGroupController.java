@@ -47,8 +47,12 @@ public class RepairGroupController {
      * @return 维修小组添加页面地址
      */
     @RequestMapping("/add/route")
-    public String routeAdd() {
-        return "admin/repairgroup/add";
+    public ModelAndView routeAdd() {
+        List<Printer> printers =repairGroupService.printerQuery4List();
+
+        ModelAndView modelAndView = new ModelAndView("admin/repairgroup/add");
+        modelAndView.addObject("printers",printers);
+        return  modelAndView;
     }
     /**
      * 保存添加新维修小组
@@ -105,10 +109,10 @@ public class RepairGroupController {
     @RequestMapping("/edit/route/{repairGroupId}")
     public ModelAndView routeEdit(@PathVariable String repairGroupId) {
         RepairGroup group = repairGroupService.query4Edit(repairGroupId);
-
+        List<Printer> printers =repairGroupService.printerQuery4List();
         if (Optional.fromNullable(group).isPresent()) {
             ModelAndView mav = new ModelAndView("admin/repairgroup/edit");
-
+            mav.addObject("printers",printers);
             mav.addObject("group", group);
 
             return mav;

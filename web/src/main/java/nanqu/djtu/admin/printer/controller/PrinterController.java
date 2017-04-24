@@ -57,7 +57,7 @@ public class PrinterController {
     /**
      * 保存添加新打印机
      *
-     * @param distinct 新打印机信息
+     * @param printer 新打印机信息
      * @param redirectAttributes 添加操作提示信息
      * @return 添加成功返回list页面,else add页面
      */
@@ -107,7 +107,7 @@ public class PrinterController {
      * 路由到打印机编辑页面
      *
      * @param printerId 打印机Id
-     * @return 校区编辑页面和相校区信息
+     * @return 打印机编辑页面和相打印机信息
      */
     @RequestMapping("/edit/route/{printerId}")
     public ModelAndView routeEdit(@PathVariable String printerId ) {

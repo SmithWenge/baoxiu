@@ -15,14 +15,14 @@
             <form action="${contextPath}/admin/repairgroup/edit/do.action" method="post" class="layui-form">
                 <input type="hidden" name="repairGroupId" value="${group.repairGroupId}">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">维修小组编号</label>
+                    <label class="layui-form-label">小组编号</label>
                     <div class="layui-input-block">
                         <input type="text" name="groupNumber" lay-verify="groupNumber" value="${group.groupNumber}" class="layui-input" id="groupNumber">
                         <input type="hidden" name="hiddenGroupNumber" value="${group.groupNumber}" class="layui-input" id="hiddenGroupNumber">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">维修小组名</label>
+                    <label class="layui-form-label">小组名</label>
                     <div class="layui-input-block">
                         <input type="text" name="groupName" lay-verify="groupName" value="${group.groupName}" autocomplete="off" class="layui-input">
                     </div>
@@ -30,7 +30,12 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">打印机编号</label>
                     <div class="layui-input-block">
-                        <input type="text" name="groupPrinterIp" lay-verify="groupPrinterIp" value="${group.groupPrinterIp}" class="layui-input">
+                        <select name="groupPrinterIp" id="groupPrinterIp" lay-verify="groupPrinterIp">
+                            <option value="${group.groupPrinterIp}">${group.groupPrinterIp}</option>
+                            <c:forEach items="${printers}" var="printers">
+                                <option  value="${printers.printerZHCNName}" >${printers.printerZHCNName}</option>
+                            </c:forEach>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -83,9 +88,6 @@
                     }
                 });
 
-                if (!uniqueGroupNumber) {
-                    return "填写的维修小组编号已存在";
-                }
             },
             groupName: function (value) {
                 if (value.length < 2) {
