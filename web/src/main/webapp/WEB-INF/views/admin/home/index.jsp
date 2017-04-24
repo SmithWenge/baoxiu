@@ -4,6 +4,8 @@
 
 <!-- 内容主体 -->
 <div class="layui-body body">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>报修单查看</legend>
     <div class="layui-field-box">
         <table class="layui-table">
             <thead>
