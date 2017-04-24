@@ -1,6 +1,7 @@
 package nanqu.djtu.admin.repairgroup.repository;
 
 import nanqu.djtu.pojo.PlaceBuilding;
+import nanqu.djtu.pojo.Printer;
 import nanqu.djtu.pojo.RepairGroup;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public interface RepairGroupRepositoryI {
     RepairGroup select4Edit(String repairGroupId);
 
     /**
-     * 更新校区信息
+     * 更新小组信息
      *
      * @param group 新的更改后的校区信息
      * @return 更改成功返回true, else false
@@ -51,4 +52,11 @@ public interface RepairGroupRepositoryI {
      * @return 唯一返回true, else false
      */
     boolean select4RepairGroupNumberUnique(String groupNumber);
+
+    /**
+     * 查询打印机信息
+     *
+     * @return所有未删除打印机
+     */
+    List<Printer> printerQuery4List();
 }

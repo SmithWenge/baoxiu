@@ -3,6 +3,7 @@ package nanqu.djtu.admin.repairgroup.service.impl;
 import nanqu.djtu.admin.repairgroup.repository.RepairGroupRepositoryI;
 import nanqu.djtu.admin.repairgroup.service.RepairGroupServiceI;
 import nanqu.djtu.pojo.AdminUser;
+import nanqu.djtu.pojo.Printer;
 import nanqu.djtu.pojo.RepairGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +70,11 @@ public class RepairGroupServiceImpl implements RepairGroupServiceI{
     @Override
     public boolean query4RepairGroupNumberUnique(String groupNumber) {
         return repairGroupRepository.select4RepairGroupNumberUnique(groupNumber);
+    }
+
+    @Override
+    public List<Printer> printerQuery4List() {
+        return repairGroupRepository.printerQuery4List();
     }
 
 

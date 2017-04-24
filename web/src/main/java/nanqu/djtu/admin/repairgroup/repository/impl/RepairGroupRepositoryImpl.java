@@ -3,7 +3,9 @@ package nanqu.djtu.admin.repairgroup.repository.impl;
 import nanqu.djtu.admin.place.building.repository.impl.PlaceBuildingRepositoryImpl;
 import nanqu.djtu.admin.place.distinct.repository.impl.PlaceDistinctRepositoryImpl;
 import nanqu.djtu.admin.repairgroup.repository.RepairGroupRepositoryI;
+import nanqu.djtu.admin.worker.info.repository.impl.WorkerInfoRepositoryImpl;
 import nanqu.djtu.pojo.PlaceBuilding;
+import nanqu.djtu.pojo.Printer;
 import nanqu.djtu.pojo.RepairGroup;
 import nanqu.djtu.utils.PrimaryKeyUtil;
 import org.slf4j.Logger;
@@ -119,7 +121,7 @@ public class RepairGroupRepositoryImpl implements RepairGroupRepositoryI {
 
     @Override
     public RepairGroup select4Edit(String repairGroupId) {
-        String sql = "SELECT repairGroupId, groupNumber, groupName, groupPrinterIp FROM baoxiu_repairgroup WHERE repairGroupId = ? AND deleteFlag = 0";
+        String sql = "SELECT repairGroupId,groupNumber,groupName,printerZHCNName,INFO.groupPrinterIp FROM baoxiu_repairgroup AS INFO LEFT JOIN baoxiu_printer AS RP ON INFO.groupPrinterIp = RP.printerId WHERE repairGroupId = ? AND INFO.deleteFlag = 0";
         Object[] args = {
                 repairGroupId
         };
@@ -178,6 +180,36 @@ public class RepairGroupRepositoryImpl implements RepairGroupRepositoryI {
             return false;
         }
 
+    }
+
+    @Override
+    public List<Printer> printerQuery4List() {
+        String sql = "SELECT printerId,printerZHCNName,printerNumber,printIp FROM baoxiu_printer where deleteFlag = 0";
+        Object[] args = {};
+
+        try {
+            return jdbcTemplate.query(sql,args,new printerQuery4ListRowMapper());
+        }catch (Exception e) {
+
+            LOG.error("[printer] query4List error with info {}.", e.getMessage());
+            return new ArrayList<>();
+
+        }
+    }
+
+    private class printerQuery4ListRowMapper implements RowMapper<Printer> {
+
+        @Override
+        public Printer mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Printer printer = new Printer();
+
+            printer.setPrinterId(rs.getString("printerId"));
+            printer.setPrinterZHCNName(rs.getString("printerZHCNName"));
+            printer.setPrinterNumber(rs.getString("printerNumber"));
+            printer.setPrintIp(rs.getString("printIp"));
+
+            return printer;
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package nanqu.djtu.admin.repairgroup.service;
 
 import nanqu.djtu.pojo.AdminUser;
+import nanqu.djtu.pojo.Printer;
 import nanqu.djtu.pojo.RepairGroup;
 
 import java.util.List;
@@ -15,4 +16,5 @@ public interface RepairGroupServiceI {
     RepairGroup query4Edit(String repairGroupId);
     boolean updateRepairGroup(RepairGroup group, AdminUser user);
     boolean query4RepairGroupNumberUnique(String groupNumber);
+    List<Printer> printerQuery4List();
 }

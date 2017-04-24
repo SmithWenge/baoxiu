@@ -198,8 +198,10 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
 
     @Override
     public WorkerInfo query4Edit(String userId) {
-        String sql = "SELECT userId, workerName, workerTel, workerUnit, workerDepartment, workerJob, workerState, groupName, typeName, INFO.repairGroupId, INFO.typeId FROM (baoxiu_workerinfo AS INFO join baoxiu_repairgroup AS RP on(INFO.repairGroupId = RP.repairGroupId) )JOIN baoxiu_workertype AS TY on(INFO.typeId = TY.typeId) WHERE INFO.deleteFlag = 0";
-        Object[] args = {};
+        String sql = "SELECT userId,workerName,workerTel,workerUnit,workerDepartment,workerJob,workerState,groupName,typeName,INFO.repairGroupId,INFO.typeId FROM baoxiu_workerinfo AS INFO join baoxiu_repairgroup AS RP on(INFO.repairGroupId = RP.repairGroupId) join baoxiu_workertype AS TY on(INFO.typeId = TY.typeId) WHERE userId = ? AND INFO.deleteFlag = 0";
+        Object[] args = {
+                userId
+        };
 
         try {
             return jdbcTemplate.queryForObject(sql,args,new Query4ListRowMapper());
