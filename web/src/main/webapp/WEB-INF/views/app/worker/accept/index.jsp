@@ -183,7 +183,7 @@
             </a>
             <a class="tab-item external" href="${contextPath}/app/worker/routeWaitingList.action" style="color: #fff;">
                 <span class="icon">
-                    <i class="fa fa-bell-o fa-lg" aria-hidden="true"></i>
+                    <i class="fa fa-bell-o" aria-hidden="true"></i>
                 </span>
                 <span class="badge">${maintenanceList.waitToDoMaintenanceSum}</span>
             </a>
