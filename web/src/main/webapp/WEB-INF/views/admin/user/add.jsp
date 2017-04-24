@@ -7,7 +7,7 @@
   <fieldset class="layui-elem-field">
     <legend>
             <span class="layui-breadcrumb">
-              <a href="${contextPath}/admin/userInfo/list.action">用户信息</a>
+              <a href="${contextPath}/admin/userInfo/list.action">管理员用户信息</a>
               <a><cite>管理员用户信息添加</cite></a>
             </span>
     </legend>

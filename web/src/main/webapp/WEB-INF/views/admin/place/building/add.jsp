@@ -14,7 +14,7 @@
     <div style="width: 30%; margin-top: 15px; ">
       <form action="${contextPath}/admin/place/building/add/do.action" method="post" class="layui-form">
         <div class="layui-form-item">
-          <label class="layui-form-label">校区名</label>
+          <label class="layui-form-label">校区</label>
           <div class="layui-input-block">
             <select name="distinctId" id="distinctId" lay-verify="distinctId">
               <c:forEach items="${placeDistincts}" var="placeDistincts">
