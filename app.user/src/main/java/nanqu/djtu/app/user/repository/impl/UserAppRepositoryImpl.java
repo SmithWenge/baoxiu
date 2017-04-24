@@ -400,24 +400,43 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
 
             MaintenanceList maintenanceList = new MaintenanceList();
             maintenanceList.setListNumber(rs.getString("listNumber"));
-            maintenanceList.setListState(rs.getString("listState"));
+
+            String listState = rs.getString("listState");
+            maintenanceList.setListState(listState);
+
+            if (listState.equals("1")) {
+                maintenanceList.setListStateFrontStyleColor(ConstantFields.MAINTENANCELIST_COMMIT_STATE_COLOR);
+            } else if (listState.equals("2")) {
+                maintenanceList.setListStateFrontStyleColor(ConstantFields.MAINTENANCELIST_ACCEPT_STATE_COLOR);
+            } else if (listState.equals("3")) {
+                maintenanceList.setListStateFrontStyleColor(ConstantFields.MAINTENANCELIST_DONE_STATE_COLOR);
+            } else if (listState.equals(ConstantFields.MAINTENANCELIST_ADD_ADMIN_MODIFY_STATE)) {
+                maintenanceList.setListStateFrontStyleColor(ConstantFields.MAINTENANCELIST_MODIFY_STATE_COLOR);
+            } else if (listState.equals("6")) {
+                maintenanceList.setListStateFrontStyleColor(ConstantFields.MAINTENANCELIST_DELAY_STATE_COLOR);
+            }
+
             maintenanceList.setListstatetime(rs.getString("liststatetime"));
             maintenanceList.setListDescription(rs.getString("listDescription"));
-            if(rs.getString("roomName")==null){
+
+            if (Strings.isNullOrEmpty(rs.getString("roomName"))){
                 maintenanceList.setRoomName(ConstantFields.QI_TA);
-            }else {
+            } else {
                 maintenanceList.setRoomName(rs.getString("roomName"));
             }
-            if(rs.getString("buildingName")==null){
+
+            if (Strings.isNullOrEmpty(rs.getString("buildingName"))){
                 maintenanceList.setBuildingName(ConstantFields.QI_TA);
-            }else {
+            } else {
                 maintenanceList.setBuildingName(rs.getString("buildingName"));
             }
-            if(rs.getString("equipmentName")==null){
+
+            if (Strings.isNullOrEmpty(rs.getString("equipmentName"))){
                 maintenanceList.setEquipmentName(ConstantFields.QI_TA);
-            }else{
+            } else {
                 maintenanceList.setEquipmentName(rs.getString("equipmentName"));
             }
+
             maintenanceList.setDistinctName(rs.getString("distinctName"));
 
             return maintenanceList;

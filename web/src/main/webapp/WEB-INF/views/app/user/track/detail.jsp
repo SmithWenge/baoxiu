@@ -12,7 +12,7 @@
                 <div class="card-header">
                     <header class="bar bar-nav" style="background-color: #FFF;">
                         <h3 class="title">
-                            <i class="fa fa-circle" aria-hidden="true" style="color:#33CC00;"></i>
+                            <%--<i class="fa fa-circle" aria-hidden="true" style="color:#33CC00;"></i>--%>
                             <b>报修单详情（${maintenanceList.listNumber}）</b>
                         </h3>
                     </header>
@@ -75,10 +75,13 @@
                                         <div class="item-inner">
                                             <div class="item-title">${state.liststatetime}</div>
                                             <div class="item-after">
-                                                <c:if test="${state.listState == 1}">已提交</c:if>
-                                                <c:if test="${state.listState == 2}">已派单</c:if>
-                                                <c:if test="${state.listState == 3}">以处理</c:if>
-                                                <c:if test="${state.listState == 4}">已评价</c:if>
+                                                <c:if test="${state.listState eq 1}">已提交</c:if>
+                                                <c:if test="${state.listState eq 2}">已接单</c:if>
+                                                <c:if test="${state.listState eq 3}">已处理</c:if>
+                                                <c:if test="${state.listState eq 4}">已评价</c:if>
+                                                <c:if test="${state.listState eq 5}">待派单</c:if>
+                                                <c:if test="${state.listState eq 6}">已延期</c:if>
+                                                <c:if test="${state.listState eq 7}">已催单</c:if>
                                             </div>
                                         </div>
                                     </li>
@@ -88,8 +91,8 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="${contextPath}/app/user/turn/repairList/router/${maintenanceList.userTel}.action" class="button button-fill button-success" external>返回</a>
-                    <a href="${contextPath}/app/user/redirect/index.action" class="button button-fill button-primary" external>首页</a>
+                    <a href="${contextPath}/app/user/turn/repairList/router/${maintenanceList.userTel}.action" class="button button-fill button-success" style="background-color: #02cbe9;" external>我的报修</a>
+                    <a href="${contextPath}/app/user/redirect/index.action" class="button button-fill button-primary" style="background-color: #fdb970;" external>首页</a>
                 </div>
             </div>
             <div class="card-header">

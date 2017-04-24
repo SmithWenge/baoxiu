@@ -29,11 +29,31 @@ public class MaintenanceList {
     private List<MaintenanceList> lists;
     private String listStatusTime;
     private int sum;
+
     private int eachDistinctMaintenanceListNumber;//每个校区有多少保修单
     private boolean maintenanceExit;//判断保修单是否存在
     private int waitToDoMaintenanceSum;//待办报修单数
     private int onDoMaintenanceSum;//在办报修单数
     private int allDoMaintenanceSum;//所有要工人处理的报修单数
+
+    private String listStateFrontStyleColor; // 前台状态圆点颜色
+
+    public void setListState(int listState) {
+        this.listState = listState;
+    }
+
+    public void setListStatusTime(String listStatusTime) {
+        this.listStatusTime = listStatusTime;
+    }
+
+    public void setListStateFrontStyleColor(String listStateFrontStyleColor) {
+        this.listStateFrontStyleColor = listStateFrontStyleColor;
+    }
+
+    public String getListStateFrontStyleColor() {
+
+        return listStateFrontStyleColor;
+    }
 
     public int getOnDoMaintenanceSum() {
         return onDoMaintenanceSum;

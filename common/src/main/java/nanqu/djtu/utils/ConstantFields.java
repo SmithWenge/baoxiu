@@ -50,4 +50,23 @@ public class ConstantFields {
     /*定义其他选项的中文名*/
     public static final String QI_TA ="其他";
     public static final String DEFAULT_WORKER_PASS = "000000";
+
+    /* 报修单已提交状态的前台圆点颜色 */
+    public static final String MAINTENANCELIST_COMMIT_STATE_COLOR = "#cc00ff";
+    /* 报修单已接单状态的前台圆点颜色 */
+    public static final String MAINTENANCELIST_ACCEPT_STATE_COLOR = "#3394ff";
+    /* 报修单已完成的前台圆点颜色 */
+    public static final String MAINTENANCELIST_DONE_STATE_COLOR = "green";
+    /* 报修单信息中包含其他的前台圆点颜色 */
+    public static final String MAINTENANCELIST_MODIFY_STATE_COLOR = "#0000FF";
+    /* 报修单延期的前台圆点颜色 */
+    public static final String MAINTENANCELIST_DELAY_STATE_COLOR = "#fff000";
+
+    /* 添加报修单中有其他选项无法派单的状态 */
+    public static final String MAINTENANCELIST_ADD_ADMIN_MODIFY_STATE = "5";
+    /* 报修单的状态为正常的添加->已提交 */
+    public static final int MAINTENANCELIST_ADD_COMMITTED_STATE = 1;
+
+
+
 }

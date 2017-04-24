@@ -1,0 +1,5 @@
+INSERT INTO `baoxiu`.`common_dictionary` (`id`, `groupKey`, `groupValue`, `itemKey`, `itemValue`, `status`, `sort`) VALUES ('33', '6', 'listState', '5', '待派单', '1', '33');
+INSERT INTO `baoxiu`.`common_dictionary` (`id`, `groupKey`, `groupValue`, `itemKey`, `itemValue`, `status`, `sort`) VALUES ('34', '6', 'listState', '5', '已延期', '1', '34');
+INSERT INTO `baoxiu`.`common_dictionary` (`id`, `groupKey`, `groupValue`, `itemKey`, `itemValue`, `status`, `sort`) VALUES ('35', '6', 'listSate', '5', '已催单', '1', '35');
+UPDATE `baoxiu`.`common_dictionary` SET `itemKey`='6' WHERE `id`='34';
+UPDATE `baoxiu`.`common_dictionary` SET `itemKey`='7' WHERE `id`='35';

@@ -49,26 +49,24 @@ public class UserAppServiceImpl implements UserAppServiceI {
             repairGroupId = ConstantFields.DEFAULT_GROUP_ID;
         }
 
-        list.setListState("1");
+
         list.setRepairGroupId(repairGroupId);
         String distinctId = list.getDistinctId();
         String buildingId = list.getBuildingId();
         String roomId = list.getRoomId();
         //其他选项的判断
         if(distinctId.equals(ConstantFields.OTHER_SELECT) || buildingId.equals(ConstantFields.OTHER_SELECT)|| roomId.equals(ConstantFields.OTHER_SELECT) || equipmentId.equals(ConstantFields.OTHER_SELECT)){
-
+            list.setListState(ConstantFields.MAINTENANCELIST_ADD_ADMIN_MODIFY_STATE);
             list.setListNumber(PrimaryKeyUtil.uuidPrimaryKey());
 
             if (userAppRepository.insertNew(list) && userAppRepository.insertNewListState(list)) {
 
                 return list;
-
-            }else {
-
+            } else {
                 return null;
-
             }
-        }else{
+        } else {
+            list.setListState(ConstantFields.MAINTENANCELIST_ADD_COMMITTED_STATE);
             // 拼接维修单编号
             String distinctNumber = userAppRepository.selectDistinctNumber(distinctId);
             String buildingNumber = userAppRepository.selectBuildingNumber(list.getBuildingId());

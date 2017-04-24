@@ -1,5 +1,7 @@
 package nanqu.djtu.app.user.controller;
 
+import com.google.common.base.Optional;
+import com.google.common.base.Strings;
 import nanqu.djtu.app.user.service.UserAppServiceI;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.utils.ConstantFields;
@@ -105,7 +107,7 @@ public class UserAppController {
      * @param maintenanceList
      * @return
      */
-    @RequestMapping(value = "/add/tel/router", method = RequestMethod.POST)
+    @RequestMapping(value = "/add/tel/router")
     public ModelAndView addTel(MaintenanceList maintenanceList){
         MaintenanceList list = userAppService.queryAllName(maintenanceList);
 
@@ -127,8 +129,7 @@ public class UserAppController {
      */
     @RequestMapping(value = "/add/do", method = RequestMethod.POST)
     public ModelAndView addNewMaintenanceList(MaintenanceList maintenanceList, RedirectAttributes redirectAttributes) {
-        if(maintenanceList.getUserTel() == null){
-
+        if(Strings.isNullOrEmpty(maintenanceList.getUserTel())){
             MaintenanceList list = userAppService.queryAllName(maintenanceList);
 
             maintenanceList.setDistinctName(list.getDistinctName());
@@ -141,12 +142,11 @@ public class UserAppController {
             modelAndView.addObject("maintenance", maintenanceList);
 
             return modelAndView;
-
         }
 
         MaintenanceList  list = userAppService.saveNewMaintenanceList(maintenanceList);
 
-        if (list == null){
+        if (!Optional.fromNullable(list).isPresent()) {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
 
             MaintenanceList list1 = userAppService.queryAllName(maintenanceList);
