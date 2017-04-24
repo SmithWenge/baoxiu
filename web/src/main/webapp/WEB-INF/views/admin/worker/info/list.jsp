@@ -19,9 +19,9 @@
           <td>单位</td>
           <td>部门</td>
           <td>职称</td>
-          <td>组名</td>
+          <td>维修小组名</td>
           <td>工种</td>
-          <td>状态</td>
+          <td>工人状态</td>
           <td>操作</td>
         </tr>
         </thead>

@@ -22,7 +22,7 @@
                 <div class="card">
                     <div class="card-header" style="font-size: .8rem;">
                         <i class="fa fa-circle" aria-hidden="true" style="color: yellow;"></i>
-                        维修单号：${list.listNumber}
+                        报修单号：${list.listNumber}
                     </div>
                     <div class="card-content">
                         <div class="card-content-inner">

@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="layui-form-item">
-        <label class="layui-form-label">报修单编号</label>
+        <label class="layui-form-label">报修单号</label>
         <div class="layui-input-block">
           <input type="text" value="${list.listNumber}" class="layui-input" readonly>
         </div>

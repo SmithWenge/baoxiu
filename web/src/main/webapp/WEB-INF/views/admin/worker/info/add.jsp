@@ -52,7 +52,7 @@
         </div>
 
         <div class="layui-form-item">
-          <label class="layui-form-label">组名</label>
+          <label class="layui-form-label">维修小组名</label>
           <div class="layui-input-block">
             <select name="repairGroupId" id="repairGroupId" lay-verify="repairGroupId">
               <option value="">请选择</option>
@@ -74,7 +74,7 @@
           </div>
         </div>
         <div class="layui-form-item">
-          <label class="layui-form-label">状态</label>
+          <label class="layui-form-label">工人状态</label>
           <div class="layui-input-block">
             <select name="workerState" id="workerState" lay-verify="workState">
               <option value="">请选择</option>

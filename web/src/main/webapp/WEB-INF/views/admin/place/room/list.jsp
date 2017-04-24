@@ -39,8 +39,8 @@
                     <td>序号</td>
                     <td>位置编号</td>
                     <td>位置名</td>
-                    <td>所属校区</td>
-                    <td>所属维修区域</td>
+                    <td>校区</td>
+                    <td>地点</td>
                     <td>操作</td>
                 </tr>
                 </thead>

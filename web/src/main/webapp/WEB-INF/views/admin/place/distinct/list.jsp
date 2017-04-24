@@ -15,7 +15,7 @@
                 <tr>
                     <td>序号</td>
                     <td>校区编号</td>
-                    <td>校区名称</td>
+                    <td>校区名</td>
                     <td>操作</td>
                 </tr>
                 </thead>
