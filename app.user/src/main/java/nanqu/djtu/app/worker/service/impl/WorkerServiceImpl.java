@@ -94,4 +94,14 @@ public class WorkerServiceImpl implements WorkerServiceI {
     public int queryOnDoMaintenanceSum(String userId) {
         return workerRepository.selectOnDoMaintenanceSum(userId);
     }
+
+    @Override
+    public List<MaintenanceList> queryWaitingMaintenanceList(String userId) {
+        return workerRepository.selectWaitingMaintenanceList(userId);
+    }
+
+    @Override
+    public List<MaintenanceList> queryDoingMaintenanceListByState(String userId) {
+        return workerRepository.selectDoingMaintenanceList(userId);
+    }
 }

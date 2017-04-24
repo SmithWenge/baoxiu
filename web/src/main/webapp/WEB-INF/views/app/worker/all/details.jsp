@@ -13,18 +13,7 @@
         <div class="card-header">
           <header class="bar bar-nav" style="background-color: #FFF;">
             <h3 class="title">
-              <c:if test="${list.listState == 1}">
-                <i class="fa fa-circle" aria-hidden="true" style="color: green;"></i>
-              </c:if>
-              <c:if test="${list.listState == 2}">
-                <i class="fa fa-circle" aria-hidden="true" style="color: yellow;"></i>
-              </c:if>
-              <c:if test="${list.listState == 3}">
-                <i class="fa fa-circle" aria-hidden="true" style="color: red;"></i>
-              </c:if>
-              <c:if test="${list.listState == 4}">
-                <i class="fa fa-circle" aria-hidden="true" style="color: blue;"></i>
-              </c:if>
+              <%--<i class="fa fa-circle" aria-hidden="true" style="color: ${list.listStateFrontStyleColor};"></i>--%>
               <b>报修单操作(${list.listNumber})</b>
             </h3>
           </header>
@@ -124,21 +113,21 @@
     </div>
     <nav class="bar bar-tab" style="background: #0E4d94;opacity: 1;">
       <a class="tab-item external active" href="${contextPath}/app/worker/routeDoingList.action" style="color: #fff;">
-					    <span class="icon">
-					    	<i class="fa fa-home fa-lg" aria-hidden="true"></i>
-					    </span>
+        <span class="icon">
+            <i class="fa fa-home fa-lg" aria-hidden="true"></i>
+        </span>
         <span class="badge">${maintenanceList.onDoMaintenanceSum}</span>
       </a>
       <a class="tab-item external" href="${contextPath}/app/worker/routeWaitingList.action" style="color: #fff;">
-					    <span class="icon">
-					    	<i class="fa fa-bell-o" aria-hidden="true"></i>
-					    </span>
+        <span class="icon">
+            <i class="fa fa-bell-o" aria-hidden="true"></i>
+        </span>
         <span class="badge">${maintenanceList.waitToDoMaintenanceSum}</span>
       </a>
       <a class="tab-item external" href="${contextPath}/app/worker/routeLatestList.action" style="color: #fff;">
-					    <span class="icon">
-					    	<i class="fa fa-briefcase" aria-hidden="true"></i>
-					    </span>
+        <span class="icon">
+            <i class="fa fa-briefcase" aria-hidden="true"></i>
+        </span>
         <span class="badge">${maintenanceList.allDoMaintenanceSum}</span>
       </a>
     </nav>

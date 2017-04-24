@@ -17,4 +17,8 @@ public interface WorkerServiceI {
     int queryallDoMaintenanceSum(String userId);
 
     int queryOnDoMaintenanceSum(String userId);
+
+    List<MaintenanceList> queryWaitingMaintenanceList(String userId);
+
+    List<MaintenanceList> queryDoingMaintenanceListByState(String userId);
 }

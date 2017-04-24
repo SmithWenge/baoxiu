@@ -2,6 +2,7 @@ package nanqu.djtu.app.user.repository.impl;
 
 import com.google.common.base.Strings;
 import nanqu.djtu.app.user.repository.UserAppRepositoryI;
+import nanqu.djtu.app.util.MaintenanceListStateToStringUtil;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.utils.ConstantFields;
 import nanqu.djtu.utils.PrimaryKeyUtil;
@@ -404,17 +405,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
             String listState = rs.getString("listState");
             maintenanceList.setListState(listState);
 
-            if (listState.equals("1")) {
-                maintenanceList.setListStateFrontStyleColor(ConstantFields.MAINTENANCELIST_COMMIT_STATE_COLOR);
-            } else if (listState.equals("2")) {
-                maintenanceList.setListStateFrontStyleColor(ConstantFields.MAINTENANCELIST_ACCEPT_STATE_COLOR);
-            } else if (listState.equals("3")) {
-                maintenanceList.setListStateFrontStyleColor(ConstantFields.MAINTENANCELIST_DONE_STATE_COLOR);
-            } else if (listState.equals(ConstantFields.MAINTENANCELIST_ADD_ADMIN_MODIFY_STATE)) {
-                maintenanceList.setListStateFrontStyleColor(ConstantFields.MAINTENANCELIST_MODIFY_STATE_COLOR);
-            } else if (listState.equals("6")) {
-                maintenanceList.setListStateFrontStyleColor(ConstantFields.MAINTENANCELIST_DELAY_STATE_COLOR);
-            }
+            maintenanceList.setListStateFrontStyleColor(MaintenanceListStateToStringUtil.stateNumberToColorString(listState));
 
             maintenanceList.setListstatetime(rs.getString("liststatetime"));
             maintenanceList.setListDescription(rs.getString("listDescription"));
