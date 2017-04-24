@@ -13,7 +13,7 @@
     <title></title>
 </head>
 <body>
-添加保修单成功！
+添加报修单成功！
 </body>
 </html>
 
