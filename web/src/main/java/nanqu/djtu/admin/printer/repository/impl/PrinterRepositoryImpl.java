@@ -33,7 +33,7 @@ public class PrinterRepositoryImpl implements PrinterRepositoryI {
      */
     @Override
     public List<Printer> query4List() {
-        String sql = "SELECT printerId,printerZHCNName,printerNumber,printIp FROM baoxiu.baoxiu_printer where deleteFlag=0";
+        String sql = "SELECT printerId,printerZHCNName,printerNumber,printIp FROM baoxiu_printer where deleteFlag=0";
         Object[] args = {};
 
         try {
@@ -70,7 +70,7 @@ public class PrinterRepositoryImpl implements PrinterRepositoryI {
      */
     @Override
     public boolean insertNewPrinter(Printer printer) {
-        String sql = "INSERT INTO baoxiu.baoxiu_printer (printerId,printerZHCNName,printerNumber,printIp,deleteFlag) VALUES (?,?,?,?,0);";
+        String sql = "INSERT INTO baoxiu_printer (printerId,printerZHCNName,printerNumber,printIp,deleteFlag) VALUES (?,?,?,?,0);";
         Object[] args = {
                 PrimaryKeyUtil.uuidPrimaryKey(),
                 printer.getPrinterZHCNName(),
@@ -96,7 +96,7 @@ public class PrinterRepositoryImpl implements PrinterRepositoryI {
      */
     @Override
     public boolean deletePrinter(String printerId) {
-        String sql = "UPDATE baoxiu.baoxiu_printer SET deleteFlag = 1 WHERE printerId =? AND deleteFlag = 0;";
+        String sql = "UPDATE baoxiu_printer SET deleteFlag = 1 WHERE printerId =? AND deleteFlag = 0;";
         Object[] args = {printerId};
 
         try {
@@ -115,7 +115,7 @@ public class PrinterRepositoryImpl implements PrinterRepositoryI {
      */
     @Override
     public Printer query4Edit(String printerId) {
-        String sql = "SELECT printerId,printerZHCNName,printerNumber,printIp FROM baoxiu.baoxiu_printer where printerId = ? and deleteFlag = 0";
+        String sql = "SELECT printerId, printerZHCNName, printerNumber, printIp FROM baoxiu_printer WHERE printerId = ? AND deleteFlag = 0";
         Object[] args = {printerId};
 
         try {
@@ -136,7 +136,7 @@ public class PrinterRepositoryImpl implements PrinterRepositoryI {
      */
     @Override
     public boolean updatePrinter(Printer printer) {
-        String sql = "UPDATE baoxiu.baoxiu_printer SET printerZHCNName = ? ,printerNumber = ?,printIp = ? where deleteFlag = 0 and printerId = ?";
+        String sql = "UPDATE baoxiu_printer SET printerZHCNName = ? ,printerNumber = ?,printIp = ? WHERE deleteFlag = 0 AND printerId = ?";
         Object[] args = {
                 printer.getPrinterZHCNName(),
                 printer.getPrinterNumber(),
@@ -160,7 +160,7 @@ public class PrinterRepositoryImpl implements PrinterRepositoryI {
 
     @Override
     public boolean select4PrinterNumberUnique(String printerNumber) {
-        String sql = "SELECT COUNT(1) AS NUM FROM baoxiu.baoxiu_printer WHERE printerNumber = ?";
+        String sql = "SELECT COUNT(1) AS NUM FROM baoxiu_printer WHERE printerNumber = ?";
         Object[] args = {printerNumber};
 
         try {
@@ -173,7 +173,7 @@ public class PrinterRepositoryImpl implements PrinterRepositoryI {
 
     @Override
     public boolean query4PrintIpUnique(String printIp) {
-        String sql = "SELECT COUNT(1) AS NUM FROM baoxiu.baoxiu_printer WHERE printIp = ?";
+        String sql = "SELECT COUNT(1) AS NUM FROM baoxiu_printer WHERE printIp = ?";
         Object[] args = {printIp};
 
         try {

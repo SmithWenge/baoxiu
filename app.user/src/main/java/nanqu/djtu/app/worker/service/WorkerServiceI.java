@@ -13,4 +13,8 @@ public interface WorkerServiceI {
     Boolean edit(MaintenanceList list,WorkerInfo info);
     WorkerInfo queryWorkerInfo(String userId);
     Boolean changePass(WorkerInfo info,WorkerInfo workerInfo);
+    int queryTodoMaintenanceNumber(String userId);
+    int queryallDoMaintenanceSum(String userId);
+
+    int queryOnDoMaintenanceSum(String userId);
 }

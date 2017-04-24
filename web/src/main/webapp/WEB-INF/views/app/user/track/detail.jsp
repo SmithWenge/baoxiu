@@ -91,8 +91,11 @@
                     <a href="${contextPath}/app/user/turn/repairList/router/${maintenanceList.userTel}.action" class="button button-fill button-success" external>返回</a>
                     <a href="${contextPath}/app/user/redirect/index.action" class="button button-fill button-primary" external>首页</a>
                 </div>
-         </div>
+            </div>
+            <div class="card-header">
+            </div>
         </div>
+
         <nav class="bar bar-tab" style="background-color: #0E4d94;">
             <h3 class="title title-2" style=" color: #FFF; font-weight: bold;">程序设计：大连交通大学56工作室</h3>
         </nav>
@@ -100,7 +103,5 @@
 </div>
 
 <%@ include file="/WEB-INF/include/app/appJavascript.jsp"%>
-
-
 
 <%@ include file="/WEB-INF/include/app/appFooter.jsp"%>

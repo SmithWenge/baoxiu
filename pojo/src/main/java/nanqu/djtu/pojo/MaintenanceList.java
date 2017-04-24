@@ -31,6 +31,33 @@ public class MaintenanceList {
     private int sum;
     private int eachDistinctMaintenanceListNumber;//每个校区有多少保修单
     private boolean maintenanceExit;//判断保修单是否存在
+    private int waitToDoMaintenanceSum;//待办报修单数
+    private int onDoMaintenanceSum;//在办报修单数
+    private int allDoMaintenanceSum;//所有要工人处理的报修单数
+
+    public int getOnDoMaintenanceSum() {
+        return onDoMaintenanceSum;
+    }
+
+    public void setOnDoMaintenanceSum(int onDoMaintenanceSum) {
+        this.onDoMaintenanceSum = onDoMaintenanceSum;
+    }
+
+    public int getWaitToDoMaintenanceSum() {
+        return waitToDoMaintenanceSum;
+    }
+
+    public void setWaitToDoMaintenanceSum(int waitToDoMaintenanceSum) {
+        this.waitToDoMaintenanceSum = waitToDoMaintenanceSum;
+    }
+
+    public int getAllDoMaintenanceSum() {
+        return allDoMaintenanceSum;
+    }
+
+    public void setAllDoMaintenanceSum(int allDoMaintenanceSum) {
+        this.allDoMaintenanceSum = allDoMaintenanceSum;
+    }
     public boolean isMaintenanceExit() {
         return maintenanceExit;
     }

@@ -99,7 +99,7 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
             MaintenanceList list = new MaintenanceList();
             list.setListNumber(resultSet.getString("listNumber"));
             list.setListstatetime(resultSet.getString("liststatetime"));
-            list.setListBigDescription("listDescription");
+            list.setListBigDescription(resultSet.getString("listDescription"));
 
             return list;
         }
@@ -374,6 +374,59 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
             LOG.error("[worker] change password  error", e.getMessage());
 
             return false;
+        }
+    }
+
+    @Override
+    public int selectTodoMiantenanceSum(String userId) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT count(MA.listNumber) FROM baoxiu_maintenancelist AS MA  LEFT JOIN baoxiu_workerinfo AS INF ON(MA.repairGroupId = INF.repairGroupId) ");
+        builder.append("WHERE INF.userId = ? AND MA.listState = 1");
+
+        Object[] args = { userId};
+        try{
+            return jdbcTemplate.queryForInt(builder.toString(), args);
+        }catch (Exception e){
+            LOG.error("[worker] select todoMiantenanceSum  error", e.getMessage());
+
+            return 0;
+        }
+    }
+
+    /**
+     * 查询所有需处理的报修单
+     * @param userId
+     * @return 报修单数
+     */
+    @Override
+    public int selectallDoMaintenanceSum(String userId) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT count(MA.listNumber) FROM baoxiu_maintenancelist AS MA  LEFT JOIN baoxiu_workerinfo AS INF ON(MA.repairGroupId = INF.repairGroupId) ");
+        builder.append("WHERE INF.userId = ? ");
+
+        Object[] args = { userId};
+        try{
+            return jdbcTemplate.queryForInt(builder.toString(), args);
+        }catch (Exception e){
+            LOG.error("[worker] select todoMiantenanceSum  error", e.getMessage());
+
+            return 0;
+        }
+    }
+
+    @Override
+    public int selectOnDoMaintenanceSum(String userId) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT count(MA.listNumber) FROM baoxiu_maintenancelist AS MA  LEFT JOIN baoxiu_workerinfo AS INF ON(MA.repairGroupId = INF.repairGroupId) ");
+        builder.append("WHERE INF.userId = ? AND MA.listState = 2");
+
+        Object[] args = { userId};
+        try{
+            return jdbcTemplate.queryForInt(builder.toString(), args);
+        }catch (Exception e){
+            LOG.error("[worker] select todoMiantenanceSum  error", e.getMessage());
+
+            return 0;
         }
     }
 }

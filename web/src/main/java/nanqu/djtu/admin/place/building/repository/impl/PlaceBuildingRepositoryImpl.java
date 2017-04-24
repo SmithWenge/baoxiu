@@ -71,7 +71,7 @@ public class PlaceBuildingRepositoryImpl implements PlaceBuildingRepositoryI {
      */
     @Override
     public List<PlaceDistinct> placeDistinctSelect4List() {
-        String sql = "SELECT distinctId,distinctName,distinctNumber FROM baoxiu.baoxiu_placedistinct where deleteFlag = 0";
+        String sql = "SELECT distinctId,distinctName,distinctNumber FROM baoxiu_placedistinct where deleteFlag = 0";
         Object[] args = {};
         try {
             return jdbcTemplate.query(sql, args, new placeDistinctSelect4ListRowMapper());

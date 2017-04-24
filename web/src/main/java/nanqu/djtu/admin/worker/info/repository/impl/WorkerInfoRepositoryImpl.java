@@ -33,7 +33,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
      */
     @Override
     public List<WorkerInfo> query4List() {
-        String sql = "SELECT userId,workerName,workerTel,workerUnit,workerDepartment,workerJob,workerState,groupName,typeName,GR.repairGroupId,INFO.typeId FROM (baoxiu_workerinfo AS INFO join baoxiu_repairgroup AS GR on(INFO.repairGroupId = GR.repairGroupId) )join baoxiu_workertype AS TY on(INFO.typeId = TY.typeId) where INFO.deleteFlag = 0";
+        String sql = "SELECT userId, workerName, workerTel, workerUnit, workerDepartment ,workerJob, workerState ,groupName, typeName, GR.repairGroupId, INFO.typeId  FROM (baoxiu_workerinfo AS INFO join baoxiu_repairgroup AS GR ON(INFO.repairGroupId = GR.repairGroupId) )JOIN baoxiu_workertype AS TY ON(INFO.typeId = TY.typeId) WHERE INFO.deleteFlag = 0";
         Object[] args = {};
 
         try {
@@ -74,7 +74,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
 
     @Override
     public List<RepairGroup> repairGroupQuery4List() {
-        String sql = "SELECT repairGroupId,groupNumber,groupName,groupPrinterIp FROM baoxiu_repairgroup where deleteFlag = 0";
+        String sql = "SELECT repairGroupId, groupNumber, groupName, groupPrinterIp FROM baoxiu_repairgroup where deleteFlag = 0";
         Object[] args = {};
 
         try {
@@ -109,7 +109,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
      */
     @Override
     public List<WorkerType> workerTypeQuery4List() {
-        String sql = "SELECT typeId,typeName FROM baoxiu_workertype where deleteFlag = 0";
+        String sql = "SELECT typeId, typeName FROM baoxiu_workertype WHERE deleteFlag = 0";
         Object[] args = {};
 
         try {
@@ -177,7 +177,7 @@ public class WorkerInfoRepositoryImpl implements WorkerInfoRepositoryI {
 
     @Override
     public boolean deleteWorkerInfo(String userId) {
-        String sql = "UPDATE baoxiu_workerinfo set deleteFlag = 1 WHERE userId = ? AND deleteFlag = 0";
+        String sql = "UPDATE baoxiu_workerinfo SET deleteFlag = 1 WHERE userId = ? AND deleteFlag = 0";
         Object[] args = {userId};
 
         try {

@@ -79,4 +79,19 @@ public class WorkerServiceImpl implements WorkerServiceI {
 
         return change;
     }
+
+    @Override
+    public int  queryTodoMaintenanceNumber(String userId) {
+        return workerRepository.selectTodoMiantenanceSum(userId);
+    }
+
+    @Override
+    public int queryallDoMaintenanceSum(String userId) {
+        return workerRepository.selectallDoMaintenanceSum(userId);
+    }
+
+    @Override
+    public int queryOnDoMaintenanceSum(String userId) {
+        return workerRepository.selectOnDoMaintenanceSum(userId);
+    }
 }

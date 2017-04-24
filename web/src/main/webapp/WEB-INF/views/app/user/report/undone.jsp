@@ -7,60 +7,63 @@
     <header class="bar bar-nav bar-nav-2" style="background-color: #0E4d94; position: static;">
       <h1 class="title title-2" style=" color: #FFF; font-weight: bold;">大连交通大学后勤报修系统</h1>
     </header>
-
-    <div class="card">
-      <div class="card-content">
-        <div class="list-block media-list">
-          <ul>
-            <li class="item-content">
-              <div class="item-media">
-                <img src="${contextPath}/static/images/app/user_done.png" width="44">
-              </div>
-              <div class="item-inner">
-                <p><b>您的报修单已存在,我们正在处理</b></p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-content">
-        <div class="card-content-inner">
-          <div class="list-block">
+    <div class="content">
+      <div class="card">
+        <div class="card-content">
+          <div class="list-block media-list">
             <ul>
               <li class="item-content">
-                <div class="item-inner">
-                  <div class="item-title">单号</div>
-                  <div class="item-after">${maintenance.listNumber}</div>
+                <div class="item-media">
+                  <img src="${contextPath}/static/images/app/user_done.png" width="44">
                 </div>
-              </li>
-              <li class="item-content">
                 <div class="item-inner">
-                  <div class="item-title">报修时间</div>
-                  <div class="item-after">${maintenance.liststatetime}</div>
-                </div>
-              </li>
-              <li class="item-content">
-                <div class="item-inner">
-                  <div class="item-title">报修人手机</div>
-                  <div class="item-after">${maintenance.userTel}</div>
-                </div>
-              </li>
-              <li class="item-content">
-                <div class="item-inner">
-                  <div class="item-title">报修队列数</div>
-                  <div class="item-after">${maintenance.sum}条</div>
+                  <p><b>您的报修单已存在,我们正在处理</b></p>
                 </div>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      <div class="card-footer">
-        <a href="${contextPath}/app/user/my/maintenance/router.action" class="button button-fill button-success" external>我的报修</a>
-        <a href="${contextPath}/app/user/index.action" class="button button-fill button-primary" external>返回首页</a>
+
+      <div class="card">
+        <div class="card-content">
+          <div class="card-content-inner">
+            <div class="list-block">
+              <ul>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title">单号</div>
+                    <div class="item-after">${maintenance.listNumber}</div>
+                  </div>
+                </li>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title">报修时间</div>
+                    <div class="item-after">${maintenance.liststatetime}</div>
+                  </div>
+                </li>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title">报修人手机</div>
+                    <div class="item-after">${maintenance.userTel}</div>
+                  </div>
+                </li>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title">报修队列数</div>
+                    <div class="item-after">${maintenance.sum}条</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="${contextPath}/app/user/my/maintenance/router.action" class="button button-fill button-success" external>我的报修</a>
+          <a href="${contextPath}/app/user/index.action" class="button button-fill button-primary" external>返回首页</a>
+        </div>
+      </div>
+      <div class="card-header">
       </div>
     </div>
 
