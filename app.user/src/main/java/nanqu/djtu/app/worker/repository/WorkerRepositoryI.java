@@ -29,6 +29,22 @@ public interface WorkerRepositoryI {
 //    List<MaintenanceList> selectListStateTimesByState(int listState,String userId);
 
     /**
+     * 查看在办维修单
+     *
+     * @param userId 工人Id
+     * @return 这个工人所在维修小组的的在办报修单
+     */
+    List<MaintenanceList> selectDoingMaintenanceList(String userId);
+
+    /**
+     * 查看待办维修单
+     *
+     * @param userId 工人Id
+     * @return 这个工人所在维修小组的的待办报修单
+     */
+    List<MaintenanceList> selectWaitingMaintenanceList(String userId);
+
+    /**
      * 查询维修单列表listNumber,listDescription
      * @param userId
      * @return

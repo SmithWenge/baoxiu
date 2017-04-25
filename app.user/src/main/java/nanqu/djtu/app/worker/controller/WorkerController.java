@@ -48,7 +48,8 @@ public class WorkerController {
 
         if (optional.isPresent()) {
             ModelAndView mav = new ModelAndView("app/worker/home/index");
-            List<MaintenanceList> lists = workerService.queryMaintenanceListByState(2, sessionInfo);
+
+            List<MaintenanceList> lists = workerService.queryDoingMaintenanceListByState(sessionInfo.getUserId());
             int todoMaintenanceNumber  = workerService.queryTodoMaintenanceNumber(sessionInfo.getUserId());
             int allDoMaintenanceSum = workerService.queryallDoMaintenanceSum(sessionInfo.getUserId());
 
@@ -78,15 +79,16 @@ public class WorkerController {
         if (optional.isPresent()) {
             ModelAndView mav = new ModelAndView("app/worker/accept/todo");
 
-            List<MaintenanceList> lists = workerService.queryMaintenanceListByState(1, sessionInfo);
+            List<MaintenanceList> lists = workerService.queryWaitingMaintenanceList(sessionInfo.getUserId());
             int onDoMaintenanceSum = workerService.queryOnDoMaintenanceSum(sessionInfo.getUserId());
             int allDoMaintenanceSum = workerService.queryallDoMaintenanceSum(sessionInfo.getUserId());
+
             MaintenanceList maintenanceList = new MaintenanceList();
             maintenanceList.setOnDoMaintenanceSum(onDoMaintenanceSum);
             maintenanceList.setAllDoMaintenanceSum(allDoMaintenanceSum);
 
             mav.addObject("lists", lists);
-            mav.addObject("maintenanceList",maintenanceList);
+            mav.addObject("maintenanceList", maintenanceList);
 
             return mav;
         } else {
@@ -107,9 +109,11 @@ public class WorkerController {
         if (optional.isPresent()) {
             ModelAndView mav = new ModelAndView("app/worker/all/index");
             List<MaintenanceList> lists = workerService.queryLatest35MaintenanceList(sessionInfo);
+
             int todoMaintenanceNumber  = workerService.queryTodoMaintenanceNumber(sessionInfo.getUserId());
             int allDoMaintenanceSum = workerService.queryallDoMaintenanceSum(sessionInfo.getUserId());
             int onDoMaintenanceSum = workerService.queryOnDoMaintenanceSum(sessionInfo.getUserId());
+
             MaintenanceList maintenanceList = new MaintenanceList();
             maintenanceList.setOnDoMaintenanceSum(onDoMaintenanceSum);
             maintenanceList.setAllDoMaintenanceSum(allDoMaintenanceSum);

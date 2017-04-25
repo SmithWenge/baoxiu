@@ -1,6 +1,7 @@
 package nanqu.djtu.app.worker.repository.impl;
 
 import com.google.common.base.Strings;
+import nanqu.djtu.app.util.MaintenanceListStateToStringUtil;
 import nanqu.djtu.app.worker.repository.WorkerRepositoryI;
 import nanqu.djtu.dictionary.feature.manager.IDictionaryManager;
 import nanqu.djtu.dictionary.feature.manager.impl.DefaultDictionaryManager;
@@ -50,11 +51,13 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
         }
     }
 
-    class WorkerLoginRowMapper implements RowMapper<WorkerInfo> {
+    private class WorkerLoginRowMapper implements RowMapper<WorkerInfo> {
 
         @Override
         public WorkerInfo mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+
             WorkerInfo info = new WorkerInfo();
+
             info.setUserId(resultSet.getString("userId"));
             info.setWorkerName(resultSet.getString("workerName"));
             info.setWorkerUnite(resultSet.getString("workerUnit"));
@@ -72,12 +75,12 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
 
     /**
      * 根据状态查询维修单列表
-     * @param listState,userId
+     * @param listState, userId
      * @return
      */
     @Override
     public List<MaintenanceList> selectMaintenanceListByState(int listState, String userId) {
-        String sql = "SELECT listNumber,liststatetime,listDescription FROM baoxiu_maintenancelist WHERE listState = ? AND repairGroupId IN (SELECT repairGroupId FROM baoxiu_workerinfo WHERE userId = ? AND deleteFlag = 0)";
+        String sql = "SELECT listNumber, liststatetime, listDescription FROM baoxiu_maintenancelist WHERE listState = ? AND repairGroupId IN (SELECT repairGroupId FROM baoxiu_workerinfo WHERE userId = ? AND deleteFlag = 0)";
         Object[] args = {
                 listState,
                 userId
@@ -92,7 +95,39 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
         }
     }
 
-    class SelectMaintenanceListByStateRowMapper implements RowMapper<MaintenanceList> {
+    @Override
+    public List<MaintenanceList> selectDoingMaintenanceList(String userId) {
+        String sql = "SELECT listNumber, listState, liststatetime, listDescription FROM baoxiu_maintenancelist WHERE listState NOT IN (1, 5, 3) AND repairGroupId IN (SELECT repairGroupId FROM baoxiu_workerinfo WHERE userId = ? AND deleteFlag = 0)";
+        Object[] args = {
+                userId
+        };
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectMaintenanceListByStateRowMapper());
+        } catch (Exception e) {
+            LOG.error("[workerManage] selectMaintenanceListByState error with info {}.", e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public List<MaintenanceList> selectWaitingMaintenanceList(String userId) {
+        String sql = "SELECT listNumber, listState, liststatetime, listDescription FROM baoxiu_maintenancelist WHERE listState IN (1, 5) AND repairGroupId IN (SELECT repairGroupId FROM baoxiu_workerinfo WHERE userId = ? AND deleteFlag = 0)";
+        Object[] args = {
+                userId
+        };
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectMaintenanceListByStateRowMapper());
+        } catch (Exception e) {
+            LOG.error("[workerManage] selectMaintenanceListByState error with info {}.", e.getMessage());
+
+            return new ArrayList<>();
+        }
+    }
+
+    private class SelectMaintenanceListByStateRowMapper implements RowMapper<MaintenanceList> {
 
         @Override
         public MaintenanceList mapRow(ResultSet resultSet, int rowNum) throws SQLException {
@@ -100,6 +135,11 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
             list.setListNumber(resultSet.getString("listNumber"));
             list.setListstatetime(resultSet.getString("liststatetime"));
             list.setListBigDescription(resultSet.getString("listDescription"));
+
+            String listState = resultSet.getString("listState");
+
+            list.setListState(listState);
+            list.setListStateFrontStyleColor(MaintenanceListStateToStringUtil.stateNumberToColorString(listState));
 
             return list;
         }
@@ -142,7 +182,7 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
 
     @Override
     public List<MaintenanceList> selectMaintenanceLists(String userId) {
-        String sql = "SELECT listNumber,listState,liststatetime,listDescription FROM baoxiu_maintenancelist WHERE repairGroupId IN (SELECT repairGroupId FROM baoxiu_workerinfo WHERE userId = ? AND deleteFlag = 0) ORDER BY liststatetime DESC LIMIT 35";
+        String sql = "SELECT listNumber, listState, liststatetime, listDescription FROM baoxiu_maintenancelist WHERE repairGroupId IN (SELECT repairGroupId FROM baoxiu_workerinfo WHERE userId = ? AND deleteFlag = 0) ORDER BY liststatetime DESC LIMIT 35";
         Object[] args = {
                 userId
         };
@@ -156,15 +196,20 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
         }
     }
 
-    class SelectMaintenanceListsRowMapper implements RowMapper<MaintenanceList> {
+    private class SelectMaintenanceListsRowMapper implements RowMapper<MaintenanceList> {
 
         @Override
         public MaintenanceList mapRow(ResultSet resultSet, int rowNum) throws SQLException {
             MaintenanceList list = new MaintenanceList();
+
             list.setListNumber(resultSet.getString("listNumber"));
-            list.setListState(String.valueOf(resultSet.getInt("listState")));
+
             list.setListBigDescription(resultSet.getString("listDescription"));
             list.setListstatetime(resultSet.getString("liststatetime"));
+
+            String listState = resultSet.getString("listState");
+            list.setListState(listState);
+            list.setListStateFrontStyleColor(MaintenanceListStateToStringUtil.stateNumberToColorString(listState));
 
             return list;
         }

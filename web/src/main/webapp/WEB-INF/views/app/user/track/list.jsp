@@ -18,7 +18,7 @@
             <c:forEach items="${maintenanceLists}" var="maintenance">
                 <div class="card">
                     <div class="card-header" style="font-size: .8rem;">
-                        <i class="fa fa-circle" aria-hidden="true" style="color: green;"></i>
+                        <i class="fa fa-circle" aria-hidden="true" style="color: ${maintenance.listStateFrontStyleColor};"></i>
                         维修单号：${maintenance.listNumber}
                     </div>
                     <div class="card-content">
@@ -34,8 +34,7 @@
             </c:forEach>
 
             <div class="content-block">
-                <p><a href="${contextPath}/app/user/redirect/index.action" class="button button-big" style="background-color: #fff;" external>返回首页</a>
-                </p>
+                <a href="${contextPath}/app/user/redirect/index.action" class="button button-big" style="background-color: #fdb970; color: #000; border: 0px;" external>返回首页</a>
             </div>
             <div class="card-header">
             </div>

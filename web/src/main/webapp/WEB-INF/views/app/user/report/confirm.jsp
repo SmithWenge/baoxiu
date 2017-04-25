@@ -92,10 +92,10 @@
                     <a href="${contextPath}/app/user/maintenance/add/router.action" class="link" external>返回</a>
                     <div class="row">
                         <div class="col-30" style="margin-right: .5rem;">
-                            <button class="button button-fill button-success" type="submit">报修</button>
+                            <button class="button button-fill button-success" type="submit" style="background-color: #02cbe9;">报修</button>
                         </div>
                         <div class="col-30" style="margin-right: .5rem;">
-                            <a href="${contextPath}/app/user/index.action" class="button button-fill button-danger" external>放弃</a>
+                            <a href="${contextPath}/app/user/index.action" class="button button-fill button-danger" style="background-color: #fdb970;" external>放弃</a>
                         </div>
                     </div>
                 </div>

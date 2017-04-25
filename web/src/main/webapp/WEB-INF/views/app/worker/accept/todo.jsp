@@ -21,7 +21,7 @@
             <c:forEach items="${lists}" var="list">
                 <div class="card">
                     <div class="card-header" style="font-size: .8rem;">
-                        <i class="fa fa-circle" aria-hidden="true" style="color: green;"></i>
+                        <i class="fa fa-circle" aria-hidden="true" style="color: ${list.listStateFrontStyleColor};"></i>
                         报修单号：${list.listNumber}
                     </div>
                     <div class="card-content">
@@ -42,18 +42,18 @@
         <nav class="bar bar-tab" style="background: #0E4d94;opacity: 1;">
             <a class="tab-item external active" href="${contextPath}/app/worker/routeDoingList.action" style="color: #fff;">
                 <span class="icon">
-                    <i class="fa fa-home fa-lg" aria-hidden="true"></i>
+                    <i class="fa fa-hourglass-o" aria-hidden="true"></i>
                 </span>
                 <span class="badge">${maintenanceList.onDoMaintenanceSum}</span>
             </a>
             <a class="tab-item external" href="${contextPath}/app/worker/routeWaitingList.action" style="color: #fff;">
                 <span class="icon">
-                    <i class="fa fa-bell-o" aria-hidden="true"></i>
+                    <i class="fa fa-bell fa-lg" aria-hidden="true"></i>
                 </span>
             </a>
             <a class="tab-item external" href="${contextPath}/app/worker/routeLatestList.action" style="color: #fff;">
                 <span class="icon">
-                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
                 </span>
                 <span class="badge">${maintenanceList.allDoMaintenanceSum}</span>
             </a>

@@ -2,6 +2,7 @@ package nanqu.djtu.app.user.repository.impl;
 
 import com.google.common.base.Strings;
 import nanqu.djtu.app.user.repository.UserAppRepositoryI;
+import nanqu.djtu.app.util.MaintenanceListStateToStringUtil;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.utils.ConstantFields;
 import nanqu.djtu.utils.PrimaryKeyUtil;
@@ -400,24 +401,33 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
 
             MaintenanceList maintenanceList = new MaintenanceList();
             maintenanceList.setListNumber(rs.getString("listNumber"));
-            maintenanceList.setListState(rs.getString("listState"));
+
+            String listState = rs.getString("listState");
+            maintenanceList.setListState(listState);
+
+            maintenanceList.setListStateFrontStyleColor(MaintenanceListStateToStringUtil.stateNumberToColorString(listState));
+
             maintenanceList.setListstatetime(rs.getString("liststatetime"));
             maintenanceList.setListDescription(rs.getString("listDescription"));
-            if(rs.getString("roomName")==null){
+
+            if (Strings.isNullOrEmpty(rs.getString("roomName"))){
                 maintenanceList.setRoomName(ConstantFields.QI_TA);
-            }else {
+            } else {
                 maintenanceList.setRoomName(rs.getString("roomName"));
             }
-            if(rs.getString("buildingName")==null){
+
+            if (Strings.isNullOrEmpty(rs.getString("buildingName"))){
                 maintenanceList.setBuildingName(ConstantFields.QI_TA);
-            }else {
+            } else {
                 maintenanceList.setBuildingName(rs.getString("buildingName"));
             }
-            if(rs.getString("equipmentName")==null){
+
+            if (Strings.isNullOrEmpty(rs.getString("equipmentName"))){
                 maintenanceList.setEquipmentName(ConstantFields.QI_TA);
-            }else{
+            } else {
                 maintenanceList.setEquipmentName(rs.getString("equipmentName"));
             }
+
             maintenanceList.setDistinctName(rs.getString("distinctName"));
 
             return maintenanceList;
