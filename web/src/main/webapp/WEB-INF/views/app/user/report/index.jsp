@@ -2,6 +2,7 @@
 
 <%@ include file="/WEB-INF/include/app/appHeader.jsp"%>
 
+
 <div class="page-group">
     <div class="page page-current">
         <header class="bar bar-nav bar-nav-2" style="background-color: #0E4d94; position: static;">
@@ -17,7 +18,7 @@
             </div>
 
             <div class="card">
-                <form action="${contextPath}/app/user/add/tel/router.action" method="post">
+                <form action="${contextPath}/app/user/add/tel/router.action" method="post" onsubmit="return checkSubmit();">
                     <div class="card-header" style="font-size: .7rem;">请填选下列内容,如列表中没有,请选择"其它"</div>
                     <div class="card-content">
                         <div class="card-content-inner">
@@ -204,5 +205,17 @@
 
         $('#distinctId').trigger("change");
     });
+</script>
+<script type="text/javascript">
+    function checkSubmit(){
+        var listdiscription = document.getElementById("listDescription").value;
+
+        if(listdiscription.length == 0 || listdiscription.test(/^\s+$/g)){
+            alert("请添加报修单详情!")
+            return false;
+        }else{
+            return true;
+        }
+    }
 </script>
 <%@ include file="/WEB-INF/include/app/appFooter.jsp"%>

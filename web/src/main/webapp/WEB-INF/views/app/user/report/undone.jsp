@@ -32,7 +32,7 @@
               <ul>
                 <li class="item-content">
                   <div class="item-inner">
-                    <div class="item-title">单号</div>
+                    <div class="item-title">报修单号</div>
                     <div class="item-after">${maintenance.listNumber}</div>
                   </div>
                 </li>
