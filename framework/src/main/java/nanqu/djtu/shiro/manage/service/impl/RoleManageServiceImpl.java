@@ -114,13 +114,17 @@ public class RoleManageServiceImpl implements RoleManageServiceI {
     public boolean updateRolePermissions(String[] editPermissions, Role role, String logUser) {
         boolean deleteOldPermissions = roleManageRepository.deleteOldRolePermissions(role.getRoleId());
         boolean insertNewPermissions = false;
+        boolean updateRoleName = false;
 
         if (deleteOldPermissions) {
             insertNewPermissions = roleManageRepository.insertNewRolePermissions(role.getRoleId(), editPermissions);
-
             if (insertNewPermissions) {
-                LogContent logContent = new LogContent(logUser, "更新角色权限" + role.getRoleId(), 1, 4);
-                logRepository.insertLog(logContent);
+                updateRoleName = roleManageRepository.updateRoleName(role);
+                if(updateRoleName) {
+                    LogContent logContent = new LogContent(logUser, "更新角色权限" + role.getRoleId(), 1, 4);
+                    logRepository.insertLog(logContent);
+                }
+
             }
 
         }

@@ -442,4 +442,19 @@ public class RoleManageRepositoryImpl implements RoleManageRepositoryI {
 
         return result.length == editPermissions.length;
     }
+    /**
+     * 更新角色名
+     * @param role
+     * @return boolean
+     */
+    @Override
+    public boolean updateRoleName(Role role) {
+        String sql = "UPDATE shiro_role SET roleName = ? WHERE roleId = ?";
+        Object[] args = {role.getRoleName(),role.getRoleId()};
+        try {
+                return jdbcTemplate.update(sql,args) == 1;
+        }catch (Exception e){
+            return false;
+        }
+    }
 }
