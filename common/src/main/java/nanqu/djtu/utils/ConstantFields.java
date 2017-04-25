@@ -67,6 +67,8 @@ public class ConstantFields {
     /* 报修单的状态为正常的添加->已提交 */
     public static final int MAINTENANCELIST_ADD_COMMITTED_STATE = 1;
 
-
-
+    /* 报修单状态 */
+    public static final int MAINTENANCELIST_STATE_ACCEPT = 2;
+    public static final int MAINTENANCELIST_STATE_SUCCESS = 3;
+    public static final int MAINTENANCELIST_STATE_DELAY_PROCESS = 6;
 }
