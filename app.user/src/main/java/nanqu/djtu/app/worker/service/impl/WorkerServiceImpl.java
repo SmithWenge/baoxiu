@@ -4,6 +4,7 @@ import nanqu.djtu.app.worker.repository.WorkerRepositoryI;
 import nanqu.djtu.app.worker.service.WorkerServiceI;
 import nanqu.djtu.pojo.MaintenanceList;
 import nanqu.djtu.pojo.WorkerInfo;
+import nanqu.djtu.utils.ConstantFields;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +51,23 @@ public class WorkerServiceImpl implements WorkerServiceI {
     @Override
     public Boolean edit(MaintenanceList list, WorkerInfo info) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String time = format.format(new Date());
-        Boolean tmp1 = workerRepository.insertState(time, list);
-        Boolean tmp2 = workerRepository.update(time,list);
+        String time = format.format(new Date(System.currentTimeMillis()));
+
+        int listState = list.getListState();
+
+        String listDescription = list.getListDescription();
+        if (listState == ConstantFields.MAINTENANCELIST_STATE_ACCEPT) {
+            listDescription += info.getWorkerName() + " 已接单";
+        } else if (listState == ConstantFields.MAINTENANCELIST_STATE_SUCCESS) {
+            listDescription += info.getWorkerName() + " 完成";
+        } else if (listState == ConstantFields.MAINTENANCELIST_STATE_DELAY_PROCESS) {
+            listDescription += info.getWorkerName() + " 延期处理";
+        }
+
+        list.setListDescription(listDescription);
+
+        boolean tmp1 = workerRepository.insertState(time, list);
+        boolean tmp2 = workerRepository.update(time, list);
 
         if (tmp1 && tmp2) {
             LOG.info("[worker] update MaintenanceList {} success with worker {}.", list.getListNumber(), info.getWorkerName());

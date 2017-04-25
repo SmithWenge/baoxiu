@@ -91,19 +91,19 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <b>后勤风采</b>
+                    <a href="${contextPath}/app/nanqu/index.action"><b>后勤风采</b></a>
                 </div>
                 <div class="card-content">
                     <div class="list-block media-list">
                         <ul>
                             <li class="item-content">
                                 <div class="item-media">
-                                    <a href="#">
+                                    <a href="${contextPath}/app/nanqu/index.action">
                                         <img src="${contextPath}/static/images/app/user_index_fengcai.png" width="50">
                                     </a>
                                 </div>
                                 <div class="item-inner">
-                                    <a href="#">
+                                    <a href="${contextPath}/app/nanqu/index.action">
                                         <p style="font-size: .7rem; color: #000000;">近日,后勤处精心购置了一批树苗,于3月25日在教学南区开展了植树活动.</p>
                                     </a>
                                 </div>
