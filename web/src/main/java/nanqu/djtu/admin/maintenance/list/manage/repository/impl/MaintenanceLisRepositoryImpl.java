@@ -6,6 +6,7 @@ import nanqu.djtu.dictionary.feature.manager.IDictionaryManager;
 import nanqu.djtu.dictionary.feature.manager.impl.DefaultDictionaryManager;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.util.RepositoryUtils;
+import nanqu.djtu.utils.ConstantFields;
 import nanqu.djtu.utils.PrimaryKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
     @Override
     public Page<MaintenanceList> select4Page(MaintenanceList list, Pageable pageable) {
-        StringBuilder sql = new StringBuilder("SELECT listNumber,listState,equipmentName,groupName,liststatetime FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId WHERE R.deleteFlag = 0");
+        StringBuilder sql = new StringBuilder("SELECT listNumber,listState,equipmentName,groupName,liststatetime FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId WHERE M.deleteFlag = 0");
         List<Object> argsList = new ArrayList<>();
         if (!Strings.isNullOrEmpty(list.getStartListTime())) {
             sql.append(" AND M.liststatetime >= ?");
@@ -76,7 +77,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
         return repositoryUtils.select4Page(sql.toString(), pageable, args, new Query4PageRowmapper());
     }
 
-    class Query4PageRowmapper implements RowMapper<MaintenanceList> {
+    private class Query4PageRowmapper implements RowMapper<MaintenanceList> {
 
         @Override
         public MaintenanceList mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -87,8 +88,22 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
 
             list.setListNumber(resultSet.getString("listNumber"));
             list.setListState(String.valueOf(listState));
-            list.setEquipmentName(resultSet.getString("equipmentName"));
-            list.setGroupName(resultSet.getString("groupName"));
+
+            String equipmentName = resultSet.getString("equipmentName");
+            if (Strings.isNullOrEmpty(equipmentName)) {
+                list.setEquipmentName(ConstantFields.NO_EQUIPMENT_NAME_DEFAULT_NAME);
+            } else {
+                list.setEquipmentName(equipmentName);
+            }
+
+            String groupName = resultSet.getString("groupName");
+
+            if (Strings.isNullOrEmpty(groupName)) {
+                list.setGroupName(ConstantFields.NO_GROUP_NAME_DEFAULT_NAME);
+            } else {
+                list.setGroupName(groupName);
+            }
+
             list.setListstatetime(format.format(resultSet.getTimestamp("liststatetime")));
             list.setListstateStr(dictionary.dictionary(listState, "listState").getItemValue());
 
