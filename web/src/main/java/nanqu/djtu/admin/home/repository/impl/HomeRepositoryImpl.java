@@ -29,47 +29,10 @@ public class HomeRepositoryImpl implements HomeRepositoryI {
     private RepositoryUtils<MaintenanceList> repositoryUtils;
     @Override
     public Page<MaintenanceList> select4Page(MaintenanceList list, Pageable pageable) {
-        StringBuilder sql = new StringBuilder("SELECT listNumber,listState,equipmentName,groupName,liststatetime FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId WHERE R.deleteFlag = 0");
-        List<Object> argsList = new ArrayList<>();
-        if (!Strings.isNullOrEmpty(list.getStartListTime())) {
-            sql.append(" AND M.liststatetime>= ?");
-            argsList.add(list.getStartListTime());
-        }
+        String sql = "SELECT listNumber,listState,equipmentName,groupName,liststatetime FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId WHERE R.deleteFlag = 0";
+        Object[] args = {};
 
-        if (!Strings.isNullOrEmpty(list.getStopListTime())) {
-            sql.append(" AND M.liststatetime <= ?");
-            argsList.add(list.getStopListTime());
-        }
-
-        if (!Strings.isNullOrEmpty(list.getBuildingId())) {
-            sql.append(" AND M.buildingId = ?");
-            argsList.add(list.getBuildingId());
-        }
-
-        if (!Strings.isNullOrEmpty(list.getRoomId())) {
-            sql.append(" AND M.roomId = ?");
-            argsList.add(list.getRoomId());
-        }
-
-        if (!Strings.isNullOrEmpty(list.getEquipmentId())) {
-            sql.append(" AND M.equipmentId = ?");
-            argsList.add(list.getEquipmentId());
-        }
-
-        if (list.getListState() > 0) {
-            sql.append(" AND M.listState = ?");
-            argsList.add(list.getListState());
-        }
-
-        if (!Strings.isNullOrEmpty(list.getRepairGroupId())) {
-            sql.append(" AND M.repairGroupId = ?");
-            argsList.add(list.getRepairGroupId());
-        }
-
-        sql.append(" ORDER BY M.liststatetime DESC");
-        Object[] args = argsList.toArray();
-
-        return repositoryUtils.select4Page(sql.toString(), pageable, args, new Query4PageRowmapper());
+        return repositoryUtils.select4Page(sql, pageable, args, new Query4PageRowmapper());
 
     }
     class Query4PageRowmapper implements RowMapper<MaintenanceList> {
