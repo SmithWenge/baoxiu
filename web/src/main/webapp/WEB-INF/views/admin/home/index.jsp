@@ -67,7 +67,7 @@
                     $("#pageTableBody").empty();
                     $.each(result.page.content, function (i, item) {
                         var trData = "<tr><td>" + (i + 1) + "</td><td><a href=\"${contextPath}/admin/maintenance/list/manage/details/route/" + item.listNumber + ".action\">" + item.listNumber + "</a></td><td>" + item.liststateStr ;
-                        trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.listTime + "</td>"+ "</td>" ;
+                        trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.liststatetime + "</td>"+ "</td>" ;
                         $("#pageTableBody").append(trData);
                     });
                 }
