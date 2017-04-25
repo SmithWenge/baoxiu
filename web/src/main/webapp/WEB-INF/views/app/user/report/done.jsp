@@ -32,7 +32,7 @@
                             <ul>
                                 <li class="item-content">
                                     <div class="item-inner">
-                                        <div class="item-title">单号</div>
+                                        <div class="item-title">报修单号</div>
                                         <div class="item-after">${maintenance.listNumber}</div>
                                     </div>
                                 </li>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="${contextPath}/app/user/my/maintenance/router.action" class="button button-fill button-success" style="background-color: #02cbe9;" external>我的报修</a>
+                    <a href="${contextPath}/app/user/select/all/maintenance.action" class="button button-fill button-success" style="background-color: #02cbe9;" external>我的报修</a>
                     <a href="${contextPath}/app/user/redirect/index.action" class="button button-fill button-primary" style="background-color: #fdb970;" external>返回首页</a>
                 </div>
             </div>

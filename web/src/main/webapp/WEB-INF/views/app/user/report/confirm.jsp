@@ -86,7 +86,7 @@
                     </div>
                 </div>
                 <div class="card-content">
-                    <div class="card-content-inner">注:手机号用来识别您的报修,务必准确输入.今后您查询报修进度需要输入您的手机号,并在后勤部门无法确定故障问题时用来与您联系,仅后勤处维修管理员可以查看您的联系方式,其他人无法获取.</div>
+                    <div class="card-content-inner">注:手机号是用来识别您的报修,务必准确输入.今后您查询报修进度需要输入您的手机号,并在后勤部门无法确定故障问题时用来与您联系,仅后勤处维修管理员可以查看您的联系方式,其他人无法获取.</div>
                 </div>
                 <div class="card-footer">
                     <a href="${contextPath}/app/user/maintenance/add/router.action" class="link" external>返回</a>
