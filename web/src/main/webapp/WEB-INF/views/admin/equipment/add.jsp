@@ -63,7 +63,7 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceDistinct">保存</button>
+                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceDistinct">新建</button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
     $(function () {
         // 导航栏选择
         // 导航栏选择
-        $("#two").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#first").attr("class", "layui-nav-item layui-nav-itemed");
         $("#equipment").attr("class", "layui-this");
 
         // 加载位置信息
@@ -165,7 +165,7 @@
 
         form.verify({
             equipmentName: function (value) {
-                if (value.length < 2) {
+                if (value.length < 1) {
                     return "请输入设备名";
                 }
 

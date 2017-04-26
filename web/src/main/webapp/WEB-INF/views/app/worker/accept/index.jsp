@@ -58,7 +58,7 @@
                                                     </div>
                                                     <div class="item-inner">
                                                         <div class="item-input">
-                                                            <input type="text" name="listDescription" placeholder="请填写紧要操作（可选）">
+                                                            <input type="text" name="listDescription" placeholder="请填写简要操作（可选）">
                                                         </div>
                                                     </div>
                                                 </div>

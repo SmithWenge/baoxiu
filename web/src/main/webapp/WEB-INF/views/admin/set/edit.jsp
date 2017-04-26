@@ -51,7 +51,7 @@
 
         form.verify({
             setName: function (value) {
-                if (value.length < 2) {
+                if (value.length < 1) {
                     return "请输入校区名";
                 }
 

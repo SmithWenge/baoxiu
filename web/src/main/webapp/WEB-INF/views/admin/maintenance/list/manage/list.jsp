@@ -43,7 +43,7 @@
           <select name="listState" id="listState" lay-filter="listState">
             <option value=-1>请选择状态</option>
             <option value=1>已报修</option>
-            <option value=2>已接单</option>
+            <option value=2>已派单</option>
             <option value=3>已处理</option>
             <option value=4>已评价</option>
           </select>
@@ -322,7 +322,7 @@
     function createStateBtnGroup(listNumber) {
       return '<div class="layui-btn-group">' +
               '<a href="${contextPath}/admin/maintenance/list/manage/status/dispatch/'+listNumber+'.action">'+
-              ' <button class="layui-btn layui-btn-normal" >派单</button>&#xe642;</i>'+
+             // ' <button class="layui-btn layui-btn-normal" >派单</button>&#xe642;</i>'+
               '</button> </a><a href="${contextPath}/admin/maintenance/list/manage/status/done/' + listNumber + '.action">'+
               ' <button class="layui-btn layui-btn-danger " >完成</button>&#xe640;</i></button>' +
               '</button> </a></div>'

@@ -89,7 +89,7 @@
 
         <div class="layui-form-item">
           <div class="layui-input-block">
-            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceDistinct">保存</button>
+            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceDistinct">新建</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
           </div>
         </div>
@@ -102,13 +102,15 @@
 
 <script>
   $(function () {
+    $("#three").attr("class", "layui-nav-item layui-nav-itemed");
+    $("#workerInfo").attr("class", "layui-this");
 
     // 表单验证
     var form = layui.form();
 
     form.verify({
       workerName: function (value) {
-        if (value.length < 2) {
+        if (value.length < 1) {
           return "请输入工人名字";
         }
 
@@ -122,7 +124,7 @@
         }
       },
       workerUnite: function (value) {
-        if (value.length < 2) {
+        if (value.length < 1) {
           return "请输入单位名";
         }
 
@@ -131,7 +133,7 @@
         }
       },
       workerJob: function (value) {
-        if (value.length < 2) {
+        if (value.length < 1) {
           return "请输入职称名";
         }
 

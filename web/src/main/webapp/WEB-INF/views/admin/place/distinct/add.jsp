@@ -27,7 +27,7 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceDistinct">保存</button>
+                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceDistinct">新建</button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                 }
             },
             distinctName: function (value) {
-                if (value.length < 2) {
+                if (value.length < 1) {
                     return "请输入校区名";
                 }
 

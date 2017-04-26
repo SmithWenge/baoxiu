@@ -70,7 +70,7 @@
           </div>
         <div class="layui-form-item">
           <div class="layui-input-block">
-            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addAdminUser">保存</button>
+            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addAdminUser">新建</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
           </div>
         </div>
@@ -83,7 +83,8 @@
 
 <script>
   $(function () {
-
+    $("#six").attr("class", "layui-nav-item layui-nav-itemed");
+    $("#userInfo").attr("class", "layui-this");
     // 表单验证
     var form = layui.form();
 

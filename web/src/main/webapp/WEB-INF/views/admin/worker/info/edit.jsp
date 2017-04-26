@@ -56,7 +56,6 @@
           <label class="layui-form-label">组名</label>
           <div class="layui-input-block">
             <select name="repairGroupId" id="repairGroupId" lay-verify="repairGroupId">
-              <option value="${infos.repairGroupId}">${infos.groupName}</option>
               <c:forEach items="${repairGroups}" var="repairGroups">
                 <option  value="${repairGroups.repairGroupId}" >${repairGroups.groupName}</option>
               </c:forEach>
@@ -67,7 +66,6 @@
           <label class="layui-form-label">工种</label>
           <div class="layui-input-block">
             <select name="typeId" id="typeId" lay-verify="typeId" >
-              <option value="${infos.typeId}">${infos.typeName}</option>
               <c:forEach items="${workerTypes}" var="workerTypes">
                 <option   value="${workerTypes.typeId}" >${workerTypes.typeName}</option>
               </c:forEach>
@@ -102,13 +100,15 @@
 
 <script>
   $(function () {
+    $("#three").attr("class", "layui-nav-item layui-nav-itemed");
+    $("#workerInfo").attr("class", "layui-this");
 
     // 表单验证
     var form = layui.form();
 
     form.verify({
       workerName: function (value) {
-        if (value.length < 2) {
+        if (value.length < 1) {
           return "请输入工人名字";
         }
 
@@ -122,7 +122,7 @@
         }
       },
       workerUnite: function (value) {
-        if (value.length < 2) {
+        if (value.length < 1) {
           return "请输入单位名";
         }
 
@@ -131,7 +131,7 @@
         }
       },
       workerJob: function (value) {
-        if (value.length < 2) {
+        if (value.length < 1) {
           return "请输入职称名";
         }
 

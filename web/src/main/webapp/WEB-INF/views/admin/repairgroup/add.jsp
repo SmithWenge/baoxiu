@@ -39,7 +39,7 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addRepairGroup">保存</button>
+                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addRepairGroup">新建</button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
 <script>
     $(function () {
         // 导航栏选择
-        $("#first").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#three").attr("class", "layui-nav-item layui-nav-itemed");
         $("#repairGroup").attr("class", "layui-this");
 
         // 表单验证
@@ -88,7 +88,7 @@
                 }
             },
             groupName: function (value) {
-                if (value.length < 2) {
+                if (value.length < 1) {
                     return "请输入维修小组名";
                 }
 

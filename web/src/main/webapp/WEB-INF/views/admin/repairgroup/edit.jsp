@@ -31,7 +31,6 @@
                     <label class="layui-form-label">打印机编号</label>
                     <div class="layui-input-block">
                         <select name="groupPrinterIp" id="groupPrinterIp" lay-verify="groupPrinterIp">
-                            <option value="${group.groupPrinterIp}">${group.groupPrinterIp}</option>
                             <c:forEach items="${printers}" var="printers">
                                 <option  value="${printers.printerZHCNName}" >${printers.printerZHCNName}</option>
                             </c:forEach>
@@ -54,7 +53,7 @@
 <script>
     $(function () {
         // 导航栏选择
-        $("#first").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#three").attr("class", "layui-nav-item layui-nav-itemed");
         $("#repairGroup").attr("class", "layui-this");
 
         // 表单验证
@@ -90,7 +89,7 @@
 
             },
             groupName: function (value) {
-                if (value.length < 2) {
+                if (value.length < 1) {
                     return "请输入维修小组名";
                 }
 
