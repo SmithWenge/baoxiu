@@ -127,4 +127,11 @@ public interface RoleManageRepositoryI {
      * @return 添加成功返回true, else false
      */
     boolean insertNewRolePermissions(String roleId, String[] editPermissions);
+
+    /**
+     * 更新角色名
+     * @param role
+     * @return boolean
+     */
+    boolean updateRoleName(Role role);
 }

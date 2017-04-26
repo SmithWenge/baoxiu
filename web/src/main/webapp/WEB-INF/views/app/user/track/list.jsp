@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-header" style="font-size: .8rem;">
                         <i class="fa fa-circle" aria-hidden="true" style="color: ${maintenance.listStateFrontStyleColor};"></i>
-                        维修单号：${maintenance.listNumber}
+                       报修单号：${maintenance.listNumber}
                     </div>
                     <div class="card-content">
                         <div class="card-content-inner">

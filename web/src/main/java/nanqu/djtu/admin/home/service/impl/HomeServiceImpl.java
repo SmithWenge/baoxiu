@@ -15,10 +15,11 @@ import java.util.List;
 public class HomeServiceImpl implements HomeServiceI {
 
     @Autowired
-    private HomeRepositoryI HomeRepository;
+    private HomeRepositoryI homeRepository;
+
     @Override
     public Page<MaintenanceList> query4Page(MaintenanceList list, Pageable pageable) {
 
-        return HomeRepository.select4Page(list,pageable);
+        return homeRepository.select4Page(list,pageable);
     }
 }
