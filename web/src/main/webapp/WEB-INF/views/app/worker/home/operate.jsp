@@ -188,7 +188,7 @@
     <nav class="bar bar-tab" style="background: #0E4d94;opacity: 1;">
         <a class="tab-item external active" href="#" style="color: #fff;">
             <span class="icon">
-                <i class="fa fa-home fa-lg" aria-hidden="true"></i>
+                <i class="fa fa-home" aria-hidden="true"></i>
             </span>
         </a>
         <a class="tab-item external" href="#" style="color: #fff;">

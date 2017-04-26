@@ -48,7 +48,7 @@
             </a>
             <a class="tab-item external" href="${contextPath}/app/worker/routeWaitingList.action" style="color: #fff;">
                 <span class="icon">
-                    <i class="fa fa-bell fa-lg" aria-hidden="true"></i>
+                    <i class="fa fa-bell" aria-hidden="true"></i>
                 </span>
             </a>
             <a class="tab-item external" href="${contextPath}/app/worker/routeLatestList.action" style="color: #fff;">

@@ -54,7 +54,7 @@
             </a>
             <a class="tab-item external" href="${contextPath}/app/worker/routeLatestList.action" style="color: #fff;">
                 <span class="icon">
-                    <i class="fa fa-file-text fa-lg" aria-hidden="true"></i>
+                    <i class="fa fa-file-text" aria-hidden="true"></i>
                 </span>
             </a>
         </nav>
