@@ -14,9 +14,10 @@
     <div style="width: 30%; margin-top: 15px; ">
       <form action="${contextPath}/admin/place/building/add/do.action" method="post" class="layui-form">
         <div class="layui-form-item">
-          <label class="layui-form-label">校区</label>
+          <label class="layui-form-label">选择校区</label>
           <div class="layui-input-block">
             <select name="distinctId" id="distinctId" lay-verify="distinctId">
+              <option value="">请选择校区</option>
               <c:forEach items="${placeDistincts}" var="placeDistincts">
                 <option  value="${placeDistincts.distinctId}" >${placeDistincts.distinctName}</option>
                 </c:forEach>
@@ -37,7 +38,7 @@
         </div>
         <div class="layui-form-item">
           <div class="layui-input-block">
-            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceBuilding">保存</button>
+            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceBuilding">新建</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
           </div>
         </div>

@@ -20,7 +20,8 @@ import java.util.Map;
 @RequestMapping("/admin/home")
 public class HomeController {
     @Autowired
-    private HomeServiceI HomeService;
+    private HomeServiceI homeService;
+
     @RequestMapping("/index")
     public ModelAndView homeIndex() {
 
@@ -38,7 +39,7 @@ public class HomeController {
 
         Map<String, Object> mapData = new HashMap<>();
 
-        Page<MaintenanceList> page = HomeService.query4Page(list, pageable);
+        Page<MaintenanceList> page = homeService.query4Page(list, pageable);
         mapData.put(ConstantFields.PAGE_KEY, page);
 
         mapData.put("condition", list);

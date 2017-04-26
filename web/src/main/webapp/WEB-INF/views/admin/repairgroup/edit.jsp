@@ -31,7 +31,6 @@
                     <label class="layui-form-label">打印机编号</label>
                     <div class="layui-input-block">
                         <select name="groupPrinterIp" id="groupPrinterIp" lay-verify="groupPrinterIp">
-                            <option value="${group.groupPrinterIp}">${group.groupPrinterIp}</option>
                             <c:forEach items="${printers}" var="printers">
                                 <option  value="${printers.printerZHCNName}" >${printers.printerZHCNName}</option>
                             </c:forEach>

@@ -71,4 +71,11 @@ public class ConstantFields {
     public static final int MAINTENANCELIST_STATE_ACCEPT = 2;
     public static final int MAINTENANCELIST_STATE_SUCCESS = 3;
     public static final int MAINTENANCELIST_STATE_DELAY_PROCESS = 6;
+
+    /* 报修单查询时设备名null */
+    public static final String NO_EQUIPMENT_NAME_DEFAULT_NAME = "未添加设备";
+    public static final String NO_GROUP_NAME_DEFAULT_NAME = "信息不明确组";
+
+    /* 报修单的状态不存在值 */
+    public static final String NO_LIST_SATE_ITEM_VALUE = "无";
 }

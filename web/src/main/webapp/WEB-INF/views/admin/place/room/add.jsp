@@ -17,6 +17,7 @@
                     <label class="layui-form-label">选择校区</label>
                     <div class="layui-input-block">
                         <select name="distinctId" id="distinctId" lay-filter="distinctId">
+                            <option value="">请选择校区</option>
                             <c:forEach items="${distincts}" var="distinct">
                                 <option value="${distinct.distinctId}">${distinct.distinctName}</option>
                             </c:forEach>
@@ -28,7 +29,7 @@
                     <label class="layui-form-label">选择地点</label>
                     <div class="layui-input-block">
                         <select name="buildingId" id="buildingId">
-                            <option value="0">请选择校区</option>
+                            <option value="0">请选择地点</option>
                         </select>
                     </div>
                 </div>
@@ -46,7 +47,7 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceDistinct">保存</button>
+                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceDistinct">新建</button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                     </div>
                 </div>
