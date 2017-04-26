@@ -78,7 +78,7 @@
     $(function () {
         // 导航栏选择
         // 导航栏选择
-        $("#two").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#first").attr("class", "layui-nav-item layui-nav-itemed");
         $("#equipment").attr("class", "layui-this");
 
         // 加载位置信息
@@ -165,7 +165,7 @@
 
         form.verify({
             equipmentName: function (value) {
-                if (value.length < 2) {
+                if (value.length < 1) {
                     return "请输入设备名";
                 }
 

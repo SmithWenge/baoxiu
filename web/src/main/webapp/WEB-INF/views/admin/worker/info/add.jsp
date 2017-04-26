@@ -102,13 +102,15 @@
 
 <script>
   $(function () {
+    $("#three").attr("class", "layui-nav-item layui-nav-itemed");
+    $("#workerInfo").attr("class", "layui-this");
 
     // 表单验证
     var form = layui.form();
 
     form.verify({
       workerName: function (value) {
-        if (value.length < 2) {
+        if (value.length < 1) {
           return "请输入工人名字";
         }
 
@@ -122,7 +124,7 @@
         }
       },
       workerUnite: function (value) {
-        if (value.length < 2) {
+        if (value.length < 1) {
           return "请输入单位名";
         }
 
@@ -131,7 +133,7 @@
         }
       },
       workerJob: function (value) {
-        if (value.length < 2) {
+        if (value.length < 1) {
           return "请输入职称名";
         }
 

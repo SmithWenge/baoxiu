@@ -66,7 +66,7 @@
 <script>
     $(function () {
         // 导航栏选择
-        $("#two").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#first").attr("class", "layui-nav-item layui-nav-itemed");
         $("#equipment").attr("class", "layui-this");
 
         var condition = {

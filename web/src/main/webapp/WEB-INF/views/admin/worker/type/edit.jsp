@@ -36,6 +36,8 @@
 
 <script>
     $(function () {
+        $("#three").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#workerType").attr("class", "layui-this");
         var form = layui.form();
 
         form.verify({

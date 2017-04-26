@@ -46,7 +46,7 @@
   $(function () {
     // 导航栏选择
     $("#first").attr("class", "layui-nav-item layui-nav-itemed");
-    $("#placebuilding").attr("class", "layui-this");
+    $("#placeBuilding").attr("class", "layui-this");
 
     // 表单验证
     var form = layui.form();
@@ -85,7 +85,7 @@
         }
       },
       buildingName: function (value) {
-        if (value.length < 2) {
+        if (value.length < 1) {
           return "请输入地点名";
         }
 

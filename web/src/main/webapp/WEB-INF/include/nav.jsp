@@ -27,6 +27,11 @@
     <div class="layui-side layui-bg-black side">
         <div class="layui-side-scroll">
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item" id="seven">
+
+                        <dd id="index"><a href="${contextPath}/admin/home/index.action"><i class="layui-icon">&#xe602;</i> 待办工作</a></dd>
+
+       </li>
                 <li class="layui-nav-item" id="five">
                     <dd id="maintenanceList"><a href="${contextPath}/admin/maintenance/list/manage/index.action"><i class="layui-icon">&#xe602;</i> 报修查询与分配</a></dd>
                 </li>
@@ -59,6 +64,8 @@
                         <dd id="password"><a href="${contextPath}/admin/userInfo/changePassword/list.action"><i class="layui-icon">&#xe602;</i>重置用户密码</a></dd>
                     </dl>
                 </li>
+
+
             </ul>
         </div>
     </div>

@@ -255,22 +255,22 @@ public class UserAppController {
         return modelAndView;
     }
 
-    /**
-     * 成功后到按钮路由到报修单列表页面
-     * @param userTel
-     * @return
-     */
-    @RequestMapping(value = "/select/button/all/maintenance/{userTel}")
-    public  ModelAndView selectAllMaintenance(@PathVariable String userTel){
-        List<MaintenanceList> maintenanceLists =userAppService.queryMaintenanceListByTel(userTel);
-        MaintenanceList maintenanceList = new MaintenanceList();
-        maintenanceList.setUserTel(userTel);
-        ModelAndView modelAndView = new ModelAndView("app/user/track/list");
-        modelAndView.addObject("maintenanceLists",maintenanceLists);
-        modelAndView.addObject("userTel",maintenanceList);
-
-        return modelAndView;
-    }
+//    /**
+//     * 成功后到按钮路由到报修单列表页面
+//     * @param userTel
+//     * @return
+//     */
+//    @RequestMapping(value = "/select/button/all/maintenance/{userTel}")
+//    public  ModelAndView selectAllMaintenance(@PathVariable String userTel){
+//        List<MaintenanceList> maintenanceLists =userAppService.queryMaintenanceListByTel(userTel);
+//        MaintenanceList maintenanceList = new MaintenanceList();
+//        maintenanceList.setUserTel(userTel);
+//        ModelAndView modelAndView = new ModelAndView("app/user/track/list");
+//        modelAndView.addObject("maintenanceLists",maintenanceLists);
+//        modelAndView.addObject("userTel",maintenanceList);
+//
+//        return modelAndView;
+//    }
     /**
      * 路由到我的保修
      * @param userTel

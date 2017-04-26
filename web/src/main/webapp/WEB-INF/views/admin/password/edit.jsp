@@ -47,6 +47,8 @@
 
 <script>
     $(function () {
+        $("#six").attr("class", "layui-nav-item layui-nav-itemed");
+        $("#password").attr("class", "layui-this");
             var againPassword;
             var form = layui.form();
             form.verify({

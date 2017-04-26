@@ -82,7 +82,8 @@
 
 <script>
   $(function () {
-
+    $("#six").attr("class", "layui-nav-item layui-nav-itemed");
+    $("#userInfo").attr("class", "layui-this");
     // 表单验证
     var form = layui.form();
 
