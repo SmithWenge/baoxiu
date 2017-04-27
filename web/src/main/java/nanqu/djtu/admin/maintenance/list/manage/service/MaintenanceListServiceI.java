@@ -18,6 +18,5 @@ public interface MaintenanceListServiceI {
     MaintenanceList query4details(String listNumber);
     boolean updatestate(String listNumber, AdminUser user);
     boolean done(String listNumber, AdminUser user);
-    Boolean editMaintenanceList(MaintenanceList list,AdminUser user);
-
+    boolean editMaintenanceList(MaintenanceList list, AdminUser user);
 }

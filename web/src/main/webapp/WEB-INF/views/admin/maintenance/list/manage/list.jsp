@@ -360,7 +360,7 @@
           loadStateData();
 
           $.each(result.page.content, function (i, item) {
-            if(item.equipmentName == null) {
+            if(item.equipmentName == "未添加设备") {
               var maBtn = createOpsBtnGroup(item.listNumber);
             } else {
               var maBtn = "";

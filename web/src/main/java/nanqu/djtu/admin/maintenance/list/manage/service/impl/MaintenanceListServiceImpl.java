@@ -6,6 +6,7 @@ import nanqu.djtu.admin.maintenance.list.manage.service.MaintenanceListServiceI;
 import nanqu.djtu.app.user.repository.UserAppRepositoryI;
 import nanqu.djtu.pojo.*;
 import nanqu.djtu.utils.ConstantFields;
+import nanqu.djtu.utils.PrimaryKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,25 +94,41 @@ public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
         return insert2;
     }
 
-
-
-
     @Override
-    public Boolean editMaintenanceList(MaintenanceList list, AdminUser user) {
+    public boolean editMaintenanceList(MaintenanceList list, AdminUser user) {
+        String equipmentId = list.getEquipmentId();
+
+        String repairGroupId = userAppRepository.selectRepairGroupId(equipmentId);
+
+        if (Strings.isNullOrEmpty(repairGroupId)) {
+            repairGroupId = ConstantFields.DEFAULT_GROUP_ID;
+        }
+
+        list.setRepairGroupId(repairGroupId);
+        String distinctId = list.getDistinctId();
+        String buildingId = list.getBuildingId();
+        String roomId = list.getRoomId();
+
         // 拼接维修单编号
-        String distinctNumber = userAppRepository.selectDistinctNumber(list.getDistinctId());
-        String buildingNumber = userAppRepository.selectBuildingNumber(list.getBuildingId());
-        String roomNumber = userAppRepository.selectRoomNumber(list.getRoomId());
-        String equipmentNumber = userAppRepository.selectEquipmentNumber(list.getEquipmentId());
+        String distinctNumber = userAppRepository.selectDistinctNumber(distinctId);
 
-        StringBuilder builder = new StringBuilder();
+        String buildingNumber = userAppRepository.selectBuildingNumber(buildingId);
+        String roomNumber = userAppRepository.selectRoomNumber(roomId);
+        String equipmentNumber = userAppRepository.selectEquipmentNumber(equipmentId);
 
-        builder.append(Strings.padStart(distinctNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
-        builder.append(Strings.padStart(buildingNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
-        builder.append(Strings.padStart(roomNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
-        builder.append(Strings.padStart(equipmentNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
+        if (Strings.isNullOrEmpty(distinctNumber) || Strings.isNullOrEmpty(buildingNumber) ||
+                Strings.isNullOrEmpty(roomNumber) || Strings.isNullOrEmpty(equipmentNumber)) {
+            list.setNewListNumber(list.getListNumber());
+        } else {
+            StringBuilder builder = new StringBuilder();
 
-        list.setListNumber(builder.toString());
+            builder.append(Strings.padStart(distinctNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
+            builder.append(Strings.padStart(buildingNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
+            builder.append(Strings.padStart(roomNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
+            builder.append(Strings.padStart(equipmentNumber, ConstantFields.MIN_NUMBER_LENGTH, ConstantFields.PAD_NUMBER_CHAR));
+
+            list.setNewListNumber(builder.toString());
+        }
 
         boolean update = maintenanceLisRepository.updateMaintenanceList(list);
 

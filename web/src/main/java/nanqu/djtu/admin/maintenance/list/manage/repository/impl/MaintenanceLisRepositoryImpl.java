@@ -74,10 +74,10 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
         sql.append(" ORDER BY M.liststatetime DESC");
         Object[] args = argsList.toArray();
 
-        return repositoryUtils.select4Page(sql.toString(), pageable, args, new Query4PageRowmapper());
+        return repositoryUtils.select4Page(sql.toString(), pageable, args, new Query4PageRowMapper());
     }
 
-    private class Query4PageRowmapper implements RowMapper<MaintenanceList> {
+    private class Query4PageRowMapper implements RowMapper<MaintenanceList> {
 
         @Override
         public MaintenanceList mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -230,7 +230,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
         }
     }
 
-    class SelectEquipmentsWithBuildingIdRowMapper implements RowMapper<Equipment> {
+    private class SelectEquipmentsWithBuildingIdRowMapper implements RowMapper<Equipment> {
 
         @Override
         public Equipment mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -273,7 +273,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
         }
     }
 
-    class SelectGroupsRowMapper implements RowMapper<MaintenanceList> {
+    private class SelectGroupsRowMapper implements RowMapper<MaintenanceList> {
 
         @Override
         public MaintenanceList mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -356,7 +356,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
         }
     }
 
-    class SelectStatusWithListNumRowMapper implements RowMapper<MaintenanceList> {
+    private class SelectStatusWithListNumRowMapper implements RowMapper<MaintenanceList> {
 
         @Override
         public MaintenanceList mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -458,7 +458,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
      */
     @Override
     public Boolean updateMaintenanceList(MaintenanceList list) {
-        String sql = "UPDATE baoxiu_maintenancelist SET userTel = ?, repairGroupId = ?, distinctId = ?, buildingId = ?, roomId = ?, equipmentId = ?, listDescription = ? WHERE listNumber = ? AND deleteFlag = 0";
+        String sql = "UPDATE baoxiu_maintenancelist SET userTel = ?, repairGroupId = ?, distinctId = ?, buildingId = ?, roomId = ?, equipmentId = ?, listDescription = ?, listNumber = ? WHERE listNumber = ? AND deleteFlag = 0";
         Object[] args = {
                 list.getUserTel(),
                 list.getRepairGroupId(),
@@ -467,6 +467,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
                 list.getRoomId(),
                 list.getEquipmentId(),
                 list.getListDescription(),
+                list.getNewListNumber(),
                 list.getListNumber()
         };
 

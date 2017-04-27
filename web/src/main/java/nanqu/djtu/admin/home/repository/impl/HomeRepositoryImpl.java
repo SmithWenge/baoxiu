@@ -28,15 +28,20 @@ public class HomeRepositoryImpl implements HomeRepositoryI {
 
     @Autowired
     private RepositoryUtils<MaintenanceList> repositoryUtils;
+
     @Override
     public Page<MaintenanceList> select4Page(MaintenanceList list, Pageable pageable) {
-        String sql = "SELECT listNumber,listState,equipmentName,groupName,liststatetime FROM baoxiu_maintenancelist AS M LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId LEFT JOIN baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId WHERE M.deleteFlag = 0";
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT listNumber,listState,equipmentName,groupName,liststatetime FROM baoxiu_maintenancelist");
+        builder.append(" AS M LEFT JOIN baoxiu_equipment AS E ON M.equipmentId = E.equipmentId LEFT JOIN");
+        builder.append(" baoxiu_repairgroup AS R ON M.repairGroupId = R.repairGroupId WHERE M.deleteFlag = 0 AND M.listState IN (1, 5)");
         Object[] args = {};
 
-        return repositoryUtils.select4Page(sql, pageable, args, new Query4PageRowmapper());
+        return repositoryUtils.select4Page(builder.toString(), pageable, args, new Query4PageRowMapper());
 
     }
-    class Query4PageRowmapper implements RowMapper<MaintenanceList> {
+
+    private class Query4PageRowMapper implements RowMapper<MaintenanceList> {
 
         @Override
         public MaintenanceList mapRow(ResultSet resultSet, int i) throws SQLException {

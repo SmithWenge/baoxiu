@@ -19,7 +19,6 @@ public class HomeServiceImpl implements HomeServiceI {
 
     @Override
     public Page<MaintenanceList> query4Page(MaintenanceList list, Pageable pageable) {
-
         return homeRepository.select4Page(list,pageable);
     }
 }
