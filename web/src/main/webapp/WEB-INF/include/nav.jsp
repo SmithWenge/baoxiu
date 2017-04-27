@@ -28,10 +28,8 @@
         <div class="layui-side-scroll">
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item" id="seven">
-
-                        <dd id="index"><a href="${contextPath}/admin/home/index.action"><i class="layui-icon">&#xe602;</i> 待办工作</a></dd>
-
-       </li>
+                    <dd id="index"><a href="${contextPath}/admin/home/index.action"><i class="layui-icon">&#xe602;</i> 待办工作</a></dd>
+                </li>
                 <li class="layui-nav-item" id="five">
                     <dd id="maintenanceList"><a href="${contextPath}/admin/maintenance/list/manage/index.action"><i class="layui-icon">&#xe602;</i> 报修查询与分配</a></dd>
                 </li>
@@ -45,10 +43,10 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item" id="two">
-                        <dd id="printer"><a href="${contextPath}/admin/printer/list.action"><i class="layui-icon">&#xe602;</i> 打印机管理</a></dd>
+                    <dd id="printer"><a href="${contextPath}/admin/printer/list.action"><i class="layui-icon">&#xe602;</i> 打印机管理</a></dd>
                 </li>
                 <li class="layui-nav-item" id="three">
-                    <a href="javascript:;"><i class="layui-icon">&#xe64a;</i> 人员与分组</a>
+                    <a href="javascript:;"><i class="layui-icon">&#xe613;</i> 人员与分组</a>
                     <dl class="layui-nav-child">
                         <dd id="workerInfo"><a href="${contextPath}/admin/worker/info/list.action"><i class="layui-icon">&#xe602;</i>工人信息管理</a></dd>
                         <dd id="workerType"><a href="${contextPath}/admin/worker/type/list.action"><i class="layui-icon">&#xe602;</i>工种管理</a></dd>
@@ -56,7 +54,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item" id="six">
-                    <a href="javascript:;"><i class="layui-icon">&#xe62d;</i> 用户管理</a>
+                    <a href="javascript:;"><i class="layui-icon">&#xe612;</i> 用户管理</a>
                     <dl class="layui-nav-child">
                         <dd id="role"><a href="${contextPath}/admin/role/list.action"><i class="layui-icon">&#xe602;</i> 角色管理</a></dd>
                         <dd id="userInfo"><a href="${contextPath}/admin/userInfo/list.action"><i class="layui-icon">&#xe602;</i> 用户添加与编辑</a></dd>
@@ -64,8 +62,6 @@
                         <dd id="password"><a href="${contextPath}/admin/userInfo/changePassword/list.action"><i class="layui-icon">&#xe602;</i>重置用户密码</a></dd>
                     </dl>
                 </li>
-
-
             </ul>
         </div>
     </div>

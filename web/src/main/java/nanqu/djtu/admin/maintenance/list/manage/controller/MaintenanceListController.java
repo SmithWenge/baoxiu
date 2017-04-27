@@ -185,24 +185,47 @@ public class MaintenanceListController {
         }
 
     }
+
     /**
      * 更改状态为已完成
      * @param listNumber
      * @return返回报修单列表
      */
     @RequestMapping("/status/done/{listNumber}")
-    public String done(@PathVariable String listNumber,RedirectAttributes redirectAttributes, HttpSession session)
-    {
+    public String done(@PathVariable String listNumber, RedirectAttributes redirectAttributes, HttpSession session) {
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+
         boolean update2 = maintenanceListService.done(listNumber,user);
+
         if (update2) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+        }
+
+        return "redirect:/admin/maintenance/list/manage/index.action";
+    }
+
+    /**
+     * 编辑报修单为正确的可派单的维修单
+     *
+     * @param list 新的维修单的信息
+     * @return 编辑成功返回到list, else edit
+     */
+    @RequestMapping(value = "/edit/do", method = RequestMethod.POST)
+    public String edit(MaintenanceList list, HttpSession session, RedirectAttributes redirectAttributes) {
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+
+        boolean edit = maintenanceListService.editMaintenanceList(list, user);
+
+        if (edit) {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
 
             return "redirect:/admin/maintenance/list/manage/index.action";
         } else {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
-
-            return "redirect:/admin/maintenance/list/manage/index.action";
         }
+
+        return "redirect:/admin/maintenance/list/manage/edit/route/" + list.getListNumber() + ".action";
     }
 }

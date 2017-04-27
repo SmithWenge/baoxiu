@@ -23,7 +23,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">小组名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="groupName" lay-verify="groupName" placeholder="请输入" autocomplete="off" class="layui-input">
+                        <input type="text" name="groupName" lay-verify="groupName" placeholder="南区_木工" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -92,7 +92,7 @@
                     return "请输入维修小组名";
                 }
 
-                if (!(/^[\u4e00-\u9fa5]+$/.test(value))) {
+                if (!(/^[\u4e00-\u9fa5\_\(\)]+$/.test(value))) {
                     return "请输入中文";
                 }
             }

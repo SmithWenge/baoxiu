@@ -14,18 +14,6 @@
         <div style="width: 30%; margin-top: 15px; ">
             <form action="${contextPath}/admin/equipment/add/do.action" method="post" class="layui-form" id="equipmentAddForm">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">设备名</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="equipmentName" lay-verify="equipmentName" id="equipmentName" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">设备编号</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="equipmentNumber" lay-verify="equipmentNumber" id="equipmentNumber" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
                     <label class="layui-form-label">校区</label>
                     <div class="layui-input-block">
                         <select name="distinctId" lay-filter="distinctId" id="distinctId">
@@ -49,6 +37,18 @@
                         <select name="roomId" id="roomId" lay-filter="roomId">
                             <option value="">请选择位置</option>
                         </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">设备名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="equipmentName" lay-verify="equipmentName" id="equipmentName" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">设备编号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="equipmentNumber" lay-verify="equipmentNumber" id="equipmentNumber" placeholder="请输入" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">

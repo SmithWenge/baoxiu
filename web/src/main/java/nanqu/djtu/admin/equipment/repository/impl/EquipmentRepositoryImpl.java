@@ -40,7 +40,7 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
         builder.append("SELECT equipmentId, equipmentName, equipmentNumber, RG.groupName, RG.groupNumber, PR.roomName, PB.buildingName");
         builder.append(" FROM baoxiu_equipment E LEFT JOIN baoxiu_repairgroup RG ON E.repairGroupId = RG.repairGroupId");
         builder.append(" LEFT JOIN baoxiu_placeroom PR ON PR.roomId = E.roomId LEFT JOIN baoxiu_placebuilding PB ON");
-        builder.append(" PR.buildingId = PB.buildingId WHERE E.deleteFlag = 0");
+        builder.append(" PR.buildingId = PB.buildingId LEFT JOIN baoxiu_placedistinct PD ON PD.distinctId = PB.distinctId WHERE E.deleteFlag = 0");
 
         List<Object> argList = new ArrayList<Object>();
 
@@ -50,6 +50,20 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryI {
             builder.append(" AND PR.roomId = ?");
 
             argList.add(roomId);
+        }
+
+        String buildingId = equipment.getBuildingId();
+        if (!Strings.isNullOrEmpty(buildingId)) {
+            builder.append(" AND PB.buildingId = ?");
+
+            argList.add(buildingId);
+        }
+
+        String distinctId = equipment.getDistinctId();
+        if (!Strings.isNullOrEmpty(distinctId)) {
+            builder.append(" AND PD.distinctId = ?");
+
+            argList.add(distinctId);
         }
 
         Object[] args = argList.toArray();

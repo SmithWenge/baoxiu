@@ -70,6 +70,7 @@
         $("#equipment").attr("class", "layui-this");
 
         var condition = {
+            "distinctId": '',
             "roomId": '',
             "buildingId": ''
         };
@@ -86,7 +87,7 @@
             var form = layui.form();
 
             var rooms = result.rooms;
-            var optionsValue = '<option value="-100">请选择位置</option>';
+            var optionsValue = '<option>请选择位置</option>';
 
             for (var i = 0; i < rooms.length; i++) {
                 optionsValue += '<option value="' + rooms[i].roomId + '">' + rooms[i].roomName + '</option>';
@@ -111,7 +112,7 @@
             var form = layui.form();
 
             var buildings = result.buildings;
-            var optionsValue = '<option value="-100">请选择地点</option>';
+            var optionsValue = '<option>请选择地点</option>';
 
             for (var i = 0; i < buildings.length; i++) {
                 optionsValue += '<option value="' + buildings[i].buildingId + '">' + buildings[i].buildingName + '</option>';
@@ -151,9 +152,13 @@
 
             var distincts = result.distincts;
 
-            var optionsValue = '<option>请选择地点</option>';
+            var optionsValue = '<option>请选择校区</option>';
             for (var i = 0; i < distincts.length; i++) {
-                optionsValue += '<option value="' + distincts[i].distinctId + '">' + distincts[i].distinctName + '</option>';
+                if (distincts[i].distinctId === condition.distinctId) {
+                    optionsValue += '<option value="' + distincts[i].distinctId + '" selected>' + distincts[i].distinctName + '</option>';
+                } else {
+                    optionsValue += '<option value="' + distincts[i].distinctId + '">' + distincts[i].distinctName + '</option>';
+                }
             }
 
             $form.find('select[id=distinctId]').empty();
@@ -164,6 +169,9 @@
                 var postData = {
                     "distinctId": data.value
                 };
+
+                // 校区条件
+                condition.distinctId = data.value;
 
                 $.ajax({
                     type: 'post',
@@ -198,7 +206,8 @@
             var pageData = {
                 "page": curr - 1,
                 "buildingId": condition.buildingId,
-                "roomId": condition.roomId
+                "roomId": condition.roomId,
+                "distinctId": condition.distinctId
             };
             $.ajax({
                 type: 'post',
@@ -227,7 +236,8 @@
             var pageData = {
                 "page": 0,
                 "buildingId": condition.buildingId,
-                "roomId": condition.roomId
+                "roomId": condition.roomId,
+                "distinctId": condition.distinctId
             };
             $.ajax({
                 type: 'post',

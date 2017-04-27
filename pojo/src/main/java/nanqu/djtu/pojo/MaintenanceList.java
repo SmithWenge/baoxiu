@@ -30,6 +30,18 @@ public class MaintenanceList {
     private String listStatusTime;
     private int sum;
 
+    // 报修单编辑,新的报修单号
+    private String newListNumber;
+
+    public void setNewListNumber(String newListNumber) {
+        this.newListNumber = newListNumber;
+    }
+
+    public String getNewListNumber() {
+
+        return newListNumber;
+    }
+
     private int eachDistinctMaintenanceListNumber;//每个校区有多少保修单
     private boolean maintenanceExit;//判断保修单是否存在
     private int waitToDoMaintenanceSum;//待办报修单数
