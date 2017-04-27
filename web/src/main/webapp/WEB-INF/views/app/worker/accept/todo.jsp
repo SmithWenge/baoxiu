@@ -44,7 +44,11 @@
                 <span class="icon">
                     <i class="fa fa-hourglass-o" aria-hidden="true"></i>
                 </span>
-                <span class="badge">${maintenanceList.onDoMaintenanceSum}</span>
+                <c:if test="${maintenanceList.onDoMaintenanceSum != 0}">
+                    <span class="badge">
+                            ${maintenanceList.onDoMaintenanceSum}
+                    </span>
+                </c:if>
             </a>
             <a class="tab-item external" href="${contextPath}/app/worker/routeWaitingList.action" style="color: #fff;">
                 <span class="icon">
@@ -55,7 +59,11 @@
                 <span class="icon">
                     <i class="fa fa-file-text-o" aria-hidden="true"></i>
                 </span>
-                <span class="badge">${maintenanceList.allDoMaintenanceSum}</span>
+                <c:if test="${maintenanceList.allDoMaintenanceSum != 0}">
+                     <span class="badge">
+                             ${maintenanceList.allDoMaintenanceSum}
+                     </span>
+                </c:if>
             </a>
         </nav>
     </div>
