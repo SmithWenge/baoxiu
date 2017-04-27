@@ -27,6 +27,7 @@
                                     <li>
                                         <div class="item-content">
                                             <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                                            <%-- 演示UI提交所加的注释 --%>
                                             <div class="item-inner">
                                                 <div class="item-title label">校区</div>
                                                 <div class="item-input">
