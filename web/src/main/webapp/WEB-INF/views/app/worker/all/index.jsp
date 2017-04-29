@@ -26,7 +26,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-content-inner">
-                                ${list.listBigDescription}
+                                ${list.distinctName}_${list.buildingName}_${list.roomName}_${list.equipmentName}
                         </div>
                     </div>
                     <div class="card-footer">

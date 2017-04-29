@@ -18,7 +18,7 @@
                     </header>
                 </div>
             </div>
-            <form action="${contextPath}/app/worker/edit.action" method="post">
+            <form action="${contextPath}/app/worker/edit.action" method="post" onsubmit=" return onClick() ">
                 <div class="card">
                     <div class="card-header">
                         <div class="card-content">
@@ -31,7 +31,7 @@
                                                 <div class="item-media"><i class="icon icon-form-gender"></i></div>
                                                 <div class="item-inner">
                                                     <div class="item-input">
-                                                        <select name="listState">
+                                                        <select name="listState" id="operation">
                                                             <option value="-1">请选择操作</option>
                                                             <option value="2">接单</option>
                                                             <option value="3">完成</option>
@@ -58,7 +58,7 @@
                                                     </div>
                                                     <div class="item-inner">
                                                         <div class="item-input">
-                                                            <input type="text" name="listDescription" placeholder="请填写简要操作（可选）">
+                                                            <input type="text" name="listDescription" placeholder="请填写简要操作（可选）" maxlength="100" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -210,7 +210,17 @@
 </div>
 
 <%@ include file="/WEB-INF/include/app/appJavascript.jsp"%>
-
+<script type="text/javascript">
+    function onClick(){
+        var value = document.getElementById("operation").value;
+        if(value = -1){
+            alert("请选择操作!");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    </script>
 
 
 <%@ include file="/WEB-INF/include/app/appFooter.jsp"%>

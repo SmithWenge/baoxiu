@@ -27,7 +27,7 @@
                                             </div>
                                             <div class="item-inner">
                                                 <div class="item-input">
-                                                    <input type="text" placeholder="请输入您报修时填写的电话号码" id="userTel" name="userTel">
+                                                    <input type="text" placeholder="请输入您报修时填写的电话号码" id="userTel" name="userTel" maxlength="">
                                                 </div>
                                             </div>
                                         </div>
