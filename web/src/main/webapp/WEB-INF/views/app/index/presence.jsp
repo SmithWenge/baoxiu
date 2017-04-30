@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <a href="${contextPath}/app/user/index.action" class="link" external>首页</a>
+                <a href="${contextPath}/app/user/index.action" class="link" external style="font-size: .8rem"><<返回首页</a>
             </div>
         </div>
         <div class="card-footer"></div>
