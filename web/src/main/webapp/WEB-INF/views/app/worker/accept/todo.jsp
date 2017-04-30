@@ -61,7 +61,7 @@
                 </span>
                 <c:if test="${maintenanceList.allDoMaintenanceSum != 0}">
                      <span class="badge">
-                             ${maintenanceList.allDoMaintenanceSum}
+                        ${maintenanceList.allDoMaintenanceSum}
                      </span>
                 </c:if>
             </a>
