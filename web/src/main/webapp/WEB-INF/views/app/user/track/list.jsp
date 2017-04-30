@@ -18,7 +18,7 @@
             <c:forEach items="${maintenanceLists}" var="maintenance">
                 <div class="card">
                     <div class="card-header" style="font-size: .8rem;">
-                        <i class="fa fa-circle" aria-hidden="true" style="color: ${maintenance.listStateFrontStyleColor};"></i>
+                        <i class="fa fa-circle" aria-hidden="true" style="color: ${maintenance.listStateFrontStyleColor};">已提交</i>
                        报修单号：${maintenance.listNumber}
                     </div>
                     <div class="card-content">

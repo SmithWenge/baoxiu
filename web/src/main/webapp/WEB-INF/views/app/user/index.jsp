@@ -23,24 +23,24 @@
                         <div class="card-content-inner">
                             <div class="row">
                                 <div class="col-50">
-                                    <div class="card" style="margin-left: 0px; margin-right: 0px;">
+                                    <div class="card" style="margin-left: 0px; margin-right: 0px;box-shadow: 0 0rem 0rem rgba(0,0,0,0);">
                                         <div class="card-content">
-                                            <div class="list-block media-list">
+                                            <div class="list-block media-list" style="border-right: 0.05rem solid #b5b0b0;">
                                                 <ul>
                                                     <li class="item-content">
                                                         <div class="item-media">
                                                             <a href="${contextPath}/app/user/maintenance/add/router.action" external>
-                                                                <i class="fa fa-wrench" aria-hidden="true"></i>
+                                                                <i class="fa fa-wrench fa-2x" aria-hidden="true"></i>
                                                             </a>
                                                         </div>
                                                         <div class="item-inner">
                                                             <div class="item-title-row">
                                                                 <a href="${contextPath}/app/user/maintenance/add/router.action" external>
-                                                                    <div class="item-title">我要报修</div>
+                                                                    <div class="item-title" style="font-size: .7rem;">我要报修</div>
                                                                 </a>
                                                             </div>
                                                             <a href="${contextPath}/app/user/maintenance/add/router.action" external>
-                                                                <div class="item-subtitle">Repair</div>
+                                                                <div class="item-subtitle" style="font-size: .7rem;">Repair</div>
                                                             </a>
                                                         </div>
                                                     </li>
@@ -50,23 +50,23 @@
                                     </div>
                                 </div>
                                 <div class="col-50">
-                                    <div class="card" style="margin-left: 0px; margin-right: 0px;">
+                                    <div class="card" style="margin-left: 0px; margin-right: 0px;box-shadow: 0 0rem 0rem rgba(0,0,0,0);">
                                         <div class="card-content">
                                             <div class="list-block media-list">
                                                 <ul>
                                                     <li class="item-content">
                                                         <div class="item-media">
                                                             <a href="${contextPath}/app/user/my/maintenance/router.action" external>
-                                                                <i class="fa fa-suitcase" aria-hidden="true"></i>
+                                                                <i class="fa fa-suitcase fa-2x" aria-hidden="true"></i>
                                                             </a>
                                                         </div>
                                                         <div class="item-inner">
                                                             <div class="item-title-row">
-                                                                <div class="item-title">
+                                                                <div class="item-title" style="font-size: .7rem;">
                                                                     <a href="${contextPath}/app/user/my/maintenance/router.action" external>我的报修</a>
                                                                 </div>
                                                             </div>
-                                                            <div class="item-subtitle">
+                                                            <div class="item-subtitle"style="font-size: .7rem;">
                                                                 <a href="${contextPath}/app/user/my/maintenance/router.action" external>Tracking</a>
                                                             </div>
                                                         </div>
@@ -91,7 +91,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <a href="${contextPath}/app/nanqu/index.action"><b>后勤风采</b></a>
+                    <a href="${contextPath}/app/nanqu/index.action" style="color:#3d4145;"><b>后勤风采</b></a>
                 </div>
                 <div class="card-content">
                     <div class="list-block media-list">
@@ -99,12 +99,12 @@
                             <li class="item-content">
                                 <div class="item-media">
                                     <a href="${contextPath}/app/nanqu/index.action">
-                                        <img src="${contextPath}/static/images/app/user_index_fengcai.png" width="50">
+                                        <img src="${contextPath}/static/images/app/user_index_fengcai.jpg" width="50">
                                     </a>
                                 </div>
                                 <div class="item-inner">
                                     <a href="${contextPath}/app/nanqu/index.action">
-                                        <p style="font-size: .7rem; color: #000000;">近日,后勤处精心购置了一批树苗,于3月25日在教学南区开展了植树活动.</p>
+                                        <p style="font-size: .7rem; color: #000000;">我校后勤系统管理与服务保障能力建设工作会在办公楼201会议室召开。</p>
                                     </a>
                                 </div>
                             </li>
