@@ -515,7 +515,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
      */
     @Override
     public List<MaintenanceList> selectAllState(String listNumber) {
-        String sql = "SELECT listNumber, listState, liststatetime, listDescription FROM baoxiu_liststatetime where listNumber= ? ORDER BY liststatetime";
+        String sql = "SELECT listNumber, listState, liststatetime, listDescription FROM baoxiu_liststatetime where listNumber= ? ORDER BY liststatetime DESC";
         Object[] args = {listNumber};
 
         try {
