@@ -91,8 +91,8 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="${contextPath}/app/user/turn/repairList/router/${maintenanceList.userTel}.action" class="button button-fill button-success" style="background-color: #fdb970;display: block;height: 1.8rem;line-height: 1.8rem;width: 25%;" external>我的报修</a>
-                    <a href="${contextPath}/app/user/redirect/index.action" class="button button-fill button-primary" style="background-color:#02cbe9;display: block;height: 1.8rem;line-height: 1.8rem;width: 25%;" external>首页</a>
+                    <a href="${contextPath}/app/user/turn/repairList/router/${maintenanceList.userTel}.action" class="button button-fill button-success" style="background-color: #fcba70;display: block;height: 1.8rem;line-height: 1.8rem;width: 25%;" external>我的报修</a>
+                    <a href="${contextPath}/app/user/redirect/index.action" class="button button-fill button-primary" style="background-color:#01cae6;display: block;height: 1.8rem;line-height: 1.8rem;width: 25%;" external>首页</a>
                 </div>
             </div>
             <div class="card-header">

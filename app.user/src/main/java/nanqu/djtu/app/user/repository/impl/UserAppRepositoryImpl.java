@@ -406,6 +406,7 @@ public class UserAppRepositoryImpl implements UserAppRepositoryI {
             maintenanceList.setListState(listState);
 
             maintenanceList.setListStateFrontStyleColor(MaintenanceListStateToStringUtil.stateNumberToColorString(listState));
+            maintenanceList.setListStateFrontStyleDesc(MaintenanceListStateToStringUtil.stateNumberToStatusString(listState));
 
             maintenanceList.setListstatetime(rs.getString("liststatetime"));
             maintenanceList.setListDescription(rs.getString("listDescription"));

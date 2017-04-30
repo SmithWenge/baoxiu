@@ -145,6 +145,7 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
 
             list.setListState(listState);
             list.setListStateFrontStyleColor(MaintenanceListStateToStringUtil.stateNumberToColorString(listState));
+            list.setListStateFrontStyleDesc(MaintenanceListStateToStringUtil.stateNumberToStatusString(listState));
 
             return list;
         }
@@ -220,6 +221,7 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
             String listState = resultSet.getString("listState");
             list.setListState(listState);
             list.setListStateFrontStyleColor(MaintenanceListStateToStringUtil.stateNumberToColorString(listState));
+            list.setListStateFrontStyleDesc(MaintenanceListStateToStringUtil.stateNumberToStatusString(listState));
 
             return list;
         }

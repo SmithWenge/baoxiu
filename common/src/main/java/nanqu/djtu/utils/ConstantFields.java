@@ -78,4 +78,17 @@ public class ConstantFields {
 
     /* 报修单的状态不存在值 */
     public static final String NO_LIST_SATE_ITEM_VALUE = "无";
+
+    /* 不存在位置 */
+    public static final String NO_DISTINCT_NAME = "校区不存在";
+    public static final String NO_BUILD_NAME = "地点不存在";
+    public static final String NO_ROOM_NAME = "位置不存在";
+    public static final String NO_EQUIPMENT_NAME = "设备不存在";
+
+    /* 报修单状态文字描述 */
+    public static final String MAINTENANCELIST_COMMIT_STATE_DESC = "已提交";
+    public static final String MAINTENANCELIST_ACCEPT_STATE_DESC = "已接单";
+    public static final String MAINTENANCELIST_DONE_STATE_DESC = "已完成";
+    public static final String MAINTENANCELIST_MODIFY_STATE_DESC = "待派单";
+    public static final String MAINTENANCELIST_DELAY_STATE_DESC = "已延期";
 }
