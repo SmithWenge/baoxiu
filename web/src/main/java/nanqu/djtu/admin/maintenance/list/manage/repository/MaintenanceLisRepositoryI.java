@@ -93,4 +93,20 @@ public interface MaintenanceLisRepositoryI {
      * @return
      */
     Boolean updateMaintenanceList(MaintenanceList list);
+
+    /**
+     * 更新报修单状态
+     * @param list
+     * @return boolean
+     */
+
+    boolean updateMaintenancestate(MaintenanceList list);
+
+    /**
+     * 更新报修单状态
+     * @param list
+     * @return boolean
+     */
+
+    boolean insertMaintenancestate(MaintenanceList list);
 }

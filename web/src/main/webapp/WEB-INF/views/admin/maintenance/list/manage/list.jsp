@@ -97,8 +97,8 @@
           <td>设备名</td>
           <td>维修小组</td>
           <td>最新状态时间</td>
-          <td>操作</td>
-          <td>更改状态</td>
+          <td>编辑</td>
+          <td>状态更改</td>
         </tr>
         </thead>
         <tbody id="pageTableBody">
@@ -323,8 +323,8 @@
       return '<div class="layui-btn-group">' +
               '<a href="${contextPath}/admin/maintenance/list/manage/status/dispatch/'+listNumber+'.action">'+
              // ' <button class="layui-btn layui-btn-normal" >派单</button>&#xe642;</i>'+
-              '</button> </a><a href="${contextPath}/admin/maintenance/list/manage/status/done/' + listNumber + '.action">'+
-              ' <button class="layui-btn layui-btn-danger " >完成</button>&#xe640;</i></button>' +
+              '</button> </a><a href="${contextPath}/admin/maintenance/list/manage/update/maintenance/state/router/' + listNumber + '.action">'+
+              ' <button class="layui-btn layui-btn-danger " >状态更改</button>&#xe640;</i></button>' +
               '</button> </a></div>'
     }
 
