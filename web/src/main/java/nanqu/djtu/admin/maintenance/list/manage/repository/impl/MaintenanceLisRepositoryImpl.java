@@ -479,4 +479,47 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             return false;
         }
     }
+    /**
+     * 更新报修单状态
+     * @param list
+     * @return boolean
+     */
+    @Override
+    public boolean updateMaintenancestate(MaintenanceList list) {
+        String sql="UPDATE baoxiu_maintenancelist SET listState =? WHERE listNumber = ? AND deleteFlag = 0";
+        Object[] args = {
+               list.getListState(),
+                list.getListNumber()
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[ListNumber] update listState error with info {}.", e.getMessage());
+
+            return false;
+        }
+    }
+    /**
+     * 更新报修单状态
+     * @param list
+     * @return boolean
+     */
+    @Override
+    public boolean insertMaintenancestate(MaintenanceList list) {
+        String sql = "INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid, listNumber, listState ) VALUES ( ?,?,? )";
+        Object[] args = {
+                PrimaryKeyUtil.uuidPrimaryKey(),
+                list.getListNumber(),
+                list.getListState()
+        };
+
+        try {
+            return jdbcTemplate.update(sql, args) == 1;
+        } catch (Exception e) {
+            LOG.error("[ListNumber] add new liststate error with info {}.", e.getMessage());
+
+            return false;
+        }
+    }
 }
