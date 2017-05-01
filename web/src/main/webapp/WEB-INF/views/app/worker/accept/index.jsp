@@ -72,8 +72,8 @@
                     <div class="card-footer">
                         <p class="link"></p>
                         <div class="row">
-                            <div class="col-30" style="margin-right: .5rem;">
-                                <button type="submit" class="button">提交</button>
+                            <div class="col-30" style="margin-right: 1.9rem;">
+                                <button type="submit" class="button" style="display: block;width: 170%;height: 2.1rem;">提交</button>
                             </div>
                         </div>
                     </div>
