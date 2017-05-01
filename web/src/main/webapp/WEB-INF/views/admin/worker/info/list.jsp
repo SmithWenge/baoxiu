@@ -20,7 +20,6 @@
           <td>部门</td>
           <td>职称</td>
           <td>维修小组名</td>
-          <td>工种</td>
           <td>工人状态</td>
           <td>操作</td>
         </tr>
@@ -32,17 +31,9 @@
             <td>${workerInfo.workerName}</td>
             <td>${workerInfo.workerTel}</td>
             <td>${workerInfo.workerUnite}</td>
-            <td>
-              <c:if  test="${workerInfo.workerDepartment == 1}" >才艺</c:if>
-              <c:if  test="${workerInfo.workerDepartment == 2}" >园艺</c:if>
-              <c:if  test="${workerInfo.workerDepartment == 3}" >工程</c:if>
-              <c:if  test="${workerInfo.workerDepartment == 4}" >设备</c:if>
-              <c:if  test="${workerInfo.workerDepartment == 5}" >其他</c:if>
-
-            </td>
+            <td>${workerInfo.typeName}</td>
             <td>${workerInfo.workerJob}</td>
             <td>${workerInfo.groupName}</td>
-            <td>${workerInfo.typeName}</td>
             <td>
 
               <c:if test="${workerInfo.workerState == 1}" >在职</c:if>

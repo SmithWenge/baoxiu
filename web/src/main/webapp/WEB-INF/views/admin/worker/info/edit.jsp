@@ -35,13 +35,10 @@
         <div class="layui-form-item">
           <label class="layui-form-label">部门</label>
           <div class="layui-input-block">
-            <select name="workerDepartment" lay-verify="workerDepartment" id="workerDepartment">
-              </option>
-              <option value="1">才艺部</option>
-              <option value="2">园艺部</option>
-              <option value="3">工程部</option>
-              <option value="4">设备部</option>
-              <option value="5">其他</option>
+            <select name="typeId" id="typeId" lay-verify="typeId" >
+              <c:forEach items="${workerTypes}" var="workerTypes">
+                <option   value="${workerTypes.typeId}" >${workerTypes.typeName}</option>
+              </c:forEach>
             </select>
           </div>
         </div>
@@ -58,16 +55,6 @@
             <select name="repairGroupId" id="repairGroupId" lay-verify="repairGroupId">
               <c:forEach items="${repairGroups}" var="repairGroups">
                 <option  value="${repairGroups.repairGroupId}" >${repairGroups.groupName}</option>
-              </c:forEach>
-            </select>
-          </div>
-        </div>
-        <div class="layui-form-item">
-          <label class="layui-form-label">工种</label>
-          <div class="layui-input-block">
-            <select name="typeId" id="typeId" lay-verify="typeId" >
-              <c:forEach items="${workerTypes}" var="workerTypes">
-                <option   value="${workerTypes.typeId}" >${workerTypes.typeName}</option>
               </c:forEach>
             </select>
           </div>

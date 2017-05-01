@@ -7,22 +7,22 @@
     <fieldset class="layui-elem-field">
         <legend>
             <span class="layui-breadcrumb">
-              <a href="${contextPath}/admin/worker/type/list.action">工种管理</a>
-              <a><cite>工种添加</cite></a>
+              <a href="${contextPath}/admin/worker/type/list.action">部门管理</a>
+              <a><cite>部门添加</cite></a>
             </span>
         </legend>
         <div style="width: 30%; margin-top: 15px; ">
             <form action="${contextPath}/admin/worker/type/add/do.action" method="post" class="layui-form">
 
                 <div class="layui-form-item">
-                    <label class="layui-form-label">工种名</label>
+                    <label class="layui-form-label">部门名</label>
                     <div class="layui-input-block">
                         <input type="text" name="typeName" lay-verify="typeName" placeholder="请输入" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addWorkerType">新建</button>
+                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addWorkerType">添加</button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                     </div>
                 </div>
