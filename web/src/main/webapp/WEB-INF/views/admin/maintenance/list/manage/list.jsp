@@ -319,13 +319,22 @@
               '</button> </a></div>'
     }
 
-    function createStateBtnGroup(listNumber) {
-      return '<div class="layui-btn-group">' +
-              '<a href="${contextPath}/admin/maintenance/list/manage/status/dispatch/'+listNumber+'.action">'+
-             // ' <button class="layui-btn layui-btn-normal" >派单</button>&#xe642;</i>'+
-              '</button> </a><a href="${contextPath}/admin/maintenance/list/manage/update/maintenance/state/router/' + listNumber + '.action">'+
+    function createStateBtnGroup(listNumber, listState) {
+
+      if(listState == 8){
+        return '<div class="layui-btn-group">' +
+                    '<a href="${contextPath}/admin/maintenance/list/manage/reSend/router/'+listNumber+'.action">'+
+                    ' <button class="layui-btn layui-btn-normal" >派单</button>&#xe642;</i></button></a>'+
+                '</div>'
+}
+      if(listState != 8){
+        return  '<div class="layui-btn-group">' +
+                '<a href="${contextPath}/admin/maintenance/list/manage/update/maintenance/state/router/' + listNumber + '.action">'+
               ' <button class="layui-btn layui-btn-danger " >状态更改</button>&#xe640;</i></button>' +
-              '</button> </a></div>'
+              '</button> </a>'+
+              '</div>'
+      }
+
     }
 
 
@@ -367,7 +376,7 @@
             }
 
             var trData = "<tr><td>" + (i + 1) + "</td><td><a href=\"${contextPath}/admin/maintenance/list/manage/details/route/" + item.listNumber + ".action\">" + item.listNumber + "</a></td><td>" + item.liststateStr + "</td>";
-            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.liststatetime + "</td><td>" + maBtn + "</td><td>" + createStateBtnGroup(item.listNumber) + "</td></tr>";
+            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.liststatetime + "</td><td>" + maBtn + "</td><td>" + createStateBtnGroup(item.listNumber,item.listState) + "</td></tr>";
             $("#pageTableBody").append(trData);
           });
         }

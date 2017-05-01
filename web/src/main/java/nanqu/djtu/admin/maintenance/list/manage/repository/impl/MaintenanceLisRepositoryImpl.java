@@ -103,7 +103,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             } else {
                 list.setGroupName(groupName);
             }
-
+            list.setListState(listState);
             list.setListstatetime(format.format(resultSet.getTimestamp("liststatetime")));
             list.setListstateStr(dictionary.dictionary(listState, "listState").getItemValue());
 
@@ -507,7 +507,7 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
      */
     @Override
     public boolean insertMaintenancestate(MaintenanceList list) {
-        String sql = "INSERT INTO baoxiu.baoxiu_liststatetime (liststatetimeid, listNumber, listState ) VALUES ( ?,?,? )";
+        String sql = "INSERT INTO baoxiu_liststatetime (liststatetimeid, listNumber, listState ) VALUES ( ?,?,? )";
         Object[] args = {
                 PrimaryKeyUtil.uuidPrimaryKey(),
                 list.getListNumber(),
@@ -522,4 +522,58 @@ public class MaintenanceLisRepositoryImpl implements MaintenanceLisRepositoryI {
             return false;
         }
     }
+    /**
+     * 查询所有维修小组
+     * @return lit
+     */
+    @Override
+    public List<RepairGroup> selectRepairGroups() {
+        String sql = "SELECT repairGroupId, groupNumber, groupName FROM .baoxiu_repairgroup WHERE deleteFlag = 0;";
+        Object[] args = { };
+        try {
+            return jdbcTemplate.query(sql, args, new SelectRepairGroupsRowMapper() );
+        } catch (Exception e) {
+            LOG.error("[ListNumber] select repairGroup error with info {}.", e.getMessage());
+
+            return new  ArrayList<>();
+        }
+    }
+
+    private class SelectRepairGroupsRowMapper implements RowMapper<RepairGroup> {
+
+        @Override
+        public RepairGroup mapRow(ResultSet resultSet, int i) throws SQLException {
+            RepairGroup list = new RepairGroup();
+
+            list.setRepairGroupId(resultSet.getString("repairGroupId"));
+            list.setGroupName(resultSet.getString("groupName"));
+            list.setGroupNumber(resultSet.getString("groupNumber"));
+
+            return list;
+        }
+    }
+
+    /**
+     * 更改报修单状态和维修小组
+     * @param list
+     * @return boolean
+     */
+
+    @Override
+    public boolean updateMaintananceStateAndRepaireId(MaintenanceList list) {
+        String sql = "UPDATE baoxiu_maintenancelist SET listState =1, repairGroupId=? WHERE listNumber = ?";
+        Object[] args = {
+                list.getRepairGroupId(),
+                list.getListNumber()
+        };
+        try {
+            return jdbcTemplate.update(sql,args ) == 1;
+        } catch (Exception e) {
+            LOG.error("[ListNumber] update maintananceStateAndRepaireId error with info {}.", e.getMessage());
+
+            return false;
+        }
+    }
+
+
 }

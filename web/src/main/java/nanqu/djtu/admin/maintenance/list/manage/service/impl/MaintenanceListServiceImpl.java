@@ -155,4 +155,23 @@ public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
         return insert;
     }
 
+    @Override
+    public  List<RepairGroup> queryRepairGroups() {
+        return maintenanceLisRepository.selectRepairGroups();
+    }
+
+    @Override
+    public boolean updateMaintananceStateAndRepaireId(MaintenanceList list, AdminUser user) {
+        boolean update = maintenanceLisRepository.updateMaintananceStateAndRepaireId(list);
+
+
+        if (update) {
+            LOG.info("[ListState] update  maintananceStateAndRepaireId {} success with user {}.",list.getListNumber(),user.getAdminName());
+        } else {
+            LOG.warn("[ListState] update maintananceStateAndRepaireId {} failure with user {}.",list.getListNumber(), user.getAdminName());
+        }
+
+        return update;
+    }
+
 }

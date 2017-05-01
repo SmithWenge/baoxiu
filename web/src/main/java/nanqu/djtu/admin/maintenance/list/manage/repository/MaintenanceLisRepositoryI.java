@@ -109,4 +109,19 @@ public interface MaintenanceLisRepositoryI {
      */
 
     boolean insertMaintenancestate(MaintenanceList list);
+
+    /**
+     * 查询所有维修小组
+     * @return lit
+     */
+
+    List<RepairGroup> selectRepairGroups();
+
+    /**
+     * 更改报修单状态和维修小组
+     * @param list
+     * @return boolean
+     */
+
+    boolean updateMaintananceStateAndRepaireId(MaintenanceList list);
 }

@@ -236,6 +236,7 @@ public class MaintenanceListController {
      */
     @RequestMapping(value = "/update/maintenance/state/router/{listNumber}")
     public ModelAndView updateMaintenanceState(@PathVariable String listNumber){
+
         MaintenanceList list = maintenanceListService.query4details(listNumber);
 
         if (Optional.fromNullable(list).isPresent()) {
@@ -271,5 +272,36 @@ public class MaintenanceListController {
         }
 
         return "redirect:/admin/maintenance/list/manage/update/maintenance/state/router/" + list.getListNumber() + ".action";
+    }
+    @RequestMapping(value = "/reSend/router/{listNumber}")
+    public ModelAndView routeReSend(@PathVariable String listNumber){
+        MaintenanceList list = maintenanceListService.query4details(listNumber);
+        List<RepairGroup> repairGroups = maintenanceListService.queryRepairGroups();
+        if (Optional.fromNullable(list).isPresent()) {
+            ModelAndView mav = new ModelAndView("admin/maintenance/list/manage/reSend");
+
+            mav.addObject("list", list);
+            mav.addObject("repairGroups", repairGroups);
+
+            return mav;
+        } else {
+            return new ModelAndView("redirect:/admin/maintenance/list/manage/index.action");
+        }
+    }
+    @RequestMapping(value = "/reSend/do", method = RequestMethod.POST)
+    public String reSendDo(MaintenanceList list, HttpSession session, RedirectAttributes redirectAttributes) {
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+
+        boolean update = maintenanceListService.updateMaintananceStateAndRepaireId(list, user);
+
+        if (update) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+
+            return "redirect:/admin/maintenance/list/manage/index.action";
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+        }
+
+        return "redirect:/admin/maintenance/list/manage/reSend/router/" + list.getListNumber() + ".action";
     }
 }
