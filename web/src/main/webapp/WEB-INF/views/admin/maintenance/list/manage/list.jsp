@@ -324,7 +324,7 @@
       if(listState == 8){
         return '<div class="layui-btn-group">' +
                     '<a href="${contextPath}/admin/maintenance/list/manage/reSend/router/'+listNumber+'.action">'+
-                    ' <button class="layui-btn layui-btn-normal" >派单</button>&#xe642;</i></button></a>'+
+                    ' <button class="layui-btn layui-btn-normal" >重新派单</button>&#xe642;</i></button></a>'+
                 '</div>'
 }
       if(listState != 8){
