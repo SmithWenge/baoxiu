@@ -70,7 +70,7 @@
           </div>
         <div class="layui-form-item">
           <div class="layui-input-block">
-            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addAdminUser">新建</button>
+            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addAdminUser">添加</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
           </div>
         </div>

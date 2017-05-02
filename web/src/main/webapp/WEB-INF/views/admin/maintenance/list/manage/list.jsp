@@ -97,8 +97,8 @@
           <td>设备名</td>
           <td>维修小组</td>
           <td>最新状态时间</td>
-          <td>操作</td>
-          <td>更改状态</td>
+          <td>编辑</td>
+          <td>状态更改</td>
         </tr>
         </thead>
         <tbody id="pageTableBody">
@@ -319,13 +319,22 @@
               '</button> </a></div>'
     }
 
-    function createStateBtnGroup(listNumber) {
-      return '<div class="layui-btn-group">' +
-              '<a href="${contextPath}/admin/maintenance/list/manage/status/dispatch/'+listNumber+'.action">'+
-             // ' <button class="layui-btn layui-btn-normal" >派单</button>&#xe642;</i>'+
-              '</button> </a><a href="${contextPath}/admin/maintenance/list/manage/status/done/' + listNumber + '.action">'+
-              ' <button class="layui-btn layui-btn-danger " >完成</button>&#xe640;</i></button>' +
-              '</button> </a></div>'
+    function createStateBtnGroup(listNumber, listState) {
+
+      if(listState == 8){
+        return '<div class="layui-btn-group">' +
+                    '<a href="${contextPath}/admin/maintenance/list/manage/reSend/router/'+listNumber+'.action">'+
+                    ' <button class="layui-btn layui-btn-normal" >重新派单</button>&#xe642;</i></button></a>'+
+                '</div>'
+}
+      if(listState != 8){
+        return  '<div class="layui-btn-group">' +
+                '<a href="${contextPath}/admin/maintenance/list/manage/update/maintenance/state/router/' + listNumber + '.action">'+
+              ' <button class="layui-btn layui-btn-danger " >状态更改</button>&#xe640;</i></button>' +
+              '</button> </a>'+
+              '</div>'
+      }
+
     }
 
 
@@ -367,7 +376,7 @@
             }
 
             var trData = "<tr><td>" + (i + 1) + "</td><td><a href=\"${contextPath}/admin/maintenance/list/manage/details/route/" + item.listNumber + ".action\">" + item.listNumber + "</a></td><td>" + item.liststateStr + "</td>";
-            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.liststatetime + "</td><td>" + maBtn + "</td><td>" + createStateBtnGroup(item.listNumber) + "</td></tr>";
+            trData += "<td>" + item.equipmentName + "</td><td>" + item.groupName + "</td><td>"  + item.liststatetime + "</td><td>" + maBtn + "</td><td>" + createStateBtnGroup(item.listNumber,item.listState) + "</td></tr>";
             $("#pageTableBody").append(trData);
           });
         }

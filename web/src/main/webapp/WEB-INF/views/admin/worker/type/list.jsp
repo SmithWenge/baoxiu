@@ -5,7 +5,7 @@
 <!-- 内容主体 -->
 <div class="layui-body body">
     <fieldset class="layui-elem-field layui-field-title">
-        <legend>工种管理</legend>
+        <legend>部门管理</legend>
         <a href="${contextPath}/admin/worker/type/add/route.action">
             <button class="layui-btn layui-btn-normal elementAddBtn" id="addworkertype">添加</button>
         </a>
@@ -14,7 +14,7 @@
                 <thead>
                 <tr>
                     <td>序号</td>
-                    <td>工种名称</td>
+                    <td>部门名称</td>
                     <td>操作</td>
                 </tr>
                 </thead>

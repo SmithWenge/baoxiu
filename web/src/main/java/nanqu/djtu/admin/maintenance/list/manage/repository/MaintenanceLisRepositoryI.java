@@ -93,4 +93,35 @@ public interface MaintenanceLisRepositoryI {
      * @return
      */
     Boolean updateMaintenanceList(MaintenanceList list);
+
+    /**
+     * 更新报修单状态
+     * @param list
+     * @return boolean
+     */
+
+    boolean updateMaintenancestate(MaintenanceList list);
+
+    /**
+     * 更新报修单状态
+     * @param list
+     * @return boolean
+     */
+
+    boolean insertMaintenancestate(MaintenanceList list);
+
+    /**
+     * 查询所有维修小组
+     * @return lit
+     */
+
+    List<RepairGroup> selectRepairGroups();
+
+    /**
+     * 更改报修单状态和维修小组
+     * @param list
+     * @return boolean
+     */
+
+    boolean updateMaintananceStateAndRepaireId(MaintenanceList list);
 }

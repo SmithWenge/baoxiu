@@ -20,8 +20,8 @@
             </div>
             <c:forEach items="${lists}" var="list">
                 <div class="card">
-                    <div class="card-header" style="font-size: .8rem;">
-                        <i class="fa fa-circle" aria-hidden="true" style="color: ${list.listStateFrontStyleColor};">${list.listStateFrontStyleDesc}</i>
+                    <div class="card-header" style="font-size: .7rem;">
+                        <i class="fa fa-circle" aria-hidden="true" style="color: ${list.listStateFrontStyleColor};margin-bottom: 0.08rem;font-size: .7rem;">${list.listStateFrontStyleDesc}</i>
                         维修单号：${list.listNumber}
                     </div>
                     <div class="card-content">

@@ -18,7 +18,7 @@
                     </header>
                 </div>
             </div>
-            <form action="${contextPath}/app/worker/edit.action" method="post" onsubmit=" return onClick() ">
+            <form action="${contextPath}/app/worker/edit.action" method="post" onsubmit="return checkSubmit();">
                 <div class="card">
                     <div class="card-header">
                         <div class="card-content">
@@ -32,10 +32,14 @@
                                                 <div class="item-inner">
                                                     <div class="item-input">
                                                         <select name="listState" id="operation">
-                                                            <option value="-1">请选择操作</option>
-                                                            <option value="2">接单</option>
-                                                            <option value="3">完成</option>
-                                                            <option value="6">延期</option>
+                                                            <c:if test="${list.listState == 1}">
+                                                                <option value="2">接单</option>
+                                                            </c:if>
+                                                            <c:if test="${list.listState == 2}">
+                                                                <option value="3">完成</option>
+                                                                <option value="6">延期</option>
+                                                                <option value="7">申请协助</option>
+                                                            </c:if>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -72,8 +76,8 @@
                     <div class="card-footer">
                         <p class="link"></p>
                         <div class="row">
-                            <div class="col-30" style="margin-right: .5rem;">
-                                <button type="submit" class="button">提交</button>
+                            <div class="col-30" style="margin-right: 1.9rem;">
+                                <button type="submit" class="button" style="display: block;width: 170%;height: 2.1rem;">提交</button>
                             </div>
                         </div>
                     </div>
@@ -210,17 +214,4 @@
 </div>
 
 <%@ include file="/WEB-INF/include/app/appJavascript.jsp"%>
-<script type="text/javascript">
-    function onClick(){
-        var value = document.getElementById("operation").value;
-        if(value = -1){
-            alert("请选择操作!");
-            return false;
-        }else{
-            return true;
-        }
-    }
-    </script>
-
-
 <%@ include file="/WEB-INF/include/app/appFooter.jsp"%>

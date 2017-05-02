@@ -141,4 +141,37 @@ public class MaintenanceListServiceImpl implements MaintenanceListServiceI {
         return update;
     }
 
+    @Override
+    public boolean updateMaintananceState(MaintenanceList list, AdminUser user) {
+        boolean update = maintenanceLisRepository.updateMaintenancestate(list);
+        boolean insert = maintenanceLisRepository.insertMaintenancestate(list);
+
+        if (update && insert) {
+            LOG.info("[ListState] update  liststate {} success with user {}.",list.getListNumber(),user.getAdminName());
+        } else {
+            LOG.warn("[ListState] delete place distinct {} failure with user {}.",list.getListNumber(), user.getAdminName());
+        }
+
+        return insert;
+    }
+
+    @Override
+    public  List<RepairGroup> queryRepairGroups() {
+        return maintenanceLisRepository.selectRepairGroups();
+    }
+
+    @Override
+    public boolean updateMaintananceStateAndRepaireId(MaintenanceList list, AdminUser user) {
+        boolean update = maintenanceLisRepository.updateMaintananceStateAndRepaireId(list);
+
+
+        if (update) {
+            LOG.info("[ListState] update  maintananceStateAndRepaireId {} success with user {}.",list.getListNumber(),user.getAdminName());
+        } else {
+            LOG.warn("[ListState] update maintananceStateAndRepaireId {} failure with user {}.",list.getListNumber(), user.getAdminName());
+        }
+
+        return update;
+    }
+
 }

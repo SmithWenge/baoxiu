@@ -66,6 +66,8 @@ public class ConstantFields {
     public static final String MAINTENANCELIST_ADD_ADMIN_MODIFY_STATE = "5";
     /* 报修单的状态为正常的添加->已提交 */
     public static final int MAINTENANCELIST_ADD_COMMITTED_STATE = 1;
+    /*报修单状态为申请协助*/
+    public static final int MAINTENANCELIST_REQUEST_HELP_STATE =8;
 
     /* 报修单状态 */
     public static final int MAINTENANCELIST_STATE_ACCEPT = 2;
