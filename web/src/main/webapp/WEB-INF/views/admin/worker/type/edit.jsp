@@ -7,8 +7,8 @@
     <fieldset class="layui-elem-field">
         <legend>
             <span class="layui-breadcrumb">
-              <a href="${contextPath}/admin/worker/type/list.action">工种管理</a>
-              <a><cite>工种修改</cite></a>
+              <a href="${contextPath}/admin/worker/type/list.action">部门管理</a>
+              <a><cite>部门修改</cite></a>
             </span>
         </legend>
         <div style="width: 30%; margin-top: 15px; ">
@@ -16,7 +16,7 @@
                 <input type="hidden" name="typeId" value="${type.typeId}">
 
                 <div class="layui-form-item">
-                    <label class="layui-form-label">工种名</label>
+                    <label class="layui-form-label">部门名</label>
                     <div class="layui-input-block">
                         <input type="text" name="typeName" lay-verify="typeName" value="${type.typeName}" autocomplete="off" class="layui-input">
                     </div>

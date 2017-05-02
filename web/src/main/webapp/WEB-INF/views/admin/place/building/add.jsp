@@ -24,12 +24,14 @@
             </select>
           </div>
         </div>
+        <!--
         <div class="layui-form-item">
           <label class="layui-form-label">地点编号</label>
           <div class="layui-input-block">
             <input type="text" name="buildingNumber" lay-verify="buildingNumber" placeholder="请输入编号" class="layui-input" id="buildingNumber">
           </div>
         </div>
+        -->
         <div class="layui-form-item">
           <label class="layui-form-label">地点名</label>
           <div class="layui-input-block">
@@ -38,7 +40,7 @@
         </div>
         <div class="layui-form-item">
           <div class="layui-input-block">
-            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceBuilding">新建</button>
+            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceBuilding">添加</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
           </div>
         </div>
@@ -50,13 +52,9 @@
 <%@ include file="/WEB-INF/include/javascript.jsp"%>
 
 <script>
-  $(function () {
-    $("#first").attr("class", "layui-nav-item layui-nav-itemed");
-    $("#placeBuilding").attr("class", "layui-this");
-    var form = layui.form();
+  /**
 
-    form.verify({
-      buildingNumber: function(value) {
+   buildingNumber: function(value) {
         if(value.length > 4 || value.length < 2) {
           return "地点编号的长度为2到4";
         }
@@ -84,6 +82,13 @@
           return "填写的地点编号已存在";
         }
       },
+   */
+  $(function () {
+    $("#first").attr("class", "layui-nav-item layui-nav-itemed");
+    $("#placeBuilding").attr("class", "layui-this");
+    var form = layui.form();
+
+    form.verify({
       buildingName: function (value) {
         if (value.length < 1) {
           return "请输入地点名";

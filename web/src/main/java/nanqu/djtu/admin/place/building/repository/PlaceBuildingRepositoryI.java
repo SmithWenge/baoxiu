@@ -26,7 +26,6 @@ public interface PlaceBuildingRepositoryI {
      *
      * @return 所有未删除的设备组信息
      */
-
     List<EquipmentSet> equipmentSetSelect4List();
 
     /**
@@ -34,7 +33,6 @@ public interface PlaceBuildingRepositoryI {
      * @param building 地点对象
      * @return true false
      */
-
     boolean insertNewPlaceDistinct(PlaceBuilding building);
 
     /**
@@ -42,7 +40,6 @@ public interface PlaceBuildingRepositoryI {
      * @param building 地点对象
      * @return true or false
      */
-
     boolean select4PlaceBuildingNumberUnique(PlaceBuilding building);
 
     /**
@@ -50,7 +47,6 @@ public interface PlaceBuildingRepositoryI {
      * @param buildingId 地点Id
      * @return true or false
      */
-
     boolean deletePlaceBuilding(String buildingId);
 
     /**
@@ -58,7 +54,6 @@ public interface PlaceBuildingRepositoryI {
      * @param buildingId 地点id
      * @return 地点对象
      */
-
     PlaceBuilding select4Edit(String buildingId);
 
     /**
@@ -66,7 +61,13 @@ public interface PlaceBuildingRepositoryI {
      * @param placeBuilding 地点对象
      * @return true or false
      */
-
     boolean updatePlaceBuilding(PlaceBuilding placeBuilding);
 
+    /**
+     * 查询这个校区下地点的总数
+     *
+     * @param distinctId 校区Id
+     * @return 返回这个校区下地点的总数
+     */
+    int select4BuildingCount(String distinctId);
 }

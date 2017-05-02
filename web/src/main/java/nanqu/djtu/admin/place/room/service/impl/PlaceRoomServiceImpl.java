@@ -2,6 +2,7 @@ package nanqu.djtu.admin.place.room.service.impl;
 
 import nanqu.djtu.admin.place.room.repository.PlaceRoomRepositoryI;
 import nanqu.djtu.admin.place.room.service.PlaceRoomServiceI;
+import nanqu.djtu.list.number.AutoListNumberCreator;
 import nanqu.djtu.pojo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,14 @@ public class PlaceRoomServiceImpl implements PlaceRoomServiceI{
 
     @Override
     public boolean saveNewPlaceRoom(PlaceRoom room, AdminUser user) {
+        int roomCount = placeRoomRepository.select4RoomCount(room.getBuildingId());
+
+        if (roomCount < 0) {
+            return false;
+        }
+
+        room.setRoomNumber(AutoListNumberCreator.createRoomNumber(roomCount));
+
         boolean insert = placeRoomRepository.insertNewPlaceRoom(room);
 
         if (insert) {
