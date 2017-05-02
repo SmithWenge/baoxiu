@@ -151,11 +151,10 @@ public class PlaceRoomRepositoryImpl implements PlaceRoomRepositoryI{
      */
     @Override
     public boolean updatePlaceRoom(PlaceRoom room) {
-        String sql = "UPDATE baoxiu_placeroom SET roomName = ?, buildingId = ?, roomNumber = ? WHERE roomId = ? AND deleteFlag = 0";
+        String sql = "UPDATE baoxiu_placeroom SET roomName = ?, buildingId = ? WHERE roomId = ? AND deleteFlag = 0";
         Object[] args = {
                 room.getRoomName(),
                 room.getBuildingId(),
-                room.getRoomNumber(),
                 room.getRoomId()
         };
 
@@ -297,6 +296,29 @@ public class PlaceRoomRepositoryImpl implements PlaceRoomRepositoryI{
             LOG.error("[PlaceBuilding] selectBuildingsForEdit error with info {}.", e.getMessage());
 
             return new ArrayList<>();
+        }
+    }
+
+    /**
+     * 查询这个地点下位置的总数目
+     *
+     * @param buildingId 地点Id
+     * @return 这个地点下位置的总数目
+     */
+    @Override
+    public int select4RoomCount(String buildingId) {
+        String sql = "SELECT COUNT(1) AS NUM FROM baoxiu_placeroom WHERE buildingId = ?";
+        Object[] args = {
+                buildingId
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, Integer.class);
+        } catch (Exception e) {
+            LOG.error("[PlaceBuilding] select building {}'s room count error with info {}.", buildingId, e.getMessage());
+
+
+            return -1;
         }
     }
 }

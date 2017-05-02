@@ -80,4 +80,12 @@ public interface PlaceRoomRepositoryI {
      * @return
      */
     List<PlaceBuilding> selectBuildings4Edit();
+
+    /**
+     * 查询这个地点下位置的总数目
+     *
+     * @param buildingId 地点Id
+     * @return 这个地点下位置的总数目
+     */
+    int select4RoomCount(String buildingId);
 }
