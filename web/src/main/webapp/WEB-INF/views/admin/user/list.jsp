@@ -17,10 +17,10 @@
           <td>工号</td>
           <td>姓名</td>
           <td>性别</td>
-          <td>邮箱</td>
-          <td>身份证</td>
-          <td>电话</td>
-          <td>登陆名</td>
+            <td>出生日期</td>
+            <td>工作日期</td>
+            <td>邮箱</td>
+            <td>电话</td>
           <td>状态</td>
           <td>操作</td>
         </tr>
@@ -34,10 +34,11 @@
               <c:if  test="${user.adminGender == 1}" >男</c:if>
               <c:if  test="${user.adminGender == 0}" >女</c:if>
             </td>
+            <td>${user.workTime}</td>
+            <td>${user.bornTime}</td>
             <td>${user.adminEmail}</td>
-            <td>${user.adminCard}</td>
             <td>${user.adminTelephone}</td>
-            <td>${user.username}</td>
+
             <td>
               <c:if  test="${user.adminState == 0}" >未激活</c:if>
               <c:if  test="${user.adminState == 1}" >激活</c:if>

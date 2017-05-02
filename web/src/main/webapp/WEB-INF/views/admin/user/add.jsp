@@ -45,6 +45,18 @@
           </div>
         </div>
         <div class="layui-form-item">
+          <label class="layui-form-label">出生日期</label>
+          <div class="layui-input-block">
+            <input name="bornTime" id="bornTime" lay-verify="date" placeholder="请输入" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})" type="text">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">工作日期</label>
+          <div class="layui-input-block">
+            <input name="workTime" id="workTime" lay-verify="date" placeholder="请输入" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})" type="text">
+          </div>
+        </div>
+        <div class="layui-form-item">
           <label class="layui-form-label">登陆名</label>
           <div class="layui-input-block">
             <input type="text" name="username" lay-verify="username" placeholder="请输入" autocomplete="off" class="layui-input" id="username">
@@ -64,7 +76,7 @@
         </div>
         <div class="layui-form-item">
           <label class="layui-form-label">状态</label>
-          <div class="layui-input-block" id="adminState" " lay-verify="adminState">
+          <div class="layui-input-block" id="adminState"  lay-verify="adminState">
             <input  value=1 name="adminState" title="激活" checked="" type="radio">
             <input  value=0 name="adminState" title="未激活" type="radio">
           </div>
@@ -172,6 +184,7 @@
     });
   });
 </script>
+
 
 <%@ include file="/WEB-INF/include/footer.jsp"%>
 

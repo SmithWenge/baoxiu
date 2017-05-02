@@ -30,7 +30,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
 
     @Override
     public List<AdminUser> selectAdminUserList() {
-        String sql = "SELECT A.adminUserId,username,adminName,userId,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone FROM baoxiu_adminuser AS A LEFT JOIN shiro_user AS U on A.adminUserId = U.adminUserId where A.deleteflag = 0";
+        String sql = "SELECT A.adminUserId,username,adminName,userId,adminGender,adminEmail,adminNumber,adminState,adminCard,workTime,bornTime,adminTelephone FROM baoxiu_adminuser AS A LEFT JOIN shiro_user AS U on A.adminUserId = U.adminUserId where A.deleteflag = 0";
         Object[] args = {};
 
         try {
@@ -58,13 +58,15 @@ public class UserRepositoryImpl implements UserRepositoryI{
             adminUser.setAdminTelephone(rs.getString("adminTelephone"));
             adminUser.setUsername(rs.getString("username"));
             adminUser.setUserId(rs.getString("userId"));
+            adminUser.setWorkTime(rs.getString("workTime"));
+            adminUser.setBornTime(rs.getString("bornTime"));
 
             return adminUser;
         }
     }
     @Override
     public boolean saveNewAdminUser(AdminUser adminUser) {
-        String sql = "INSERT INTO baoxiu_adminuser(adminUserId,adminName,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone) VALUES (?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO baoxiu_adminuser(adminUserId,adminName,adminGender,adminEmail,adminNumber,adminState,adminCard,adminTelephone,workTime,bornTime) VALUES (?,?,?,?,?,?,?,?,?,?)";
         Object[] args = {
                 adminUser.getAdminUserId(),
                 adminUser.getAdminName(),
@@ -74,6 +76,8 @@ public class UserRepositoryImpl implements UserRepositoryI{
                 adminUser.getAdminState(),
                 adminUser.getAdminCard(),
                 adminUser.getAdminTelephone(),
+                adminUser.getWorkTime(),
+                adminUser.getBornTime()
         };
 
         try {
@@ -146,7 +150,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
 
     @Override
     public AdminUser query4Edit(String adminUserId) {
-        String sql = "SELECT baoxiu_adminuser.adminUserId, userId, username, adminName, adminGender, adminEmail, adminNumber, adminState, adminCard, adminTelephone  FROM baoxiu_adminuser JOIN shiro_user ON (baoxiu_adminuser.adminUserId = shiro_user.adminUserId ) WHERE baoxiu_adminuser.adminUserId = ? ";
+        String sql = "SELECT baoxiu_adminuser.adminUserId, userId, username, adminName, adminGender, adminEmail, adminNumber, adminState, adminCard, adminTelephone,workTime, bornTime  FROM baoxiu_adminuser JOIN shiro_user ON (baoxiu_adminuser.adminUserId = shiro_user.adminUserId ) WHERE baoxiu_adminuser.adminUserId = ? ";
         Object[] args  = {adminUserId};
         try{
             return jdbcTemplate.queryForObject(sql,args,new SelectAdminUserListRowMapper() );
@@ -165,7 +169,7 @@ public class UserRepositoryImpl implements UserRepositoryI{
      */
     @Override
     public boolean updateAdminUser(AdminUser adminUser) {
-        String sql = "UPDATE baoxiu_adminuser SET adminName=?, adminGender=?, adminEmail=?, adminNumber = ?, adminState = ? , adminCard= ?, adminTelephone= ? WHERE adminUserId = ?";
+        String sql = "UPDATE baoxiu_adminuser SET adminName=?, adminGender=?, adminEmail=?, adminNumber = ?, adminState = ? , adminCard= ?, adminTelephone= ?,workTime=?,bornTime=? WHERE adminUserId = ?";
         Object[] args = {
                 adminUser.getAdminName(),
                 adminUser.getAdminGender(),
@@ -174,9 +178,10 @@ public class UserRepositoryImpl implements UserRepositoryI{
                 adminUser.getAdminState(),
                 adminUser.getAdminCard(),
                 adminUser.getAdminTelephone(),
+                adminUser.getWorkTime(),
+                adminUser.getBornTime(),
                 adminUser.getAdminUserId()
         };
-
         try {
             return  jdbcTemplate.update(sql,args) == 1;
         }catch (Exception e) {

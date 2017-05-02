@@ -18,6 +18,25 @@ public class AdminUser {
     private String adminTelephone;  // 维修人员联系电话
     private String username;
     private String password;
+    private String workTime;
+    private String bornTime;
+
+    public String getWorkTime() {
+        return workTime;
+    }
+
+    public void setWorkTime(String workTime) {
+        this.workTime = workTime;
+    }
+
+    public String getBornTime() {
+        return bornTime;
+    }
+
+    public void setBornTime(String bornTime) {
+        this.bornTime = bornTime;
+    }
+
     private List<AdminUser> roleList;
 
     public List<AdminUser> getRoleList() {
