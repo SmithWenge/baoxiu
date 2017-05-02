@@ -131,10 +131,9 @@ public class PlaceDistinctRepositoryImpl implements PlaceDistinctRepositoryI {
      */
     @Override
     public boolean updatePlaceDistinct(PlaceDistinct distinct) {
-        String sql = "UPDATE baoxiu_placedistinct SET distinctName = ?, distinctNumber = ? WHERE distinctId = ? AND deleteFlag = 0";
+        String sql = "UPDATE baoxiu_placedistinct SET distinctName = ? WHERE distinctId = ? AND deleteFlag = 0";
         Object[] args = {
                 distinct.getDistinctName(),
-                distinct.getDistinctNumber(),
                 distinct.getDistinctId()
         };
 
@@ -164,6 +163,25 @@ public class PlaceDistinctRepositoryImpl implements PlaceDistinctRepositoryI {
             return jdbcTemplate.queryForObject(sql, args, Integer.class) == 0;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    /**
+     * 查询校区的总数,编号是总数加一
+     *
+     * @return 校区的总数
+     */
+    @Override
+    public int select4DistinctCount() {
+        String sql = "SELECT COUNT(1) AS NUM FROM baoxiu_placedistinct";
+        Object[] args = {};
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, Integer.class);
+        } catch (Exception e) {
+            LOG.error("[PlaceDistinct] query place distinct count error with info {}.", e.getMessage());
+
+            return -1;
         }
     }
 }

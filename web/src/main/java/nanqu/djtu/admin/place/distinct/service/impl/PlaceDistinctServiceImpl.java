@@ -2,6 +2,7 @@ package nanqu.djtu.admin.place.distinct.service.impl;
 
 import nanqu.djtu.admin.place.distinct.repository.PlaceDistinctRepositoryI;
 import nanqu.djtu.admin.place.distinct.service.PlaceDistinctServiceI;
+import nanqu.djtu.list.number.AutoListNumberCreator;
 import nanqu.djtu.pojo.AdminUser;
 import nanqu.djtu.pojo.PlaceDistinct;
 import org.slf4j.Logger;
@@ -25,6 +26,14 @@ public class PlaceDistinctServiceImpl implements PlaceDistinctServiceI {
 
     @Override
     public boolean saveNewPlaceDistinct(PlaceDistinct distinct, AdminUser user) {
+        int distinctCount = placeDistinctRepository.select4DistinctCount();
+
+        if (distinctCount < 0) {
+            return false;
+        }
+
+        distinct.setDistinctNumber(AutoListNumberCreator.createDistinctNumber(distinctCount));
+
         boolean insert = placeDistinctRepository.insertNewPlaceDistinct(distinct);
 
         if (insert) {

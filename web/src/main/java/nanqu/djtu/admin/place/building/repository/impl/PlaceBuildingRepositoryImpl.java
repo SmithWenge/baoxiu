@@ -240,9 +240,8 @@ public class PlaceBuildingRepositoryImpl implements PlaceBuildingRepositoryI {
      */
     @Override
     public boolean updatePlaceBuilding(PlaceBuilding placeBuilding) {
-        String sql = "UPDATE baoxiu_placebuilding SET buildingNumber = ?, distinctId=?, buildingName = ? where deleteFlag = 0 AND buildingId =? ";
+        String sql = "UPDATE baoxiu_placebuilding SET distinctId=?, buildingName = ? where deleteFlag = 0 AND buildingId =? ";
         Object[] args = {
-                placeBuilding.getBuildingNumber(),
                 placeBuilding.getDistinctId(),
                 placeBuilding.getBuildingName(),
                 placeBuilding.getBuildingId()
@@ -255,6 +254,28 @@ public class PlaceBuildingRepositoryImpl implements PlaceBuildingRepositoryI {
             LOG.error("[PlaceBuilding] update place building error with info {}.", e.getMessage());
 
             return false;
+        }
+    }
+
+    /**
+     * 查询这个校区下地点的总数
+     *
+     * @param distinctId 校区Id
+     * @return 返回这个校区下地点的总数
+     */
+    @Override
+    public int select4BuildingCount(String distinctId) {
+        String sql = "SELECT COUNT(1) AS NUM FROM baoxiu_placebuilding WHERE distinctId = ?";
+        Object[] args = {
+                distinctId
+        };
+
+        try {
+            return jdbcTemplate.queryForObject(sql, args, Integer.class);
+        } catch (Exception e) {
+            LOG.error("[PlaceBuilding] query place building count for distinctId {} and error with info {}.", distinctId, e.getMessage());
+
+            return -1;
         }
     }
 
