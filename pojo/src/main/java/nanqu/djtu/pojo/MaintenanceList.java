@@ -33,6 +33,25 @@ public class MaintenanceList {
     // 报修单编辑,新的报修单号
     private String newListNumber;
 
+    // 报修单状态描述
+    private String listStateFrontStyleDesc;
+    private int eachDistinctMaintenanceListNumber;//每个校区有多少保修单
+    private boolean maintenanceExit;//判断保修单是否存在
+    private int waitToDoMaintenanceSum;//待办报修单数
+    private int onDoMaintenanceSum;//在办报修单数
+    private int allDoMaintenanceSum;//所有要工人处理的报修单数
+
+    private String listStateFrontStyleColor; // 前台状态圆点颜色
+
+    public void setListStateFrontStyleDesc(String listStateFrontStyleDesc) {
+        this.listStateFrontStyleDesc = listStateFrontStyleDesc;
+    }
+
+    public String getListStateFrontStyleDesc() {
+
+        return listStateFrontStyleDesc;
+    }
+
     public void setNewListNumber(String newListNumber) {
         this.newListNumber = newListNumber;
     }
@@ -41,14 +60,6 @@ public class MaintenanceList {
 
         return newListNumber;
     }
-
-    private int eachDistinctMaintenanceListNumber;//每个校区有多少保修单
-    private boolean maintenanceExit;//判断保修单是否存在
-    private int waitToDoMaintenanceSum;//待办报修单数
-    private int onDoMaintenanceSum;//在办报修单数
-    private int allDoMaintenanceSum;//所有要工人处理的报修单数
-
-    private String listStateFrontStyleColor; // 前台状态圆点颜色
 
     public void setListState(int listState) {
         this.listState = listState;

@@ -205,10 +205,34 @@ public class UserAppController {
         List<MaintenanceList> allStates = userAppService.queryAllState(listNumber);
         MaintenanceList list = userAppService.queryAllName(maintenanceList);
 
-        maintenanceList.setDistinctName(list.getDistinctName());
-        maintenanceList.setBuildingName(list.getBuildingName());
-        maintenanceList.setRoomName(list.getRoomName());
-        maintenanceList.setEquipmentName(list.getEquipmentName());
+        String distinctName = list.getDistinctName();
+
+        if (Strings.isNullOrEmpty(distinctName)) {
+            maintenanceList.setDistinctName(ConstantFields.NO_DISTINCT_NAME);
+        } else {
+            maintenanceList.setDistinctName(distinctName);
+        }
+
+        String buildName = list.getBuildingName();
+        if (Strings.isNullOrEmpty(buildName)) {
+            maintenanceList.setBuildingName(ConstantFields.NO_BUILD_NAME);
+        } else {
+            maintenanceList.setBuildingName(buildName);
+        }
+
+        String roomName = list.getRoomName();
+        if (Strings.isNullOrEmpty(roomName)) {
+            maintenanceList.setRoomName(ConstantFields.NO_ROOM_NAME);
+        } else {
+            maintenanceList.setRoomName(roomName);
+        }
+
+        String equipmentName = list.getEquipmentName();
+        if (Strings.isNullOrEmpty(equipmentName)) {
+            maintenanceList.setEquipmentName(ConstantFields.NO_EQUIPMENT_NAME);
+        } else {
+            maintenanceList.setEquipmentName(equipmentName);
+        }
 
         ModelAndView modelAndView = new ModelAndView("app/user/track/detail");
         modelAndView.addObject("allStates", allStates);

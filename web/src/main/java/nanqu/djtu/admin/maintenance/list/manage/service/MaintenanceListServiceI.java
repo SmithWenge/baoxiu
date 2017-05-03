@@ -19,4 +19,9 @@ public interface MaintenanceListServiceI {
     boolean updatestate(String listNumber, AdminUser user);
     boolean done(String listNumber, AdminUser user);
     boolean editMaintenanceList(MaintenanceList list, AdminUser user);
+    boolean updateMaintananceState(MaintenanceList list, AdminUser user);
+
+    List<RepairGroup>  queryRepairGroups();
+
+    boolean updateMaintananceStateAndRepaireId(MaintenanceList list, AdminUser user);
 }

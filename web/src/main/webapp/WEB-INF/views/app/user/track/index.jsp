@@ -27,7 +27,7 @@
                                             </div>
                                             <div class="item-inner">
                                                 <div class="item-input">
-                                                    <input type="text" placeholder="请输入您报修时填写的电话号码" id="userTel" name="userTel">
+                                                    <input type="text" placeholder="请输入您报修时填写的电话号码" id="userTel" name="userTel" maxlength="">
                                                 </div>
                                             </div>
                                         </div>
@@ -39,8 +39,8 @@
                 </div>
                 <div class="content-block">
                     <div class="row">
-                        <div class="col-50"><a href="${contextPath}/app/user/redirect/index.action" class="button button-big button-fill button-warning" style="background-color: #fdb970;" external>返回</a></div>
-                        <div class="col-50"><button class="button button-big button-fill button-success" type="submit" style="float: right; background-color: #02cbe9;">查询</button></div>
+                        <div class="col-50"><a href="${contextPath}/app/user/redirect/index.action" class="button button-big button-fill button-warning" style="background-color: #02cbe9;width:90%;" external>返回</a></div>
+                        <div class="col-50"><button class="button button-big button-fill button-success" type="submit" style="float: right; background-color: #fdb970;display: block;width:90%;">查询</button></div>
                     </div>
                 </div>
                 </form>

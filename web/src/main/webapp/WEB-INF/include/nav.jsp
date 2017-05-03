@@ -49,7 +49,7 @@
                     <a href="javascript:;"><i class="layui-icon">&#xe613;</i> 人员与分组</a>
                     <dl class="layui-nav-child">
                         <dd id="workerInfo"><a href="${contextPath}/admin/worker/info/list.action"><i class="layui-icon">&#xe602;</i>工人信息管理</a></dd>
-                        <dd id="workerType"><a href="${contextPath}/admin/worker/type/list.action"><i class="layui-icon">&#xe602;</i>工种管理</a></dd>
+                        <dd id="workerType"><a href="${contextPath}/admin/worker/type/list.action"><i class="layui-icon">&#xe602;</i>部门管理</a></dd>
                         <dd id="repairGroup"><a href="${contextPath}/admin/repairgroup/list.action"><i class="layui-icon">&#xe602;</i> 维修小组管理</a></dd>
                     </dl>
                 </li>

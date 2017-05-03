@@ -97,7 +97,7 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
 
     @Override
     public List<MaintenanceList> selectDoingMaintenanceList(String userId) {
-        String sql = "SELECT listNumber, listState, liststatetime, listDescription FROM baoxiu_maintenancelist WHERE listState NOT IN (1, 5, 3) AND repairGroupId IN (SELECT repairGroupId FROM baoxiu_workerinfo WHERE userId = ? AND deleteFlag = 0)";
+        String sql = "SELECT listNumber,userTel, liststatetime, listState, listDescription, DI.distinctName, BU.buildingName, RO.roomName, EQ.equipmentName FROM baoxiu_maintenancelist AS MA LEFT JOIN baoxiu_placedistinct AS DI  ON MA.distinctId = DI.distinctId LEFT JOIN baoxiu_placebuilding AS BU ON MA.buildingId = BU.buildingId LEFT JOIN baoxiu_placeroom AS RO ON MA.roomId = RO.roomId LEFT JOIN baoxiu_equipment AS EQ ON MA.equipmentId = EQ.equipmentId WHERE MA.repairGroupId IN (SELECT baoxiu_workerinfo.repairGroupId FROM baoxiu_workerinfo WHERE baoxiu_workerinfo.userId = ? AND baoxiu_workerinfo.deleteFlag = 0) AND MA.deleteFlag = 0 AND MA.listState = 2";
         Object[] args = {
                 userId
         };
@@ -113,7 +113,7 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
 
     @Override
     public List<MaintenanceList> selectWaitingMaintenanceList(String userId) {
-        String sql = "SELECT listNumber, listState, liststatetime, listDescription FROM baoxiu_maintenancelist WHERE listState IN (1, 5) AND repairGroupId IN (SELECT repairGroupId FROM baoxiu_workerinfo WHERE userId = ? AND deleteFlag = 0)";
+        String sql = "SELECT listNumber,userTel, liststatetime, listState, listDescription, DI.distinctName, BU.buildingName, RO.roomName, EQ.equipmentName FROM baoxiu_maintenancelist AS MA LEFT JOIN baoxiu_placedistinct AS DI  ON MA.distinctId = DI.distinctId LEFT JOIN baoxiu_placebuilding AS BU ON MA.buildingId = BU.buildingId LEFT JOIN baoxiu_placeroom AS RO ON MA.roomId = RO.roomId LEFT JOIN baoxiu_equipment AS EQ ON MA.equipmentId = EQ.equipmentId WHERE MA.repairGroupId IN (SELECT baoxiu_workerinfo.repairGroupId FROM baoxiu_workerinfo WHERE baoxiu_workerinfo.userId = ? AND baoxiu_workerinfo.deleteFlag = 0) AND MA.deleteFlag = 0 AND MA.listState = 1";
         Object[] args = {
                 userId
         };
@@ -133,6 +133,11 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
         public MaintenanceList mapRow(ResultSet resultSet, int rowNum) throws SQLException {
             MaintenanceList list = new MaintenanceList();
             list.setListNumber(resultSet.getString("listNumber"));
+            list.setUserTel(resultSet.getString("userTel"));
+            list.setDistinctName(resultSet.getString("distinctName"));
+            list.setBuildingName(resultSet.getString("buildingName"));
+            list.setRoomName(resultSet.getString("roomName"));
+            list.setEquipmentName(resultSet.getString("equipmentName"));
             list.setListstatetime(resultSet.getString("liststatetime"));
             list.setListBigDescription(resultSet.getString("listDescription"));
 
@@ -140,6 +145,7 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
 
             list.setListState(listState);
             list.setListStateFrontStyleColor(MaintenanceListStateToStringUtil.stateNumberToColorString(listState));
+            list.setListStateFrontStyleDesc(MaintenanceListStateToStringUtil.stateNumberToStatusString(listState));
 
             return list;
         }
@@ -182,7 +188,7 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
 
     @Override
     public List<MaintenanceList> selectMaintenanceLists(String userId) {
-        String sql = "SELECT listNumber, listState, liststatetime, listDescription FROM baoxiu_maintenancelist WHERE repairGroupId IN (SELECT repairGroupId FROM baoxiu_workerinfo WHERE userId = ? AND deleteFlag = 0) ORDER BY liststatetime DESC LIMIT 35";
+        String sql = "SELECT listNumber,userTel, liststatetime, listState, listDescription, DI.distinctName, BU.buildingName, RO.roomName, EQ.equipmentName FROM baoxiu_maintenancelist AS MA LEFT JOIN baoxiu_placedistinct AS DI  ON MA.distinctId = DI.distinctId LEFT JOIN baoxiu_placebuilding AS BU ON MA.buildingId = BU.buildingId LEFT JOIN baoxiu_placeroom AS RO ON MA.roomId = RO.roomId LEFT JOIN baoxiu_equipment AS EQ ON MA.equipmentId = EQ.equipmentId WHERE MA.repairGroupId IN (SELECT baoxiu_workerinfo.repairGroupId FROM baoxiu_workerinfo WHERE baoxiu_workerinfo.userId = ? AND baoxiu_workerinfo.deleteFlag = 0) AND MA.deleteFlag = 0  ORDER BY MA.liststatetime DESC LIMIT 35";
         Object[] args = {
                 userId
         };
@@ -202,14 +208,20 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
         public MaintenanceList mapRow(ResultSet resultSet, int rowNum) throws SQLException {
             MaintenanceList list = new MaintenanceList();
 
-            list.setListNumber(resultSet.getString("listNumber"));
 
-            list.setListBigDescription(resultSet.getString("listDescription"));
+            list.setListNumber(resultSet.getString("listNumber"));
+            list.setUserTel(resultSet.getString("userTel"));
+            list.setDistinctName(resultSet.getString("distinctName"));
+            list.setBuildingName(resultSet.getString("buildingName"));
+            list.setRoomName(resultSet.getString("roomName"));
+            list.setEquipmentName(resultSet.getString("equipmentName"));
             list.setListstatetime(resultSet.getString("liststatetime"));
+            list.setListBigDescription(resultSet.getString("listDescription"));
 
             String listState = resultSet.getString("listState");
             list.setListState(listState);
             list.setListStateFrontStyleColor(MaintenanceListStateToStringUtil.stateNumberToColorString(listState));
+            list.setListStateFrontStyleDesc(MaintenanceListStateToStringUtil.stateNumberToStatusString(listState));
 
             return list;
         }
@@ -446,9 +458,7 @@ public class WorkerRepositoryImpl implements WorkerRepositoryI {
     @Override
     public int selectallDoMaintenanceSum(String userId) {
         StringBuilder builder = new StringBuilder();
-        builder.append("SELECT count(MA.listNumber) FROM baoxiu_maintenancelist AS MA  LEFT JOIN baoxiu_workerinfo AS INF ON(MA.repairGroupId = INF.repairGroupId) ");
-        builder.append("WHERE INF.userId = ? ");
-
+        builder.append("SELECT count(MA.listNumber) FROM baoxiu_maintenancelist AS MA  LEFT JOIN baoxiu_workerinfo AS INF ON(MA.repairGroupId = INF.repairGroupId) WHERE  INF.userId = ? ");
         Object[] args = { userId};
         try{
             return jdbcTemplate.queryForInt(builder.toString(), args);

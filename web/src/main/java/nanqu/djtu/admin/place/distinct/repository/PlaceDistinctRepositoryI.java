@@ -51,4 +51,11 @@ public interface PlaceDistinctRepositoryI {
      * @return 唯一返回true, else false
      */
     boolean select4PlaceDistinctNumberUnique(String distinctNumber);
+
+    /**
+     * 查询校区的总数,编号是总数加一
+     *
+     * @return 校区的总数
+     */
+    int select4DistinctCount();
 }

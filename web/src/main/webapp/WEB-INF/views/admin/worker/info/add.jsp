@@ -34,14 +34,12 @@
         <div class="layui-form-item">
           <label class="layui-form-label">部门</label>
           <div class="layui-input-block">
-            <select name="workerDepartment" lay-verify="workerDepartment" id="workerDepartment">
+            <select name="typeId" id="typeId" lay-verify="typeId">
               <option value="">请选择</option>
-              <option value="1">才艺部</option>
-              <option value="2">园艺部</option>
-              <option value="3">工程部</option>
-              <option value="4">设备部</option>
-              <option value="5">其他</option>
-              </select>
+              <c:forEach items="${workerTypes}" var="workerTypes">
+                <option  value="${workerTypes.typeId}" >${workerTypes.typeName}</option>
+              </c:forEach>
+            </select>
           </div>
         </div>
         <div class="layui-form-item">
@@ -63,17 +61,6 @@
           </div>
         </div>
         <div class="layui-form-item">
-          <label class="layui-form-label">工种</label>
-          <div class="layui-input-block">
-            <select name="typeId" id="typeId" lay-verify="typeId">
-              <option value="">请选择</option>
-              <c:forEach items="${workerTypes}" var="workerTypes">
-                <option  value="${workerTypes.typeId}" >${workerTypes.typeName}</option>
-              </c:forEach>
-            </select>
-          </div>
-        </div>
-        <div class="layui-form-item">
           <label class="layui-form-label">工人状态</label>
           <div class="layui-input-block">
             <select name="workerState" id="workerState" lay-verify="workState">
@@ -89,7 +76,7 @@
 
         <div class="layui-form-item">
           <div class="layui-input-block">
-            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceDistinct">新建</button>
+            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceDistinct">添加</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
           </div>
         </div>

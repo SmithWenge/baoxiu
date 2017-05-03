@@ -514,7 +514,7 @@ $axure.internal(function($ax) {
 
                     var textStepFunction = function() {
                         //change the width of the text div may effect the height
-                        //var currentTextHeight = Number($(textChildren.children('p')[0]).css('height').replace('px', ''));
+                        //var currentTextHeight = number($(textChildren.children('p')[0]).css('height').replace('px', ''));
                         //textChildren.css('height', currentTextHeight);
                         var display = $ax.public.fn.displayHackStart(document.getElementById(textDivId));
                         $ax.style.updateTextAlignmentForVisibility(textDivId, true);
@@ -1212,7 +1212,7 @@ $axure.internal(function($ax) {
         if(displaySet) obj.css('display', oldDisplay);
 
         //        var body = $('body');
-        //        if (body.css('position') == 'relative') loc -= (Number(body.css(loc).replace('px', '')) + Math.max(0, ($(window).width() - body.width()) / 2));
+        //        if (body.css('position') == 'relative') loc -= (number(body.css(loc).replace('px', '')) + Math.max(0, ($(window).width() - body.width()) / 2));
         return loc;
     };
 

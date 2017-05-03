@@ -3,6 +3,7 @@ package nanqu.djtu.admin.place.building.service.impl;
 
 import nanqu.djtu.admin.place.building.repository.PlaceBuildingRepositoryI;
 import nanqu.djtu.admin.place.building.service.PlaceBuildingServiceI;
+import nanqu.djtu.list.number.AutoListNumberCreator;
 import nanqu.djtu.pojo.AdminUser;
 import nanqu.djtu.pojo.EquipmentSet;
 import nanqu.djtu.pojo.PlaceBuilding;
@@ -38,6 +39,14 @@ public class PlaceBuildingServiceImpl implements PlaceBuildingServiceI {
 
     @Override
     public boolean saveNewPlaceDistinct(PlaceBuilding building, AdminUser user) {
+        int buildingCount = placeBuildingRepository.select4BuildingCount(building.getDistinctId());
+
+        if (buildingCount < 0) {
+            return false;
+        }
+
+        building.setBuildingNumber(AutoListNumberCreator.createBuildingNumber(buildingCount));
+
         boolean insert = placeBuildingRepository.insertNewPlaceDistinct(building);
 
         if (insert) {

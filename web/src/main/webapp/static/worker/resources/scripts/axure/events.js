@@ -1316,7 +1316,7 @@ $axure.internal(function($ax) {
             newY = e.pageY;
         }
         //var body = $('body');
-        //if(body.css('position') == 'relative') newX = Math.round(newX - Number(body.css('left').replace('px', '')) - Math.max(0, ($(window).width() - body.width()) / 2));
+        //if(body.css('position') == 'relative') newX = Math.round(newX - number(body.css('left').replace('px', '')) - Math.max(0, ($(window).width() - body.width()) / 2));
 
         if(_mouseLocation.x == newX && _mouseLocation.y == newY) return;
 

@@ -246,7 +246,7 @@
     //    $ax.drag.GetWidgetRectangles = function(id) {
     //        var widget = window.document.getElementById(id);
     //        var rects = new Object();
-    //        rects.lastRect = new rect($ax.legacy.getAbsoluteLeft(widget), $ax.legacy.getAbsoluteTop(widget), Number($('#' + id).css('width').replace("px", "")), Number($('#' + id).css('height').replace("px", "")));
+    //        rects.lastRect = new rect($ax.legacy.getAbsoluteLeft(widget), $ax.legacy.getAbsoluteTop(widget), number($('#' + id).css('width').replace("px", "")), number($('#' + id).css('height').replace("px", "")));
     //        rects.currentRect = rects.lastRect;
     //        return rects;
     //    };

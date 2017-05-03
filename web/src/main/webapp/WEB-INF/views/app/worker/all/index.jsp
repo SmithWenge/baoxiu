@@ -20,13 +20,13 @@
             </div>
             <c:forEach items="${lists}" var="list">
                 <div class="card">
-                    <div class="card-header" style="font-size: .8rem;">
-                        <i class="fa fa-circle" aria-hidden="true" style="color: ${list.listStateFrontStyleColor};"></i>
+                    <div class="card-header" style="font-size: .7rem;">
+                        <i class="fa fa-circle" aria-hidden="true" style="color: ${list.listStateFrontStyleColor};margin-bottom: 0.08rem;font-size: .7rem;">${list.listStateFrontStyleDesc}</i>
                         维修单号：${list.listNumber}
                     </div>
                     <div class="card-content">
                         <div class="card-content-inner">
-                                ${list.listBigDescription}
+                                ${list.distinctName}_${list.buildingName}_${list.roomName}_${list.equipmentName}
                         </div>
                     </div>
                     <div class="card-footer">
@@ -44,13 +44,21 @@
                 <span class="icon">
                     <i class="fa fa-hourglass-o" aria-hidden="true"></i>
                 </span>
-                <span class="badge">${maintenanceList.onDoMaintenanceSum}</span>
+                <c:if test="${maintenanceList.onDoMaintenanceSum != 0}">
+                    <span class="badge">
+                            ${maintenanceList.onDoMaintenanceSum}
+                    </span>
+                </c:if>
             </a>
             <a class="tab-item external" href="${contextPath}/app/worker/routeWaitingList.action" style="color: #fff;">
                 <span class="icon">
                     <i class="fa fa-bell-o" aria-hidden="true"></i>
                 </span>
-                <span class="badge">${maintenanceList.waitToDoMaintenanceSum}</span>
+                <c:if test="${maintenanceList.waitToDoMaintenanceSum !=0}">
+                     <span class="badge">
+                             ${maintenanceList.waitToDoMaintenanceSum}
+                     </span>
+                </c:if>
             </a>
             <a class="tab-item external" href="${contextPath}/app/worker/routeLatestList.action" style="color: #fff;">
                 <span class="icon">

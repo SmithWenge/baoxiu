@@ -78,7 +78,6 @@ public class WorkerController {
 
         if (optional.isPresent()) {
             ModelAndView mav = new ModelAndView("app/worker/accept/todo");
-
             List<MaintenanceList> lists = workerService.queryWaitingMaintenanceList(sessionInfo.getUserId());
             int onDoMaintenanceSum = workerService.queryOnDoMaintenanceSum(sessionInfo.getUserId());
             int allDoMaintenanceSum = workerService.queryallDoMaintenanceSum(sessionInfo.getUserId());

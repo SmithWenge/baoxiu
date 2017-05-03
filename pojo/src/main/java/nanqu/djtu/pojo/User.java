@@ -5,6 +5,23 @@ public class User {
     private String username;
     private String password;
     private String adminUserId;
+    private String bornTime;
+    private String workTime;
+    public String getBornTime() {
+        return bornTime;
+    }
+
+    public void setBornTime(String bornTime) {
+        this.bornTime = bornTime;
+    }
+
+    public String getWorkTime() {
+        return workTime;
+    }
+
+    public void setWorkTime(String workTime) {
+        this.workTime = workTime;
+    }
 
     public User(String adminUserId, String username, String password) {
         this.adminUserId = adminUserId;

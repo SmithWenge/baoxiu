@@ -195,7 +195,7 @@ public class MaintenanceListController {
     public String done(@PathVariable String listNumber, RedirectAttributes redirectAttributes, HttpSession session) {
         AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
 
-        boolean update2 = maintenanceListService.done(listNumber,user);
+        boolean update2 = maintenanceListService.done(listNumber, user);
 
         if (update2) {
             redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
@@ -227,5 +227,81 @@ public class MaintenanceListController {
         }
 
         return "redirect:/admin/maintenance/list/manage/edit/route/" + list.getListNumber() + ".action";
+    }
+
+    /**
+     *路由到更改报修单状态页面
+     * @param listNumber
+     * @return
+     */
+    @RequestMapping(value = "/update/maintenance/state/router/{listNumber}")
+    public ModelAndView updateMaintenanceState(@PathVariable String listNumber){
+
+        MaintenanceList list = maintenanceListService.query4details(listNumber);
+
+        if (Optional.fromNullable(list).isPresent()) {
+            ModelAndView mav = new ModelAndView("admin/maintenance/list/manage/state");
+
+            mav.addObject("list", list);
+
+            return mav;
+        } else {
+            return new ModelAndView("redirect:/admin/maintenance/list/manage/index.action");
+        }
+    }
+
+    /**
+     * 更改报修单状态
+     * @param list
+     * @param session
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping(value = "/update/do", method = RequestMethod.POST)
+    public String updateState(MaintenanceList list, HttpSession session, RedirectAttributes redirectAttributes) {
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+
+        boolean update = maintenanceListService.updateMaintananceState(list, user);
+
+        if (update) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+
+            return "redirect:/admin/maintenance/list/manage/index.action";
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+        }
+
+        return "redirect:/admin/maintenance/list/manage/update/maintenance/state/router/" + list.getListNumber() + ".action";
+    }
+    @RequestMapping(value = "/reSend/router/{listNumber}")
+    public ModelAndView routeReSend(@PathVariable String listNumber){
+        MaintenanceList list = maintenanceListService.query4details(listNumber);
+        List<RepairGroup> repairGroups = maintenanceListService.queryRepairGroups();
+        if (Optional.fromNullable(list).isPresent()) {
+            ModelAndView mav = new ModelAndView("admin/maintenance/list/manage/reSend");
+
+            mav.addObject("list", list);
+            mav.addObject("repairGroups", repairGroups);
+
+            return mav;
+        } else {
+            return new ModelAndView("redirect:/admin/maintenance/list/manage/index.action");
+        }
+    }
+    @RequestMapping(value = "/reSend/do", method = RequestMethod.POST)
+    public String reSendDo(MaintenanceList list, HttpSession session, RedirectAttributes redirectAttributes) {
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_LOGIN_KEY);
+
+        boolean update = maintenanceListService.updateMaintananceStateAndRepaireId(list, user);
+
+        if (update) {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.SUCCESS_MESSAGE);
+
+            return "redirect:/admin/maintenance/list/manage/index.action";
+        } else {
+            redirectAttributes.addFlashAttribute(ConstantFields.OPERATION_MESSAGE_KEY, ConstantFields.FAILURE_MESSAGE);
+        }
+
+        return "redirect:/admin/maintenance/list/manage/reSend/router/" + list.getListNumber() + ".action";
     }
 }

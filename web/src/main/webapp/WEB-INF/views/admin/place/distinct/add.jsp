@@ -13,12 +13,14 @@
         </legend>
         <div style="width: 30%; margin-top: 15px; ">
             <form action="${contextPath}/admin/place/distinct/add/do.action" method="post" class="layui-form">
+                <!--
                 <div class="layui-form-item">
                     <label class="layui-form-label">校区编号</label>
                     <div class="layui-input-block">
                         <input type="text" name="distinctNumber" lay-verify="distinctNumber" placeholder="请输入编号" class="layui-input" id="distinctNumber">
                     </div>
                 </div>
+                -->
                 <div class="layui-form-item">
                     <label class="layui-form-label">校区名</label>
                     <div class="layui-input-block">
@@ -27,7 +29,7 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceDistinct">新建</button>
+                        <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="addPlaceDistinct">添加</button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                     </div>
                 </div>
@@ -39,6 +41,36 @@
 <%@ include file="/WEB-INF/include/javascript.jsp"%>
 
 <script>
+    /**
+     distinctNumber: function(value) {
+            if(value.length > 4 || value.length < 2) {
+                return "校区编号的长度为2到4";
+            }
+
+            if (!(/^[0-9]+$/.test(value))) {
+                return "请填写数字序列";
+            }
+
+            var validateData = { "distinctNumber": $("#distinctNumber").val() };
+            var uniqueDistinctNumber = false;
+
+            $.ajax({
+                type: 'post',
+                async: false,
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                data: validateData,
+                url: '${contextPath}/admin/place/distinct/unique/distinctNumber.action',
+                success: function (result) {
+                    uniqueDistinctNumber = result;
+                }
+            });
+
+            if (!uniqueDistinctNumber) {
+                return "填写的校区编号已存在";
+            }
+        },
+     */
     $(function () {
         // 导航栏选择
         $("#first").attr("class", "layui-nav-item layui-nav-itemed");
@@ -48,34 +80,7 @@
         var form = layui.form();
 
         form.verify({
-            distinctNumber: function(value) {
-                if(value.length > 4 || value.length < 2) {
-                    return "校区编号的长度为2到4";
-                }
 
-                if (!(/^[0-9]+$/.test(value))) {
-                    return "请填写数字序列";
-                }
-
-                var validateData = { "distinctNumber": $("#distinctNumber").val() };
-                var uniqueDistinctNumber = false;
-
-                $.ajax({
-                    type: 'post',
-                    async: false,
-                    contentType: 'application/x-www-form-urlencoded',
-                    dataType: 'json',
-                    data: validateData,
-                    url: '${contextPath}/admin/place/distinct/unique/distinctNumber.action',
-                    success: function (result) {
-                        uniqueDistinctNumber = result;
-                    }
-                });
-
-                if (!uniqueDistinctNumber) {
-                    return "填写的校区编号已存在";
-                }
-            },
             distinctName: function (value) {
                 if (value.length < 1) {
                     return "请输入校区名";

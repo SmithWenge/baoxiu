@@ -114,21 +114,34 @@
     <nav class="bar bar-tab" style="background: #0E4d94;opacity: 1;">
       <a class="tab-item external active" href="${contextPath}/app/worker/routeDoingList.action" style="color: #fff;">
         <span class="icon">
-            <i class="fa fa-home" aria-hidden="true"></i>
+          <i class="fa fa-home" aria-hidden="true"></i>
         </span>
-        <span class="badge">${maintenanceList.onDoMaintenanceSum}</span>
+        <c:if test="${maintenanceList.onDoMaintenanceSum != 0}">
+          <span class="badge">
+              ${maintenanceList.onDoMaintenanceSum}
+          </span>
+        </c:if>
       </a>
       <a class="tab-item external" href="${contextPath}/app/worker/routeWaitingList.action" style="color: #fff;">
         <span class="icon">
             <i class="fa fa-bell-o" aria-hidden="true"></i>
         </span>
-        <span class="badge">${maintenanceList.waitToDoMaintenanceSum}</span>
+        <c:if test="${maintenanceList.waitToDoMaintenanceSum !=0}">
+         <span class="badge">
+             ${maintenanceList.waitToDoMaintenanceSum}
+         </span>
+        </c:if>
+
       </a>
       <a class="tab-item external" href="${contextPath}/app/worker/routeLatestList.action" style="color: #fff;">
         <span class="icon">
             <i class="fa fa-briefcase" aria-hidden="true"></i>
         </span>
-        <span class="badge">${maintenanceList.allDoMaintenanceSum}</span>
+        <c:if test="${maintenanceList.allDoMaintenanceSum != 0}">
+         <span class="badge">
+             ${maintenanceList.allDoMaintenanceSum}
+         </span>
+        </c:if>
       </a>
     </nav>
   </div>

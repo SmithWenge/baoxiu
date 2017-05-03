@@ -48,6 +48,18 @@
           </div>
         </div>
         <div class="layui-form-item">
+          <label class="layui-form-label">出生日期</label>
+          <div class="layui-input-block">
+            <input name="bornTime" id="bornTime" lay-verify="date" value="${adminUser.bornTime}" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})" type="text">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">工作日期</label>
+          <div class="layui-input-block">
+            <input name="workTime" id="workTime" lay-verify="date" value="${adminUser.workTime}" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})" type="text">
+          </div>
+        </div>
+        <div class="layui-form-item">
           <label class="layui-form-label">登陆名</label>
           <div class="layui-input-block">
             <input type="text" name="username" lay-verify="username" value="${adminUser.username}" autocomplete="off" class="layui-input" id="username">

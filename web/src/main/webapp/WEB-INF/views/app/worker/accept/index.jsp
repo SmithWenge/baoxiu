@@ -18,7 +18,7 @@
                     </header>
                 </div>
             </div>
-            <form action="${contextPath}/app/worker/edit.action" method="post">
+            <form action="${contextPath}/app/worker/edit.action" method="post" onsubmit="return checkSubmit();">
                 <div class="card">
                     <div class="card-header">
                         <div class="card-content">
@@ -31,11 +31,15 @@
                                                 <div class="item-media"><i class="icon icon-form-gender"></i></div>
                                                 <div class="item-inner">
                                                     <div class="item-input">
-                                                        <select name="listState">
-                                                            <option value="-1">请选择操作</option>
-                                                            <option value="2">接单</option>
-                                                            <option value="3">完成</option>
-                                                            <option value="6">延期</option>
+                                                        <select name="listState" id="operation">
+                                                            <c:if test="${list.listState == 1}">
+                                                                <option value="2">接单</option>
+                                                            </c:if>
+                                                            <c:if test="${list.listState == 2}">
+                                                                <option value="3">完成</option>
+                                                                <option value="6">延期</option>
+                                                                <option value="7">申请协助</option>
+                                                            </c:if>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -58,7 +62,7 @@
                                                     </div>
                                                     <div class="item-inner">
                                                         <div class="item-input">
-                                                            <input type="text" name="listDescription" placeholder="请填写简要操作（可选）">
+                                                            <input type="text" name="listDescription" placeholder="请填写简要操作（可选）" maxlength="100" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -72,8 +76,8 @@
                     <div class="card-footer">
                         <p class="link"></p>
                         <div class="row">
-                            <div class="col-30" style="margin-right: .5rem;">
-                                <button type="submit" class="button">提交</button>
+                            <div class="col-30" style="margin-right: 1.9rem;">
+                                <button type="submit" class="button" style="display: block;width: 170%;height: 2.1rem;">提交</button>
                             </div>
                         </div>
                     </div>
@@ -179,26 +183,35 @@
                 <span class="icon">
                     <i class="fa fa-hourglass-o" aria-hidden="true"></i>
                 </span>
-                <span class="badge">${maintenanceList.onDoMaintenanceSum}</span>
+                <c:if test="${maintenanceList.onDoMaintenanceSum != 0}">
+                    <span class="badge">
+                            ${maintenanceList.onDoMaintenanceSum}
+                    </span>
+                </c:if>
             </a>
             <a class="tab-item external" href="${contextPath}/app/worker/routeWaitingList.action" style="color: #fff;">
                 <span class="icon">
                     <i class="fa fa-bell-o" aria-hidden="true"></i>
                 </span>
-                <span class="badge">${maintenanceList.waitToDoMaintenanceSum}</span>
+                <c:if test="${maintenanceList.waitToDoMaintenanceSum !=0}">
+                     <span class="badge">
+                             ${maintenanceList.waitToDoMaintenanceSum}
+                     </span>
+                </c:if>
             </a>
             <a class="tab-item external" href="${contextPath}/app/worker/routeLatestList.action" style="color: #fff;">
                 <span class="icon">
                     <i class="fa fa-file-text-o" aria-hidden="true"></i>
                 </span>
-                <span class="badge">${maintenanceList.allDoMaintenanceSum}</span>
+                <c:if test="${maintenanceList.allDoMaintenanceSum != 0}">
+                     <span class="badge">
+                             ${maintenanceList.allDoMaintenanceSum}
+                     </span>
+                </c:if>
             </a>
         </nav>
     </div>
 </div>
 
 <%@ include file="/WEB-INF/include/app/appJavascript.jsp"%>
-
-
-
 <%@ include file="/WEB-INF/include/app/appFooter.jsp"%>
